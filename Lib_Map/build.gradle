@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    buildToolsVersion BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
+
+        manifestPlaceholders = [
+                AMAP_MAP_KEY: RELEASE_AMAP_KEY,
+        ]
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [AMAP_MAP_KEY: RELEASE_AMAP_KEY]//正式key
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
+    api ('com.amap.api:location:latest.integration'){
+        exclude module: 'support-v13'
+    }
+    api ('com.amap.api:map2d:latest.integration'){
+        exclude module: 'support-v13'
+    }
+    api ('com.amap.api:navi-3dmap:latest.integration'){
+        exclude module: 'support-v13'
+    }
+    api ('com.amap.api:search:latest.integration'){
+        exclude module: 'support-v13'
+    }
+    implementation project(':BaseProject:util')
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}

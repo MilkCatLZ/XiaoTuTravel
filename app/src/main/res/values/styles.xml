@@ -1,0 +1,46 @@
+<resources>
+
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/main_back</item>
+        <item name="colorAccent">@color/text_primary_333333</item>
+        <item name="android:colorBackground">@color/main_back</item>
+        <item name="android:textColorPrimary">@color/text_primary_333333</item>
+        <item name="android:textColorSecondary">@color/text_second_primary_666666</item>
+        <item name="android:textColor">@color/text_primary_333333</item>
+        <item name="android:windowBackground">@color/main_back</item>
+    </style>
+
+
+    <style name="AppTheme" parent="AppThemeBase"/>
+
+    <style name="line_horizontal">
+        <item name="android:background">@color/text_fifth_primary_e5e5e5</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+    </style>
+
+    <style name="line_vertical">
+        <item name="android:background">@color/text_fifth_primary_e5e5e5</item>
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="style_verify_edt">
+        <item name="android:layout_width">52dp</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@drawable/back_verify_edit</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:textColor">@color/main_color_green</item>
+        <item name="android:textSize">38sp</item>
+    </style>
+
+    <style name="style_verify_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+</resources>

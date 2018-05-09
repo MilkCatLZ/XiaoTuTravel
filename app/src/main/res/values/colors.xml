@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="main_back">#F3F4F5</color>
+
+    <color name="main_color_green">#00B38A</color>
+    <color name="main_color_green_click">#00A680</color>
+    <color name="main_color_red">#FF7452</color>
+    <color name="main_color_blue">#3391EC</color>
+    <color name="main_color_yellow">#FFBB00</color>
+
+    <color name="text_primary_333333">#333333</color>
+    <color name="text_second_primary_666666">#666666</color>
+    <color name="text_third_primary_999999">#999999</color>
+    <color name="text_forth_primary_cccccc">#cccccc</color>
+    <color name="text_fifth_primary_e5e5e5">#e5e5e5</color>
+</resources>

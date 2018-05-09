@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.login.ui.VerifyDialogFragment"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/back_dialog_top_corner_2dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:text="输入验证码"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="19sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_second_primary_12dp"
+                    tools:text="验证码已发送至 13333333333"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/back_verify_count_down"
+                    android:gravity="center"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_second_primary_12dp"
+                    tools:text="99秒后重发"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp">
+
+                    <LinearLayout
+
+                        style="@style/style_verify_content">
+
+                        <EditText
+                            android:id="@+id/edt_verify_0"
+                            style="@style/style_verify_edt"
+                            android:enabled="@{fragment.currentVerifyNum==0}"
+                            tools:enabled="true"
+                            tools:text="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/style_verify_content">
+
+                        <EditText
+                            android:id="@+id/edt_verify_1"
+                            style="@style/style_verify_edt"
+                            android:enabled="@{fragment.currentVerifyNum==1}"
+                            tools:enabled="false"
+                            tools:text="1"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/style_verify_content">
+
+                        <EditText
+                            android:id="@+id/edt_verify_2"
+                            style="@style/style_verify_edt"
+                            android:enabled="@{fragment.currentVerifyNum==2}"
+                            tools:enabled="false"
+                            tools:text="1"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        style="@style/style_verify_content">
+
+                        <EditText
+                            android:id="@+id/edt_verify_3"
+                            style="@style/style_verify_edt"
+                            android:enabled="@{fragment.currentVerifyNum==3}"
+                            tools:enabled="false"
+                            tools:text="1"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/login_return"
+                android:onClick="@{()->fragment.back()}"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/login_close"
+                android:onClick="@{()->fragment.dismiss()}"/>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

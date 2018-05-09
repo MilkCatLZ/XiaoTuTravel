@@ -1,0 +1,9 @@
+<resources>
+
+
+    <string name="str_afjjelldfjlkjd_">rrDfYw4VJglG23P7+qjAxhZqWnfD/cLUT3j3B+iuJF7GmvgLahHtTP+MhOApcsjz60igcV9SYvAyxS0j8cKAnA==</string>
+    <string name="str_sdlkjcviiglldldfjlkjlksjdf">c55aa29f-71f4-48bd-b9e5-952f7128be98</string>
+    <string name="app_id">2080522</string>
+    <string name="str_login_out_date">登录超时，请重新登录</string>
+    <string name="str_data_parse_error">数据格式错误，请联系管理员</string>
+</resources>

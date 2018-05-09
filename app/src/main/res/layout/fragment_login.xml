@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.login.ui.LoginDialogFragment"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp">
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/back_dialog_top_corner_2dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="登录"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="19sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingEnd="35dp"
+                    android:paddingStart="35dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:gravity="center"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="+86"
+                            android:textSize="@dimen/text_primary_14dp"
+                            android:textColor="@color/text_second_primary_666666"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="13dp"
+                            android:rotation="180"
+                            android:src="@drawable/login_return"
+                            android:tint="@color/text_primary_333333"/>
+
+                        <EditText
+                            android:id="@+id/editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:background="@android:color/transparent"
+                            android:textColor="@color/text_primary_333333"
+                            android:textColorHint="@color/text_forth_primary_cccccc"
+                            android:hint="手机号码"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:textSize="15sp"/>
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line_horizontal"
+                        android:layout_marginTop="10dp"/>
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/back_button_main_green_clickable_corner_2dp"
+                    android:text="下一步"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_title_16dp"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="15dp"
+                android:onClick="@{()->fragment.dismiss()}"
+                android:background="@drawable/login_close"/>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

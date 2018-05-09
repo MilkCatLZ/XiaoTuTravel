@@ -1,0 +1,1 @@
+include ':app', ':Lib_Map', ':Alipay', ':BaseProject:util', ':BaseProject:base', ':BaseProject:DataBinding', ':BaseProject:Network', ':BaseProject:Update', ':BaseProject:PhotoGallery', ':Lib_Push',':Lib_UmengShare'

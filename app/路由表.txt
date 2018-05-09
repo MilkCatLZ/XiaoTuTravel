@@ -1,0 +1,2 @@
+路由链接                              类名                                  参数           result   需要拦截     说明
+@Route(path = "/app/homeActivity")    shy.car.sdk.MainActivity              无             否       否          程序首页

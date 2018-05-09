@@ -1,0 +1,148 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+}
+
+android {
+    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
+    buildToolsVersion BUILD_TOOLS_VERSION
+
+    repositories {
+        flatDir {
+            dirs "libs"
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        preDexLibraries = false
+    }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'xxx'
+            keyPassword 'xxx'
+            storeFile file('../xxx.jks')
+            storePassword 'xxx'
+        }
+    }
+
+    ext {
+        // 开发用服务器的参数配置
+        DevelopArray = [
+                AMAP_MAP_KEY        : DEBUG_AMAP_KEY,
+                UMENG_APPKEY        : DEBUG_UMENG_APPKEY,
+                UMENG_MESSAGE_SECRET: DEBUG_MESSAGE_SECRET
+        ]
+        ReleaseArray = [
+                UMENG_APPKEY        : RELEASE_UMENG_APPKEY,
+                UMENG_MESSAGE_SECRET: RELEASE_MESSAGE_SECRET
+        ]
+    }
+    defaultConfig {
+        applicationId "shy.car.sdk"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        buildConfigField "String", HOST, RELEASE_HOST //host
+        buildConfigField "String", APP_ID, RELEASE_APP_ID //appid
+        //取消自动更新
+        buildConfigField "String", CANCEL_ACTIVITY, CANCEL_ACTIVITY_ACTION
+
+        manifestPlaceholders = [
+                //高德地图
+                AMAP_MAP_KEY: RELEASE_AMAP_KEY,
+                //自动更新时，取消更新用的Activity的Action
+                CancelAction: CANCEL_ACTIVITY_ACTION_MANIFEST,
+        ]
+
+        flavorDimensions "debug"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.releaseConfig
+            debuggable false
+            jniDebuggable false
+        }
+        debug {
+//            signingConfig signingConfigs.releaseConfig
+            debuggable true
+            jniDebuggable false
+        }
+    }
+
+    productFlavors {
+        Develop_ {
+            dimension "debug"
+            //开发用的是内网地址
+            buildConfigField "String", HOST, DEVELOP_HOST
+            //AppId
+            buildConfigField "String", APP_ID, DEBUG_APP_ID
+            //token自动续期周期
+            buildConfigField "Integer", TokenTimeOut, "2"//自动续期缩放，这里就是过期时间的1/2，比如30天，还剩15天就续期，测试用
+            //开发版本测试后缀
+            applicationIdSuffix "develop"
+            manifestPlaceholders = DevelopArray
+        }
+        Release_ {
+            dimension "debug"
+            manifestPlaceholders = ReleaseArray
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+//    implementation 'com.android.support:support-v4:27.1.1'
+    implementation "com.android.support:support-v4:${AndroidSupportVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+
+    implementation project(':BaseProject:base')
+    implementation project(':BaseProject:DataBinding')
+    implementation project(':BaseProject:Network')
+    implementation project(':BaseProject:Update')
+    implementation project(':BaseProject:util')
+    implementation project(':BaseProject:PhotoGallery')
+    implementation project(':Lib_Map')
+    implementation project(':Alipay')
+    implementation project(':Lib_Push')
+    implementation project(':Lib_UmengShare')
+
+    implementation 'com.alibaba:arouter-api:1.3.1'
+    kapt 'com.alibaba:arouter-compiler:1.1.4'
+//    implementation "org.jetbrains.anko:anko:0.10.5"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "com.android.support:support-v4:${AndroidSupportVersion}"
+    }
+}
