@@ -13,6 +13,10 @@
         <variable
             name="fragment"
             type="shy.car.sdk.travel.login.ui.LoginDialogFragment"/>
+
+        <variable
+            name="p"
+            type="shy.car.sdk.travel.login.presenter.LoginPresenter"/>
     </data>
 
     <RelativeLayout
@@ -71,7 +75,7 @@
                             android:tint="@color/text_primary_333333"/>
 
                         <EditText
-                            android:id="@+id/editText"
+                            android:id="@+id/edt_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="3dp"
@@ -79,7 +83,8 @@
                             android:textColor="@color/text_primary_333333"
                             android:textColorHint="@color/text_forth_primary_cccccc"
                             android:hint="手机号码"
-                            android:inputType="number"
+                            android:inputType="phone"
+                            android:text="@={p.phone}"
                             android:maxLength="11"
                             android:textSize="15sp"/>
                     </LinearLayout>
@@ -95,6 +100,7 @@
                     android:layout_marginTop="30dp"
                     android:background="@drawable/back_button_main_green_clickable_corner_2dp"
                     android:text="下一步"
+                    android:onClick="@{()->fragment.onNextClick()}"
                     android:textColor="@color/_foreground_material_light"
                     android:textSize="@dimen/text_title_16dp"/>
 

@@ -1,15 +1,14 @@
 package shy.car.sdk
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import kotlinx.android.synthetic.main.activity_main.*
-import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.app.base.XTBaseActivity
 
 @Route(path = "/app/homeActivity")
-class MainActivity : AppCompatActivity() {
+class MainActivity : XTBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +45,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClick(v: View) {
-        ARouter.getInstance().build(RouteMap.Home).navigation()
-        val dialog = ARouter.getInstance().build(RouteMap.Login).navigation() as android.support.v4.app.DialogFragment
-        dialog.show(supportFragmentManager, "login_dialog")
+       app.startLoginDialog()
     }
 }

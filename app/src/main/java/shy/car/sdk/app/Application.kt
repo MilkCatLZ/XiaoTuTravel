@@ -12,6 +12,7 @@ import shy.car.sdk.app.net.BaseInterceptor
 import shy.car.sdk.app.net.XTRetrofitInterface
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
+import shy.car.sdk.travel.login.ui.VerifyDialogFragment
 
 class Application : BaseApplication(), AmapOnLocationReceiveListener {
 
@@ -47,9 +48,23 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         ApiManager.init("https://www.baidu.com", interceptor, iterator, ApiInterface::class.java)
     }
 
-    fun startLoginDialog(){
-       val dialogFragment= ARouter.getInstance().build(RouteMap.Login).navigation() as LoginDialogFragment
-        dialogFragment.show(activityList[0].supportFragmentManager,"fragment_login_dialog")
+    fun startLoginDialog() {
+        try {
+//            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).navigation() as VerifyDialogFragment
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Login).navigation() as LoginDialogFragment
+            dialogFragment.show(activityList[0].supportFragmentManager, "fragment_login_dialog")
+        } catch (e: Exception) {
+        }
+    }
+
+    fun startVerifyDialog(phone: String) {
+        try {
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).withString("phone", phone).navigation() as VerifyDialogFragment
+            dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
+        } catch (e: Exception) {
+        }
+
+
     }
 
 }

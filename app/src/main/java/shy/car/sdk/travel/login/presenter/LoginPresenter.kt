@@ -2,73 +2,56 @@ package shy.car.sdk.travel.login.presenter
 
 
 import android.content.Context
-import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View.OnClickListener
 import com.alibaba.fastjson.JSON
 import com.base.base.ProgressDialog
-import com.base.util.*
+import com.base.util.Device
+import com.base.util.Phone
+import com.base.util.StringUtils
+import com.base.util.ToastManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
 
 
-interface LoginListener {
-    fun loginSuccess()
-    fun loginFailed(e: Throwable)
-    fun loginFailed()
+interface VerifyListener {
+    fun onGetVerifySuccess()
+    fun onGetVerifyError(e: Throwable)
 }
 
 /**
  *
  * 登录逻辑处理
  */
-class LoginPresenter(val listener: LoginListener? = null, context: Context) : BasePresenter(context) {
+class LoginPresenter(val listener: VerifyListener? = null, context: Context) : BasePresenter(context) {
 
-    var phone = ""
-    var verify = ObservableField<String>("")
-
-    /**
-     * 手机输入是否正确，true:正确，false:不正确
-     */
-    var isVerifyCorrect = ObservableBoolean(false)
+    var phone = ObservableField<String>("")
+    var isPhoneCorrect = false
 
     /**
      * 登录/注册的参数
      *
      * @return
      */
-    private val loginParam: String
+    private val verifyParam: String
         get() {
             val data = JSON.parseObject("{}")
-
             data[UserBase.PHONE] = phone
-            data[ParamsConstant.VERIFY] = verify.get()
             data[ParamsConstant.UUID] = Device.getUUID(context)
             data["umeng_device_token"] = app.device_token
 
             return data.toString()
         }
 
-
-    /**
-     * 登录/注册按钮点击
-     */
-    var onLoginClickListener: OnClickListener = OnClickListener {
-        if (ClickUtil.canClick() && !User.instance.isLogin && isVerifyCorrect.get())
-            login()
-    }
-
     /**
      * 电话输入框文字检查
      */
-    var verifyTextWatcher: TextWatcher = object : TextWatcher {
+    var phoneTextWatcher: TextWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
 
         }
@@ -78,73 +61,47 @@ class LoginPresenter(val listener: LoginListener? = null, context: Context) : Ba
         }
 
         override fun afterTextChanged(editable: Editable) {
-            isVerifyCorrect.set(StringUtils.isNotEmpty(verify.get()) && verify.get()?.length == 6)
+            isPhoneCorrect = Phone.isMobile(phone.get())
         }
     }
-
+    var d: Disposable? = null
     /**
-     * 登录
+     * 获取验证码
      */
-    private fun login() {
-        var observer = ApiManager.instance.api.login(loginParam)
-        ApiManager.instance.toSubscribe(observer, object : Observer<String> {
-            override fun onComplete() {
-                ProgressDialog.hideLoadingView(context)
-            }
+    fun getVerify() {
+        if (isPhoneCorrect) {
+            ProgressDialog.showLoadingView(context)
+            d?.dispose()
+            ApiManager.instance.toSubscribe(ApiManager.instance.api.gerVerify(phone.get()!!), object : Observer<String> {
+                override fun onComplete() {
+                    ProgressDialog.hideLoadingView(context)
+                }
 
-            override fun onSubscribe(d: Disposable) {
+                override fun onSubscribe(d: Disposable) {
+                    this@LoginPresenter.d = d
+                }
 
-            }
+                override fun onNext(t: String) {
+                    if (StringUtils.isNotEmpty(t)) {
+                        ToastManager.showLongToast(context, "验证码发送成功")
+                        listener?.onGetVerifySuccess()
+                    }
+                }
 
-            override fun onNext(result: String) {
-                processResult(result)
-            }
+                override fun onError(e: Throwable) {
+                    listener?.onGetVerifyError(e)
+                    ProgressDialog.hideLoadingView(context)
 
-            override fun onError(e: Throwable) {
-                listener?.loginFailed(e)
-            }
-        })
-    }
-
-    /**
-     * 一般登录
-     *
-     * @param result
-     */
-    private fun isLoginSuccess(result: String): Boolean {
-        val accessToken = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
-        return StringUtils.isNotEmpty(accessToken)
-    }
-
-
-    private fun saveLoginState(result: String) {
-        User.instance.access_token = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
-        User.instance.uid = Integer.parseInt(JsonManager.getJsonString(result, UserBase.UID))
-        User.instance.expiresIn = java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN))
-        User.instance.type = Integer.parseInt(JsonManager.getJsonString(result, UserBase.BUYER_TYPE))
-        Log.d("LoginPresenter", "Long.parseLong(JsonManager.getJsonString(result, User.EXPIRES_IN)" + java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN) + ""))
-        User.instance.loginTime = System.currentTimeMillis() / 1000L
-        User.instance.phone = phone
-        User.saveUserState(context)
-    }
-
-
-    private fun processResult(result: String) {
-        if (isLoginSuccess(result)) {
-            saveLoginState(result)
-            savePhoneNumCache()
-            listener?.loginSuccess()
+                }
+            })
         } else {
-            listener?.loginFailed()
+            ToastManager.showLongToast(context, "请输入正确的手机号")
         }
     }
 
-    private fun savePhoneNumCache() {
-        SPCache.saveObject(context, LAST_LOGIN_PHONE, phone)
-    }
-
-    companion object {
-        val LAST_LOGIN_PHONE = "lastLoginPhone"
+    override fun destroy() {
+        super.destroy()
+        d?.dispose()
     }
 }
 

@@ -52,7 +52,7 @@ abstract class BasePresenter(protected var context: Context) : BaseObservable() 
     /**
      * 强烈建议这个方法在每个用到presenter的Activity/Fragment的onDestroy中调用
      */
-    fun destroy() {
+    open fun destroy() {
         EventBus.getDefault()
                 .unregister(this)
         isPresenterDestroy = true

@@ -19,8 +19,8 @@ interface ApiInterface {
     /**
      * 获取验证码
      */
-    @GET("xt/verify")
-    fun gerVerify(@Query("") params: String): Observable<String>
+    @GET("phone/captcha")
+    fun gerVerify(@Query("phone") params: String): Observable<String>
 
     /**
      * 登录

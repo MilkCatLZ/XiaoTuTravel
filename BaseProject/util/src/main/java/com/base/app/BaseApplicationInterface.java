@@ -1,7 +1,7 @@
 package com.base.app;
 
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 
 /**
@@ -9,7 +9,7 @@ import android.app.Activity;
  */
 
 public interface BaseApplicationInterface {
-    void addActivity(Activity activity);
-    void removeActivity(Activity activity);
+    void addActivity(AppCompatActivity activity);
+    void removeActivity(AppCompatActivity activity);
     void exit();
 }

@@ -54,7 +54,7 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
         return createUrl(url, rootParams)
     }
 
-        override fun getUrl(url: String, rootParams: HashMap<String, String>): String {
+    override fun getUrl(url: String, rootParams: HashMap<String, String>): String {
         getSign(url, rootParams)
         return createUrl(url, rootParams)
     }
@@ -77,7 +77,7 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
 
     private fun toKeyValueList(params: HashMap<String, String>): ArrayList<KeyValue> {
         val list = ArrayList<KeyValue>()
-        params.forEach { key, value -> list.add(KeyValue(key, value)) }
+        params.mapValues { (key, value) -> list.add(KeyValue(key, value)) }
         return list
     }
 
@@ -136,7 +136,7 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
 
 
 //        try {
-            stringBuilder.append( SCERET /*securityCipher.decryptString(SCERET, KEY)*/)
+        stringBuilder.append(SCERET /*securityCipher.decryptString(SCERET, KEY)*/)
 //        } catch (e: JAQException) {
 //            Log.e("JAQException=====", "error======================" + e.errorCode)
 //        }
