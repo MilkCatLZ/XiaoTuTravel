@@ -105,7 +105,6 @@
                             style="@style/style_verify_edt"
                             android:enabled="@{fragment.currentVerifyNum==1}"
                             android:onClick="@{()->fragment.touchEvent()}"
-                            tools:enabled="false"
                             tools:text="1"/>
                     </LinearLayout>
 
@@ -117,7 +116,6 @@
                             style="@style/style_verify_edt"
                             android:enabled="@{fragment.currentVerifyNum==2}"
                             android:onClick="@{()->fragment.touchEvent()}"
-                            tools:enabled="false"
                             tools:text="1"/>
                     </LinearLayout>
 
@@ -129,7 +127,6 @@
                             android:id="@+id/edt_verify_3"
                             style="@style/style_verify_edt"
                             android:enabled="@{fragment.currentVerifyNum==3}"
-                            tools:enabled="false"
                             android:onClick="@{()->fragment.touchEvent()}"
                             tools:text="1"/>
                     </LinearLayout>
