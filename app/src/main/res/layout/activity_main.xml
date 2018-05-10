@@ -9,8 +9,8 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/header"
@@ -44,22 +44,14 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="@android:color/holo_red_dark"
+        android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="侧边"/>
+        <include
+            layout="@layout/layout_home_user_center"/>
 
-        <Button
-            android:layout_width="match_parent"
-            android:text="点击跳转"
-            android:onClick="onClick"
-            android:layout_height="match_parent"/>
+
     </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

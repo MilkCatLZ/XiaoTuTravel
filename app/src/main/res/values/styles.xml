@@ -43,4 +43,15 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
     </style>
+
+    <style name="style_user_center_menu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">30dp</item>
+        <item name="android:drawablePadding">13dp</item>
+
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/text_primary_333333</item>
+        <item name="android:textSize">@dimen/text_title_16dp</item>
+    </style>
 </resources>
