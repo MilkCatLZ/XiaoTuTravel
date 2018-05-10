@@ -66,10 +66,10 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         var dialog = super.onCreateDialog(savedInstanceState)
         dialog.setCanceledOnTouchOutside(false)
         dialog.setOnKeyListener { _: DialogInterface, _: Int, keyEvent: KeyEvent ->
-            if( keyEvent.action == KeyEvent.ACTION_UP) {
+            if (keyEvent.action == KeyEvent.ACTION_UP) {
                 if (keyEvent.keyCode == KeyEvent.KEYCODE_DEL && repeatCount == 1) {
                     backEvent()
-                    repeatCount = 0
+                    repeatCount = 1
                     true
                 } else {
                     repeatCount++
