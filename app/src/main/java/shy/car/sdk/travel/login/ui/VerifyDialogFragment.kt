@@ -1,5 +1,6 @@
 package shy.car.sdk.travel.login.ui
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
 import android.databinding.DataBindingUtil
@@ -63,14 +64,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        var dialog = super.onCreateDialog(savedInstanceState)
+        val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setCanceledOnTouchOutside(false)
         dialog.setOnKeyListener { _: DialogInterface, _: Int, keyEvent: KeyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_UP) {
-                if (keyEvent.keyCode == KeyEvent.KEYCODE_DEL && repeatCount == 1) {
+                if (keyEvent.keyCode == KeyEvent.KEYCODE_DEL && repeatCount >= 1) {
                     backEvent()
-                    repeatCount = 1
-                    true
                 } else {
                     repeatCount++
                 }
@@ -106,13 +105,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         }
     }
 
-    private var currentIsEmpty: Boolean = true
     /**
      * 输入监听
      */
     var textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable) {
-            var t = s.toString()
+            val t = s.toString()
             if (StringUtils.isNotEmpty(t)) {
                 nextEditText()
             }
@@ -131,8 +129,10 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      * 退回前一个EditText
      */
     private fun forwardEditTextRequestFocus(): EditText {
+        repeatCount = 1
         return when (currentVerifyNum.get()) {
             1 -> {
+                repeatCount = 0
                 currentVerifyNum.set(0)
                 binding.edtVerify0.requestFocus()
                 binding.edtVerify0
@@ -155,6 +155,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      * 下一个editText获取焦点
      */
     private fun nextEditText(): EditText {
+        repeatCount = 1
         return when (currentVerifyNum.get()) {
             0 -> {
                 binding.edtVerify1.requestFocus()
@@ -174,6 +175,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             }
             3 -> {
                 lockAndSubmit()
+                repeatCount = 0
                 binding.edtVerify3
             }
             else -> binding.edtVerify0
@@ -232,6 +234,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                         this@VerifyDialogFragment.d = d
                     }
 
+                    @SuppressLint("SetTextI18n")
                     override fun onNext(t: Long) {
                         binding.txtCountDown.text = "${t}秒后重发"
                     }
