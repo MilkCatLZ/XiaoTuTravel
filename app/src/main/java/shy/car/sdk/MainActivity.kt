@@ -34,9 +34,9 @@ class MainActivity : XTBaseActivity() {
         binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.ac = this
         var transaction = supportFragmentManager.beginTransaction()
-        transaction.add(carRentFragment, tag)
-        transaction.add(orderTakeFragment, tag)
-        transaction.add(orderSendFragment, tag)
+        transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
+        transaction.add(R.id.frame_fragment_content, orderTakeFragment, tag)
+        transaction.add(R.id.frame_fragment_content, orderSendFragment, tag)
         transaction.commit()
 
         radio_car_rent.performClick()
@@ -60,13 +60,17 @@ class MainActivity : XTBaseActivity() {
     fun changeToOrderSendFragment() {
         changeFragment(orderSendFragment, "fragment_order_send")
     }
+
     fun onAvatarClick() {
         drawer.openDrawer(Gravity.LEFT)
     }
 
     private fun changeFragment(fragment: Fragment, tag: String) {
         var transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_fragment_content, fragment, tag)
+        transaction.hide(carRentFragment)
+        transaction.hide(orderTakeFragment)
+        transaction.hide(orderSendFragment)
+        transaction.show( fragment)
         transaction.commit()
     }
 }

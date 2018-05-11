@@ -2,12 +2,15 @@ package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.base.util.Log
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentCarRentBinding
+
 
 /**
  * create by LZ at 2018/05/11
@@ -23,6 +26,17 @@ class CarRentFragment : XTBaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         binding.map.onCreate(savedInstanceState)
+
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.viewBottomSheet)
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                Log.d("--------------onSlide--------","offset=======$slideOffset")
+            }
+        })
         return binding.root
     }
 

@@ -123,7 +123,11 @@ dependencies {
         exclude module: 'appcompat-v7'
         exclude module: 'support-v13'
     }
-
+    implementation('me.relex:circleindicator:1.2.1@aar') {
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
+        exclude module: 'support-annotations'
+    }
     implementation project(':BaseProject:base')
     implementation project(':BaseProject:DataBinding')
     implementation project(':BaseProject:Network')
