@@ -9,8 +9,8 @@
 
         <variable
             name="car"
-            type="shy.car.sdk.travel.rent.data.CarInfo"
-/>    </data>
+            type="shy.car.sdk.travel.rent.data.CarInfo"/>
+    </data>
 
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

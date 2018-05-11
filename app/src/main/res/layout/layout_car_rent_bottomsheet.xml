@@ -5,6 +5,10 @@
             alias="util"
             type="com.base.util.StringUtils"/>
 
+        <variable
+            name="p"
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
+
     </data>
 
     <LinearLayout
@@ -92,6 +96,7 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/viewPager_car_list"
                         android:layout_width="match_parent"
+                        android:adapter="@{p.carListAdapter}"
                         android:layout_height="match_parent"/>
 
                     <me.relex.circleindicator.CircleIndicator

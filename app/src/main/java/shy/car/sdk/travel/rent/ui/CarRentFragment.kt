@@ -6,10 +6,10 @@ import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.base.util.Log
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentCarRentBinding
+import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 
 
 /**
@@ -18,12 +18,23 @@ import shy.car.sdk.databinding.FragmentCarRentBinding
 class CarRentFragment : XTBaseFragment() {
 
     lateinit var binding: FragmentCarRentBinding
+    private lateinit var carRentPresenter: CarRentPresenter
+
+    val callBack = object : CarRentPresenter.CallBack {}
     override fun getFragmentName(): CharSequence {
         return "租车"
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.let { carRentPresenter = CarRentPresenter(it, callBack) }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
+        binding.p = carRentPresenter
+        binding.fragment = this
+
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         binding.map.onCreate(savedInstanceState)
 
@@ -34,7 +45,7 @@ class CarRentFragment : XTBaseFragment() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                Log.d("--------------onSlide--------","offset=======$slideOffset")
+                binding.viewBack.alpha = slideOffset
             }
         })
         return binding.root
@@ -42,7 +53,6 @@ class CarRentFragment : XTBaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onDestroy() {

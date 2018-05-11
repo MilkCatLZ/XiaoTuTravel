@@ -7,6 +7,14 @@
         <import
             alias="util"
             type="com.base.util.StringUtils"/>
+
+        <variable
+            name="p"
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment"/>
     </data>
 
 
@@ -89,11 +97,12 @@
             android:id="@+id/view_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             app:behavior_peekHeight="260dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-            <include layout="@layout/layout_car_rent_bottomsheet"/>
+            <include
+                layout="@layout/layout_car_rent_bottomsheet"
+                app:p="@{p}"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -101,6 +110,13 @@
                 android:onClick="onClick"
                 android:text="点击跳转"/>
         </LinearLayout>
+
+        <View
+            android:id="@+id/view_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="#99000000"/>
     </android.support.design.widget.CoordinatorLayout>
 
 
