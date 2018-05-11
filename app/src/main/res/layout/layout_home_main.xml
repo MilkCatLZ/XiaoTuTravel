@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_user_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon_pre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/txt_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
+        android:text="南宁市"
+        android:textColor="@color/text_second_primary_666666"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/txt_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/icon_infor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RadioGroup
+        android:id="@+id/group_radio"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_city">
+
+        <RadioButton
+            style="@style/style_mm.gcw1.home_page_title"
+            android:checked="true"
+            android:text="接单"/>
+
+        <RadioButton
+            style="@style/style_mm.gcw1.home_page_title"
+            android:text="租车"/>
+
+        <RadioButton
+            style="@style/style_mm.gcw1.home_page_title"
+            android:text="发货"/>
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_radio">
+
+        <LinearLayout
+            style="@style/style_user_center_bottom_content"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                style="@style/style_wm.car"
+                android:checked="true"
+                android:text="全部车型"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/style_user_center_bottom_content"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                style="@style/style_wm.car"
+                android:text="小兔EQ1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/style_user_center_bottom_content"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                style="@style/style_wm.car"
+                android:text="小兔EQ2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/style_user_center_bottom_content"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                style="@style/style_wm.car"
+                android:text="小兔EQ3"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_more_horiz_black_18dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

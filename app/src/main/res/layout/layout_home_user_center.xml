@@ -12,6 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -36,6 +37,7 @@
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
             android:gravity="center"
+            android:text="未认证"
             android:textColor="@color/main_color_red"
             android:textSize="@dimen/text_second_primary_12dp"
             tools:enabled="false"
@@ -65,10 +67,45 @@
             android:drawableStart="@drawable/icon_pre_service"
             android:text="客 服"/>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:text="点击跳转"
-            android:onClick="onClick"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:paddingBottom="30dp">
+
+            <LinearLayout
+                style="@style/style_user_center_bottom_content">
+
+                <TextView
+                    style="@style/style_ww.user_center_bottom_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/icon_pre_give"
+                    android:text="分享有礼"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_user_center_bottom_content">
+
+                <TextView
+                    style="@style/style_ww.user_center_bottom_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/icon_pre_send"
+                    android:text="发货补贴"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_user_center_bottom_content">
+
+                <TextView
+                    style="@style/style_ww.user_center_bottom_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTop="@drawable/icon_pre_income"
+                    android:text="接单有礼"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
     </LinearLayout>
 </layout>
