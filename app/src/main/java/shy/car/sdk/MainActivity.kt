@@ -3,9 +3,11 @@ package shy.car.sdk
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.Gravity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.databinding.ActivityMainBinding
@@ -57,6 +59,9 @@ class MainActivity : XTBaseActivity() {
 
     fun changeToOrderSendFragment() {
         changeFragment(orderSendFragment, "fragment_order_send")
+    }
+    fun onAvatarClick() {
+        drawer.openDrawer(Gravity.LEFT)
     }
 
     private fun changeFragment(fragment: Fragment, tag: String) {
