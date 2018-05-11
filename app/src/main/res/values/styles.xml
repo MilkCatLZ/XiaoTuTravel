@@ -99,7 +99,7 @@
         <item name="android:textColor">@drawable/color_home_page_title</item>
     </style>
 
-    <style name="style_wm.car">
+    <style name="style_wm.gcw1.car">
         <item name="android:button">@null</item>
         <item name="android:textSize">@dimen/text_second_primary_12dp</item>
         <item name="android:background">@drawable/back_under_line_selector</item>

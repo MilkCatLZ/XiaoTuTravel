@@ -3,5 +3,4 @@
     <item android:drawable="@drawable/icon_infor_idcode" android:state_enabled="false"/>
     <item android:drawable="@drawable/icon_ident" android:state_enabled="true"/>
 
-
 </selector>

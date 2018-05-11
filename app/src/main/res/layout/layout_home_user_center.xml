@@ -28,6 +28,7 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/text_primary_333333"
             android:textSize="@dimen/text_title_17dp"
+            android:text="177****4949"
             tools:text="177****4949"/>
 
         <TextView
@@ -38,34 +39,40 @@
             android:drawableStart="@drawable/icon_identy_selector"
             android:gravity="center"
             android:text="未认证"
-            android:textColor="@color/main_color_red"
+            android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
             tools:enabled="false"
             tools:text="未认证"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
 
-        <TextView
-            style="@style/style_user_center_menu"
-            android:drawableStart="@drawable/icon_pre_wallet"
-            android:text="钱 包"/>
+            <TextView
+                style="@style/style_user_center_menu"
+                android:drawableStart="@drawable/icon_pre_wallet"
+                android:text="钱 包"/>
 
-        <TextView
-            style="@style/style_user_center_menu"
-            android:layout_marginTop="39dp"
-            android:drawableStart="@drawable/icon_pre_route"
-            android:text="订 单"/>
+            <TextView
+                style="@style/style_user_center_menu"
+                android:layout_marginTop="35dp"
+                android:drawableStart="@drawable/icon_pre_route"
+                android:text="订 单"/>
 
-        <TextView
-            style="@style/style_user_center_menu"
-            android:layout_marginTop="39dp"
-            android:drawableStart="@drawable/icon_pre_set"
-            android:text="设 置"/>
+            <TextView
+                style="@style/style_user_center_menu"
+                android:layout_marginTop="35dp"
+                android:drawableStart="@drawable/icon_pre_set"
+                android:text="设 置"/>
 
-        <TextView
-            style="@style/style_user_center_menu"
-            android:layout_marginTop="39dp"
-            android:drawableStart="@drawable/icon_pre_service"
-            android:text="客 服"/>
+            <TextView
+                style="@style/style_user_center_menu"
+                android:layout_marginTop="35dp"
+                android:drawableStart="@drawable/icon_pre_service"
+                android:text="客 服"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
