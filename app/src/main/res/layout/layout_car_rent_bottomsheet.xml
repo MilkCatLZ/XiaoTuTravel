@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <import
             alias="util"
             type="com.base.util.StringUtils"/>
@@ -19,16 +21,16 @@
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:paddingEnd="11dp"
-        android:paddingStart="11dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
         tools:background="#88000000">
 
 
         <com.dd.ShadowLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            app:sl_shadowColor="#e9e9e9"
-            app:sl_shadowRadius="3dp"
+            app:sl_shadowColor="#dcdcdc"
+            app:sl_shadowRadius="5dp"
             tools:background="@color/_foreground_material_light">
 
             <LinearLayout
@@ -37,8 +39,8 @@
                 android:background="@drawable/back_white_coner_4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp">
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -75,9 +77,8 @@
         <com.dd.ShadowLayout
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:layout_marginTop="5dp"
-            app:sl_shadowColor="#e9e9e9"
-            app:sl_shadowRadius="3dp"
+            app:sl_shadowColor="#dcdcdc"
+            app:sl_shadowRadius="5dp"
             tools:background="@color/_foreground_material_light">
 
             <LinearLayout
@@ -96,8 +97,8 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/viewPager_car_list"
                         android:layout_width="match_parent"
-                        android:adapter="@{p.carListAdapter}"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:adapter="@{p.carListAdapter}"/>
 
                     <me.relex.circleindicator.CircleIndicator
                         android:id="@+id/circle_indicator"
@@ -109,13 +110,15 @@
 
                 </RelativeLayout>
 
+                <View style="@style/line_horizontal"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingEnd="20dp"
-                    android:paddingStart="20dp">
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -128,13 +131,126 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="距3.5km 步行3小时38分钟"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="广西南宁市西乡塘区鲁班路83号"
                         android:textColor="@color/text_third_primary_999999"
                         android:textSize="10sp"/>
                 </LinearLayout>
 
             </LinearLayout>
 
+        </com.dd.ShadowLayout>
+
+        <com.dd.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            app:sl_shadowColor="#dcdcdc"
+            app:sl_shadowRadius="5dp"
+            tools:background="@color/_foreground_material_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/back_white_coner_4dp"
+                android:orientation="vertical"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/icon_money"
+                    android:gravity="center"
+                    android:text="￥0.2/分钟+￥0.88/公里"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="11sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="以下仅限时长优惠封顶，里程费用另计"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="9sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/icon_night"
+                        android:text="￥88"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="11sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20:00-次日8:00"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="11sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/icon_24"
+                        android:text="￥88"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="11sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24小时整日租"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="11sp"/>
+
+                </LinearLayout>
+
+                <View
+                    style="@style/line_horizontal"
+                    android:layout_marginTop="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="最低消费8元"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="@dimen/text_second_primary_12dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="必选"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="@dimen/text_second_primary_12dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
         </com.dd.ShadowLayout>
     </LinearLayout>
 </layout>

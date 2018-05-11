@@ -145,7 +145,7 @@ public class DataBindingPagerAdapter<ItemType> extends PagerAdapter {
      *                       * @param onItemClickListener 设置方式为： 在布局中<variable name="onItemClickListener" type="android.view.View.OnClickListener"/>，并绑定到对应需要点击的位置。
      */
     public DataBindingPagerAdapter(@NonNull Context context, @LayoutRes int itemViewID, int itemVariableId, @Nullable CallBack callBack) {
-        this( context,itemVariableId, itemVariableId, null, null, callBack);
+        this( context,itemViewID, itemVariableId, null, null, callBack);
     }
 
     @Override
