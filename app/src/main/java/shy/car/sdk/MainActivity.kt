@@ -1,50 +1,67 @@
 package shy.car.sdk
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.databinding.ActivityMainBinding
+import shy.car.sdk.travel.rent.ui.CarRentFragment
+import shy.car.sdk.travel.rent.ui.OrderSendFragment
+import shy.car.sdk.travel.rent.ui.OrderTakeFragment
 
 @Route(path = "/app/homeActivity")
 class MainActivity : XTBaseActivity() {
 
+    lateinit var binding: ActivityMainBinding
+
+    private val carRentFragment = CarRentFragment()
+    private val orderTakeFragment = OrderTakeFragment()
+    private val orderSendFragment = OrderSendFragment()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         //inject
-        ARouter.getInstance().inject(this)
+        ARouter.getInstance()
+                .inject(this)
 
-        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        map.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.ac = this
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.add(carRentFragment, tag)
+        transaction.add(orderTakeFragment, tag)
+        transaction.add(orderSendFragment, tag)
+        transaction.commit()
+
+        radio_car_rent.performClick()
+
+
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        map.onDestroy()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //在activity执行onResume时执行mMapView.onResume ()，重新绘制加载地图
-        map.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        //在activity执行onPause时执行mMapView.onPause ()，暂停地图的绘制
-        map.onPause()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
-        map.onSaveInstanceState(outState)
-    }
 
     fun onClick(v: View) {
-       app.startLoginDialog()
+        app.startLoginDialog()
+    }
+
+    fun changeToOrderTakeFragment() {
+        changeFragment(orderTakeFragment, "fragment_order_take")
+    }
+
+    fun changeToCarRentFragment() {
+        changeFragment(carRentFragment, "fragment_car_rent")
+    }
+
+    fun changeToOrderSendFragment() {
+        changeFragment(orderSendFragment, "fragment_order_send")
+    }
+
+    private fun changeFragment(fragment: Fragment, tag: String) {
+        var transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_fragment_content, fragment, tag)
+        transaction.commit()
     }
 }

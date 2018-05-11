@@ -78,4 +78,5 @@ open class XTBaseFragment : BaseFragment<Application>() {
             return null
         }
     }
+
 }

@@ -6,6 +6,7 @@
         <import
             alias="util"
             type="com.base.util.StringUtils"/>
+
     </data>
 
     <LinearLayout
@@ -26,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:text="177****4949"
             android:textColor="@color/text_primary_333333"
             android:textSize="@dimen/text_title_17dp"
-            android:text="177****4949"
             tools:text="177****4949"/>
 
         <TextView
