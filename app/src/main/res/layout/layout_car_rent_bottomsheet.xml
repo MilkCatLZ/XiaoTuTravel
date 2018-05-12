@@ -115,29 +115,53 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="距3.5km 步行3小时38分钟"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="13sp"/>
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        >
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:text="广西南宁市西乡塘区鲁班路83号"
-                        android:textColor="@color/text_third_primary_999999"
-                        android:textSize="10sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="距3.5km 步行3小时38分钟"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="13sp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="广西南宁市西乡塘区鲁班路83号"
+                            android:textColor="@color/text_third_primary_999999"
+                            android:textSize="10sp"/>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/back_button_rent_car_out">
+
+                        <TextView
+                            android:layout_width="47dp"
+                            android:layout_height="47dp"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/back_button_rent_car_in"
+                            android:gravity="center"
+                            android:text="租车"
+                            android:textColor="@color/_foreground_material_light"
+                            android:textSize="@dimen/text_primary_14dp"/>
+                    </RelativeLayout>
                 </LinearLayout>
-
             </LinearLayout>
 
         </com.dd.ShadowLayout>
@@ -183,7 +207,7 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
@@ -207,7 +231,7 @@
                     android:layout_marginTop="3dp">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:drawablePadding="10dp"
@@ -235,7 +259,7 @@
                     android:gravity="center_vertical">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="最低消费8元"

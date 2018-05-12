@@ -25,6 +25,11 @@
         <item name="android:layout_width">1px</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+    <style name="line_vertical_cccccc">
+        <item name="android:background">#cccccc</item>
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
     <style name="style_verify_edt">
         <item name="android:layout_width">52dp</item>

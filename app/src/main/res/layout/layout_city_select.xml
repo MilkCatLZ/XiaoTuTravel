@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+    </data>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp">
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="城市中文或拼音"
+                android:singleLine="true"
+                android:textColor="@color/main_color_green"
+                android:textColorHint="#cccccc"
+                android:textSize="@dimen/text_primary_14dp"/>
+
+            <View
+                style="@style/line_vertical_cccccc"
+                android:layout_height="17dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_primary_14dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/shadow"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@drawable/back_top_corner_2dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当前城市："
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="@dimen/text_primary_14dp"/>
+
+                <TextView
+                    android:id="@+id/txt_city_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="南宁市"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="@dimen/text_primary_14dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
