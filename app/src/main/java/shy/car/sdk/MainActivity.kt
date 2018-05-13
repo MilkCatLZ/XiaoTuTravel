@@ -1,5 +1,6 @@
 package shy.car.sdk
 
+import android.Manifest
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.Gravity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_city_select.*
 import kotlinx.android.synthetic.main.layout_home_top.*
@@ -51,7 +53,20 @@ class MainActivity : XTBaseActivity() {
 
         radio_car_rent.performClick()
 
-        initLocation()
+        checkPermissi()
+    }
+
+    private fun checkPermissi() {
+        val per = RxPermissions(this)
+        per.request(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+                .subscribe { granted ->
+                    if (granted) {
+                        initLocation()
+                    } else {
+
+                    }
+                }
+
     }
 
     /**
@@ -90,6 +105,7 @@ class MainActivity : XTBaseActivity() {
     fun onAvatarClick() {
         drawer.openDrawer(Gravity.LEFT)
     }
+
     fun onCityClick() {
         isSearchVisible.set(!isSearchVisible.get())
     }
