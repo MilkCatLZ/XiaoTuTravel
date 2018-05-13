@@ -16,11 +16,6 @@ android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILD_TOOLS_VERSION
 
-    repositories {
-        flatDir {
-            dirs "libs"
-        }
-    }
 
     dataBinding {
         enabled true
@@ -75,6 +70,11 @@ android {
 
         flavorDimensions "debug"
 
+
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi", "armeabi-v7a"
+        }
     }
 
     buildTypes {

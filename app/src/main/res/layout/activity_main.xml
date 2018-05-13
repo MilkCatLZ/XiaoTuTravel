@@ -43,6 +43,10 @@
                 android:layout_height="3dp"
                 android:layout_below="@+id/layout_top"
                 android:background="@drawable/shadow"/>
+
+            <include
+                app:ac="@{ac}"
+                layout="@layout/layout_city_select"/>
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView

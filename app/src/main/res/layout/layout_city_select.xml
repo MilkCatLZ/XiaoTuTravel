@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
             type="com.base.util.StringUtils"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.MainActivity"/>
     </data>
 
 
@@ -13,13 +18,17 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@android:color/transparent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibleOrGone="@{ac.isSearchVisible}"
+        tools:visibility="gone">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="46dp"
+            android:background="@color/_foreground_material_light"
             android:gravity="center_vertical"
             android:paddingEnd="15dp"
             android:paddingStart="15dp">
@@ -47,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="取消"
+                android:onClick="@{()->ac.onCityClick()}"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_primary_14dp"/>
 
@@ -62,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
+            android:orientation="vertical"
             android:paddingEnd="10dp"
             android:paddingStart="10dp">
 
@@ -89,6 +100,20 @@
                     android:textColor="@color/text_primary_333333"
                     android:textSize="@dimen/text_primary_14dp"/>
             </LinearLayout>
+
+            <me.yokeyword.indexablerv.IndexableLayout
+                android:id="@+id/indexable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/_foreground_material_light"
+                app:indexBar_background="#08000000"
+                app:indexBar_layout_width="24dp"
+                app:indexBar_selectedTextColor="#f33737"
+                app:indexBar_textColor="#000000"
+                app:indexBar_textSize="14sp"
+                app:indexBar_textSpace="6dp"/>
         </LinearLayout>
+
+
     </LinearLayout>
 </layout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="name"
+            type="String"/>
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="54dp"
+                  android:paddingStart="15dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@{name}"
+            android:background="#f3f4f5"
+            android:textColor="@color/text_third_primary_999999"
+            android:textSize="@dimen/text_primary_14dp"
+            tools:text="A"/>
+    </LinearLayout>
+</layout>

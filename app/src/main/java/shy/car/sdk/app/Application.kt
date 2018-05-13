@@ -3,6 +3,10 @@ package shy.car.sdk.app
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.base.app.BaseApplication
+import com.base.util.Log
+import com.github.promeg.pinyinhelper.Pinyin
+import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
+import com.lianni.mall.location.AmapLocationManager
 import com.lianni.mall.location.AmapOnLocationReceiveListener
 import com.lianni.mall.location.Location
 import shy.car.sdk.BuildConfig
@@ -29,6 +33,21 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         super.onCreate()
         initNetWork()
         initRouter()
+        initPinYin()
+        initAmap()
+    }
+
+    private fun initAmap() {
+        AmapLocationManager.init(this)
+        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
+            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                Log.d("获取位置成功", "经纬度={${location.latitude},${location.longitude}}")
+            }
+        })
+    }
+
+    private fun initPinYin() {
+        Pinyin.init(Pinyin.newConfig().with(CnCityDict.getInstance(this)))
     }
 
     private fun initRouter() {

@@ -2,6 +2,7 @@ package shy.car.sdk.app.net
 
 import io.reactivex.Observable
 import retrofit2.http.*
+import shy.car.sdk.travel.location.data.City
 
 
 /**
@@ -37,4 +38,11 @@ interface ApiInterface {
     @FormUrlEncoded
     @PUT("xt/password")
     fun setupPassWord(@Field("") params: String): Observable<String>
+
+    /**
+     * 获取城市列表
+     * JsonString：{"phone":"","password":""}
+     */
+    @GET("xt/city")
+    fun getCityList(): Observable<java.util.ArrayList<City>>
 }
