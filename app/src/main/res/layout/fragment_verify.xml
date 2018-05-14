@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:background="@drawable/back_dialog_top_corner_2dp"
+                android:background="@drawable/back_dialog_corner_2dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
