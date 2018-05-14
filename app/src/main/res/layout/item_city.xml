@@ -24,9 +24,11 @@
 
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="53dp"
             android:text="@{city.cityName}"
+            android:gravity="center_vertical"
             android:textColor="@color/text_primary_333333"
             android:textSize="@dimen/text_primary_14dp"/>
 

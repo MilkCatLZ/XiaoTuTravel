@@ -22,6 +22,8 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
 
 
     var device_token: String = ""
+    var location: Location? = null
+
     /**
      * 高德地图定位回调
      */
@@ -42,6 +44,7 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
                 Log.d("获取位置成功", "经纬度={${location.latitude},${location.longitude}}")
+                this@Application.location = location
             }
         })
     }
