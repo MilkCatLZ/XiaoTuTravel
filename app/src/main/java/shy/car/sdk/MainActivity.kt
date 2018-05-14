@@ -43,7 +43,11 @@ class MainActivity : XTBaseActivity() {
 
     var isSearchVisible = ObservableBoolean(false)
     var isSearchMode = ObservableBoolean(false)
+    //首页顶部显示的城市
     val cityName = ObservableField<String>(LOCATING)
+    //搜索栏 显示的当前城市
+    val cityNameLocating = ObservableField<String>(LOCATING)
+    var currentCity: City? = null
     lateinit var binding: ActivityMainBinding
 
     private val carRentFragment = CarRentFragment()
@@ -81,6 +85,7 @@ class MainActivity : XTBaseActivity() {
                 .subscribe { granted ->
                     if (granted) {
                         initLocation()
+                        refreshLocation()
                     } else {
 
                     }
@@ -102,7 +107,9 @@ class MainActivity : XTBaseActivity() {
                 adapter.setDatas(list)
                 adapter.setOnItemContentClickListener { v, originalPosition, currentPosition, entity ->
                     ToastManager.showShortToast(this@MainActivity, entity.cityName)
+                    cityName.set(entity.cityName)
                     isSearchVisible.set(false)
+                    currentCity = entity
                 }
 
 
@@ -194,13 +201,34 @@ class MainActivity : XTBaseActivity() {
     fun onCityClick() {
         isSearchVisible.set(!isSearchVisible.get())
         if (isSearchVisible.get()) {
-            cityName.set(LOCATING)
-            AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
-                override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                    cityName.set(location.city)
-                }
-            })
+            cityNameLocating.set(LOCATING)
+            getLocation()
         }
+    }
+
+    fun onCitySelected() {
+        cityName.set(cityNameLocating.get())
+        currentCity = getCityDetail(cityName.get())
+    }
+
+    private fun getCityDetail(cityName: String?): City? {
+        return currentCity
+    }
+
+    private fun refreshLocation() {
+        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
+            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                cityName.set(location.city)
+            }
+        })
+    }
+
+    private fun getLocation() {
+        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
+            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                cityNameLocating.set(location.city)
+            }
+        })
     }
 
     private fun changeFragment(fragment: Fragment, tag: String) {
@@ -224,4 +252,5 @@ class MainActivity : XTBaseActivity() {
         isSearchVisible.set(false)
         searchEditText?.text = ""
     }
+
 }

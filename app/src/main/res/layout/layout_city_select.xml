@@ -96,6 +96,7 @@
                     android:orientation="horizontal"
                     android:paddingEnd="15dp"
                     android:paddingStart="15dp"
+                    android:onClick="@{()->ac.onCitySelected()}"
                     android:visibleOrGone="@{!ac.isSearchMode}">
 
                     <TextView

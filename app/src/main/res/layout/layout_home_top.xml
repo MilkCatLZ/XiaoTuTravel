@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
-            android:text="南宁市"
+            android:text="@{ac.cityName}"
             android:textColor="@color/text_second_primary_666666"
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="@{()->ac.onCityClick()}"
