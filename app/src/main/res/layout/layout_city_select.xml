@@ -22,7 +22,7 @@
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:visibleOrGone="@{ac.isSearchVisible}"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
 
         <LinearLayout
@@ -55,8 +55,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="取消"
                 android:onClick="@{()->ac.onCityClick()}"
+                android:text="取消"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_primary_14dp"/>
 
@@ -96,7 +96,7 @@
                     android:id="@+id/txt_city_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="南宁市"
+                    android:text="@{ac.cityName}"
                     android:textColor="@color/text_primary_333333"
                     android:textSize="@dimen/text_primary_14dp"/>
             </LinearLayout>

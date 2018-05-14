@@ -17,6 +17,7 @@
                   xmlns:tools="http://schemas.android.com/tools"
                   android:layout_width="match_parent"
                   android:layout_height="54dp"
+                  android:background="#f3f4f5"
                   android:paddingStart="15dp">
 
 
@@ -25,7 +26,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="@{name}"
-            android:background="#f3f4f5"
+
             android:textColor="@color/text_third_primary_999999"
             android:textSize="@dimen/text_primary_14dp"
             tools:text="A"/>
