@@ -125,6 +125,8 @@ class MainActivity : XTBaseActivity() {
         locationPresenter.getCity()
     }
 
+    private var searchEditText: TextView? = null
+
     private fun initSearch() {
         supportFragmentManager.beginTransaction().hide(fragment_search_result).commit()
 
@@ -156,12 +158,12 @@ class MainActivity : XTBaseActivity() {
 
 
         try {
-            val textView = search_view.findViewById<TextView>(R.id.search_src_text)
-            textView.setTextColor(resources.getColor(R.color.main_color_green))//字体颜色
+            searchEditText = search_view.findViewById<TextView>(R.id.search_src_text)
+            searchEditText?.setTextColor(resources.getColor(R.color.main_color_green))//字体颜色
 
 //            textView.textSize = resources.getDimensionPixelOffset(R.dimen.text_primary_14dp).toFloat()//字体、提示字体大小
-            textView.textSize = 14f//字体、提示字体大小
-            textView.setHintTextColor(resources.getColor(R.color.text_third_primary_999999))//提示字体颜色
+            searchEditText?.textSize = 14f//字体、提示字体大小
+            searchEditText?.setHintTextColor(resources.getColor(R.color.text_third_primary_999999))//提示字体颜色
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -212,9 +214,14 @@ class MainActivity : XTBaseActivity() {
 
     override fun onBackPressed() {
         if (isSearchVisible.get()) {
-            isSearchVisible.set(false)
+            closeSearch()
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun closeSearch() {
+        isSearchVisible.set(false)
+        searchEditText?.text = ""
     }
 }
