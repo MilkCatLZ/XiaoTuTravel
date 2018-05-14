@@ -110,7 +110,7 @@
                         android:id="@+id/txt_city_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{ac.cityName}"
+                        android:text="@{ac.cityNameLocating}"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="@dimen/text_primary_14dp"/>
                 </LinearLayout>
