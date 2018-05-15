@@ -2,7 +2,9 @@ package shy.car.sdk.app.net
 
 import io.reactivex.Observable
 import retrofit2.http.*
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.order.take.data.OrderList
 
 
 /**
@@ -21,7 +23,7 @@ interface ApiInterface {
      * 获取验证码
      */
     @GET("phone/captcha")
-    fun gerVerify(@Query("phone") params: String): Observable<String>
+    fun gerVerify(@Query(ParamsConstant.Phone) params: String): Observable<String>
 
     /**
      * 登录
@@ -45,4 +47,11 @@ interface ApiInterface {
      */
     @GET("xt/city")
     fun getCityList(): Observable<java.util.ArrayList<City>>
+
+    /**
+     * 获取接单列表
+     *
+     */
+    @GET("xt/takeOrderList")
+    fun getTakeOrderList(@Query(ParamsConstant.PageIndex) pageIndex: Int, @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderList>>
 }

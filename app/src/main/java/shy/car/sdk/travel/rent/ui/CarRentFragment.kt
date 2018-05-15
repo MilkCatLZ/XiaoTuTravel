@@ -6,8 +6,10 @@ import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 
@@ -15,6 +17,7 @@ import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 /**
  * create by LZ at 2018/05/11
  */
+@Route(path = RouteMap.CarRent)
 class CarRentFragment : XTBaseFragment() {
 
     lateinit var binding: FragmentCarRentBinding

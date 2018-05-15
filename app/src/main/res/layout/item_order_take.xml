@@ -8,18 +8,27 @@
         <import
             alias="util"
             type="com.base.util.StringUtils"/>
+
+        <variable
+            name="order"
+            type="shy.car.sdk.travel.order.take.data.OrderList"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
     </data>
 
     <com.dd.ShadowLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginStart="3dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+
         app:sl_cornerRadius="2dp"
         app:sl_dx="0dp"
         app:sl_dy="0dp"
         app:sl_shadowColor="#08c9cfd1"
-        app:sl_shadowRadius="3dp">
+        app:sl_shadowRadius="5dp">
 
         <LinearLayout
 

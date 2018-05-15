@@ -25,15 +25,13 @@ import kotlinx.android.synthetic.main.layout_home_top.*
 import me.yokeyword.indexablerv.IndexableLayout
 import me.yokeyword.indexablerv.SimpleHeaderAdapter
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityMainBinding
 import shy.car.sdk.travel.location.LocationPresenter
 import shy.car.sdk.travel.location.LocationPresenter.CallBack
 import shy.car.sdk.travel.location.SearchFragment
 import shy.car.sdk.travel.location.adapter.CityIndexAdapter
 import shy.car.sdk.travel.location.data.City
-import shy.car.sdk.travel.order.send.ui.OrderSendFragment
-import shy.car.sdk.travel.order.take.ui.OrderTakeFragment
-import shy.car.sdk.travel.rent.ui.CarRentFragment
 
 
 @Route(path = "/app/homeActivity")
@@ -50,9 +48,9 @@ class MainActivity : XTBaseActivity() {
     var currentCity: City? = null
     lateinit var binding: ActivityMainBinding
 
-    private val carRentFragment = CarRentFragment()
-    private val orderTakeFragment = OrderTakeFragment()
-    private val orderSendFragment = OrderSendFragment()
+    private val carRentFragment = ARouter.getInstance().build(RouteMap.CarRent).navigation() as Fragment
+    private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
+    private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
 
     lateinit var locationPresenter: LocationPresenter
 
@@ -114,9 +112,10 @@ class MainActivity : XTBaseActivity() {
 
 
                 val hotCity = ArrayList<City>()
-                for (i in 0..5) {
-                    hotCity.add(City("南宁$i", i.toString()))
-                }
+                hotCity.add(City("南宁", "南宁"))
+                hotCity.add(City("柳州", "柳州"))
+                hotCity.add(City("北海", "北海"))
+
                 //添加头部
                 val headerAdapter = SimpleHeaderAdapter<City>(adapter, "热", "热门城市", hotCity)
                 indexable_layout.addHeaderAdapter(headerAdapter)
@@ -182,19 +181,19 @@ class MainActivity : XTBaseActivity() {
     }
 
     fun changeToOrderTakeFragment() {
-        changeFragment(orderTakeFragment, "fragment_order_take")
+        changeFragment(orderTakeFragment)
     }
 
     fun changeToCarRentFragment() {
-        changeFragment(carRentFragment, "fragment_car_rent")
+        changeFragment(carRentFragment)
     }
 
     fun changeToOrderSendFragment() {
-        changeFragment(orderSendFragment, "fragment_order_send")
+        changeFragment(orderSendFragment)
     }
 
     fun onAvatarClick() {
-        drawer.openDrawer(Gravity.LEFT)
+        drawer.openDrawer(Gravity.START)
     }
 
 
@@ -231,8 +230,8 @@ class MainActivity : XTBaseActivity() {
         })
     }
 
-    private fun changeFragment(fragment: Fragment, tag: String) {
-        var transaction = supportFragmentManager.beginTransaction()
+    private fun changeFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
         transaction.hide(carRentFragment)
         transaction.hide(orderTakeFragment)
         transaction.hide(orderSendFragment)

@@ -22,4 +22,8 @@ public class RouteMap {
      * shy.car.sdk.travel.order.take.ui.OrderTakeFragment
      */
     public static final String OrderSend = "/order/send";
+    /**
+     * shy.car.sdk.travel.rent.ui.CarRentFragment
+     */
+    public static final String CarRent = "/car/rent";
 }
