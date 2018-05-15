@@ -31,9 +31,9 @@ import shy.car.sdk.travel.location.LocationPresenter.CallBack
 import shy.car.sdk.travel.location.SearchFragment
 import shy.car.sdk.travel.location.adapter.CityIndexAdapter
 import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.order.send.ui.OrderSendFragment
+import shy.car.sdk.travel.order.take.ui.OrderTakeFragment
 import shy.car.sdk.travel.rent.ui.CarRentFragment
-import shy.car.sdk.travel.rent.ui.OrderSendFragment
-import shy.car.sdk.travel.rent.ui.OrderTakeFragment
 
 
 @Route(path = "/app/homeActivity")

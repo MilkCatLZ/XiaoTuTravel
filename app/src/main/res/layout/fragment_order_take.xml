@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
-            app:recyclerviewEmptyView="@layout/view_list_empty"
+            app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical" />
 
     </LinearLayout>

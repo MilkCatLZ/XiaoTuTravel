@@ -1,4 +1,0 @@
-路由链接            类名                                                          参数              result   需要拦截     说明
-RouteMap.Home       shy.car.sdk.MainActivity                                      无                 否       否          程序首页
-RouteMap.Login      shy.car.sdk.travel.login.ui.LoginDialogFragment               无                 否       否          登录
-RouteMap.Verify     shy.car.sdk.travel.login.ui.VerifyDialogFragment              phone:String       否       否          短信验证码
