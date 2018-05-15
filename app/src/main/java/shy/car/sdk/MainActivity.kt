@@ -179,7 +179,7 @@ class MainActivity : XTBaseActivity() {
     }
 
     fun onClick(v: View) {
-        app.startLoginDialog()
+        app.startLoginDialog(null, null)
     }
 
     fun changeToOrderTakeFragment() {

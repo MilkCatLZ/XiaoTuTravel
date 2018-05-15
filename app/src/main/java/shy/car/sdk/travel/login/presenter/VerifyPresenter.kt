@@ -2,11 +2,7 @@ package shy.car.sdk.travel.login.presenter
 
 
 import android.content.Context
-import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View.OnClickListener
 import com.base.base.ProgressDialog
 import com.base.util.*
 import io.reactivex.Observer
@@ -35,41 +31,41 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
     var phone = ObservableField<String>("")
     var verify = ObservableField<String>("")
 
-    /**
-     * 手机输入是否正确，true:正确，false:不正确
-     */
-    var isPhoneNumCorrect = ObservableBoolean(false)
+//    /**
+//     * 手机输入是否正确，true:正确，false:不正确
+//     */
+//    var isPhoneNumCorrect = ObservableBoolean(false)
 
 
-    /**
-     * 下一步
-     */
-    var onGetVerifyClickListener: OnClickListener = OnClickListener {
-        if (ClickUtil.canClick() && !User.instance.isLogin && isPhoneNumCorrect.get())
-            login()
-    }
-
-    /**
-     * 电话输入框文字检查
-     */
-    var phoneTextWatcher: TextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-        }
-
-        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-        }
-
-        override fun afterTextChanged(editable: Editable) {
-            isPhoneNumCorrect.set(Phone.isMobile(editable.toString()))
-        }
-    }
+//    /**
+//     * 下一步
+//     */
+//    var onGetVerifyClickListener: OnClickListener = OnClickListener {
+//        if (ClickUtil.canClick() && !User.instance.isLogin && isPhoneNumCorrect.get())
+//            login()
+//    }
+//
+//    /**
+//     * 电话输入框文字检查
+//     */
+//    var phoneTextWatcher: TextWatcher = object : TextWatcher {
+//        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+//
+//        }
+//
+//        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+//
+//        }
+//
+//        override fun afterTextChanged(editable: Editable) {
+//            isPhoneNumCorrect.set(Phone.isMobile(editable.toString()))
+//        }
+//    }
 
     /**
      * 登录
      */
-    private fun login() {
+    fun login() {
         var observer = ApiManager.instance.api.login(verify.get()!!)
         ApiManager.instance.toSubscribe(observer, object : Observer<String> {
             override fun onComplete() {

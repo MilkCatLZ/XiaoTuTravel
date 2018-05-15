@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableInt
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +24,8 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_verify.*
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.route.RouteMap
@@ -35,8 +38,17 @@ import java.util.concurrent.TimeUnit
 @Route(path = RouteMap.Verify)
 class VerifyDialogFragment : XTBaseDialogFragment() {
 
+    /**
+     * 当前所处的EditText位置（0~3）
+     */
     var currentVerifyNum = ObservableInt(0)
-
+    /**
+     * 当前所处的EditText位置（0~3）
+     */
+    var isLogining = ObservableBoolean(false)
+    /**
+     * 记录返回键按下的次数
+     */
     private var repeatCount: Int = 0
     private var d: Disposable? = null
 
@@ -86,10 +98,15 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     private var listener = object : LoginListener {
         override fun loginSuccess() {
             dismiss()
+            Observable.timer(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                circularButton.progress = 100
+            })
         }
 
         override fun loginFailed(e: Throwable) {
-
+            Observable.timer(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+                circularButton.progress = -1
+            })
         }
 
         override fun loginFailed() {
@@ -113,6 +130,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             val t = s.toString()
             if (StringUtils.isNotEmpty(t)) {
                 nextEditText()
+            }
+            if (currentVerifyNum.get() == 3) {
+                presenter.login()
+                isLogining.set(true)
+                circularButton.isIndeterminateProgressMode = true
+                circularButton.progress = 1
             }
         }
 
@@ -261,7 +284,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     fun back() {
         dismiss()
-        app.startLoginDialog()
+        app.startLoginDialog(null, null)
     }
 
     fun getVerify() {

@@ -1,16 +1,21 @@
 package shy.car.sdk.app
 
+import com.alibaba.android.arouter.facade.Postcard
+import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.base.app.BaseApplication
 import com.base.util.Log
-import com.base.util.ToastManager
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.lianni.mall.location.AmapLocationManager
 import com.lianni.mall.location.AmapOnLocationReceiveListener
 import com.lianni.mall.location.Location
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BuildConfig
+import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.net.ApiInterface
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.net.BaseInterceptor
@@ -38,6 +43,8 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         initRouter()
         initPinYin()
         initAmap()
+        EventBus.builder().build()
+        EventBus.getDefault().register(this)
     }
 
     private fun initAmap() {
@@ -75,10 +82,13 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         ApiManager.init("https://www.baidu.com", interceptor, iterator, ApiInterface::class.java)
     }
 
-    fun startLoginDialog() {
+    var postcard: Postcard? = null
+    var callback: InterceptorCallback? = null
+    fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?) {
         try {
-            ToastManager.showShortToast(this, "请先登录...")
-            val dialogFragment = ARouter.getInstance().build(RouteMap.Login).navigation() as LoginDialogFragment
+            this.postcard = postcard
+            this.callback = callback
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Login).greenChannel().navigation() as LoginDialogFragment
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_login_dialog")
         } catch (e: Exception) {
         }
@@ -86,12 +96,20 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
 
     fun startVerifyDialog(phone: String) {
         try {
-            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).withString("phone", phone).navigation() as VerifyDialogFragment
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).navigation() as VerifyDialogFragment
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
         } catch (e: Exception) {
         }
 
-
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onLoginSuccess(success: LoginSuccess) {
+        EventBus.getDefault().removeStickyEvent(success)
+        if (postcard != null && callback != null) {
+            callback?.onContinue(postcard)
+            postcard = null
+            callback = null
+        }
+    }
 }
