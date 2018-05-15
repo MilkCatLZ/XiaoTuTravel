@@ -70,6 +70,9 @@
         <activity
             android:name=".travel.wallet.ui.WalletActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".travel.order.mine.ui.OrderMineActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

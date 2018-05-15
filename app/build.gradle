@@ -128,11 +128,11 @@ dependencies {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'
     }
-    implementation('com.github.dmytrodanylyk.circular-progress-button:library:1.1.3') {
-        exclude module: 'appcompat-v7'
-        exclude module: 'support-v4'
-        exclude module: 'support-annotations'
-    }
+//    implementation('com.github.dmytrodanylyk.circular-progress-button:library:1.1.3') {
+//        exclude module: 'appcompat-v7'
+//        exclude module: 'support-v4'
+//        exclude module: 'support-annotations'
+//    }
     implementation 'me.yokeyword:indexablerecyclerview:1.3.0'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation project(':BaseProject:base')

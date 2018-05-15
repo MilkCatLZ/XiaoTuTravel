@@ -154,4 +154,21 @@
         <item name="android:rotation">180</item>
     </style>
 
+    <style name="style_order_mine_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textColor">@color/text_second_primary_666666</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="style_wm.order_mine">
+        <item name="android:button">@null</item>
+        <item name="android:textSize">@dimen/text_title_16dp</item>
+        <item name="android:textColor">@drawable/color_home_page_title</item>
+        <item name="android:background">@drawable/back_under_line_selector</item>
+    </style>
+
 </resources>

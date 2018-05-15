@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="order"
+            type="shy.car.sdk.travel.order.mine.data.OrderMineList"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <com.dd.ShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_back"
+        app:sl_cornerRadius="2dp"
+        app:sl_dx="0dp"
+        app:sl_dy="0dp"
+        app:sl_shadowColor="#08c9cfd1"
+        app:sl_shadowRadius="5dp">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:background="@drawable/back_dialog_corner_2dp"
+            android:orientation="vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="小兔租车"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="15sp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="行驶中"
+                    android:textColor="@color/main_color_green"
+                    android:textSize="13sp"/>
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rotation="180"
+                    android:src="@drawable/login_return"
+                    android:tint="@color/text_primary_333333"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/style_order_mine_text"
+                android:layout_marginTop="3dp"
+                android:drawableStart="@drawable/icon_good"
+                android:text="桂AKK123 /EQ3"/>
+
+            <TextView
+                style="@style/style_order_mine_text"
+                android:layout_marginTop="2dp"
+                android:drawableStart="@drawable/icon_time"
+                android:text="03月15日 12:00"/>
+
+            <TextView
+                style="@style/style_order_mine_text"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:drawableStart="@drawable/icon_start"
+                android:text="广西大学 正门农院路"/>
+
+            <TextView
+                style="@style/style_order_mine_text"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="2dp"
+                android:drawableStart="@drawable/icon_end"
+                android:text="南宁中关村实验基地"/>
+
+        </LinearLayout>
+    </com.dd.ShadowLayout>
+</layout>

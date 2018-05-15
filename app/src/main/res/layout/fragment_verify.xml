@@ -78,7 +78,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -89,7 +90,7 @@
                         android:orientation="horizontal"
                         android:paddingEnd="20dp"
                         android:paddingStart="20dp"
-                        android:visibleOrGone="@{!fragment.isLogining}">
+                        android:visibleOrInvisible="@{!fragment.isLogining}">
 
                         <LinearLayout
 
@@ -139,28 +140,37 @@
 
                     </LinearLayout>
 
-                    <com.dd.CircularProgressButton
-                        android:id="@+id/circularButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginEnd="28dp"
-                        android:layout_marginStart="28dp"
+
                         android:animateLayoutChanges="true"
-                        android:background="@drawable/back_progress_button"
-                        android:focusable="false"
-                        android:focusableInTouchMode="false"
-                        android:text=""
-                        android:textColor="@color/_foreground_material_light"
-                        android:visibleOrGone="@{fragment.isLogining}"
-                        app:cpb_colorIndicator="@color/_foreground_material_light"
-                        app:cpb_colorIndicatorBackground="@color/_foreground_material_light"
-                        app:cpb_colorProgress="@color/main_color_green"
-                  
-                        app:cpb_textComplete="登录成功..."
-                        app:cpb_textError="登录失败...请重试"
-                        />
+                        android:visibleOrGone="@{fragment.isLogining&amp;&amp;!(fragment.isLoginSuccess||fragment.isLoginFailed)}"/>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:animateLayoutChanges="true"
+                        android:text="登录成功"
+                        android:textColor="@color/text_second_primary_666666"
+                        android:textSize="14sp"
+                        android:visibleOrGone="@{fragment.isLoginSuccess}"/>
+
+                    <TextView
+                        android:id="@+id/txt_login_failed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:animateLayoutChanges="true"
+                        android:text="登录失败，请重试"
+                        android:textColor="@color/text_second_primary_666666"
+                        android:textSize="14sp"
+                        android:visibleOrGone="@{fragment.isLoginFailed}"/>
+
+
                     <!--app:cpb_selectorIdle="@drawable/idle_state_selector"-->
                     <!--app:cpb_selectorComplete="@drawable/complete_state_selector"-->
                     <!--app:cpb_selectorError="@drawable/error_state_selector"-->

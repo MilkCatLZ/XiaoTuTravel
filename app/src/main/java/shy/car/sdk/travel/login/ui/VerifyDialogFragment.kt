@@ -47,6 +47,14 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      */
     var isLogining = ObservableBoolean(false)
     /**
+     * 登录成功
+     */
+    var isLoginSuccess = ObservableBoolean(false)
+    /**
+     * 登录失败
+     */
+    var isLoginFailed = ObservableBoolean(false)
+    /**
      * 记录返回键按下的次数
      */
     private var repeatCount: Int = 0
@@ -97,20 +105,98 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      */
     private var listener = object : LoginListener {
         override fun loginSuccess() {
-            dismiss()
-            Observable.timer(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                circularButton.progress = 100
-            })
+            isLoginSuccess.set(true)
+//            Observable.timer(3, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({
+//                        dismiss()
+//                    })
+
+            Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
+                    .map { i -> 3 - i }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<Long> {
+                        override fun onComplete() {
+                            dismiss()
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: Long) {
+                            txt_login_failed.text = "登录成功$t"
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+                    })
         }
 
         override fun loginFailed(e: Throwable) {
-            Observable.timer(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
-                circularButton.progress = -1
-            })
+            isLoginFailed.set(true)
+//            Observable.timer(3, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({
+//                        dismiss()
+//                    })
+
+            Observable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS)
+                    .map { i -> 3 - i }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<Long> {
+                        override fun onComplete() {
+                            dismiss()
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: Long) {
+                            txt_login_failed.text = "登录失败，请重试$t"
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+                    })
         }
 
         override fun loginFailed() {
+            isLoginFailed.set(true)
+//            Observable.timer(3, TimeUnit.SECONDS)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({
+//                        dismiss()
+//                    })
+            Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
+                    .map { i -> 3 - i }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<Long> {
+                        override fun onComplete() {
+                            dismiss()
+                        }
 
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: Long) {
+                            txt_login_failed.text = "登录失败，请重试$t"
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+                    })
         }
 
         override fun onGetVerifySuccess() {
@@ -131,11 +217,9 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             if (StringUtils.isNotEmpty(t)) {
                 nextEditText()
             }
-            if (currentVerifyNum.get() == 3) {
+            if (currentVerifyNum.get() == 3 && StringUtils.isNotEmpty(edt_verify_3.text)) {
                 presenter.login()
                 isLogining.set(true)
-                circularButton.isIndeterminateProgressMode = true
-                circularButton.progress = 1
             }
         }
 
