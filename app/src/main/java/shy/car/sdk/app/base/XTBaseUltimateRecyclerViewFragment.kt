@@ -15,29 +15,24 @@ import shy.car.sdk.app.presenter.BasePresenter
 
 abstract class XTBaseUltimateRecyclerViewFragment : BaseUltimateRecyclerViewFragment<Application>() {
 
-    protected abstract val presenter: BasePresenter?
-    abstract override fun getFragmentName(): String
 
+    abstract override fun getFragmentName(): String
+    abstract fun getPrecenter(): BasePresenter?
     override fun onResume() {
         super.onResume()
-        if (presenter != null) {
-            presenter!!.onResume()
-        }
+        getPrecenter()?.onResume()
         //        MobclickAgent.onPageStart(getFragmentName());
     }
 
     override fun onPause() {
         super.onPause()
-        if (presenter != null) {
-            presenter!!.onPause()
-        }
+        getPrecenter()?.onPause()
+
         //        MobclickAgent.onPageEnd(getFragmentName());
     }
 
     override fun onDestroy() {
-        if (presenter != null) {
-            presenter!!.destroy()
-        }
+        getPrecenter()?.destroy()
         super.onDestroy()
     }
 

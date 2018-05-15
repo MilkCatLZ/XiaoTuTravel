@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="order"
+            type="shy.car.sdk.travel.order.send.data.OrderSendList"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <com.dd.ShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        app:sl_cornerRadius="2dp"
+        app:sl_dx="0dp"
+        app:sl_dy="0dp"
+        app:sl_shadowColor="#08c9cfd1"
+        app:sl_shadowRadius="5dp">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@drawable/back_dialog_corner_2dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp">
+
+
+                <ImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/icon_head"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="王羲之"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp"
+                            tools:text="王羲之"/>
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:src="@drawable/icon_tell"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="-1.5dp"
+                            android:text="钻石会员"
+                            android:textColor="@color/text_second_primary_666666"
+                            android:textSize="@dimen/text_second_primary_12dp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="213.90"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="元 "
+                        android:textColor="@color/text_second_primary_666666"
+                        android:textSize="@dimen/text_second_primary_12dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp">
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@drawable/icon_good"
+                            android:text="货物信息"/>
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:layout_marginStart="10dp"
+                            android:text="3.9米-6.9米 冷藏6.1顿生鲜"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@drawable/icon_start"
+                            android:text="出发地点"/>
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:layout_marginStart="10dp"
+                            android:text="南宁东站"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@drawable/icon_end"
+                            android:text="到底地点"/>
+
+                        <TextView
+                            style="@style/style_order_take_detail"
+                            android:layout_marginStart="10dp"
+                            android:text="西乡塘区"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="13dp"
+                    android:gravity="center"
+                    android:text="进行中"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="13dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.dd.ShadowLayout>
+</layout>

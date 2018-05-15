@@ -10,6 +10,7 @@ import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
+import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeBinding
 import shy.car.sdk.travel.order.take.data.OrderList
@@ -21,6 +22,9 @@ import shy.car.sdk.travel.order.take.presenter.OrderTakePresenter
  */
 @Route(path = RouteMap.OrderTake)
 class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
+    override fun getPrecenter(): BasePresenter? {
+        return presenter
+    }
 
 
     lateinit var binding: FragmentOrderTakeBinding
@@ -52,11 +56,10 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        enableLoadMore()
         binding.presenter = presenter
     }
 
-    override lateinit var presenter: OrderTakePresenter
+    lateinit var presenter: OrderTakePresenter
 
 
     override fun getFragmentName(): String {

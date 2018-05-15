@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.order.send.data.OrderSendList
 import shy.car.sdk.travel.order.take.data.OrderList
 
 
@@ -54,4 +55,11 @@ interface ApiInterface {
      */
     @GET("xt/takeOrderList")
     fun getTakeOrderList(@Query(ParamsConstant.PageIndex) pageIndex: Int, @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderList>>
+
+    /**
+     * 获取发货列表
+     *
+     */
+    @GET("xt/orderSendList")
+    fun getOrderSendList(@Query(ParamsConstant.PageIndex) pageIndex: Int, @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderSendList>>
 }

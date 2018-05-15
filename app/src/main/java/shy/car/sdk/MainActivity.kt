@@ -72,6 +72,8 @@ class MainActivity : XTBaseActivity() {
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
         transaction.add(R.id.frame_fragment_content, orderTakeFragment, tag)
         transaction.add(R.id.frame_fragment_content, orderSendFragment, tag)
+        transaction.hide(orderSendFragment)
+        transaction.hide(orderTakeFragment)
         transaction.commit()
 
         radio_car_rent.performClick()

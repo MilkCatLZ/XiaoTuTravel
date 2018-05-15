@@ -43,8 +43,8 @@
                 android:layout_height="70dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp">
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp">
 
 
                 <ImageView
@@ -66,8 +66,9 @@
 
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="21dp"
                             android:layout_weight="1"
+                            android:layout_marginTop="3dp"
                             android:text="王羲之"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="15sp"
