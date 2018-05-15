@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    >
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.wallet.ui.WalletActivity"/>
+
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/layout_pay"
+            android:onClick="@{()->ac.onPayClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_payment"
+                android:text="支付方式"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="选择支付方式"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/style_wallet_content"
+            android:id="@+id/layout_remain"
+            android:onClick="@{()->ac.onRemainClick()}"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_money"
+                android:text="余额"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="0元"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+
+        <LinearLayout
+            android:id="@+id/layout_charge_money"
+            android:onClick="@{()->ac.onChargeMoneyClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_pay"
+                android:text="充值"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="充值消费更划算"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_tixian"
+            android:onClick="@{()->ac.onTixianClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_get"
+                android:text="提现"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="可提现599.00元"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_bank_car"
+            android:onClick="@{()->ac.onBankCarClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_card"
+                android:text="银行卡"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="2涨"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_discount"
+            android:onClick="@{()->ac.onDiscountClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_discount"
+                android:text="优惠券"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="5涨"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_baozhengjin"
+            android:onClick="@{()->ac.onBaoZhengJinClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_apply"
+                android:text="保证金退还申请"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="可申请退还999.99元"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_wallet_apply"
+            android:onClick="@{()->ac.onWalletApplyClick()}"
+            style="@style/style_wallet_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_apply"
+                android:text="保险"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text="小兔专享，只为安全"/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_fapiao"
+            android:onClick="@{()->ac.onFaPiaoClick()}"
+            style="@style/style_wallet_content">
+
+            <TextView
+                style="@style/style_wallet_nav_title"
+                android:drawableStart="@drawable/icon_wallet_apply"
+                android:text="发票与报销"/>
+
+            <TextView
+                style="@style/style_wallet_nav_hint"
+                android:text=""/>
+
+            <ImageView
+                style="@style/style_wallet_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

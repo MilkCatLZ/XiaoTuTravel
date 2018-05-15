@@ -9,7 +9,7 @@ import shy.car.sdk.app.Application
 import shy.car.sdk.travel.user.data.User
 
 @Interceptor(priority = 1, name = "拦截登录状态")
-class RouterInterceptor : IInterceptor {
+open class RouterInterceptor : IInterceptor {
     lateinit var app: Application
 
     override fun process(postcard: Postcard, callback: InterceptorCallback) {

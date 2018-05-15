@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.base.app.BaseApplication
 import com.base.util.Log
+import com.base.util.ToastManager
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.lianni.mall.location.AmapLocationManager
@@ -53,6 +54,10 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
         Pinyin.init(Pinyin.newConfig().with(CnCityDict.getInstance(this)))
     }
 
+    /**
+     * 拦截器:shy.car.sdk.app.route.RouterInterceptor
+     * 拦截需要登录才能进的页面
+     */
     private fun initRouter() {
         if (BuildConfig.DEBUG) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog()     // 打印日志
@@ -72,7 +77,7 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
 
     fun startLoginDialog() {
         try {
-//            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).navigation() as VerifyDialogFragment
+            ToastManager.showShortToast(this, "请先登录...")
             val dialogFragment = ARouter.getInstance().build(RouteMap.Login).navigation() as LoginDialogFragment
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_login_dialog")
         } catch (e: Exception) {

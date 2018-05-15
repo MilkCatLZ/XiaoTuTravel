@@ -1,6 +1,9 @@
 package shy.car.sdk.app.route;
 
 
+import org.jetbrains.annotations.NotNull;
+
+
 public class RouteMap {
     /**
      * shy.car.sdk.MainActivity
@@ -26,4 +29,14 @@ public class RouteMap {
      * shy.car.sdk.travel.rent.ui.CarRentFragment
      */
     public static final String CarRent = "/car/rent";
+    /**
+     * shy.car.sdk.travel.wallet.ui.WalletActivity
+     */
+    public static final String Wallet = "/wallet/main";
+    @NotNull
+    public static final String UserDetail = "/user/detail";
+    @NotNull
+    public static final String Setting = "/setting/main";
+    @NotNull
+    public static final String KeFu = "/kefu/main";
 }

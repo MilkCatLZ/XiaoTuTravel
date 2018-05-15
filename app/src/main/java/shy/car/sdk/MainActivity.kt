@@ -66,7 +66,7 @@ class MainActivity : XTBaseActivity() {
     }
 
     private fun initPageFragment() {
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.ac = this
         var transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
@@ -105,7 +105,7 @@ class MainActivity : XTBaseActivity() {
                 val adapter = CityIndexAdapter(this@MainActivity)
                 indexable_layout.setAdapter(adapter)
                 adapter.setDatas(list)
-                adapter.setOnItemContentClickListener { v, originalPosition, currentPosition, entity ->
+                adapter.setOnItemContentClickListener { _, _, _, entity ->
                     ToastManager.showShortToast(this@MainActivity, entity.cityName)
                     cityName.set(entity.cityName)
                     isSearchVisible.set(false)
@@ -254,4 +254,20 @@ class MainActivity : XTBaseActivity() {
         searchEditText?.text = ""
     }
 
+
+    fun onUserPicClick() {
+        ARouter.getInstance().build(RouteMap.UserDetail).navigation()
+    }
+
+    fun onWalletClick() {
+        ARouter.getInstance().build(RouteMap.Wallet).navigation()
+    }
+
+    fun onSettingClick() {
+        ARouter.getInstance().build(RouteMap.Setting).navigation()
+    }
+
+    fun onKeFuClick() {
+        ARouter.getInstance().build(RouteMap.KeFu).navigation()
+    }
 }

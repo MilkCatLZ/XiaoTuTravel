@@ -7,6 +7,10 @@
             alias="util"
             type="com.base.util.StringUtils"/>
 
+        <variable
+            name="ac"
+            type="shy.car.sdk.MainActivity"/>
+
     </data>
 
     <LinearLayout
@@ -21,6 +25,7 @@
             android:layout_width="62dp"
             android:layout_height="62dp"
             android:layout_marginTop="54dp"
+            android:onClick="@{()->ac.onUserPicClick()}"
             android:src="@drawable/icon_pre_header"/>
 
         <TextView
@@ -54,6 +59,7 @@
             <TextView
                 style="@style/style_user_center_menu"
                 android:drawableStart="@drawable/icon_pre_wallet"
+                android:onClick="@{()->ac.onWalletClick()}"
                 android:text="钱 包"/>
 
             <TextView
@@ -65,12 +71,14 @@
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
+                android:onClick="@{()->ac.onSettingClick()}"
                 android:drawableStart="@drawable/icon_pre_set"
                 android:text="设 置"/>
 
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
+                android:onClick="@{()->ac.onKeFuClick()}"
                 android:drawableStart="@drawable/icon_pre_service"
                 android:text="客 服"/>
         </LinearLayout>

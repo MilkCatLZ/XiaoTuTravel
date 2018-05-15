@@ -66,6 +66,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".travel.wallet.ui.WalletActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
