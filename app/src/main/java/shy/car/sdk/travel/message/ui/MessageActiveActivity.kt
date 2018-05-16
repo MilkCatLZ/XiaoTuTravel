@@ -10,11 +10,11 @@ import shy.car.sdk.app.route.RouteMap
  * create by LZ at 2018/05/16
  * 活动消息
  */
-@Route(path = RouteMap.Message)
-class MessageActivity :XTBaseActivity(){
+@Route(path = RouteMap.MessageActive)
+class MessageActiveActivity :XTBaseActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message)
+        setContentView(R.layout.activity_message_active)
     }
 }

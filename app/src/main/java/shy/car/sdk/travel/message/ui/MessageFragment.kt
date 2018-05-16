@@ -11,7 +11,7 @@ import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.databinding.FragmentMessageBinding
+import shy.car.sdk.databinding.FragmentMessageActiveBinding
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.message.presenter.MessagePresenter
 
@@ -20,8 +20,8 @@ import shy.car.sdk.travel.message.presenter.MessagePresenter
  * 活动消息
  */
 
-class MessageFragment :XTBaseUltimateRecyclerViewFragment(){
-    lateinit var binding: FragmentMessageBinding
+class MessageFragment : XTBaseUltimateRecyclerViewFragment() {
+    lateinit var binding: FragmentMessageActiveBinding
     lateinit var presenter: MessagePresenter
 
     val checkedTab = ObservableInt(0)
@@ -52,7 +52,7 @@ class MessageFragment :XTBaseUltimateRecyclerViewFragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message_active, null, false)
         binding.fragment = this
         binding.presenter = presenter
         return binding.root

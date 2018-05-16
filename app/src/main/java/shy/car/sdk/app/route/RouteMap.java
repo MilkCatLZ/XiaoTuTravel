@@ -53,8 +53,8 @@ public class RouteMap {
     @NotNull
     public static final String OrderMine = "/order/mine";
     /**
-     * shy.car.sdk.travel.message.ui.MessageActivity
+     * shy.car.sdk.travel.message.ui.MessageActiveActivity
      */
     @NotNull
-    public static final String Message = "/message/main";
+    public static final String MessageActive = "/message/active";
 }

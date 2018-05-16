@@ -94,7 +94,7 @@
             android:name=".travel.setting.ui.KeFuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".travel.message.ui.MessageActivity"
+            android:name=".travel.message.ui.MessageActiveActivity"
             android:screenOrientation="portrait"/>
     </application>
 
