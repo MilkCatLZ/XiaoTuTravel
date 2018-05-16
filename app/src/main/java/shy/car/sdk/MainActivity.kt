@@ -304,4 +304,10 @@ class MainActivity : XTBaseActivity() {
                 .build(RouteMap.OrderMine)
                 .navigation()
     }
+
+    fun onMessageClick() {
+        ARouter.getInstance()
+                .build(RouteMap.Message)
+                .navigation()
+    }
 }

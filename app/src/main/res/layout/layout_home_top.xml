@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:src="@drawable/icon_pre"
             android:onClick="@{()->ac.onAvatarClick()}"
+            android:src="@drawable/icon_pre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
+            android:onClick="@{()->ac.onCityClick()}"
             android:text="@{ac.cityName}"
             android:textColor="@color/text_second_primary_666666"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{()->ac.onCityClick()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -47,8 +47,8 @@
             android:id="@+id/txt_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:onClick="@{()->ac.onMessageClick()}"
             android:src="@drawable/icon_infor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

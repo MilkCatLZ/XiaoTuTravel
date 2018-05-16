@@ -11,4 +11,5 @@
     <string name="str_kefu">客服</string>
     <string name="str_already_verify">已认证</string>
     <string name="str_no_verify">未认证</string>
+    <string name="str_message">活动消息</string>
 </resources>

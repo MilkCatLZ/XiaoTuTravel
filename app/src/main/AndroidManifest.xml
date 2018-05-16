@@ -89,9 +89,12 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        
+
         <activity
             android:name=".travel.setting.ui.KeFuActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".travel.message.ui.MessageActivity"
             android:screenOrientation="portrait"/>
     </application>
 

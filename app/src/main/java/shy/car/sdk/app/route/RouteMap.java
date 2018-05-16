@@ -42,7 +42,9 @@ public class RouteMap {
      */
     @NotNull
     public static final String Setting = "/setting/main";
-    
+    /**
+     * shy.car.sdk.travel.setting.ui.KeFuActivity
+     */
     @NotNull
     public static final String KeFu = "/kefu/main";
     /**
@@ -50,4 +52,9 @@ public class RouteMap {
      */
     @NotNull
     public static final String OrderMine = "/order/mine";
+    /**
+     * shy.car.sdk.travel.message.ui.MessageActivity
+     */
+    @NotNull
+    public static final String Message = "/message/main";
 }
