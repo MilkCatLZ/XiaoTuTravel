@@ -99,7 +99,7 @@ class SettingActivity : XTBaseActivity() {
         val observable = ApiManager.instance.api.getUpdateInfo()
         val observer = object : Observer<String> {
             override fun onComplete() {
-
+                ProgressDialog.hideLoadingView(this@SettingActivity)
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -112,6 +112,7 @@ class SettingActivity : XTBaseActivity() {
 
             override fun onError(e: Throwable) {
                 ErrorManager.managerError(this@SettingActivity, e, "更新失败，请稍后再试")
+                ProgressDialog.hideLoadingView(this@SettingActivity)
             }
         }
 

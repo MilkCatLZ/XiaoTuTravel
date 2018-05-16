@@ -8,4 +8,5 @@
     <string name="str_setting">设置 </string>
     <string name="str_cleanning">正在清理缓存，请稍后…</string>
     <string name="str_clean_success">缓存清理成功</string>
+    <string name="str_kefu">客服</string>
 </resources>
