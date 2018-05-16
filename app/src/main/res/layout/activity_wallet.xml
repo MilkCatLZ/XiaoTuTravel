@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,11 +21,19 @@
         android:background="@color/main_back"
         android:orientation="vertical">
 
+        <include
+            app:title="@{@string/str_wallet}"
+            layout="@layout/layout_title"/>
+
+        <View
+            style="@style/style_shadow_main_back"/>
+
 
         <LinearLayout
             android:id="@+id/layout_pay"
-            android:onClick="@{()->ac.onPayClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:layout_marginTop="7dp"
+            android:onClick="@{()->ac.onPayClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -41,11 +49,12 @@
                 android:src="@drawable/login_return"/>
         </LinearLayout>
 
+
         <LinearLayout
-            style="@style/style_wallet_content"
             android:id="@+id/layout_remain"
-            android:onClick="@{()->ac.onRemainClick()}"
-            android:layout_marginTop="10dp">
+            style="@style/style_wallet_content"
+            android:layout_marginTop="10dp"
+            android:onClick="@{()->ac.onRemainClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -66,8 +75,8 @@
 
         <LinearLayout
             android:id="@+id/layout_charge_money"
-            android:onClick="@{()->ac.onChargeMoneyClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onChargeMoneyClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -87,8 +96,8 @@
 
         <LinearLayout
             android:id="@+id/layout_tixian"
-            android:onClick="@{()->ac.onTixianClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onTixianClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -108,8 +117,8 @@
 
         <LinearLayout
             android:id="@+id/layout_bank_car"
-            android:onClick="@{()->ac.onBankCarClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onBankCarClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -129,8 +138,8 @@
 
         <LinearLayout
             android:id="@+id/layout_discount"
-            android:onClick="@{()->ac.onDiscountClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onDiscountClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -150,8 +159,8 @@
 
         <LinearLayout
             android:id="@+id/layout_baozhengjin"
-            android:onClick="@{()->ac.onBaoZhengJinClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onBaoZhengJinClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -169,9 +178,9 @@
 
         <LinearLayout
             android:id="@+id/layout_wallet_apply"
-            android:onClick="@{()->ac.onWalletApplyClick()}"
             style="@style/style_wallet_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:onClick="@{()->ac.onWalletApplyClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"
@@ -191,8 +200,8 @@
 
         <LinearLayout
             android:id="@+id/layout_fapiao"
-            android:onClick="@{()->ac.onFaPiaoClick()}"
-            style="@style/style_wallet_content">
+            style="@style/style_wallet_content"
+            android:onClick="@{()->ac.onFaPiaoClick()}">
 
             <TextView
                 style="@style/style_wallet_nav_title"

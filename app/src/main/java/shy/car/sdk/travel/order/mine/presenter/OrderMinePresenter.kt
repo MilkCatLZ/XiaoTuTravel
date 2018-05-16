@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.order.take.presenter
+package shy.car.sdk.travel.order.mine.presenter
 
 import android.content.Context
 import com.base.databinding.DataBindingItemClickAdapter
@@ -14,9 +14,10 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
     interface CallBack {
         fun getListSuccess(list: ArrayList<OrderMineList>)
+        fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {})
     var pageSize = 10
     var pageIndex = 1
 
@@ -58,7 +59,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
             }
 
             override fun onError(e: Throwable) {
-
+                callBack.getListError(e)
             }
         })
     }

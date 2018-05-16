@@ -21,6 +21,7 @@
     <com.dd.ShadowLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@color/main_back"
         app:sl_cornerRadius="2dp"
         app:sl_dx="0dp"

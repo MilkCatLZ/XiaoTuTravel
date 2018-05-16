@@ -9,8 +9,8 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.base.util.StringUtils
-import shy.car.sdk.R
 import com.umeng.message.PushAgent
+import shy.car.sdk.R
 import shy.car.sdk.app.Application
 import shy.car.sdk.app.presenter.BasePresenter
 
@@ -108,5 +108,9 @@ open class XTBaseActivity : com.base.base.BaseActivity<Application>() {
             }
             return null
         }
+    }
+
+    fun back(view: View) {
+        onBackPressed()
     }
 }

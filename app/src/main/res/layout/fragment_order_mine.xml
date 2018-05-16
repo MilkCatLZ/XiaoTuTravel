@@ -11,7 +11,11 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.order.send.presenter.OrderSendPresenter"/>
+            type="shy.car.sdk.travel.order.mine.presenter.OrderMinePresenter"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.order.mine.ui.OrderMineFragment"/>
     </data>
 
     <LinearLayout
@@ -20,32 +24,9 @@
         android:background="@color/main_back"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="15dp"
-                    android:src="@drawable/icon_back"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="我的订单"
-                    android:textColor="@color/text_primary_333333"
-                    android:textSize="16sp"/>
-            </RelativeLayout>
-
-        </LinearLayout>
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_order_mine}"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -67,8 +48,10 @@
 
                     <RadioButton
                         android:id="@+id/radio_order_mine_all"
+
                         style="@style/style_wm.order_mine"
-                        android:checked="true"
+                        android:checked="@{fragment.checkedTab==0}"
+                        android:onClick="@{()->fragment.checkChange(0)}"
                         android:text="全部订单"/>
                 </LinearLayout>
 
@@ -79,6 +62,8 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_rent"
                         style="@style/style_wm.order_mine"
+                        android:checked="@{fragment.checkedTab==1}"
+                        android:onClick="@{()->fragment.checkChange(1)}"
                         android:text="租车"/>
                 </LinearLayout>
 
@@ -89,6 +74,8 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_take"
                         style="@style/style_wm.order_mine"
+                        android:checked="@{fragment.checkedTab==2}"
+                        android:onClick="@{()->fragment.checkChange(2)}"
                         android:text="接单"/>
                 </LinearLayout>
 
@@ -99,14 +86,15 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_send"
                         style="@style/style_wm.order_mine"
+                        android:checked="@{fragment.checkedTab==3}"
+                        android:onClick="@{()->fragment.checkChange(3)}"
                         android:text="发货"/>
                 </LinearLayout>
             </RadioGroup>
 
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@drawable/shadow"/>
+                style="@style/style_shadow_white"/>
         </RelativeLayout>
 
 
@@ -116,6 +104,9 @@
             android:layout_height="match_parent"
             android:background="@color/main_back"
             android:bindAdapter="@{presenter.adapter}"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:layout_marginTop="5dp"
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"

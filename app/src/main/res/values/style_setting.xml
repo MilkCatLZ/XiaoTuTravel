@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="style_setting_content">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:background">@color/_foreground_material_light</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingStart">19dp</item>
+    </style>
+
+    <style name="style_setting_nav_title">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textColor">#4b4b4b</item>
+        <item name="android:textSize">@dimen/text_primary_14dp</item>
+    </style>
+
+    <style name="style_setting_nav_hint">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:textColor">@color/text_third_primary_999999</item>
+        <item name="android:textSize">@dimen/text_second_primary_12dp</item>
+    </style>
+
+    <style name="style_setting_nav_arrow">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:rotation">180</item>
+    </style>
+</resources>

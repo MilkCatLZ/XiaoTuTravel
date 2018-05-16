@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatDelegate
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.base.base.BaseUltimateRecyclerViewActivity
 import com.base.util.StringUtils
 import com.umeng.message.PushAgent
@@ -54,5 +55,10 @@ abstract class XTBaseUltimateRecyclerViewActivity : BaseUltimateRecyclerViewActi
             tintHomeAsUpWithColor(textView.textColors.defaultColor)
         }
 
+    }
+
+
+    fun back(view: View) {
+        onBackPressed()
     }
 }

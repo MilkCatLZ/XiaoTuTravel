@@ -66,6 +66,7 @@
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
                 android:drawableStart="@drawable/icon_pre_route"
+                android:onClick="@{()->ac.onOrderClick()}"
                 android:text="订 单"/>
 
             <TextView

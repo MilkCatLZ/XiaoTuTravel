@@ -194,12 +194,12 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
     
         try {
             if (getAdapter() != null) {
+                if (!getAdapter().isEnableLoadMore()) {
+                    enableLoadMore();
+                }
                 if (getAdapter().getAdapterItemCount() <= MAX_LOAD_MORE_COUNT) {
                     disableLoadMore();
                 } else {
-                    if (!getAdapter().isEnableLoadMore()) {
-                        enableLoadMore();
-                    }
                     getAdapter().setFooterState(FooterState.Loading);
                 }
             }

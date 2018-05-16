@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.setting.ui.SettingActivity"/>
+    </data>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_setting}"/>
+
+        <View
+            style="@style/style_shadow_main_back"/>
+
+
+        <LinearLayout
+            android:id="@+id/layout_account"
+            style="@style/style_setting_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                style="@style/style_setting_nav_title"
+                android:text="我的账号"/>
+
+            <TextView
+                style="@style/style_setting_nav_hint"
+                android:text="17755565656"/>
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_feed_back"
+            style="@style/style_setting_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                style="@style/style_setting_nav_title"
+                android:text="意见反馈"/>
+
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return"/>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_cache"
+            android:onClick="@{()->ac.clearCache()}"
+            style="@style/style_setting_content">
+
+            <TextView
+                style="@style/style_setting_nav_title"
+                android:text="清楚缓存"/>
+
+
+            <TextView
+                android:id="@+id/txtSettingCache"
+                style="@style/style_setting_nav_hint"
+                android:text="3MB"/>
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return"/>
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_version"
+            style="@style/style_setting_content">
+
+            <TextView
+                style="@style/style_setting_nav_title"
+                android:text="版本更新 "/>
+
+
+            <TextView
+                style="@style/style_setting_nav_hint"
+                android:text="v1.0.0"/>
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return"/>
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_about"
+            style="@style/style_setting_content">
+
+            <TextView
+                style="@style/style_setting_nav_title"
+                android:text="关于小兔 "/>
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

@@ -257,6 +257,7 @@ class MainActivity : XTBaseActivity() {
 
     fun onUserPicClick() {
         ARouter.getInstance().build(RouteMap.UserDetail).navigation()
+        app.startLoginDialog(null, null)
     }
 
     fun onWalletClick() {
@@ -269,5 +270,8 @@ class MainActivity : XTBaseActivity() {
 
     fun onKeFuClick() {
         ARouter.getInstance().build(RouteMap.KeFu).navigation()
+    }
+    fun onOrderClick() {
+        ARouter.getInstance().build(RouteMap.OrderMine).navigation()
     }
 }

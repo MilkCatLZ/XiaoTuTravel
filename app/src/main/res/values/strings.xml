@@ -3,4 +3,9 @@
     <string name="str_login_failed">登录失败，请重试</string>
     <string name="str_verify_failed">获取失败，请重试</string>
     <string name="str_verify_send_to">验证码已发送至 </string>
+    <string name="str_order_mine">我的订单 </string>
+    <string name="str_wallet">我的钱包 </string>
+    <string name="str_setting">设置 </string>
+    <string name="str_cleanning">正在清理缓存，请稍后…</string>
+    <string name="str_clean_success">缓存清理成功</string>
 </resources>

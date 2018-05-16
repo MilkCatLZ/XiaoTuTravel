@@ -33,10 +33,21 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
+    
     @NotNull
     public static final String UserDetail = "/user/detail";
+    
+    /**
+     * shy.car.sdk.travel.setting.ui.SettingActivity
+     */
     @NotNull
     public static final String Setting = "/setting/main";
+    
     @NotNull
     public static final String KeFu = "/kefu/main";
+    /**
+     * shy.car.sdk.travel.order.mine.ui.OrderMineActivity
+     */
+    @NotNull
+    public static final String OrderMine = "/order/mine";
 }
