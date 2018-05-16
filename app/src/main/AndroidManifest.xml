@@ -76,6 +76,18 @@
         <activity
             android:name=".travel.setting.ui.SettingActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".travel.setting.ui.CancelActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="${CancelAction}"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
