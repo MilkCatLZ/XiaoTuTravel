@@ -77,6 +77,7 @@
             android:name=".travel.setting.ui.SettingActivity"
             android:screenOrientation="portrait"/>
 
+
         <activity
             android:name=".travel.setting.ui.CancelActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -88,6 +89,10 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name=".travel.setting.ui.KeFuActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

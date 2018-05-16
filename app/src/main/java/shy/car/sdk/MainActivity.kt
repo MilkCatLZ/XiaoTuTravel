@@ -32,6 +32,7 @@ import shy.car.sdk.travel.location.LocationPresenter.CallBack
 import shy.car.sdk.travel.location.SearchFragment
 import shy.car.sdk.travel.location.adapter.CityIndexAdapter
 import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.user.data.User
 
 
 @Route(path = "/app/homeActivity")
@@ -59,15 +60,20 @@ class MainActivity : XTBaseActivity() {
         //inject
         ARouter.getInstance()
                 .inject(this)
-
+        initBinding()
         initPageFragment()
         initSearch()
         checkPermissi()
     }
 
-    private fun initPageFragment() {
+    private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.ac = this
+        binding.user = User.instance
+    }
+
+    private fun initPageFragment() {
+
         var transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
         transaction.add(R.id.frame_fragment_content, orderTakeFragment, tag)
@@ -101,42 +107,51 @@ class MainActivity : XTBaseActivity() {
         locationPresenter = LocationPresenter(this, object : CallBack {
             override fun getCitySuccess(list: java.util.ArrayList<City>) {
                 //添加数据
-                indexable_layout.setLayoutManager(LinearLayoutManager(this@MainActivity))
-                val adapter = CityIndexAdapter(this@MainActivity)
-                indexable_layout.setAdapter(adapter)
-                adapter.setDatas(list)
-                adapter.setOnItemContentClickListener { _, _, _, entity ->
-                    ToastManager.showShortToast(this@MainActivity, entity.cityName)
-                    cityName.set(entity.cityName)
-                    isSearchVisible.set(false)
-                    currentCity = entity
-                }
+                addCityInfo(list)
 
-
-                val hotCity = ArrayList<City>()
-                hotCity.add(City("南宁", "南宁"))
-                hotCity.add(City("柳州", "柳州"))
-                hotCity.add(City("北海", "北海"))
-
-                //添加头部
-                val headerAdapter = SimpleHeaderAdapter<City>(adapter, "热", "热门城市", hotCity)
-                indexable_layout.addHeaderAdapter(headerAdapter)
-
-                indexable_layout.setCompareMode(IndexableLayout.MODE_FAST)
-                var filterList = ArrayList<City>()
-                filterList.addAll(list)
-                filterList.addAll(hotCity)
-
-                (fragment_search_result as SearchFragment).bindDatas(filterList)
             }
         })
         locationPresenter.getCity()
     }
 
+    private fun addCityInfo(list: java.util.ArrayList<City>) {
+        //添加城市列表
+        indexable_layout.setLayoutManager(LinearLayoutManager(this@MainActivity))
+        val adapter = CityIndexAdapter(this@MainActivity)
+        indexable_layout.setAdapter(adapter)
+        adapter.setDatas(list)
+        adapter.setOnItemContentClickListener { _, _, _, entity ->
+            ToastManager.showShortToast(this@MainActivity, entity.cityName)
+            cityName.set(entity.cityName)
+            isSearchVisible.set(false)
+            currentCity = entity
+        }
+
+
+        //----------------------添加热门城市
+        val hotCity = ArrayList<City>()
+        hotCity.add(City("南宁市", "南宁市"))
+        hotCity.add(City("柳州市", "柳州市"))
+        hotCity.add(City("北海市", "北海市"))
+
+        //添加头部
+        val headerAdapter = SimpleHeaderAdapter<City>(adapter, "热", "热门城市", hotCity)
+        indexable_layout.addHeaderAdapter(headerAdapter)
+
+        indexable_layout.setCompareMode(IndexableLayout.MODE_FAST)
+        var filterList = ArrayList<City>()
+        filterList.addAll(list)
+        filterList.addAll(hotCity)
+
+        (fragment_search_result as SearchFragment).bindDatas(filterList)
+    }
+
     private var searchEditText: TextView? = null
 
     private fun initSearch() {
-        supportFragmentManager.beginTransaction().hide(fragment_search_result).commit()
+        supportFragmentManager.beginTransaction()
+                .hide(fragment_search_result)
+                .commit()
 
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -147,12 +162,16 @@ class MainActivity : XTBaseActivity() {
                 if (newText != null) {
                     if (newText.trim(' ').isNotEmpty()) {
                         if (fragment_search_result.isHidden) {
-                            supportFragmentManager.beginTransaction().show(fragment_search_result).commit()
+                            supportFragmentManager.beginTransaction()
+                                    .show(fragment_search_result)
+                                    .commit()
                             isSearchMode.set(true)
                         }
                     } else {
                         if (!fragment_search_result.isHidden) {
-                            supportFragmentManager.beginTransaction().hide(fragment_search_result).commit()
+                            supportFragmentManager.beginTransaction()
+                                    .hide(fragment_search_result)
+                                    .commit()
                             isSearchMode.set(false)
                         }
                     }
@@ -256,22 +275,33 @@ class MainActivity : XTBaseActivity() {
 
 
     fun onUserPicClick() {
-        ARouter.getInstance().build(RouteMap.UserDetail).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.UserDetail)
+                .navigation()
         app.startLoginDialog(null, null)
     }
 
     fun onWalletClick() {
-        ARouter.getInstance().build(RouteMap.Wallet).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.Wallet)
+                .navigation()
     }
 
     fun onSettingClick() {
-        ARouter.getInstance().build(RouteMap.Setting).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.Setting)
+                .navigation()
     }
 
     fun onKeFuClick() {
-        ARouter.getInstance().build(RouteMap.KeFu).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.KeFu)
+                .navigation()
     }
+
     fun onOrderClick() {
-        ARouter.getInstance().build(RouteMap.OrderMine).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.OrderMine)
+                .navigation()
     }
 }

@@ -7,10 +7,15 @@
             alias="util"
             type="com.base.util.StringUtils"/>
 
+        <import type="com.base.util.Phone"/>
+
         <variable
             name="ac"
             type="shy.car.sdk.MainActivity"/>
 
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User"/>
     </data>
 
     <LinearLayout
@@ -32,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="177****4949"
+            android:text="@{Phone.phoneEncode(user.phone)}"
             android:textColor="@color/text_primary_333333"
             android:textSize="@dimen/text_title_17dp"
             tools:text="177****4949"/>
@@ -43,8 +48,9 @@
             android:layout_marginTop="15dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
+            android:enabled="@{user.status==1}"
             android:gravity="center"
-            android:text="未认证"
+            android:text="@{user.status==1?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
             tools:enabled="false"
@@ -72,15 +78,15 @@
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
-                android:onClick="@{()->ac.onSettingClick()}"
                 android:drawableStart="@drawable/icon_pre_set"
+                android:onClick="@{()->ac.onSettingClick()}"
                 android:text="设 置"/>
 
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
-                android:onClick="@{()->ac.onKeFuClick()}"
                 android:drawableStart="@drawable/icon_pre_service"
+                android:onClick="@{()->ac.onKeFuClick()}"
                 android:text="客 服"/>
         </LinearLayout>
 
@@ -92,7 +98,8 @@
             android:paddingBottom="30dp">
 
             <LinearLayout
-                style="@style/style_user_center_bottom_content">
+                style="@style/style_user_center_bottom_content"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/style_ww.user_center_bottom_icon"

@@ -9,4 +9,6 @@
     <string name="str_cleanning">正在清理缓存，请稍后…</string>
     <string name="str_clean_success">缓存清理成功</string>
     <string name="str_kefu">客服</string>
+    <string name="str_already_verify">已认证</string>
+    <string name="str_no_verify">未认证</string>
 </resources>

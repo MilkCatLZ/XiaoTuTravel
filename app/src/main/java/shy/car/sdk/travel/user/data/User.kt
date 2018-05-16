@@ -13,24 +13,12 @@ import shy.car.sdk.BR
 
 
 /**
- * Created by Syokora on 2016/8/18.
- * 用户类，单实例
+ * create by LZ at 2018/05/16
+ * 用户信息
  */
 class User private constructor() : UserBase() {
     //endregion
 
-
-    object Type {
-        /**
-         * 手机登陆类型，=1
-         */
-        var PINGTAI = 1
-        /**
-         * 微信登陆类型，=2
-         */
-        var DIANPU = 2
-
-    }
 
     companion object {
         @get:JSONField(serialize = false)
@@ -127,20 +115,11 @@ class User private constructor() : UserBase() {
             if (dis.uid != 0)
                 User.instance.uid = dis.uid
             User.instance.expiresIn = dis.expiresIn
-            //add on 2017.6.20 by lz
-            User.instance.type = dis.type
             User.instance.password = dis.password
             User.instance.paymentPassword = dis.paymentPassword
             User.instance.status = dis.status
-            User.instance.deliveryName = dis.deliveryName
             User.instance.msgRemind = dis.msgRemind
             User.instance.loginTime = dis.loginTime
-            User.instance.superiorLevel = dis.superiorLevel
-            User.instance.superiorName = dis.superiorName
-            User.instance.superiorPhone = dis.superiorPhone
-            User.instance.jobLevel = dis.jobLevel
-            User.instance.workTime = dis.workTime
-            User.instance.partner = dis.partner
         }
 
 
@@ -153,15 +132,8 @@ class User private constructor() : UserBase() {
             User.instance.password = user.password
             User.instance.paymentPassword = user.paymentPassword
             User.instance.status = user.status
-            User.instance.deliveryName = user.deliveryName
-            User.instance.type = user.type
             User.instance.msgRemind = user.msgRemind
-            User.instance.superiorLevel = user.superiorLevel
-            User.instance.superiorName = user.superiorName
-            User.instance.superiorPhone = user.superiorPhone
-            User.instance.jobLevel = user.jobLevel
-            User.instance.workTime = user.workTime
-            User.instance.partner = user.partner
+
         }
     }
 

@@ -165,7 +165,6 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
         User.instance.access_token = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
         User.instance.uid = Integer.parseInt(JsonManager.getJsonString(result, UserBase.UID))
         User.instance.expiresIn = java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN))
-        User.instance.type = Integer.parseInt(JsonManager.getJsonString(result, UserBase.BUYER_TYPE))
         Log.d("LoginPresenter", "Long.parseLong(JsonManager.getJsonString(result, User.EXPIRES_IN)" + java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN) + ""))
         User.instance.loginTime = System.currentTimeMillis() / 1000L
         User.instance.phone = phone.get()
