@@ -113,6 +113,7 @@
 
             <include
                 layout="@layout/layout_car_rent_bottomsheet"
+                app:fragment="@{fragment}"
                 app:p="@{p}"/>
 
             <Button

@@ -12,4 +12,5 @@
     <string name="str_already_verify">已认证</string>
     <string name="str_no_verify">未认证</string>
     <string name="str_message">活动消息</string>
+    <string name="str_message_center">消息中心</string>
 </resources>

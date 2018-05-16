@@ -16,6 +16,11 @@ import shy.car.sdk.BuildConfig;
  * 用户
  */
 public class UserBase extends BaseObservable {
+    public static class PromissState {
+        public static final int MONEY_PAYED = 1;
+        public static final int MONEY_NOT_PAYED = 2;
+    }
+    
     
     public static final String UID = "uid";
     public static final String PHONE = "phone";
@@ -69,6 +74,21 @@ public class UserBase extends BaseObservable {
      */
     @JSONField(name = "msg_remind")
     private int msgRemind;
+    /**
+     * 保证金缴纳：1：已缴纳，2：未缴纳
+     */
+    @JSONField(name = "promise_money")
+    private int promiseMoney;
+    
+    @Bindable
+    public int getPromiseMoney() {
+        return promiseMoney;
+    }
+    
+    public void setPromiseMoney(int promiseMoney) {
+        this.promiseMoney = promiseMoney;
+        notifyPropertyChanged(BR.promiseMoney);
+    }
     
     @Bindable
     public int getMsgRemind() {

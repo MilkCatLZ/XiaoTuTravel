@@ -57,4 +57,19 @@ public class RouteMap {
      */
     @NotNull
     public static final String MessageActive = "/message/active";
+    /**
+     * shy.car.sdk.travel.message.ui.MessageActiveActivity
+     */
+    @NotNull
+    public static final String MessageCenter = "/message/center";
+    /**
+     * shy.car.sdk.travel.dialog.DialogMoneyVerify
+     */
+    @NotNull
+    public static final String Dialog_Money_Verify = "/dialog/moneyverify";
+    /**
+     * 交保证金
+     */
+    @NotNull
+    public static final String VerifyMoney = "/money/verify";
 }

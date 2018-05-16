@@ -11,6 +11,10 @@
             name="p"
             type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
 
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment"/>
+
     </data>
 
     <LinearLayout
@@ -157,6 +161,7 @@
                             android:layout_centerInParent="true"
                             android:background="@drawable/back_button_rent_car_in"
                             android:gravity="center"
+                            android:onClick="@{()->fragment.onRentClick()}"
                             android:text="租车"
                             android:textColor="@color/_foreground_material_light"
                             android:textSize="@dimen/text_primary_14dp"/>

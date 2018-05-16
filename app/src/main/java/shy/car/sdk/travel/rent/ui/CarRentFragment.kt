@@ -7,15 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
+import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
+import shy.car.sdk.travel.user.data.User
+import shy.car.sdk.travel.user.data.UserBase
 
 
 /**
  * create by LZ at 2018/05/11
+ * 租车
  */
 @Route(path = RouteMap.CarRent)
 class CarRentFragment : XTBaseFragment() {
@@ -82,4 +87,26 @@ class CarRentFragment : XTBaseFragment() {
         binding.map.onSaveInstanceState(outState)
     }
 
+
+    fun onRentClick() {
+        val user = User.instance
+        when (user.isLogin) {
+            true -> checkPromiseMoneyPay()
+            else -> app.startLoginDialog(null, null)
+        }
+
+    }
+
+    private fun checkPromiseMoneyPay() {
+        if (User.instance.promiseMoney == UserBase.PromissState.MONEY_PAYED) {
+            ARouter.getInstance()
+                    .build(RouteMap.MessageCenter)
+                    .navigation()
+        } else {
+            val dialog = ARouter.getInstance()
+                    .build(RouteMap.Dialog_Money_Verify)
+                    .navigation() as XTBaseDialogFragment
+            dialog.show(fragmentManager, "dialog_money_verify")
+        }
+    }
 }

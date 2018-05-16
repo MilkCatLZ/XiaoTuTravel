@@ -307,7 +307,8 @@ class MainActivity : XTBaseActivity() {
 
     fun onMessageClick() {
         ARouter.getInstance()
-                .build(RouteMap.MessageActive)
+                .build(RouteMap.MessageCenter)
                 .navigation()
     }
+
 }

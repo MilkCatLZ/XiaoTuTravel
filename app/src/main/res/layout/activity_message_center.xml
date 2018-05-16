@@ -1,11 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<layout>
 
-    <fragment
-        android:id="@+id/fragment_message"
-        android:name="shy.car.sdk.travel.message.ui.MessageFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</android.support.constraint.ConstraintLayout>
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.message.ui.MessageCenterActivity"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
+
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_message_center}"/>
+
+        <View style="@style/style_shadow_main_back"/>
+
+        <!--<LinearLayout-->
+        <!--style="@style/style_message_center_content">-->
+        <!--<ImageView-->
+        <!--android:src="@drawable/icon_news_pre"-->
+        <!--style="@style/style_message_center_logo"/>-->
+        <!--<LinearLayout-->
+        <!--style="@style/style_message_center_text_content">-->
+        <!--<TextView-->
+        <!--android:text="在线客服"-->
+        <!--style="@style/style_message_center_title"/>-->
+        <!--<TextView-->
+        <!--android:text="查看与客服的沟通记录"-->
+        <!--style="@style/style_message_center_detail"/>-->
+        <!--</LinearLayout>-->
+        <!---->
+        <!--</LinearLayout>-->
+
+        <!--<View style="@style/line_horizontal"/>-->
+
+        <LinearLayout
+            style="@style/style_message_center_content"
+            android:onClick="@{()->ac.onMessageActiveClick()}"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                style="@style/style_message_center_logo"
+                android:src="@drawable/icon_news_give"/>
+
+            <LinearLayout
+                style="@style/style_message_center_text_content">
+
+                <TextView
+                    style="@style/style_message_center_title"
+                    android:text="活动消息"/>
+
+                <TextView
+                    style="@style/style_message_center_detail"
+                    android:text="您的地球日优惠来啦"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            style="@style/style_message_center_content">
+
+            <ImageView
+                style="@style/style_message_center_logo"
+                android:src="@drawable/icon_news_serivce"/>
+
+            <LinearLayout
+                style="@style/style_message_center_text_content">
+
+                <TextView
+                    style="@style/style_message_center_title"
+                    android:text="服务消息"/>
+
+                <TextView
+                    style="@style/style_message_center_detail"
+                    android:text="您有一张优惠券到账了"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal"/>
+
+        <LinearLayout
+            style="@style/style_message_center_content">
+
+            <ImageView
+                style="@style/style_message_center_logo"
+                android:src="@drawable/icon_news_vox"/>
+
+            <LinearLayout
+                style="@style/style_message_center_text_content">
+
+                <TextView
+                    style="@style/style_message_center_title"
+                    android:text="系统消息"/>
+
+                <TextView
+                    style="@style/style_message_center_detail"
+                    android:text="1.0.8版本更新了"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

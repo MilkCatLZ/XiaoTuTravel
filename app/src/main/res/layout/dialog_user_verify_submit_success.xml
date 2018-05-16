@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="197dp"
+            android:background="@drawable/back_dialog_corner_2dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:src="@drawable/icon_win"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="22dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="15dp"
+                android:text="恭喜您提交成功，2个工作日之内会尽快审核"
+                android:textColor="@color/text_second_primary_666666"
+                android:textSize="@dimen/text_primary_14dp"/>
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginTop="18dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_title_16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
