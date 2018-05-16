@@ -63,10 +63,18 @@ interface ApiInterface {
      */
     @GET("xt/orderSendList")
     fun getOrderSendList(@Query(ParamsConstant.PageIndex) pageIndex: Int, @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderSendList>>
+
     /**
      * 获取发货列表
      *
      */
     @GET("xt/orderMineList")
     fun getOrdreMineList(@Query(ParamsConstant.PageIndex) pageIndex: Int, @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderMineList>>
+
+    /**
+     * 检查更新
+     *
+     */
+    @GET("xt/update")
+    fun getUpdateInfo(): Observable<String>
 }

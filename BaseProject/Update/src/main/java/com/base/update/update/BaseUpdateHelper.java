@@ -190,6 +190,16 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
     }
     
     /**
+     * @param context
+     * @param logo         默认logo
+     * @param isAutoUpdate 是否是自动更新
+     * @param needMessage  是否需要显示更新信息
+     */
+    public BaseUpdateHelper(@NonNull Context context, int logo, boolean isAutoUpdate, boolean needMessage) {
+        this(context, null, logo, isAutoUpdate, needMessage, null);
+    }
+    
+    /**
      * @param result 原始json字符串
      *
      * @return 返回最新的版本信息
@@ -209,6 +219,11 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
 //        params.addParameter("d", "d");
 //        params.addParameter("a", "a");
         Callback.Cancelable cancelable = XUtils.get(params, checkUpdateCallback);
+    }
+    
+    public void checkUpdate(String result) {
+        info = getNewUpdateInfo(result);
+        manageResult(info);
     }
     
     
@@ -261,6 +276,11 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         }
     }
     
+    interface CheckUpdateListener {
+    
+    }
+    
+    
     /**
      * 检查更新回调
      */
@@ -269,54 +289,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         public void onSuccess(String result) {
 //            info = JSONObject.parseObject(result, Update.class);
             info = getNewUpdateInfo(result);
-            boolean forceUpdate = info.getCompulsion() == FORCE_UPDATE && ((nowVersion.compareTo(
-                info.getVersion()) < 0));
-            //强制更新,isAutoUpdate=true就是自动，否则就是手动检查更新
-            if (forceUpdate && isAutoUpdate) {
-                if (nowVersion.compareTo(info.getVersion()) < 0) {
-                    if (NetworkState.isWifi(context)) {
-//                        silenceDownLoad = true;
-                        startDownLoad();
-                    }
-                    SPCache.saveObject(context, HAS_NEW_VERSION, true);
-                    SPCache.saveObject(context, Version.NewVersion, info.getVersion());
-                } else {
-                    SPCache.saveObject(context, HAS_NEW_VERSION, false);
-                }
-            } else {
-                //非强制更新
-                boolean todayIsChecked = checkToday();
-                SPCache.saveObject(context, nowString, info);
-                todayInfo = info;
-                if (todayIsChecked) {
-                    if (checkHasNewVersion(nowVersion,info.getVersion())/*(nowVersion.compareTo(info.getVersion()) < 0)*/) {
-                        if (needMessage()) {
-                            showUpdateConfirmDialog();
-                        }
-                        SPCache.saveObject(context, HAS_NEW_VERSION, true);
-                        SPCache.saveObject(context, Version.NewVersion, info.getVersion());
-                    } else {
-                        if (needMessage()) {
-                            ToastManager.showShortToast(context, getAlreadyNewMessage());
-                        }
-                        SPCache.saveObject(context, HAS_NEW_VERSION, false);
-                    }
-                } else {
-                    if ((nowVersion.compareTo(info.getVersion()) < 0)) {
-                        showUpdateConfirmDialog();
-                        SPCache.saveObject(context, HAS_NEW_VERSION, true);
-                        SPCache.saveObject(context, Version.NewVersion, info.getVersion());
-                    } else {
-                        if (needMessage()) {
-                            ToastManager.showShortToast(context, getAlreadyNewMessage());
-                        }
-                        SPCache.saveObject(context, HAS_NEW_VERSION, false);
-                    }
-                }
-            }
-            if (listener != null) {
-                listener.onCheckComplete(info);
-            }
+            manageResult(info);
         }
         
         @Override
@@ -328,19 +301,70 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         
         @Override
         public void onCancelled(CancelledException cex) {
-            
+        
         }
         
         @Override
         public void onFinished() {
-            
+        
         }
     };
     
+    private void manageResult(Update info) {
+        boolean forceUpdate = info.getCompulsion() == FORCE_UPDATE && ((nowVersion.compareTo(
+            info.getVersion()) < 0));
+        //强制更新,isAutoUpdate=true就是自动，否则就是手动检查更新
+        if (forceUpdate && isAutoUpdate) {
+            if (nowVersion.compareTo(info.getVersion()) < 0) {
+                if (NetworkState.isWifi(context)) {
+//                        silenceDownLoad = true;
+                    startDownLoad();
+                }
+                SPCache.saveObject(context, HAS_NEW_VERSION, true);
+                SPCache.saveObject(context, Version.NewVersion, info.getVersion());
+            } else {
+                SPCache.saveObject(context, HAS_NEW_VERSION, false);
+            }
+        } else {
+            //非强制更新
+            boolean todayIsChecked = checkToday();
+            SPCache.saveObject(context, nowString, info);
+            todayInfo = info;
+            if (todayIsChecked) {
+                if (checkHasNewVersion(nowVersion, info.getVersion())/*(nowVersion.compareTo(info.getVersion()) < 0)*/) {
+                    if (needMessage()) {
+                        showUpdateConfirmDialog();
+                    }
+                    SPCache.saveObject(context, HAS_NEW_VERSION, true);
+                    SPCache.saveObject(context, Version.NewVersion, info.getVersion());
+                } else {
+                    if (needMessage()) {
+                        ToastManager.showShortToast(context, getAlreadyNewMessage());
+                    }
+                    SPCache.saveObject(context, HAS_NEW_VERSION, false);
+                }
+            } else {
+                if ((nowVersion.compareTo(info.getVersion()) < 0)) {
+                    showUpdateConfirmDialog();
+                    SPCache.saveObject(context, HAS_NEW_VERSION, true);
+                    SPCache.saveObject(context, Version.NewVersion, info.getVersion());
+                } else {
+                    if (needMessage()) {
+                        ToastManager.showShortToast(context, getAlreadyNewMessage());
+                    }
+                    SPCache.saveObject(context, HAS_NEW_VERSION, false);
+                }
+            }
+        }
+        if (listener != null) {
+            listener.onCheckComplete(info);
+        }
+    }
+    
     /**
-     *
      * @param nowVersion
      * @param newVersion
+     *
      * @return true:有新版本，false：没有新版本
      */
     protected abstract boolean checkHasNewVersion(String nowVersion, String newVersion);
@@ -420,7 +444,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             Intent installIntent = new Intent(context, InstallActivity.class);
             installIntent.putExtra(InstallActivity.APK_URL, result.getAbsolutePath());
             installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent pendingIntent=PendingIntent.getActivity(context,0,installIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, installIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             
             
             notifyChange(builder
@@ -492,7 +516,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
      * @param result
      */
     public void startInstall(File result) {
-        openFile(result,context);
+        openFile(result, context);
     }
     
     static class Progress {
