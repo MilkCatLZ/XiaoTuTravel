@@ -8,14 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.MyLocationStyle
+import com.amap.api.maps2d.CameraUpdateFactory
+import com.amap.api.maps2d.model.*
 import kotlinx.android.synthetic.main.fragment_car_rent.*
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
+import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
@@ -65,21 +67,39 @@ class CarRentFragment : XTBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
+        addCarLocation()
+        refreshLocation()
     }
 
+    lateinit var bitmap: BitmapDescriptor
+    /**
+     * 初始化地图
+     */
     private fun initMap() {
-        changeCamera()
+        bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
+        map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
+        map.map.setOnMyLocationChangeListener {
+            //            Observable.timer(2, TimeUnit.SECONDS)
+//                    .observeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({ changeZoom() })
+        }
+        activity?.let { map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
+    }
 
-        val myLocationStyle = MyLocationStyle()
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE)//连续定位、蓝点不会移动到地图中心点，定位点依照设备方向旋转，并且蓝点会跟随设备移动。
-        myLocationStyle.interval(5000) //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        map.map.myLocationStyle = myLocationStyle//设置定位蓝点的Style
-//        aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
-        map.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
-
-        map.map.animateCamera(CameraUpdateFactory.zoomTo(12f), 1000, null)
+    /**
+     * 刷新定位
+     */
+    fun refreshLocation() {
+        var myLocationStyle = MyLocationStyle().myLocationIcon(bitmap)
+                .anchor(0.5f, 0.5f)
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW)
+        myLocationStyle.interval(10000)
+        map.map.setMyLocationStyle(myLocationStyle)
+        map.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
 
     }
+
 
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
@@ -106,15 +126,21 @@ class CarRentFragment : XTBaseFragment() {
     }
 
 
+    /**
+     * 租车点击事件
+     */
     fun onRentClick() {
         val user = User.instance
-        when (user.isLogin) {
+        when (user.isLogin && BuildConfig.DEBUG) {
             true -> checkPromiseMoneyPay()
             else -> app.startLoginDialog(null, null)
         }
 
     }
 
+    /**
+     * 租车点击-检查是否认证
+     */
     private fun checkPromiseMoneyPay() {
         if (User.instance.promiseMoney == UserBase.PromissState.MONEY_PAYED) {
             ARouter.getInstance()
@@ -125,6 +151,10 @@ class CarRentFragment : XTBaseFragment() {
                     .build(RouteMap.Dialog_Money_Verify)
                     .navigation() as XTBaseDialogFragment
             dialog.show(fragmentManager, "dialog_money_verify")
+            if (BuildConfig.DEBUG)
+                ARouter.getInstance()
+                        .build(RouteMap.MessageCenter)
+                        .navigation()
         }
     }
 
@@ -132,9 +162,31 @@ class CarRentFragment : XTBaseFragment() {
         edt_zoom.text?.let { map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
     }
 
-    private fun changeCamera() {
 
-//        map.map.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition((LatLng(22.817746, 108.36637)), 18f, 30f, 30f)))
+    fun addCarLocation() {
+        addMarkersToMap(LatLng(22.817746, 108.36637))
+        addMarkersToMap(LatLng(22.873487, 108.275277))
+        addMarkersToMap(LatLng(22.823181, 108.300745))
+    }
 
+    /**
+     * 在地图上添加marker
+     */
+    private fun addMarkersToMap(latlng: LatLng) {
+
+        var marker = map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+                .anchor(0.5f, 1.0f)
+                .snippet("小兔")
+                .snippet("附近可用车${latlng.latitude}辆")
+                .position(latlng)
+                .draggable(false))
+        marker.showInfoWindow()
+
+    }
+
+    fun onNearCarClick() {
+        ARouter.getInstance()
+                .build(RouteMap.NearCarList)
+                .navigation()
     }
 }

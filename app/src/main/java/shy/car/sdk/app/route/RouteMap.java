@@ -72,4 +72,9 @@ public class RouteMap {
      */
     @NotNull
     public static final String VerifyMoney = "/money/verify";
+    /**
+     * 附近可用车
+     */
+    @NotNull
+    public static final String NearCarList = "/near/car_list";
 }

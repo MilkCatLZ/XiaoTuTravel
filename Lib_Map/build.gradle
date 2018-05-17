@@ -38,6 +38,9 @@ dependencies {
     api ('com.amap.api:location:latest.integration'){
         exclude module: 'support-v13'
     }
+    api ('com.amap.api:map2d:latest.integration'){
+        exclude module: 'support-v13'
+    }
     api ('com.amap.api:navi-3dmap:latest.integration'){
         exclude module: 'support-v13'
     }

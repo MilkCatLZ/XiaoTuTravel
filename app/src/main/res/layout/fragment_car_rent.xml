@@ -93,29 +93,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/edt_zoom"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="number"
-                        android:layout_height="match_parent"/>
 
-                    <Button
-                        android:layout_width="60dp"
-                        android:text="修改缩放级别"
-                        android:onClick="@{()->fragment.changeZoom()}"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
-
-                <com.amap.api.maps.MapView
+                <com.amap.api.maps2d.MapView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
+                    android:onClick="@{()->fragment.onNearCarClick()}"
+                    android:layout_marginTop="150dp"
+                    android:src="@drawable/icon_site"/>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="200dp"
+                    android:onClick="@{()->fragment.refreshLocation()}"
+                    android:src="@drawable/icon_locat"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_zoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="10"
+                        android:inputType="number"/>
+
+                    <Button
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:onClick="@{()->fragment.changeZoom()}"
+                        android:text="修改缩放级别"/>
+
+                </LinearLayout>
             </RelativeLayout>
 
         </LinearLayout>
