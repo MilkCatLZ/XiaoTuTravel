@@ -19,7 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
 -useuniqueclassmembernames
 -dontusemixedcaseclassnames
 -skipnonpubliclibraryclasses
@@ -60,6 +59,48 @@
     private void readObject(java.io.ObjectInputStream);
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
+}
+#保持所有用到了的Serializable的类和它们的名称
+-keepnames class * implements java.io.Serializable
+
+#保持所有实现了JSONAware的类的关键内容
+-keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
+    public *;
+}
+#保持所有支持FastJSON的类的关键内容
+-keepclassmembers,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
+}
+#保持所有用到了的支持FastJSON的类
+-keepclasseswithmembernames,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
+}
+-keepnames,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
 }
 
 #保持所有用到了的native方法以及方法所在的类
@@ -121,17 +162,25 @@
     @android.databinding.BindingAdapter public static void <methods>;
 }
 
-#okhttp
--keep class com.squareup.okhttp.** { *; }
--dontwarn com.squareup.okhttp.**
+
+
+#fastjson
+-keep class com.alibaba.fastjson.** { *; }
+-dontwarn com.alibaba.fastjson.**
+
+
+-keep class okhttp3.** {*;}
+-dontwarn okhttp3.**
+
+-keep class okio.** {*;}
+-dontwarn okio.**
+
+-keep class retrofit2.** {*;}
+-dontwarn retrofit2.**
 
 #picasso
 -keep class com.squareup.picasso.** { *; }
 -dontwarn com.squareup.picasso.**
-
-#支付宝
--keep class com.alipay.** { *; }
--dontwarn com.alipay.**
 
 #EventBus
 -keepattributes *Annotation*
@@ -145,33 +194,15 @@
     <init>(java.lang.Throwable);
 }
 
--keep class com.taobao.securityjni.**{*;}
--keep class com.taobao.wireless.security.**{*;}
--keep class com.ut.secbody.**{*;}
--keep class com.taobao.dp.**{*;}
--keep class com.alibaba.wireless.security.**{*;}
 
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
-}
-
--keep public class shy.car.sdk.R$*{
-    public static final int *;
 }
 
 -keepclassmembers enum * {
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
-
--keep class okhttp3.** {*;}
--dontwarn okhttp3.**
-
--keep class okio.** {*;}
--dontwarn okio.**
-
--keep class retrofit2.** {*;}
--dontwarn retrofit2.**
 
 #（可选）避免Log打印输出
 -assumenosideeffects class android.util.Log {
@@ -181,8 +212,14 @@
    public static *** w(...);
  }
 
-#AROUTER 路由表
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+
+#ARouter
 -keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep class com.alibaba.android.arouter.facade.model.**{*;}
 -keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
 
 # 如果使用了 byType 的方式获取 Service，需添加下面规则，保护接口
@@ -192,49 +229,179 @@
 -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
 
 
-#fastjson
--keep class com.alibaba.fastjson.** { *; }
--dontwarn com.alibaba.fastjson.**
-#保持所有实现了JSONAware的类的关键内容
--keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
-    public *;
+
+#start-------------------------------------------支付宝
+-keep class com.alipay.android.app.IAlixPay{*;}
+-keep class com.alipay.android.app.IAlixPay$Stub{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback{*;}
+-keep class com.alipay.android.app.IRemoteServiceCallback$Stub{*;}
+-keep class com.alipay.sdk.app.PayTask{ public *;}
+-keep class com.alipay.sdk.app.AuthTask{ public *;}
+-keep class com.alipay.sdk.app.H5PayCallback {
+    <fields>;
+    <methods>;
 }
-#保持所有实现了JSONAware的类的关键内容
--keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
-    public *;
+-keep class com.alipay.android.phone.mrpc.core.** { *; }
+-keep class com.alipay.apmobilesecuritysdk.** { *; }
+-keep class com.alipay.mobile.framework.service.annotation.** { *; }
+-keep class com.alipay.mobilesecuritysdk.face.** { *; }
+-keep class com.alipay.tscenter.biz.rpc.** { *; }
+-keep class org.json.alipay.** { *; }
+-keep class com.alipay.tscenter.** { *; }
+-keep class com.ta.utdid2.** { *;}
+-keep class com.ut.device.** { *;}
+#end----------------------------------------支付宝
+
+#start-------------------------------------------umeng Push
+-dontwarn com.taobao.**
+-dontwarn anet.channel.**
+-dontwarn anetwork.channel.**
+-dontwarn org.android.**
+-dontwarn org.apache.thrift.**
+-dontwarn com.xiaomi.**
+-dontwarn com.huawei.**
+-dontwarn com.meizu.**
+-keepattributes *Annotation*
+-keep class com.taobao.** {*;}
+-keep class org.android.** {*;}
+-keep class anet.channel.** {*;}
+-keep class com.umeng.** {*;}
+-keep class com.xiaomi.** {*;}
+-keep class com.huawei.** {*;}
+-keep class com.meizu.** {*;}
+-keep class org.apache.thrift.** {*;}
+-keep class com.alibaba.sdk.android.**{*;}
+-keep class com.ut.**{*;}
+-keep class com.ta.**{*;}
+-keep public class **.R$*{
+   public static final int *;
 }
-#保持所有支持FastJSON的类的关键内容
--keepclassmembers,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
+#end----------------------------------------umeng Push
+
+#start-------------------------------------------umeng Share
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.**
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+-keep public class javax.**
+-keep public class android.webkit.**
+-dontwarn android.support.v4.**
+-keep enum com.facebook.**
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public interface com.facebook.**
+-keep public interface com.tencent.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+-keep public class com.umeng.socialize.* {*;}
+-keep class com.facebook.**
+-keep class com.facebook.** { *; }
+-keep class com.umeng.scrshot.**
+-keep public class com.tencent.** {*;}
+-keep class com.umeng.socialize.sensor.**
+-keep class com.umeng.socialize.handler.**
+-keep class com.umeng.socialize.handler.*
+-keep class com.umeng.weixin.handler.**
+-keep class com.umeng.weixin.handler.*
+-keep class com.umeng.qq.handler.**
+-keep class com.umeng.qq.handler.*
+-keep class UMMoreHandler{*;}
+-keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+-keep class im.yixin.sdk.api.YXMessage {*;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+-keep class com.tencent.mm.sdk.** {
+   *;
 }
-#保持所有用到了的支持FastJSON的类
--keepclasseswithmembernames,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
+-keep class com.tencent.mm.opensdk.** {
+   *;
 }
--keepnames,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
+-keep class com.tencent.wxop.** {
+   *;
 }
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+-dontwarn twitter4j.**
+-keep class twitter4j.** { *; }
+-keep class com.tencent.** {*;}
+-dontwarn com.tencent.**
+-keep class com.kakao.** {*;}
+-dontwarn com.kakao.**
+-keep public class com.umeng.com.umeng.soexample.R$*{
+    public static final int *;
+}
+-keep public class com.linkedin.android.mobilesdk.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class com.tencent.open.TDialog$*
+-keep class com.tencent.open.TDialog$* {*;}
+-keep class com.tencent.open.PKDialog
+-keep class com.tencent.open.PKDialog {*;}
+-keep class com.tencent.open.PKDialog$*
+-keep class com.tencent.open.PKDialog$* {*;}
+-keep class com.umeng.socialize.impl.ImageImpl {*;}
+-keep class com.sina.** {*;}
+-dontwarn com.sina.**
+-keep class  com.alipay.share.sdk.** {
+   *;
+}
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+-keep class com.linkedin.** { *; }
+-keep class com.android.dingtalk.share.ddsharemodule.** { *; }
+-keepattributes Signature
+#end----------------------------------------umeng Share
+
+
+#start--------other
+-keep class javax.lang.model.element.** {*;}
+-dontwarn com.alibaba.android.arouter.facade.model.**
+
+-keep class com.alipay.android.phone.mrpc.core.** {*;}
+-dontwarn com.alipay.android.phone.mrpc.core.**
+
+-keep class com.amap.api.mapcore2d.** { *; }
+-dontwarn com.amap.api.mapcore2d.**
+#end----------other
+
+#start--------高德地图
+#3D 地图 V5.0.0之后：
+-keep   class com.amap.api.maps.**{*;}
+-keep   class com.autonavi.**{*;}
+-keep   class com.amap.api.trace.**{*;}
+
+#定位
+-keep class com.amap.api.location.**{*;}
+-keep class com.amap.api.fence.**{*;}
+-keep class com.autonavi.aps.amapapi.model.**{*;}
+
+#搜索
+-keep   class com.amap.api.services.**{*;}
+
+#2D地图
+-keep class com.amap.api.maps2d.**{*;}
+-keep class com.amap.api.mapcore2d.**{*;}
+
+#导航
+-keep class com.amap.api.navi.**{*;}
+-keep class com.autonavi.**{*;}
+
+
+#内置语音 V5.6.0之后
+-keep class com.alibaba.idst.nls.** {*;}
+-keep class com.google.**{*;}
+-keep class com.nlspeech.nlscodec.** {*;}
+#end----------高德地图
+
+

@@ -15,8 +15,6 @@ kapt {
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILD_TOOLS_VERSION
-
-
     dataBinding {
         enabled true
     }
@@ -28,10 +26,10 @@ android {
 
     signingConfigs {
         releaseConfig {
-            keyAlias 'xxx'
-            keyPassword 'xxx'
-            storeFile file('../xxx.jks')
-            storePassword 'xxx'
+            keyAlias 'shy'
+            keyPassword 'xxx8d9fx5Ddx5665'
+            storeFile file('../keystore_xxx8d9fx5Ddx5665.jks')
+            storePassword 'xxx8d9fx5Ddx5665'
         }
     }
 
@@ -73,7 +71,7 @@ android {
 
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
         }
     }
 
@@ -81,12 +79,12 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.releaseConfig
+            signingConfig signingConfigs.releaseConfig
             debuggable false
             jniDebuggable false
         }
         debug {
-//            signingConfig signingConfigs.releaseConfig
+            signingConfig signingConfigs.releaseConfig
             debuggable true
             jniDebuggable false
         }

@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.app.BaseApplication
+import com.base.util.crash.CrashHandler
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.lianni.mall.location.AmapLocationManager
@@ -36,12 +37,18 @@ class Application : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+        CrashHandler.getInstance()
+                .init(this, null)
+
         initNetWork()
         initRouter()
         initPinYin()
         initAmap()
+
         EventBus.builder().build()
         EventBus.getDefault().register(this)
+
     }
 
     private fun initAmap() {

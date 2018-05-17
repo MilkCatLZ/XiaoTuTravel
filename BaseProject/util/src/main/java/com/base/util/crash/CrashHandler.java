@@ -36,7 +36,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     CrashCallBack callBack;
 
     public static final String TAG = "CrashHandler";
-    private String CrashDir = "/LianNiCrashFile/";
+    private String CrashDir = "/XTCrashFile/";
 
     // 系统默认的UncaughtException处理类
     private UncaughtExceptionHandler mDefaultHandler;
