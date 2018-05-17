@@ -89,10 +89,35 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <com.amap.api.maps.MapView
-                android:id="@+id/map"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/edt_zoom"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="number"
+                        android:layout_height="match_parent"/>
+
+                    <Button
+                        android:layout_width="60dp"
+                        android:text="修改缩放级别"
+                        android:onClick="@{()->fragment.changeZoom()}"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
+                <com.amap.api.maps.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
+
         </LinearLayout>
 
         <View
@@ -100,9 +125,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
-            android:focusableInTouchMode="false"
+            android:background="#99000000"
             android:focusable="false"
-            android:background="#99000000"/>
+            android:focusableInTouchMode="false"/>
 
         <LinearLayout
             android:id="@+id/view_bottom_sheet"

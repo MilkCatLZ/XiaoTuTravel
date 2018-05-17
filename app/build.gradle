@@ -84,7 +84,7 @@ android {
             jniDebuggable false
         }
         debug {
-            signingConfig signingConfigs.releaseConfig
+//            signingConfig signingConfigs.releaseConfig
             debuggable true
             jniDebuggable false
         }
