@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.order.send.presenter
 
 import android.content.Context
+import android.view.View
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -17,9 +18,17 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     interface CallBack {
         fun getListSuccess(list: ArrayList<OrderSendList>)
+        fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<OrderSendList> = DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, {})
+
+
+    var adapter: DataBindingItemClickAdapter<OrderSendList> =DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, object:View.OnClickListener{
+        override fun onClick(v: View?) {
+
+        }
+
+    })
     var pageSize = 10
     var pageIndex = 1
 
@@ -61,7 +70,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
             }
 
             override fun onError(e: Throwable) {
-
+                callBack.getListError(e)
             }
         })
     }

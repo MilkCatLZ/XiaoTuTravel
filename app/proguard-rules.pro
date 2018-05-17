@@ -190,3 +190,51 @@
 
 # 如果使用了 单类注入，即不定义接口实现 IProvider，需添加下面规则，保护实现
 -keep class * implements com.alibaba.android.arouter.facade.template.IProvider
+
+
+#fastjson
+-keep class com.alibaba.fastjson.** { *; }
+-dontwarn com.alibaba.fastjson.**
+#保持所有实现了JSONAware的类的关键内容
+-keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
+    public *;
+}
+#保持所有实现了JSONAware的类的关键内容
+-keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
+    public *;
+}
+#保持所有支持FastJSON的类的关键内容
+-keepclassmembers,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
+}
+#保持所有用到了的支持FastJSON的类
+-keepclasseswithmembernames,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
+}
+-keepnames,includedescriptorclasses class ** {
+    @com.alibaba.fastjson.annotation.JSONField <fields>;
+    @com.alibaba.fastjson.annotation.JSONField <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+    !private <init>();
+    public final <fields>;
+    public void set*(***);
+    public boolean is*();
+    public *** get*();
+}

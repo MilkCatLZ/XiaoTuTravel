@@ -90,7 +90,7 @@ class MainActivity : XTBaseActivity() {
         per.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe { granted ->
                     if (granted) {
-                        initLocation()
+                        initCityList()
                         refreshLocation()
                     } else {
 
@@ -102,7 +102,7 @@ class MainActivity : XTBaseActivity() {
     /**
      * 初始化城市列表
      */
-    private fun initLocation() {
+    private fun initCityList() {
 
         locationPresenter = LocationPresenter(this, object : CallBack {
             override fun getCitySuccess(list: java.util.ArrayList<City>) {

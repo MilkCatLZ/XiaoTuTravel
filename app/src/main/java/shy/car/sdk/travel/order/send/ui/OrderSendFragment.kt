@@ -31,6 +31,11 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     private val callBack = object : OrderSendPresenter.CallBack {
+        override fun getListError(e: Throwable) {
+            refreshOrLoadMoreComplete()
+            checkHasMore()
+        }
+
         override fun getListSuccess(list: ArrayList<OrderSendList>) {
             refreshOrLoadMoreComplete()
             checkHasMore()
@@ -82,6 +87,5 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
     override fun getAdapter(): DataBindingAdapter<*> {
         return presenter.adapter
     }
-
 
 }

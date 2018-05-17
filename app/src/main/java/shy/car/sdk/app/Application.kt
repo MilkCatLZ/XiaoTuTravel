@@ -3,13 +3,10 @@ package shy.car.sdk.app
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.location.AMapLocation
 import com.base.app.BaseApplication
-import com.base.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.lianni.mall.location.AmapLocationManager
-import com.lianni.mall.location.AmapOnLocationReceiveListener
 import com.lianni.mall.location.Location
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -24,18 +21,18 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
 
-class Application : BaseApplication(), AmapOnLocationReceiveListener {
+class Application : BaseApplication() {
 
 
     var device_token: String = ""
     var location: Location? = null
 
-    /**
-     * 高德地图定位回调
-     */
-    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-
-    }
+//    /**
+//     * 高德地图定位回调
+//     */
+//    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+//
+//    }
 
     override fun onCreate() {
         super.onCreate()
@@ -49,12 +46,12 @@ class Application : BaseApplication(), AmapOnLocationReceiveListener {
 
     private fun initAmap() {
         AmapLocationManager.init(this)
-        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
-            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                Log.d("获取位置成功", "经纬度={${location.latitude},${location.longitude}}")
-                this@Application.location = location
-            }
-        })
+//        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
+//            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+//                Log.d("获取位置成功", "经纬度={${location.latitude},${location.longitude}}")
+//                this@Application.location = location
+//            }
+//        })
     }
 
     private fun initPinYin() {
