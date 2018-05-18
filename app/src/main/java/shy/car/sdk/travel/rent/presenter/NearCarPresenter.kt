@@ -8,21 +8,22 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.order.take.data.OrderList
+import shy.car.sdk.travel.rent.data.NearCarList
 
 class NearCarPresenter(context:Context,var callBack:CallBack):BasePresenter(context) {
     interface CallBack {
-        fun getListSuccess(list: ArrayList<OrderList>)
+        fun getListSuccess(list: ArrayList<NearCarList>)
     }
 
-    var adapter: DataBindingItemClickAdapter<OrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {})
-    var pageSize = 10
+//    var adapter: DataBindingItemClickAdapter<NearCarList> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<NearCarList> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {})
+    var pageSize = 50
     var pageIndex = 1
 
     init {
-        val list = ArrayList<OrderList>()
+        val list = ArrayList<NearCarList>()
         for (i in 1..9) {
-            list.add(OrderList())
+            list.add(NearCarList())
         }
 
         adapter.setItems(list, 1)
@@ -34,16 +35,24 @@ class NearCarPresenter(context:Context,var callBack:CallBack):BasePresenter(cont
 
     fun refresh() {
         pageIndex = 1
-        getOrderList()
+        getNearList(lat, lng)
     }
 
     fun nextPage() {
         pageIndex++
-        getOrderList()
+        getNearList(lat, lng)
     }
 
-    private fun getOrderList() {
-        ApiManager.instance.api.getTakeOrderList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderList>> {
+    private lateinit var lat: String
+
+    private lateinit var lng: String
+
+    fun getNearList(lat:String, lng:String) {
+
+         this.lat=lat
+         this.lng=lng
+
+        ApiManager.instance.api.getNearList(lat,lng,pageIndex,pageSize).subscribe(object: Observer<ArrayList<NearCarList>> {
             override fun onComplete() {
 
             }
@@ -52,7 +61,7 @@ class NearCarPresenter(context:Context,var callBack:CallBack):BasePresenter(cont
 
             }
 
-            override fun onNext(t: ArrayList<OrderList>) {
+            override fun onNext(t: ArrayList<NearCarList>) {
                 callBack.getListSuccess(t)
             }
 

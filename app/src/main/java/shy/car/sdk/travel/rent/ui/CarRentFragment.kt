@@ -10,6 +10,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps2d.CameraUpdateFactory
 import com.amap.api.maps2d.model.*
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.geocoder.GeocodeResult
+import com.amap.api.services.geocoder.GeocodeSearch
+import com.amap.api.services.geocoder.RegeocodeQuery
+import com.amap.api.services.geocoder.RegeocodeResult
 import kotlinx.android.synthetic.main.fragment_car_rent.*
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
@@ -17,7 +22,13 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
+import shy.car.sdk.travel.interfaces.BottomSheetDragListener
+import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
+import shy.car.sdk.travel.interfaces.NearCarOpenListener
+import shy.car.sdk.travel.interfaces.OnNearListListener
+import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
+import shy.car.sdk.travel.rent.data.NearCarList
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
@@ -28,12 +39,19 @@ import shy.car.sdk.travel.user.data.UserBase
  * 租车
  */
 @Route(path = RouteMap.CarRent)
-class CarRentFragment : XTBaseFragment() {
+class CarRentFragment : XTBaseFragment(), OnNearListListener {
+    override fun getNearCarListSuccess(list: ArrayList<NearCarList>) {
 
-    lateinit var binding: FragmentCarRentBinding
+    }
+
+    private lateinit var binding: FragmentCarRentBinding
     private lateinit var carRentPresenter: CarRentPresenter
 
-    val callBack = object : CarRentPresenter.CallBack {}
+    var nearCarListener: NearCarOpenListener? = null
+    var bottomSheetListener: BottomSheetDragListener? = null
+    var locationRefreshListener: MapLocationRefreshListener? = null
+
+    private val callBack = object : CarRentPresenter.CallBack {}
     override fun getFragmentName(): CharSequence {
         return "租车"
     }
@@ -58,7 +76,7 @@ class CarRentFragment : XTBaseFragment() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                binding.viewBack.alpha = slideOffset
+                bottomSheetListener?.onBottomSheetStateChange(bottomSheet, slideOffset)
             }
         })
         return binding.root
@@ -71,6 +89,7 @@ class CarRentFragment : XTBaseFragment() {
         refreshLocation()
     }
 
+
     lateinit var bitmap: BitmapDescriptor
     /**
      * 初始化地图
@@ -79,10 +98,18 @@ class CarRentFragment : XTBaseFragment() {
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
         map.map.setOnMyLocationChangeListener {
-            //            Observable.timer(2, TimeUnit.SECONDS)
-//                    .observeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe({ changeZoom() })
+            var geocoderSearch = GeocodeSearch(context)
+            val query = RegeocodeQuery(LatLonPoint(it.latitude, it.longitude), 200f, GeocodeSearch.AMAP)
+            geocoderSearch.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
+                override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
+                    locationRefreshListener?.onLocationChange(City(p0?.regeocodeAddress?.city!!, ""))
+                }
+
+                override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
+
+                }
+            })
+            geocoderSearch.getFromLocationAsyn(query)
         }
         activity?.let { map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
     }
@@ -104,6 +131,8 @@ class CarRentFragment : XTBaseFragment() {
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         binding.map.onDestroy()
+        bottomSheetListener = null
+        nearCarListener = null
         super.onDestroy()
     }
 
@@ -185,8 +214,6 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     fun onNearCarClick() {
-        ARouter.getInstance()
-                .build(RouteMap.NearCarList)
-                .navigation()
+        nearCarListener?.onNearCarClick()
     }
 }

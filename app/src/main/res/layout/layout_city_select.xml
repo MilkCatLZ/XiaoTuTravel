@@ -9,8 +9,8 @@
             type="com.base.util.StringUtils"/>
 
         <variable
-            name="ac"
-            type="shy.car.sdk.MainActivity"/>
+            name="fragment"
+            type="shy.car.sdk.travel.main.ui.MainCitySelectFragment"/>
     </data>
 
 
@@ -21,7 +21,6 @@
         android:animateLayoutChanges="true"
         android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:visibleOrGone="@{ac.isSearchVisible}"
         tools:visibility="visible">
 
 
@@ -62,7 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->ac.onCityClick()}"
+                android:onClick="@{()->fragment.closeSearch()}"
                 android:text="取消"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_primary_14dp"/>
@@ -96,8 +95,7 @@
                     android:orientation="horizontal"
                     android:paddingEnd="15dp"
                     android:paddingStart="15dp"
-                    android:onClick="@{()->ac.onCitySelected()}"
-                    android:visibleOrGone="@{!ac.isSearchMode}">
+                    android:onClick="@{()->fragment.onCitySelected()}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -110,7 +108,7 @@
                         android:id="@+id/txt_city_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{ac.cityNameLocating}"
+                        android:text="@{fragment.cityNameLocating}"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="@dimen/text_primary_14dp"/>
                 </LinearLayout>
@@ -127,9 +125,8 @@
                     app:indexBar_textSize="14sp"
                     app:indexBar_textSpace="6dp"/>
             </LinearLayout>
-            <fragment
-                android:id="@+id/fragment_search_result"
-                android:name="shy.car.sdk.travel.location.SearchFragment"
+            <FrameLayout
+                android:id="@+id/frame_search_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 

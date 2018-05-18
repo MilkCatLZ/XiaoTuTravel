@@ -44,7 +44,6 @@
                 android:layout_marginEnd="10dp"
                 android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
                 android:onClick="@{()->ac.onNearCityClick()}"
-                android:text="@{ac.nearCityName}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="@dimen/text_primary_14dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,17 +93,20 @@
             android:id="@+id/recyclerView_near_car_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/top"
+            android:layout_below="@+id/top"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/main_back"
             android:bindAdapter="@{presenter.adapter}"
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"
-            tools:listItem="@layout/item_order_take"/>
+            tools:listItem="@layout/item_near_car_list"/>
 
         <View
             style="@style/style_shadow"
-            android:layout_below="@id/top"
+            android:layout_below="@+id/top"
             />
 
     </RelativeLayout>

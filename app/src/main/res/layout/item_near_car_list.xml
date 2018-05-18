@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="near"
+            type="shy.car.sdk.travel.rent.data.NearCarList"/>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/_foreground_material_light"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_orient"
+            android:tint="@color/text_third_primary_999999"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            android:paddingTop="14dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_weight="1"
+                    android:text="小兔科技"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="15sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="13辆可用车"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="@dimen/text_second_primary_12dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="广西壮族自治区向南宁市西乡塘区滨河路"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_second_primary_12dp"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>
