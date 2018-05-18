@@ -25,7 +25,7 @@
             app:title="@{@string/str_setting}"/>
 
         <View
-            style="@style/style_shadow_main_back"/>
+            style="@style/style_shadow"/>
 
 
         <LinearLayout

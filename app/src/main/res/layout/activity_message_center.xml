@@ -23,7 +23,7 @@
             layout="@layout/layout_title"
             app:title="@{@string/str_message_center}"/>
 
-        <View style="@style/style_shadow_main_back"/>
+        <View style="@style/style_shadow"/>
 
         <!--<LinearLayout-->
         <!--style="@style/style_message_center_content">-->

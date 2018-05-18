@@ -21,6 +21,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -51,6 +52,19 @@
             <include
                 layout="@layout/layout_city_select"
                 app:ac="@{ac}"/>
+
+            <include
+                layout="@layout/layout_near_car_list"
+                app:ac="@{ac}"/>
+
+            <View
+                android:id="@+id/view_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:background="#99000000"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView

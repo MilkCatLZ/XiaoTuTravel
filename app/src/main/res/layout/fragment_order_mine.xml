@@ -94,7 +94,7 @@
 
 
             <View
-                style="@style/style_shadow_white"/>
+                style="@style/style_shadow"/>
         </RelativeLayout>
 
 

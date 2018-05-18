@@ -26,7 +26,7 @@
             layout="@layout/layout_title"/>
 
         <View
-            style="@style/style_shadow_main_back"/>
+            style="@style/style_shadow"/>
 
 
         <LinearLayout

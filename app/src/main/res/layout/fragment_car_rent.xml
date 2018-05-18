@@ -143,15 +143,6 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            android:background="#99000000"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
-
         <LinearLayout
             android:id="@+id/view_bottom_sheet"
             android:layout_width="match_parent"

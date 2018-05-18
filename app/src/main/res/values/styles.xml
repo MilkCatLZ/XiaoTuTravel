@@ -112,19 +112,11 @@
         <item name="android:textColor">@drawable/color_home_filter_title</item>
     </style>
 
-
-
-    <style name="style_shadow_white">
+    <style name="style_shadow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>
         <item name="android:background">@drawable/shadow</item>
     </style>
-    <style name="style_shadow_main_back">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2dp</item>
-        <item name="android:background">@drawable/shadow_main_back</item>
-    </style>
-
     <style name="style_indicator_green">
         <item name="android:layout_width">8dp</item>
         <item name="android:layout_height">8dp</item>

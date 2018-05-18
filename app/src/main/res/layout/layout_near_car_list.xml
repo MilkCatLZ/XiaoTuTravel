@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.MainActivity"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.NearCarPresenter"/>
+    </data>
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:background="@android:color/transparent"
+        android:visibleOrGone="@{ac.isNearVisible}"
+        tools:visibility="visible">
+
+
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="13dp">
+
+            <TextView
+                android:id="@+id/txt_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
+                android:onClick="@{()->ac.onNearCityClick()}"
+                android:text="@{ac.nearCityName}"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_primary_14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="南宁"/>
+
+            <View
+                style="@style/line_vertical"
+                android:layout_marginBottom="14dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginTop="14dp"/>
+
+            <EditText
+                android:id="@+id/edt_near_car"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:hint="输入搜索位置"
+                android:singleLine="true"
+                android:textColor="@color/main_color_green"
+                android:textColorHint="#cccccc"
+                android:textSize="@dimen/text_primary_14dp"
+                />
+
+            <View
+                style="@style/line_vertical_cccccc"
+                android:layout_height="17dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->ac.onNearCarClick()}"
+                android:text="取消"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_primary_14dp"/>
+
+        </LinearLayout>
+
+
+        <com.base.widget.UltimateRecyclerView
+            android:id="@+id/recyclerView_near_car_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/top"
+            android:background="@color/main_back"
+            android:bindAdapter="@{presenter.adapter}"
+            app:recyclerviewDefaultSwipeColor="@array/google_colors"
+            app:recyclerviewEmptyView="@layout/error_no_record"
+            app:recyclerviewScrollbars="vertical"
+            tools:listItem="@layout/item_order_take"/>
+
+        <View
+            style="@style/style_shadow"
+            android:layout_below="@id/top"
+            />
+
+    </RelativeLayout>
+</layout>
