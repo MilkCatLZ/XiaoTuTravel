@@ -33,9 +33,9 @@ import shy.car.sdk.travel.user.data.User
 
 @Route(path = "/app/homeActivity")
 class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity() {
-    override fun onCitySelected(get: City) {
+    override fun onCitySelected(city: City) {
         isCitySelectVisible.set(false)
-
+        currentCity.set(city)
     }
 
     override fun onSearchClosed() {
