@@ -11,9 +11,6 @@
             name="ac"
             type="shy.car.sdk.MainActivity"/>
 
-        <variable
-            name="city"
-            type="shy.car.sdk.travel.location.data.City"/>
     </data>
 
 
@@ -42,7 +39,7 @@
             android:layout_marginTop="16dp"
             android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
             android:onClick="@{()->ac.onCityClick()}"
-            android:text="@{city.cityName}"
+            android:text="@{ac.currentCity==null?@string/str_locationg:ac.currentCity.cityName}"
             android:textColor="@color/text_second_primary_666666"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
