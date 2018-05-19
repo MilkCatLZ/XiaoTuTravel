@@ -9,8 +9,8 @@
             type="com.base.util.StringUtils"/>
 
         <variable
-            name="ac"
-            type="shy.car.sdk.MainActivity"/>
+            name="fragment"
+            type="shy.car.sdk.travel.main.ui.MainNearCarListFragment"/>
 
         <variable
             name="presenter"
@@ -23,9 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:background="@android:color/transparent"
-        android:visibleOrGone="@{ac.isNearVisible}"
-        tools:visibility="visible">
+        android:background="@android:color/transparent">
 
 
         <LinearLayout
@@ -43,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:drawableEnd="@drawable/ic_arrow_drop_down_black_18dp"
-                android:onClick="@{()->ac.onNearCityClick()}"
+                android:onClick="@{()->fragment.onCityClick()}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="@dimen/text_primary_14dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +79,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->ac.onNearCarClick()}"
+                android:onClick="@{()->fragment.onCancel()}"
                 android:text="取消"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_primary_14dp"/>

@@ -15,6 +15,9 @@ import com.lianni.mall.location.AmapLocationManager
 import com.lianni.mall.location.AmapOnLocationReceiveListener
 import com.lianni.mall.location.Location
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
@@ -25,14 +28,17 @@ import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
-import shy.car.sdk.travel.rent.data.NearCarList
-import shy.car.sdk.travel.rent.presenter.NearCarPresenter
+import shy.car.sdk.travel.main.ui.MainNearCarListFragment
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.user.data.User
 
 
 @Route(path = "/app/homeActivity")
-class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity() {
+class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
+    override fun onCancelClick() {
+        isNearVisible.set(false)
+    }
+
     override fun onCitySelected(city: City) {
         isCitySelectVisible.set(false)
         currentCity.set(city)
@@ -52,7 +58,6 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
 
     override fun onNearCarClick() {
         isNearVisible.set(!isNearVisible.get())
-        refreshNearCarList()
     }
 
 
@@ -67,8 +72,9 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
     private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
     private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
     var citySelectFragment = MainCitySelectFragment()
+    var nearCarListFragment = MainNearCarListFragment()
 
-    var nearCarListPresenter: NearCarPresenter? = null
+
     var currentCity = ObservableField<City>()
 
 
@@ -87,19 +93,21 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.ac = this
         binding.user = User.instance
-        citySelectFragment.listener = this
+
     }
 
     private fun initPageFragment() {
 
         carRentFragment.nearCarListener = this
         carRentFragment.bottomSheetListener = this
-
+        citySelectFragment.listener = this
+        nearCarListFragment.listener = this
         var transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
         transaction.add(R.id.frame_fragment_content, orderTakeFragment, tag)
         transaction.add(R.id.frame_fragment_content, orderSendFragment, tag)
         transaction.add(R.id.frame_city_select, citySelectFragment, "citySelectFragment")
+        transaction.add(R.id.frame_near_car_list, nearCarListFragment, "nearCarListFragment")
         transaction.hide(orderSendFragment)
         transaction.hide(orderTakeFragment)
         transaction.commit()
@@ -110,13 +118,33 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
     private fun checkPermissi() {
         val per = RxPermissions(this)
         per.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe { granted ->
-                    if (granted) {
-                        refreshLocation()
-                    } else {
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Boolean> {
+                    override fun onComplete() {
 
                     }
-                }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(granted: Boolean) {
+                        if (granted) {
+                            refreshLocation()
+                        } else {
+
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+                })
+        per.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
 
     }
 
@@ -147,7 +175,7 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
     private fun refreshLocation() {
         AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                var city = City(location.name, getCode(location))
+                var city = City(location.city, getCode(location))
                 city.lat = location.latitude
                 city.lng = location.longitude
                 currentCity.set(city)
@@ -214,15 +242,4 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
         isCitySelectVisible.set(true)
     }
 
-
-    private fun refreshNearCarList() {
-        if (nearCarListPresenter == null) {
-            nearCarListPresenter = NearCarPresenter(this, object : NearCarPresenter.CallBack {
-                override fun getListSuccess(list: ArrayList<NearCarList>) {
-                    carRentFragment.getNearCarListSuccess(list)
-                }
-            })
-        }
-        nearCarListPresenter?.getNearList(app.location?.latitude.toString(), app.location?.longitude.toString())
-    }
 }

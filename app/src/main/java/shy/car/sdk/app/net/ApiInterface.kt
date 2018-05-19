@@ -97,6 +97,7 @@ interface ApiInterface {
     @GET("xt/near_List")
     fun getNearList(@Query(ParamsConstant.Lat) lat: String,
                     @Query(ParamsConstant.Lng) lng: String,
+                    @Query(ParamsConstant.KeyWord) keyWord: String,
                     @Query(ParamsConstant.PageIndex) pageIndex: Int,
                     @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<NearCarList>>
 }

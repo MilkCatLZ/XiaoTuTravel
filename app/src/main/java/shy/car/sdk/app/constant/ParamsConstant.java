@@ -13,4 +13,5 @@ public class ParamsConstant {
     public static final String PageSize = "pageSize";
     public static final String Lat = "lat";
     public static final String Lng = "lng";
+    public static final String KeyWord = "keyword";
 }

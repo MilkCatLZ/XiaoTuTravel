@@ -56,9 +56,10 @@ class MainCitySelectFragment : XTBaseFragment() {
         initSearch()
         initCityList()
         getLocation()
-        childFragmentManager.beginTransaction()
-                .add(R.id.frame_search_result, searchResultFragment, "search_result")
-                .commit()
+        val transaction=childFragmentManager.beginTransaction()
+        transaction.add(R.id.frame_search_result, searchResultFragment, "search_result")
+        transaction.hide(searchResultFragment)
+        transaction .commit()
     }
 
     private var searchEditText: TextView? = null
@@ -66,8 +67,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     private fun initSearch() {
 
 
-//        childFragmentManager.beginTransaction()
-//                .hide(searchResultFragment)
+
 
 
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -171,7 +171,7 @@ class MainCitySelectFragment : XTBaseFragment() {
         AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
                 cityNameLocating.set(location.city)
-                currentCity = City(location.name, getCode(location))
+                currentCity = City(location.city, getCode(location))
                 currentCity.lat = location.latitude
                 currentCity.lng = location.longitude
             }

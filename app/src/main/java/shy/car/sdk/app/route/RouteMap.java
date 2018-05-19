@@ -66,11 +66,16 @@ public class RouteMap {
      * shy.car.sdk.travel.dialog.DialogMoneyVerify
      */
     @NotNull
-    public static final String Dialog_Money_Verify = "/dialog/moneyverify";
+    public static final String Dialog_Money_Verify = "/dialog/money_verify";
     /**
      * 交保证金
      */
     @NotNull
     public static final String VerifyMoney = "/money/verify";
+    /**
+     * 站点信息
+     */
+    @NotNull
+    public static final String CarPointDetail = "/rent/car_point_detail";
 
 }

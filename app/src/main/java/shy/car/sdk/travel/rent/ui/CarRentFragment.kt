@@ -20,15 +20,14 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.eventbus.RefreshNearCarList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.BottomSheetDragListener
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
-import shy.car.sdk.travel.interfaces.OnNearListListener
 import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
-import shy.car.sdk.travel.rent.data.NearCarList
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
@@ -39,10 +38,7 @@ import shy.car.sdk.travel.user.data.UserBase
  * 租车
  */
 @Route(path = RouteMap.CarRent)
-class CarRentFragment : XTBaseFragment(), OnNearListListener {
-    override fun getNearCarListSuccess(list: ArrayList<NearCarList>) {
-
-    }
+class CarRentFragment : XTBaseFragment() {
 
     private lateinit var binding: FragmentCarRentBinding
     private lateinit var carRentPresenter: CarRentPresenter
@@ -87,8 +83,8 @@ class CarRentFragment : XTBaseFragment(), OnNearListListener {
         initMap()
         addCarLocation()
         refreshLocation()
+        eventBusDefault.postSticky(RefreshNearCarList())
     }
-
 
     lateinit var bitmap: BitmapDescriptor
     /**

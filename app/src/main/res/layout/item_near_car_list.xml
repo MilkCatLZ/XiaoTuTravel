@@ -24,6 +24,7 @@
         android:layout_height="70dp"
         android:background="@color/_foreground_material_light"
         android:gravity="center_vertical"
+        android:onClick="@{click}"
         android:orientation="horizontal"
         android:paddingEnd="15dp"
         android:paddingStart="15dp">
@@ -50,9 +51,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:layout_weight="1"
                     android:text="小兔科技"
                     android:textColor="@color/text_primary_333333"
                     android:textSize="15sp"/>
