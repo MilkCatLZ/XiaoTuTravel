@@ -55,21 +55,15 @@ class MainCitySelectFragment : XTBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initSearch()
         initCityList()
-        getLocation()
-        val transaction=childFragmentManager.beginTransaction()
+        val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.frame_search_result, searchResultFragment, "search_result")
         transaction.hide(searchResultFragment)
-        transaction .commit()
+        transaction.commit()
     }
 
     private var searchEditText: TextView? = null
 
     private fun initSearch() {
-
-
-
-
-
         search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -135,7 +129,7 @@ class MainCitySelectFragment : XTBaseFragment() {
             indexable_layout.setAdapter(adapter)
             adapter.setDatas(list)
             adapter.setOnItemContentClickListener { _, _, _, entity ->
-//                ToastManager.showShortToast(it, entity.cityName)
+                //                ToastManager.showShortToast(it, entity.cityName)
                 listener?.onCitySelected(entity)
             }
 
@@ -167,7 +161,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     /**
      * 搜索模式下 用于展示搜索的
      */
-    private fun getLocation() {
+    fun getLocation() {
         AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
                 cityNameLocating.set(location.city)
@@ -189,5 +183,10 @@ class MainCitySelectFragment : XTBaseFragment() {
     fun closeSearch() {
         searchEditText?.text = ""
         listener?.onSearchClosed()
+    }
+
+    override fun onRealResume() {
+        super.onRealResume()
+        getLocation()
     }
 }

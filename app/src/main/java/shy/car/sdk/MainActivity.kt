@@ -85,7 +85,6 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
                 .inject(this)
         initBinding()
         initPageFragment()
-
         checkPermissi()
     }
 
@@ -234,12 +233,22 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
                 .navigation()
     }
 
-    fun onNearCityClick() {
-
-    }
-
     fun onCityClick() {
         isCitySelectVisible.set(true)
+        citySelectFragment.getLocation()
+    }
+
+
+    override fun onBackPressed() {
+        when {
+            isNearVisible.get() -> {
+                isNearVisible.set(false)
+            }
+            isCitySelectVisible.get() -> {
+                isCitySelectVisible.set(false)
+            }
+            else -> super.onBackPressed()
+        }
     }
 
 }

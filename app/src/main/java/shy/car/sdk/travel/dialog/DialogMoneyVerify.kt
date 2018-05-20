@@ -29,5 +29,6 @@ class DialogMoneyVerify : XTBaseDialogFragment() {
         ARouter.getInstance()
                 .build(RouteMap.VerifyMoney)
                 .navigation()
+        dismiss()
     }
 }

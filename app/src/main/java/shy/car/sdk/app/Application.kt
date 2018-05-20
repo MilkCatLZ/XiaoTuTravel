@@ -46,8 +46,10 @@ class Application : BaseApplication() {
         initPinYin()
         initAmap()
 
-        EventBus.builder().build()
-        EventBus.getDefault().register(this)
+        EventBus.builder()
+                .build()
+        EventBus.getDefault()
+                .register(this)
 
     }
 
@@ -107,13 +109,13 @@ class Application : BaseApplication() {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(success: LoginSuccess) {
-        EventBus.getDefault().removeStickyEvent(success)
         if (postcard != null && callback != null) {
             callback?.onContinue(postcard)
             postcard = null
             callback = null
         }
     }
+
 }

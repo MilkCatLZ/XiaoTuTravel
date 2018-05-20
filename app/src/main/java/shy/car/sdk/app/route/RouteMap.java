@@ -78,4 +78,10 @@ public class RouteMap {
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
 
+    /**
+     * 租车详情
+     */
+    @NotNull
+    public static final String RentCarDetail = "/rent/rent_car_detail";
+
 }

@@ -371,8 +371,6 @@
 -keep class com.alipay.android.phone.mrpc.core.** {*;}
 -dontwarn com.alipay.android.phone.mrpc.core.**
 
--keep class com.amap.api.mapcore2d.** { *; }
--dontwarn com.amap.api.mapcore2d.**
 #end----------other
 
 #start--------高德地图

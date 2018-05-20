@@ -106,12 +106,6 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     private var listener = object : LoginListener {
         override fun loginSuccess() {
             isLoginSuccess.set(true)
-//            Observable.timer(3, TimeUnit.SECONDS)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe({
-//                        dismiss()
-//                    })
 
             Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
                     .map { i -> 3 - i }
@@ -134,17 +128,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
                         }
                     })
+
         }
 
         override fun loginFailed(e: Throwable) {
             isLoginFailed.set(true)
-//            Observable.timer(3, TimeUnit.SECONDS)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe({
-//                        dismiss()
-//                    })
-
+            //倒计时
             Observable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS)
                     .map { i -> 3 - i }
                     .subscribeOn(Schedulers.io())
@@ -166,16 +155,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
                         }
                     })
+
         }
 
         override fun loginFailed() {
             isLoginFailed.set(true)
-//            Observable.timer(3, TimeUnit.SECONDS)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe({
-//                        dismiss()
-//                    })
+            //倒计时
             Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
                     .map { i -> 3 - i }
                     .subscribeOn(Schedulers.io())

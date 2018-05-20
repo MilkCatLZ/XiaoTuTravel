@@ -7,8 +7,10 @@ import com.base.base.ProgressDialog
 import com.base.util.*
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
@@ -77,12 +79,24 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
             }
 
             override fun onNext(result: String) {
-                processResult(result)
+                if (isLoginSuccess(result)) {
+                    saveLoginState(result)
+                    savePhoneNumCache()
+                    listener?.loginSuccess()
+                    EventBus.getDefault()
+                            .post(LoginSuccess())
+                } else {
+                    listener?.loginFailed()
+                }
             }
 
             override fun onError(e: Throwable) {
                 listener?.loginFailed(e)
                 ProgressDialog.hideLoadingView(context)
+                if (BuildConfig.DEBUG) {
+                    EventBus.getDefault()
+                            .post(LoginSuccess())
+                }
             }
         })
     }
@@ -94,35 +108,35 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
         val error = ErrorManager.managerError(context, ex, R.string.str_verify_failed)
     }
 
-    var d: Disposable?=null
+    var d: Disposable? = null
     /**
      * 获取验证码
      */
     fun getVerify() {
-            ProgressDialog.showLoadingView(context)
-            d?.dispose()
-            ApiManager.instance.toSubscribe(ApiManager.instance.api.gerVerify(phone.get()!!), object : Observer<String> {
-                override fun onComplete() {
-                    ProgressDialog.hideLoadingView(context)
-                }
+        ProgressDialog.showLoadingView(context)
+        d?.dispose()
+        ApiManager.instance.toSubscribe(ApiManager.instance.api.gerVerify(phone.get()!!), object : Observer<String> {
+            override fun onComplete() {
+                ProgressDialog.hideLoadingView(context)
+            }
 
-                override fun onSubscribe(d: Disposable) {
-                    this@VerifyPresenter.d = d
-                }
+            override fun onSubscribe(d: Disposable) {
+                this@VerifyPresenter.d = d
+            }
 
-                override fun onNext(t: String) {
-                    if (StringUtils.isNotEmpty(t)) {
-                        ToastManager.showLongToast(context, "验证码发送成功")
-                        listener?.onGetVerifySuccess()
-                    }
+            override fun onNext(t: String) {
+                if (StringUtils.isNotEmpty(t)) {
+                    ToastManager.showLongToast(context, "验证码发送成功")
+                    listener?.onGetVerifySuccess()
                 }
+            }
 
-                override fun onError(e: Throwable) {
-                    listener?.onGetVerifyError(e)
-                    ProgressDialog.hideLoadingView(context)
+            override fun onError(e: Throwable) {
+                listener?.onGetVerifyError(e)
+                ProgressDialog.hideLoadingView(context)
 
-                }
-            })
+            }
+        })
     }
 
     init {
@@ -133,16 +147,6 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
 
     }
 
-    private fun processResult(result: String) {
-        if (isLoginSuccess(result)) {
-            saveLoginState(result)
-            savePhoneNumCache()
-            listener?.loginSuccess()
-        } else {
-            listener?.loginFailed()
-        }
-    }
-
     private fun savePhoneNumCache() {
         SPCache.saveObject(context, LAST_LOGIN_PHONE, phone)
     }
@@ -150,6 +154,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
     companion object {
         const val LAST_LOGIN_PHONE = "lastLoginPhone"
     }
+
     /**
      * 一般登录
      *

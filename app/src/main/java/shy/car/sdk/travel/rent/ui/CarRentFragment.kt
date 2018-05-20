@@ -16,10 +16,12 @@ import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeQuery
 import com.amap.api.services.geocoder.RegeocodeResult
 import kotlinx.android.synthetic.main.fragment_car_rent.*
-import shy.car.sdk.BuildConfig
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshNearCarList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
@@ -83,6 +85,8 @@ class CarRentFragment : XTBaseFragment() {
         initMap()
         addCarLocation()
         refreshLocation()
+        //通知 shy.car.sdk.travel.main.ui.MainNearCarListFragment中 刷新列表
+        register(this)
         eventBusDefault.postSticky(RefreshNearCarList())
     }
 
@@ -151,14 +155,19 @@ class CarRentFragment : XTBaseFragment() {
     }
 
 
+    private var isRentClick: Boolean = false
+
     /**
      * 租车点击事件
      */
     fun onRentClick() {
         val user = User.instance
-        when (user.isLogin && BuildConfig.DEBUG) {
+        when (user.isLogin) {
             true -> checkPromiseMoneyPay()
-            else -> app.startLoginDialog(null, null)
+            else -> {
+                app.startLoginDialog(null, null)
+                isRentClick = true
+            }
         }
 
     }
@@ -167,19 +176,17 @@ class CarRentFragment : XTBaseFragment() {
      * 租车点击-检查是否认证
      */
     private fun checkPromiseMoneyPay() {
+        //已交保证金
         if (User.instance.promiseMoney == UserBase.PromissState.MONEY_PAYED) {
             ARouter.getInstance()
-                    .build(RouteMap.MessageCenter)
+                    .build(RouteMap.RentCarDetail)
                     .navigation()
         } else {
+            //提示未交保证金
             val dialog = ARouter.getInstance()
                     .build(RouteMap.Dialog_Money_Verify)
                     .navigation() as XTBaseDialogFragment
             dialog.show(fragmentManager, "dialog_money_verify")
-            if (BuildConfig.DEBUG)
-                ARouter.getInstance()
-                        .build(RouteMap.MessageCenter)
-                        .navigation()
         }
     }
 
@@ -211,5 +218,13 @@ class CarRentFragment : XTBaseFragment() {
 
     fun onNearCarClick() {
         nearCarListener?.onNearCarClick()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLoginSuccess(success: LoginSuccess) {
+        if (isRentClick) {
+            isRentClick = false
+            checkPromiseMoneyPay()
+        }
     }
 }
