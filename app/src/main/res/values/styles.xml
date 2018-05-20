@@ -9,6 +9,8 @@
         <item name="android:textColorSecondary">@color/text_second_primary_666666</item>
         <item name="android:textColor">@color/text_primary_333333</item>
         <item name="android:windowBackground">@color/main_back</item>
+        <item name="android:background">@color/main_back</item>
+
     </style>
 
 

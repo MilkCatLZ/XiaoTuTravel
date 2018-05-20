@@ -9,7 +9,6 @@ import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.message.data.MessageList
-import shy.car.sdk.travel.order.mine.data.OrderMineList
 
 /**
  * create by LZ at 2018/05/16

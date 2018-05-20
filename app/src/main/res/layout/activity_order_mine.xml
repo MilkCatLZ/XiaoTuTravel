@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_order_mine"
-        android:name="shy.car.sdk.travel.order.mine.ui.OrderMineFragment"
+        android:name="shy.car.sdk.travel.order.ui.OrderMineFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_order_mine"/>

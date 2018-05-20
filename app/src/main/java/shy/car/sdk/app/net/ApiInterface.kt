@@ -5,9 +5,9 @@ import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.message.data.MessageList
-import shy.car.sdk.travel.order.mine.data.OrderMineList
-import shy.car.sdk.travel.order.send.data.OrderSendList
-import shy.car.sdk.travel.order.take.data.OrderList
+import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.send.data.OrderSendList
+import shy.car.sdk.travel.take.data.OrderList
 import shy.car.sdk.travel.rent.data.NearCarList
 
 

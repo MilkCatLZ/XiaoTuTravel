@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.order.mine.presenter
+package shy.car.sdk.travel.take.presenter
 
 import android.content.Context
 import com.base.databinding.DataBindingItemClickAdapter
@@ -8,23 +8,22 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.order.mine.data.OrderMineList
+import shy.car.sdk.travel.take.data.OrderList
 
-class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getListSuccess(list: ArrayList<OrderMineList>)
-        fun getListError(e: Throwable)
+        fun getListSuccess(list: ArrayList<OrderList>)
     }
 
-    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<OrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {})
     var pageSize = 10
     var pageIndex = 1
 
     init {
-        val list = ArrayList<OrderMineList>()
+        val list = ArrayList<OrderList>()
         for (i in 1..9) {
-            list.add(OrderMineList())
+            list.add(OrderList())
         }
 
         adapter.setItems(list, 1)
@@ -45,7 +44,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrdreMineList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderMineList>>{
+        ApiManager.instance.api.getTakeOrderList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderList>>{
             override fun onComplete() {
 
             }
@@ -54,12 +53,12 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
             }
 
-            override fun onNext(t: ArrayList<OrderMineList>) {
+            override fun onNext(t: ArrayList<OrderList>) {
                 callBack.getListSuccess(t)
             }
 
             override fun onError(e: Throwable) {
-                callBack.getListError(e)
+
             }
         })
     }

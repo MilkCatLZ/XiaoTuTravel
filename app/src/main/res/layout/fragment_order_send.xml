@@ -11,7 +11,7 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.order.send.presenter.OrderSendPresenter"/>
+            type="shy.car.sdk.travel.send.presenter.OrderSendPresenter"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout

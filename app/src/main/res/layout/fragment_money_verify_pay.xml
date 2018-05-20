@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils"/>
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/main_back"
+                  android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/layout_title"
+                app:title="@{@string/str_money_verify}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:text="保证金明细"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_second_primary_12dp"/>
+        </RelativeLayout>
+
+        <View style="@style/style_shadow"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height=""></LinearLayout>
+    </LinearLayout>
+</layout>

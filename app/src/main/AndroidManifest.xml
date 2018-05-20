@@ -71,7 +71,7 @@
             android:name=".travel.wallet.ui.WalletActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".travel.order.mine.ui.OrderMineActivity"
+            android:name="shy.car.sdk.travel.order.ui.OrderMineActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".travel.setting.ui.SettingActivity"
@@ -98,6 +98,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".travel.message.ui.MessageCenterActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".travel.pay.ui.MoneyVerifyPayActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -1,39 +1,40 @@
-package shy.car.sdk.travel.order.take.ui
+package shy.car.sdk.travel.order.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableInt
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.FragmentOrderTakeBinding
-import shy.car.sdk.travel.order.take.data.OrderList
-import shy.car.sdk.travel.order.take.presenter.OrderTakePresenter
+import shy.car.sdk.databinding.FragmentOrderMineBinding
+import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.presenter.OrderMinePresenter
 
 /**
- * create by LZ at 2018/05/11
- * 首页-接单
+ * create by lz at 2018/05/15
+ * 我的订单
  */
-@Route(path = RouteMap.OrderTake)
-class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
-    override fun getPrecenter(): BasePresenter? {
-        return presenter
-    }
+class OrderMineFragment : XTBaseUltimateRecyclerViewFragment() {
+    lateinit var binding: FragmentOrderMineBinding
+    lateinit var presenter: OrderMinePresenter
 
-
-    lateinit var binding: FragmentOrderTakeBinding
+    val checkedTab = ObservableInt(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
-            presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
-                override fun getListSuccess(list: ArrayList<OrderList>) {
+            presenter = OrderMinePresenter(it, object : OrderMinePresenter.CallBack {
+                override fun getListError(e: Throwable) {
+                    refreshOrLoadMoreComplete()
+                    checkHasMore()
+                }
+
+                override fun getListSuccess(list: ArrayList<OrderMineList>) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
                 }
@@ -50,22 +51,25 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_take, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_mine, null, false)
+        binding.fragment = this
+        binding.presenter = presenter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.presenter = presenter
-    }
 
-    lateinit var presenter: OrderTakePresenter
+    }
 
 
     override fun getFragmentName(): String {
-        return "首页-接单"
+        return "我的订单"
     }
 
+    override fun getPrecenter(): BasePresenter? {
+        return presenter
+    }
 
     override fun refresh() {
         presenter.refresh()
@@ -80,12 +84,16 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     override fun getUltimateRecyclerView(): UltimateRecyclerView {
-        return binding.recyclerViewOrderTake
+        return binding.recyclerViewOrderMine
     }
 
     override fun getAdapter(): DataBindingAdapter<*> {
         return presenter.adapter
     }
 
+    fun checkChange(i: Int) {
+        checkedTab.set(i)
+        onRefresh()
+    }
 
 }

@@ -18,11 +18,11 @@ public class RouteMap {
      */
     public static final String Verify = "/user/verify";
     /**
-     * shy.car.sdk.travel.order.take.ui.OrderTakeFragment
+     * shy.car.sdk.travel.take.ui.OrderTakeFragment
      */
     public static final String OrderTake = "/order/take";
     /**
-     * shy.car.sdk.travel.order.take.ui.OrderTakeFragment
+     * shy.car.sdk.travel.take.ui.OrderTakeFragment
      */
     public static final String OrderSend = "/order/send";
     /**
@@ -48,7 +48,7 @@ public class RouteMap {
     @NotNull
     public static final String KeFu = "/kefu/main";
     /**
-     * shy.car.sdk.travel.order.mine.ui.OrderMineActivity
+     * shy.car.sdk.travel.order.ui.OrderMineActivity
      */
     @NotNull
     public static final String OrderMine = "/order/mine";

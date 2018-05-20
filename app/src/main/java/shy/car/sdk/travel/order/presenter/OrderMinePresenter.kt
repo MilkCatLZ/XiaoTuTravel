@@ -1,7 +1,6 @@
-package shy.car.sdk.travel.order.send.presenter
+package shy.car.sdk.travel.order.presenter
 
 import android.content.Context
-import android.view.View
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -9,33 +8,23 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.order.send.data.OrderSendList
+import shy.car.sdk.travel.order.data.OrderMineList
 
-/**
- * 发货首页
- */
-class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getListSuccess(list: ArrayList<OrderSendList>)
+        fun getListSuccess(list: ArrayList<OrderMineList>)
         fun getListError(e: Throwable)
     }
 
-
-
-    var adapter: DataBindingItemClickAdapter<OrderSendList> =DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, object:View.OnClickListener{
-        override fun onClick(v: View?) {
-
-        }
-
-    })
+    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {})
     var pageSize = 10
     var pageIndex = 1
 
     init {
-        val list = ArrayList<OrderSendList>()
+        val list = ArrayList<OrderMineList>()
         for (i in 1..9) {
-            list.add(OrderSendList())
+            list.add(OrderMineList())
         }
 
         adapter.setItems(list, 1)
@@ -56,7 +45,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrderSendList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderSendList>>{
+        ApiManager.instance.api.getOrdreMineList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderMineList>>{
             override fun onComplete() {
 
             }
@@ -65,7 +54,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
 
             }
 
-            override fun onNext(t: ArrayList<OrderSendList>) {
+            override fun onNext(t: ArrayList<OrderMineList>) {
                 callBack.getListSuccess(t)
             }
 

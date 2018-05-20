@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.order.take.data
+package shy.car.sdk.travel.take.data
 
 import android.databinding.BaseObservable
 

@@ -14,4 +14,5 @@
     <string name="str_message">活动消息</string>
     <string name="str_message_center">消息中心</string>
     <string name="str_locationg">正在定位</string>
+    <string name="str_money_verify">保证金</string>
 </resources>

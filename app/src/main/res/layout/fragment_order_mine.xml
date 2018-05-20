@@ -11,11 +11,11 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.order.mine.presenter.OrderMinePresenter"/>
+            type="shy.car.sdk.travel.order.presenter.OrderMinePresenter"/>
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.order.mine.ui.OrderMineFragment"/>
+            type="shy.car.sdk.travel.order.ui.OrderMineFragment"/>
     </data>
 
     <LinearLayout
@@ -102,11 +102,11 @@
             android:id="@+id/recyclerView_order_mine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:background="@color/main_back"
             android:bindAdapter="@{presenter.adapter}"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            android:layout_marginTop="5dp"
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"

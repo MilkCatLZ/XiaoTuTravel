@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.order.mine.ui
+package shy.car.sdk.travel.order.ui
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route

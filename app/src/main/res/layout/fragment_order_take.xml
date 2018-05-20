@@ -10,7 +10,7 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.order.take.presenter.OrderTakePresenter"/>
+            type="shy.car.sdk.travel.take.presenter.OrderTakePresenter"/>
     </data>
 
     <LinearLayout

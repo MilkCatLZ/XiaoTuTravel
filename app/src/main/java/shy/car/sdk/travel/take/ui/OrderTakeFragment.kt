@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.order.send.ui
+package shy.car.sdk.travel.take.ui
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -12,33 +12,32 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.FragmentOrderSendBinding
-import shy.car.sdk.travel.order.send.data.OrderSendList
-import shy.car.sdk.travel.order.send.presenter.OrderSendPresenter
+import shy.car.sdk.databinding.FragmentOrderTakeBinding
+import shy.car.sdk.travel.take.data.OrderList
+import shy.car.sdk.travel.take.presenter.OrderTakePresenter
 
 /**
  * create by LZ at 2018/05/11
+ * 首页-接单
  */
-@Route(path = RouteMap.OrderSend)
-class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
-    override fun getFragmentName(): String {
-        return "首页-发货"
-    }
-
-    lateinit var presenter: OrderSendPresenter
+@Route(path = RouteMap.OrderTake)
+class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     override fun getPrecenter(): BasePresenter? {
         return presenter
     }
 
-    private val callBack = object : OrderSendPresenter.CallBack {
-        override fun getListError(e: Throwable) {
-            refreshOrLoadMoreComplete()
-            checkHasMore()
-        }
 
-        override fun getListSuccess(list: ArrayList<OrderSendList>) {
-            refreshOrLoadMoreComplete()
-            checkHasMore()
+    lateinit var binding: FragmentOrderTakeBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.let {
+            presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
+                override fun getListSuccess(list: ArrayList<OrderList>) {
+                    refreshOrLoadMoreComplete()
+                    checkHasMore()
+                }
+            })
         }
     }
 
@@ -50,16 +49,8 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.let { presenter = OrderSendPresenter(it, callBack) }
-    }
-
-
-    lateinit var binding: FragmentOrderSendBinding
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_send, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_take, null, false)
         return binding.root
     }
 
@@ -67,6 +58,14 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
     }
+
+    lateinit var presenter: OrderTakePresenter
+
+
+    override fun getFragmentName(): String {
+        return "首页-接单"
+    }
+
 
     override fun refresh() {
         presenter.refresh()
@@ -81,11 +80,12 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     override fun getUltimateRecyclerView(): UltimateRecyclerView {
-        return binding.recyclerViewOrderSend
+        return binding.recyclerViewOrderTake
     }
 
     override fun getAdapter(): DataBindingAdapter<*> {
         return presenter.adapter
     }
+
 
 }
