@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="p"
-            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.rent.ui.CarRentFragment"/>
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
     </data>
 
 
@@ -45,7 +45,7 @@
                     <RadioButton
                         style="@style/style_wm.car"
                         android:checked="true"
-                        android:text="全部车型"/>
+                        android:text="全部车型" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -54,7 +54,7 @@
 
                     <RadioButton
                         style="@style/style_wm.car"
-                        android:text="小兔EQ1"/>
+                        android:text="小兔EQ1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -63,7 +63,7 @@
 
                     <RadioButton
                         style="@style/style_wm.car"
-                        android:text="小兔EQ2"/>
+                        android:text="小兔EQ2" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -72,7 +72,7 @@
 
                     <RadioButton
                         style="@style/style_wm.car"
-                        android:text="小兔EQ3"/>
+                        android:text="小兔EQ3" />
                 </LinearLayout>
 
                 <RelativeLayout
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_more_horiz_black_18dp"/>
+                        android:src="@drawable/ic_more_horiz_black_18dp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -97,16 +97,16 @@
                 <com.amap.api.maps.MapView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"
-                    android:onClick="@{()->fragment.onNearCarClick()}"
                     android:layout_marginTop="150dp"
-                    android:src="@drawable/icon_site"/>
+                    android:onClick="@{()->fragment.onNearCarClick()}"
+                    android:src="@drawable/icon_site" />
 
 
                 <ImageView
@@ -116,32 +116,41 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="200dp"
                     android:onClick="@{()->fragment.refreshLocation()}"
-                    android:src="@drawable/icon_locat"/>
+                    android:src="@drawable/icon_locat" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/edt_zoom"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="10"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:text="10" />
 
                     <Button
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:onClick="@{()->fragment.changeZoom()}"
-                        android:text="修改缩放级别"/>
+                        android:text="修改缩放级别" />
 
                 </LinearLayout>
             </RelativeLayout>
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/view_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="#99000000"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
         <LinearLayout
             android:id="@+id/view_bottom_sheet"
@@ -153,13 +162,13 @@
             <include
                 layout="@layout/layout_car_rent_bottomsheet"
                 app:fragment="@{fragment}"
-                app:p="@{p}"/>
+                app:p="@{p}" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onClick"
-                android:text="点击跳转"/>
+                android:text="点击跳转" />
         </LinearLayout>
 
 

@@ -158,11 +158,6 @@ public class UserBase extends BaseObservable {
     
     @Bindable
     public String getPhone() {
-        if (BuildConfig.DEBUG) {
-            if (StringUtils.isEmpty(phone)) {
-                return "18677766655";
-            }
-        }
         return phone;
     }
     

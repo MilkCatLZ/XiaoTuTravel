@@ -21,6 +21,7 @@ import shy.car.sdk.app.net.XTRetrofitInterface
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
+import shy.car.sdk.travel.user.data.User
 
 class Application : BaseApplication() {
 

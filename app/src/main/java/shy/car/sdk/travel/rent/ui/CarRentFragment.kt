@@ -25,7 +25,6 @@ import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshNearCarList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
-import shy.car.sdk.travel.interfaces.BottomSheetDragListener
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.City
@@ -46,7 +45,6 @@ class CarRentFragment : XTBaseFragment() {
     private lateinit var carRentPresenter: CarRentPresenter
 
     var nearCarListener: NearCarOpenListener? = null
-    var bottomSheetListener: BottomSheetDragListener? = null
     var locationRefreshListener: MapLocationRefreshListener? = null
 
     private val callBack = object : CarRentPresenter.CallBack {}
@@ -74,7 +72,7 @@ class CarRentFragment : XTBaseFragment() {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                bottomSheetListener?.onBottomSheetStateChange(bottomSheet, slideOffset)
+                view_back.alpha = slideOffset
             }
         })
         return binding.root
@@ -121,7 +119,7 @@ class CarRentFragment : XTBaseFragment() {
         var myLocationStyle = MyLocationStyle().myLocationIcon(bitmap)
                 .anchor(0.5f, 0.5f)
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW)
-        myLocationStyle.interval(10000)
+        myLocationStyle.interval(60000)
         map.map.setMyLocationStyle(myLocationStyle)
         map.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
 
@@ -131,7 +129,6 @@ class CarRentFragment : XTBaseFragment() {
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         binding.map.onDestroy()
-        bottomSheetListener = null
         nearCarListener = null
         super.onDestroy()
     }

@@ -26,8 +26,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_verify.*
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
+import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentVerifyBinding
 import shy.car.sdk.travel.login.presenter.LoginListener
@@ -107,21 +109,23 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         override fun loginSuccess() {
             isLoginSuccess.set(true)
 
-            Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
+            Observable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS)
                     .map { i -> 3 - i }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Long> {
                         override fun onComplete() {
                             dismiss()
+                            EventBus.getDefault()
+                                    .post(LoginSuccess())
                         }
 
                         override fun onSubscribe(d: Disposable) {
-
+                            disposable = d
                         }
 
                         override fun onNext(t: Long) {
-                            txt_login_failed.text = "登录成功$t"
+                            txt_login_success.text = "登录成功...$t"
                         }
 
                         override fun onError(e: Throwable) {
@@ -144,11 +148,11 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                         }
 
                         override fun onSubscribe(d: Disposable) {
-
+                            disposable = d
                         }
 
                         override fun onNext(t: Long) {
-                            txt_login_failed.text = "登录失败，请重试$t"
+                            txt_login_failed.text = "登录失败，请重试...$t"
                         }
 
                         override fun onError(e: Throwable) {
@@ -171,7 +175,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                         }
 
                         override fun onSubscribe(d: Disposable) {
-
+                            disposable = d
                         }
 
                         override fun onNext(t: Long) {
@@ -192,6 +196,11 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             activity?.let { ToastManager.showLongToast(it, "获取验证码失败，请重试") }
         }
     }
+    var disposable: Disposable? = null
+    override fun onDestroy() {
+        disposable?.dispose()
+        super.onDestroy()
+    }
 
     /**
      * 输入监听
@@ -203,6 +212,9 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                 nextEditText()
             }
             if (currentVerifyNum.get() == 3 && StringUtils.isNotEmpty(edt_verify_3.text)) {
+                var verify = edt_verify_0.text.toString() + edt_verify_1.text.toString() + edt_verify_2.text.toString() + edt_verify_3.text.toString()
+                presenter.verify.set(verify)
+                presenter.phone.set(phone)
                 presenter.login()
                 isLogining.set(true)
             }
@@ -347,8 +359,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     }
 
     override fun dismiss() {
-        super.dismiss()
         d?.dispose()
+        super.dismiss()
     }
 
     fun back() {

@@ -81,15 +81,6 @@
                     android:layout_height="match_parent"/>
             </LinearLayout>
 
-
-            <View
-                android:id="@+id/view_back"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0"
-                android:background="#99000000"
-                android:focusable="false"
-                android:focusableInTouchMode="false"/>
         </RelativeLayout>
 
         <android.support.design.widget.NavigationView

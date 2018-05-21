@@ -1,12 +1,17 @@
 package shy.car.sdk.travel.login.presenter
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.*
+import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
@@ -15,6 +20,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
+import java.util.concurrent.TimeUnit
 
 interface LoginListener {
     fun loginSuccess()
@@ -71,7 +77,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
         var observer = ApiManager.instance.api.login(verify.get()!!)
         ApiManager.instance.toSubscribe(observer, object : Observer<String> {
             override fun onComplete() {
-                ProgressDialog.hideLoadingView(context)
+//                    ProgressDialog.hideLoadingView(context)
             }
 
             override fun onSubscribe(d: Disposable) {
@@ -83,19 +89,26 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                     saveLoginState(result)
                     savePhoneNumCache()
                     listener?.loginSuccess()
-                    EventBus.getDefault()
-                            .post(LoginSuccess())
                 } else {
                     listener?.loginFailed()
                 }
             }
 
             override fun onError(e: Throwable) {
-                listener?.loginFailed(e)
-                ProgressDialog.hideLoadingView(context)
-                if (BuildConfig.DEBUG) {
-                    EventBus.getDefault()
-                            .post(LoginSuccess())
+
+                if (shy.car.sdk.BuildConfig.DEBUG) {
+                    if ("1234".equals(verify.get())) {
+                        User.instance.access_token = "sdklflkjlksjdf"
+                        User.instance.uid = 1985632
+                        User.instance.nickName = "小兔出行"
+                        User.instance.phone = phone.get()
+                        User.instance.status = 1
+                        listener?.loginSuccess()
+                    }else{
+                        listener?.loginFailed(e)
+                    }
+                } else {
+                    listener?.loginFailed(e)
                 }
             }
         })

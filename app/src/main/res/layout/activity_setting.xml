@@ -11,6 +11,10 @@
         <variable
             name="ac"
             type="shy.car.sdk.travel.setting.ui.SettingActivity"/>
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User"/>
     </data>
 
     <LinearLayout
@@ -39,7 +43,7 @@
 
             <TextView
                 style="@style/style_setting_nav_hint"
-                android:text="17755565656"/>
+                android:text="@{user.phone}"/>
 
             <ImageView
                 style="@style/style_setting_nav_arrow"

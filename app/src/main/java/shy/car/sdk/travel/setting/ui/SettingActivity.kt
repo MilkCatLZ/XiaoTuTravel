@@ -8,8 +8,10 @@ import com.base.base.ProgressDialog
 import com.base.util.FileManager
 import com.base.util.ToastManager
 import com.base.util.Version
+import com.base.webview.DeviceUtils
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -38,6 +40,7 @@ class SettingActivity : XTBaseActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_setting)
         binding.ac = this
         version.set(Version.getVersion(this))
+        showCache()
     }
 
 

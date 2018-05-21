@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityMainBinding
-import shy.car.sdk.travel.interfaces.BottomSheetDragListener
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.City
@@ -34,7 +33,7 @@ import shy.car.sdk.travel.user.data.User
 
 
 @Route(path = "/app/homeActivity")
-class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
+class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
     override fun onCancelClick() {
         isNearVisible.set(false)
     }
@@ -51,11 +50,6 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
     override fun onLocationChange(city: City) {
         currentCity.set(city)
     }
-
-    override fun onBottomSheetStateChange(bottomSheet: View, slideOffset: Float) {
-        binding.viewBack.alpha = slideOffset
-    }
-
     override fun onNearCarClick() {
         isNearVisible.set(!isNearVisible.get())
     }
@@ -98,7 +92,6 @@ class MainActivity : BottomSheetDragListener, NearCarOpenListener, MapLocationRe
     private fun initPageFragment() {
 
         carRentFragment.nearCarListener = this
-        carRentFragment.bottomSheetListener = this
         citySelectFragment.listener = this
         nearCarListFragment.listener = this
         var transaction = supportFragmentManager.beginTransaction()

@@ -5,15 +5,15 @@
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
     </data>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/main_back"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
             <include
                 layout="@layout/layout_title"
-                app:title="@{@string/str_money_verify}"/>
+                app:title="@{@string/str_money_verify}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,13 +31,79 @@
                 android:layout_marginEnd="10dp"
                 android:text="保证金明细"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp"/>
+                android:textSize="@dimen/text_second_primary_12dp" />
         </RelativeLayout>
 
-        <View style="@style/style_shadow"/>
+        <View style="@style/style_shadow" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></LinearLayout>
+            android:layout_height="200dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥999.99"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="45sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未缴纳"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_car_type"
+            style="@style/style_money_verify_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                style="@style/style_money_verify_title"
+                android:drawableStart="@drawable/icon_wallet_discount"
+                android:text="车型" />
+
+            <TextView
+                style="@style/style_money_verify_hint"
+                android:text="选择车型" />
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:id="@+id/layout_pay_method"
+            style="@style/style_money_verify_content">
+
+            <TextView
+                style="@style/style_money_verify_title"
+                android:drawableStart="@drawable/icon_wallet_payment"
+                android:text="支付方式" />
+
+            <TextView
+                style="@style/style_money_verify_hint"
+                android:text="选择支付方式" />
+
+            <ImageView
+                style="@style/style_setting_nav_arrow"
+                android:src="@drawable/login_return" />
+        </LinearLayout>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_primary_14dp"
+            android:background="@drawable/back_button_main_green_corner_2dp"
+            android:layout_height="49dp" />
     </LinearLayout>
 </layout>
