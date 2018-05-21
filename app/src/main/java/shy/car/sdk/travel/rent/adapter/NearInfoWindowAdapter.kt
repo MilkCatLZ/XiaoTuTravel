@@ -4,8 +4,8 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.View
-import com.amap.api.maps2d.AMap
-import com.amap.api.maps2d.model.Marker
+import com.amap.api.maps.AMap
+import com.amap.api.maps.model.Marker
 import shy.car.sdk.R
 import shy.car.sdk.databinding.ItemNearInfoWindowBinding
 

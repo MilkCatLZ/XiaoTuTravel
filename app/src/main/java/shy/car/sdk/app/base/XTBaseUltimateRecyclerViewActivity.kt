@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.base.base.BaseUltimateRecyclerViewActivity
 import com.base.util.StringUtils
-import com.umeng.message.PushAgent
 import shy.car.sdk.R
 import shy.car.sdk.app.Application
 
@@ -25,7 +24,7 @@ abstract class XTBaseUltimateRecyclerViewActivity : BaseUltimateRecyclerViewActi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        PushAgent.getInstance(this).onAppStart()
+//        PushAgent.getInstance(this).onAppStart()
     }
 
     override fun onResume() {

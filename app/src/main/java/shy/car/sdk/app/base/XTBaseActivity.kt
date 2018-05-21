@@ -9,7 +9,6 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import com.base.util.StringUtils
-import com.umeng.message.PushAgent
 import shy.car.sdk.R
 import shy.car.sdk.app.Application
 import shy.car.sdk.app.presenter.BasePresenter
@@ -38,7 +37,7 @@ open class XTBaseActivity : com.base.base.BaseActivity<Application>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        PushAgent.getInstance(this).onAppStart()
+//        PushAgent.getInstance(this).onAppStart()
     }
 
     override fun startActivity(intent: Intent) {

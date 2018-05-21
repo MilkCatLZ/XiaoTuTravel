@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.maps2d.CameraUpdateFactory
-import com.amap.api.maps2d.model.*
+import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.*
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.geocoder.GeocodeResult
 import com.amap.api.services.geocoder.GeocodeSearch
