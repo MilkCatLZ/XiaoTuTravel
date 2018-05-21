@@ -1,165 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils" />
+            type="com.base.util.StringUtils"/>
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.pay.ui.MoneyVerifyPayFragment" />
+            type="shy.car.sdk.travel.pay.ui.MoneyVerifyPayFragment"/>
+
+        <variable
+            name="car"
+            type="shy.car.sdk.travel.rent.data.CarSelectInfo"/>
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User"/>
     </data>
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_back"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include
-                layout="@layout/layout_title"
-                app:title="@{@string/str_money_verify}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:text="保证金明细"
-                android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp" />
-        </RelativeLayout>
-
-        <View style="@style/style_shadow" />
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/_foreground_material_light"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:background="@color/main_back"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥999.99"
-                android:textColor="@color/text_primary_333333"
-                android:textSize="45sp" />
+                <include
+                    layout="@layout/layout_title"
+                    app:title="@{@string/str_money_verify}"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="未缴纳"
-                android:textColor="@color/text_third_primary_999999"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:text="保证金明细"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_second_primary_12dp"/>
+            </RelativeLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_car_type"
-            style="@style/style_money_verify_content"
-
-            android:layout_marginTop="7dp">
-
-            <TextView
-                style="@style/style_money_verify_title"
-                android:drawableStart="@drawable/icon_wallet_discount"
-                android:text="车型" />
-
-            <TextView
-                style="@style/style_money_verify_hint"
-                android:text="选择车型" />
-
-            <ImageView
-                style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return" />
-        </LinearLayout>
-
-        <View style="@style/line_horizontal" />
-
-        <LinearLayout
-            android:id="@+id/layout_pay_method"
-            style="@style/style_money_verify_content"
-            android:onClick="@{()->fragment.onSelectPayClick()}">
-
-            <TextView
-                style="@style/style_money_verify_title"
-                android:drawableStart="@drawable/icon_wallet_payment"
-                android:text="支付方式" />
-
-            <TextView
-                style="@style/style_money_verify_hint"
-                android:text="选择支付方式" />
-
-            <ImageView
-                style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/back_button_main_green_corner"
-            android:gravity="center"
-            android:text="支付保证金"
-            android:textColor="@color/_foreground_material_light"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/style_verify_money_pay_hint"
-                android:text="温馨提示:" />
+            <View style="@style/style_shadow"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_height="200dp"
+                android:background="@color/_foreground_material_light"
+                android:gravity="center"
+                android:orientation="vertical">
+
 
                 <TextView
-                    style="@style/style_verify_money_pay_hint"
-                    android:text="1.基础用车需缴纳" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥999.99"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="45sp"/>
 
                 <TextView
-                    style="@style/style_verify_money_pay_hint"
-                    android:text="￥999.00"
-                    android:textColor="@color/main_color_red" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.promiseMoneyState?@string/str_verify_money_already_pay:@string/str_verify_money_no_pay}"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_car_type"
+                android:onClick="@{()->fragment.onSelectCarTypeClick()}"
+                style="@style/style_money_verify_content"
+
+                android:layout_marginTop="7dp">
 
                 <TextView
-                    style="@style/style_verify_money_pay_hint"
-                    android:text="元的违章保证金" />
+                    style="@style/style_money_verify_title"
+                    android:drawableStart="@drawable/icon_wallet_discount"
+                    android:text="车型"/>
+
+                <TextView
+                    style="@style/style_money_verify_hint"
+                    android:text="选择车型"/>
+
+                <ImageView
+                    style="@style/style_setting_nav_arrow"
+                    android:src="@drawable/login_return"/>
+            </LinearLayout>
+
+            <View style="@style/line_horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/layout_pay_method"
+                style="@style/style_money_verify_content"
+                android:onClick="@{()->fragment.onSelectPayClick()}">
+
+                <TextView
+                    style="@style/style_money_verify_title"
+                    android:drawableStart="@drawable/icon_wallet_payment"
+                    android:text="支付方式"/>
+
+                <TextView
+                    style="@style/style_money_verify_hint"
+                    android:text="选择支付方式"/>
+
+                <ImageView
+                    style="@style/style_setting_nav_arrow"
+                    android:src="@drawable/login_return"/>
             </LinearLayout>
 
             <TextView
-                style="@style/style_verify_money_pay_hint"
-                android:layout_marginTop="5dp"
-                android:text="2.保证金可申请退回，保证金不能用于抵扣用车费用" />
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/back_button_main_green_corner"
+                android:gravity="center"
+                android:text="支付保证金"
+                android:textColor="@color/_foreground_material_light"
+                android:textSize="16sp"/>
 
-            <TextView
-                style="@style/style_verify_money_pay_hint"
-                android:layout_marginTop="8dp"
-                android:text="3.保证金可申请退回期间无法下单用车" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/style_verify_money_pay_hint"
-                android:layout_marginTop="8dp"
-                android:text="4.申请提交后15个工作日审核无违章，保证金将退回原支付账户" />
+                <TextView
+                    style="@style/style_verify_money_pay_hint"
+                    android:text="温馨提示:"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/style_verify_money_pay_hint"
+                        android:text="1.基础用车需缴纳"/>
+
+                    <TextView
+                        style="@style/style_verify_money_pay_hint"
+                        android:text="￥999.00"
+                        android:textColor="@color/main_color_red"/>
+
+                    <TextView
+                        style="@style/style_verify_money_pay_hint"
+                        android:text="元的违章保证金"/>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_verify_money_pay_hint"
+                    android:layout_marginTop="5dp"
+                    android:text="2.保证金可申请退回，保证金不能用于抵扣用车费用"/>
+
+                <TextView
+                    style="@style/style_verify_money_pay_hint"
+                    android:layout_marginTop="8dp"
+                    android:text="3.保证金可申请退回期间无法下单用车"/>
+
+                <TextView
+                    style="@style/style_verify_money_pay_hint"
+                    android:layout_marginTop="8dp"
+                    android:text="4.申请提交后15个工作日审核无违章，保证金将退回原支付账户"/>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </layout>

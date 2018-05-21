@@ -85,9 +85,16 @@ public class RouteMap {
     public static final String RentCarDetail = "/rent/rent_car_detail";
 
     /**
-     * 租车详情
+     * 支付方式选择
+     * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
      */
     @NotNull
     public static final String PaySelect = "/pay/select";
+    /**
+     * 选择车辆
+     * shy.car.sdk.travel.rent.ui.CarTypeSelectActivity
+     */
+    @NotNull
+    public static final String CarTypeSelect = "/common/car_type_select";
 
 }

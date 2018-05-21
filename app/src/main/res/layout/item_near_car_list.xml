@@ -9,7 +9,7 @@
             type="com.base.util.StringUtils"/>
 
         <variable
-            name="car"
+            name="near"
             type="shy.car.sdk.travel.rent.data.NearCarList"/>
 
         <variable

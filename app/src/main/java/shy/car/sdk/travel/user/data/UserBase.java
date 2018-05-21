@@ -5,10 +5,8 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.base.util.StringUtils;
 
 import shy.car.sdk.BR;
-import shy.car.sdk.BuildConfig;
 
 
 /**
@@ -74,18 +72,28 @@ public class UserBase extends BaseObservable {
      */
     @JSONField(name = "msg_remind")
     private int msgRemind;
+    
     /**
      * 保证金缴纳：1：已缴纳，2：未缴纳
      */
     @JSONField(name = "promise_money")
-    private int promiseMoney;
+    private double promiseMoney;
+    
+    /**
+     * 保证金缴纳：1：已缴纳，2：未缴纳
+     */
+    @Bindable
+    public boolean getPromiseMoneyState() {
+        return promiseMoney > 0;
+    }
+    
     
     @Bindable
-    public int getPromiseMoney() {
+    public double getPromiseMoney() {
         return promiseMoney;
     }
     
-    public void setPromiseMoney(int promiseMoney) {
+    public void setPromiseMoney(double promiseMoney) {
         this.promiseMoney = promiseMoney;
         notifyPropertyChanged(BR.promiseMoney);
     }

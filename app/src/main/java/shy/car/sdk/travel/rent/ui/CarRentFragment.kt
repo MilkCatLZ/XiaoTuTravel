@@ -31,7 +31,6 @@ import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
-import shy.car.sdk.travel.user.data.UserBase
 
 
 /**
@@ -174,7 +173,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun checkPromiseMoneyPay() {
         //已交保证金
-        if (User.instance.promiseMoney == UserBase.PromissState.MONEY_PAYED) {
+        if (User.instance.promiseMoneyState) {
             ARouter.getInstance()
                     .build(RouteMap.RentCarDetail)
                     .navigation()

@@ -10,7 +10,6 @@ import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.rent.data.CarSelectInfo
-import shy.car.sdk.travel.rent.ui.CarSelectFragment
 
 /**
  * create by LZ at 2018/05/21

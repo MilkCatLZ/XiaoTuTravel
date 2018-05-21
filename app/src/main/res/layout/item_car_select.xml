@@ -1,37 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
 
         <variable
             name="car"
-            type="shy.car.sdk.travel.rent.data.CarSelectInfo" />
+            type="shy.car.sdk.travel.rent.data.CarSelectInfo"/>
 
         <variable
             name="click"
-            type="android.view.View.OnClickListener" />
+            type="android.view.View.OnClickListener"/>
     </data>
 
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_height="170dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/back_main_green_4dp"
-        android:gravity="center_vertical"
         android:onClick="@{click}"
-        android:orientation="horizontal"
-        android:paddingEnd="15dp"
-        android:paddingStart="15dp"
         android:tag="@{car}">
 
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bg_car" />
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/bg_car"/>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="小兔EQ1车型"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="15sp"
+            tools:text="小兔EQ1车型"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
+            android:text="999.99元"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="15sp"
+            tools:text="999.99元"/>
+
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="27dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/back_car_select"
+            android:gravity="center"
+            android:text="选择"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_primary_14dp"/>
     </RelativeLayout>
 
 </layout>

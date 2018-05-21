@@ -18,17 +18,11 @@ import shy.car.sdk.travel.rent.presenter.CarSelectPresenter
  * create by LZ at 2018/05/21
  * 选择车辆类型
  */
-class CarSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPresenter.CallBack {
+class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPresenter.CallBack {
     override fun onCarSelected(carSelectInfo: CarSelectInfo) {
-        listener?.onCarSelected(carSelectInfo)
+        eventBusDefault.post(carSelectInfo)
         finish()
     }
-
-    interface CarSelectListener {
-        fun onCarSelected(carSelectInfo: CarSelectInfo)
-    }
-
-    var listener: CarSelectListener? = null
 
     lateinit var binding: FragmentCarSelectBinding
     lateinit var presenter: shy.car.sdk.travel.rent.presenter.CarSelectPresenter
