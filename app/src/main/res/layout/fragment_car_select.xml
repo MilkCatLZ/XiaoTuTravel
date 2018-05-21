@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils" />
+
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.CarSelectPresenter"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_collapseMode="parallax">
+
+        <com.base.widget.UltimateRecyclerView
+            android:id="@+id/recyclerView_car_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/txt_history"
+            android:background="@color/main_back"
+            android:bindAdapter="@{presenter.adapter}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:recyclerviewDefaultSwipeColor="@array/google_colors"
+            app:recyclerviewEmptyView="@layout/error_no_record"
+            app:recyclerviewScrollbars="vertical"
+            tools:listItem="@layout/item_order_take" />
+
+
+    </LinearLayout>
+
+
+</layout>

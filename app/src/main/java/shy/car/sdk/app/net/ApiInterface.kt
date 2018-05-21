@@ -6,6 +6,7 @@ import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.rent.data.CarSelectInfo
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.OrderList
 import shy.car.sdk.travel.rent.data.NearCarList
@@ -50,7 +51,7 @@ interface ApiInterface {
      * JsonString：{"phone":"","password":""}
      */
     @GET("xt/city")
-    fun getCityList(): Observable<java.util.ArrayList<City>>
+    fun getCityList(): Observable<ArrayList<City>>
 
     /**
      * 获取接单列表
@@ -58,7 +59,7 @@ interface ApiInterface {
      */
     @GET("xt/takeOrderList")
     fun getTakeOrderList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderList>>
+                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<OrderList>>
 
     /**
      * 获取发货列表
@@ -66,7 +67,7 @@ interface ApiInterface {
      */
     @GET("xt/orderSendList")
     fun getOrderSendList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderSendList>>
+                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<OrderSendList>>
 
     /**
      * 获取发货列表
@@ -74,7 +75,7 @@ interface ApiInterface {
      */
     @GET("xt/orderMineList")
     fun getOrdreMineList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<OrderMineList>>
+                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<OrderMineList>>
 
     /**
      * 检查更新
@@ -89,7 +90,7 @@ interface ApiInterface {
      */
     @GET("xt/message")
     fun getMessageList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                       @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<MessageList>>
+                       @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<MessageList>>
 
     /**
      * 附近车辆列表
@@ -99,5 +100,11 @@ interface ApiInterface {
                     @Query(ParamsConstant.Lng) lng: String,
                     @Query(ParamsConstant.KeyWord) keyWord: String,
                     @Query(ParamsConstant.PageIndex) pageIndex: Int,
-                    @Query(ParamsConstant.PageSize) pageSize: Int): Observable<java.util.ArrayList<NearCarList>>
+                    @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<NearCarList>>
+
+    /**
+     * 附近车辆列表
+     */
+    @GET("xt/car_list")
+    fun getCarList(): Observable<ArrayList<CarSelectInfo>>
 }
