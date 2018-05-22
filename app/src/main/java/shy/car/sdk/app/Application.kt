@@ -46,12 +46,16 @@ class Application : BaseApplication() {
         initRouter()
         initPinYin()
         initAmap()
-
+        initUserCache()
         EventBus.builder()
                 .build()
         EventBus.getDefault()
                 .register(this)
 
+    }
+
+    private fun initUserCache() {
+        User.initUserCache(this)
     }
 
     private fun initAmap() {
@@ -117,6 +121,7 @@ class Application : BaseApplication() {
             postcard = null
             callback = null
         }
+        User.saveUserState(this)
     }
 
 }

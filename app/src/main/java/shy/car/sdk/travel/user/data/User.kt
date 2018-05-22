@@ -23,7 +23,7 @@ class User private constructor() : UserBase() {
     companion object {
         @get:JSONField(serialize = false)
         val instance = User()
-        internal val LIANNI_USER = "lianni:user"
+        internal val UserKey = "app://user"
         private val key = "qpelakfjgjfkdlsd"
 
         //region 逻辑相关
@@ -38,7 +38,7 @@ class User private constructor() : UserBase() {
             var uJson: String? = null
             try {
 
-                uJson = AesUtil.decrypt(key, SPCache.getObject<Any>(context, LIANNI_USER, String::class.java)!!.toString())
+                uJson = AesUtil.decrypt(key, SPCache.getObject<Any>(context, UserKey, String::class.java)!!.toString())
             } catch (e: Exception) {
 
             }
@@ -68,7 +68,7 @@ class User private constructor() : UserBase() {
                 //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
                 //            uJson = JSONObject.toJSONString(user);
                 uJson = AesUtil.encrypt(key, JSONObject.toJSONString(instance))
-                SPCache.saveObject(context, LIANNI_USER, uJson)
+                SPCache.saveObject(context, UserKey, uJson)
                 User.instance.notifyPropertyChanged(BR.login)
             } catch (e: Exception) {
 
@@ -85,7 +85,7 @@ class User private constructor() : UserBase() {
                 //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
                 //            uJson = JSONObject.toJSONString(user);
                 uJson = AesUtil.encrypt(key, JSONObject.toJSONString(user))
-                SPCache.saveObject(context, LIANNI_USER, uJson)
+                SPCache.saveObject(context, UserKey, uJson)
                 copyUser(user)
                 //            PushManager.deleteAlias(context, user.getUid());
                 User.instance.notifyPropertyChanged(BR.login)

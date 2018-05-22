@@ -100,10 +100,10 @@
             android:name=".travel.message.ui.MessageCenterActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".travel.pay.ui.MoneyVerifyPayActivity"
+            android:name=".travel.pay.ui.PromiseMoneyPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".travel.rent.ui.CarTypeSelectActivity"
+            android:name=".travel.pay.ui.CarTypeSelectActivity"
             android:screenOrientation="portrait"/>
     </application>
 

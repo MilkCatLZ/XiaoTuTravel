@@ -7,7 +7,7 @@ import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
 
 @Route(path = RouteMap.VerifyMoney)
-class MoneyVerifyPayActivity:XTBaseActivity() {
+class PromiseMoneyPayActivity:XTBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

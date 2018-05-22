@@ -7,11 +7,13 @@
 
         <variable
             name="car"
-            type="shy.car.sdk.travel.rent.data.CarSelectInfo"/>
+            type="shy.car.sdk.travel.pay.data.CarSelectInfo"/>
 
         <variable
             name="click"
             type="android.view.View.OnClickListener"/>
+
+        <import type="shy.car.sdk.app.LNTextUtil"/>
     </data>
 
 
@@ -38,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="小兔EQ1车型"
+            android:text="@{car.carName}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="15sp"
             tools:text="小兔EQ1车型"
@@ -50,7 +52,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="30dp"
-            android:text="999.99元"
+            android:text="@{LNTextUtil.getPriceText(car.promiseMoneyPrice)+@string/str_yuan_c}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="15sp"
             tools:text="999.99元"/>

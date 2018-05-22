@@ -7,19 +7,22 @@
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="shy.car.sdk.app.LNTextUtil"/>
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.pay.ui.MoneyVerifyPayFragment"/>
-
-        <variable
-            name="car"
-            type="shy.car.sdk.travel.rent.data.CarSelectInfo"/>
+            type="shy.car.sdk.travel.pay.ui.PromiseMoneyPayFragment"/>
 
         <variable
             name="user"
             type="shy.car.sdk.travel.user.data.User"/>
+
+        <import
+            type="shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.pay.data.PromiseMoneyPayPresenter"/>
     </data>
 
 
@@ -65,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥999.99"
+                    android:text="@{util.getPriceText(user.promiseMoney)}"
                     android:textColor="@color/text_primary_333333"
                     android:textSize="45sp"/>
 
@@ -92,7 +95,7 @@
 
                 <TextView
                     style="@style/style_money_verify_hint"
-                    android:text="选择车型"/>
+                    android:text="@{fragment.carSelect.carName}"/>
 
                 <ImageView
                     style="@style/style_setting_nav_arrow"
@@ -113,7 +116,7 @@
 
                 <TextView
                     style="@style/style_money_verify_hint"
-                    android:text="选择支付方式"/>
+                    android:text="@{fragment.payName}"/>
 
                 <ImageView
                     style="@style/style_setting_nav_arrow"
@@ -121,6 +124,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/txt_payButton"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:layout_margin="10dp"

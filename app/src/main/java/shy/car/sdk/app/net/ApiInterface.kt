@@ -6,7 +6,7 @@ import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.rent.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.OrderList
 import shy.car.sdk.travel.rent.data.NearCarList

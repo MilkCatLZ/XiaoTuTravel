@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.rent.presenter
+package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
 import com.base.databinding.DataBindingItemClickAdapter
@@ -9,7 +9,7 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.rent.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.CarSelectInfo
 
 /**
  * create by LZ at 2018/05/21
@@ -31,7 +31,26 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
     init {
         val list = ArrayList<CarSelectInfo>()
         for (i in 1..9) {
-            list.add(CarSelectInfo())
+            var car = CarSelectInfo()
+            when (i % 3) {
+                0 -> {
+                    car.carName = "小兔e1"
+                    car.id = i.toString()
+                    car.promiseMoneyPrice = 999.0
+                }
+                1 -> {
+                    car.carName = "小兔e2"
+                    car.id = i.toString()
+                    car.promiseMoneyPrice = 1999.0
+                }
+                2 -> {
+                    car.carName = "小兔e3"
+                    car.id = i.toString()
+                    car.promiseMoneyPrice = 2999.0
+                }
+            }
+
+            list.add(car)
         }
 
         adapter.setItems(list, 1)

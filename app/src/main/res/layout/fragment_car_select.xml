@@ -12,19 +12,21 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.rent.presenter.CarSelectPresenter"/>
+            type="shy.car.sdk.travel.pay.presenter.CarSelectPresenter" />
     </data>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_collapseMode="parallax">
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_car_type_select}"/>
+            app:title="@{@string/str_car_type_select}" />
+
+        <View style="@style/style_shadow" />
 
         <com.base.widget.UltimateRecyclerView
             android:id="@+id/recyclerView_car_select"
@@ -35,7 +37,7 @@
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"
-            tools:listItem="@layout/item_order_take" />
+            tools:listItem="@layout/item_car_select" />
 
 
     </LinearLayout>

@@ -69,12 +69,13 @@
             </LinearLayout>
 
             <CheckBox
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/check_pay_action"
                 android:button="@null"
-                android:checked="true" />
+                android:clickable="false"
+                android:checked="@{fragment.payMethod==fragment.Companion.WeChatPay}" />
         </LinearLayout>
 
         <View style="@style/line_horizontal" />
@@ -121,10 +122,11 @@
             <CheckBox
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:clickable="false"
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/check_pay_action"
                 android:button="@null"
-                android:checked="false" />
+                android:checked="@{fragment.payMethod==fragment.Companion.AliPay}"/>
         </LinearLayout>
     </LinearLayout>
 

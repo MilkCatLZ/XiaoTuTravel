@@ -92,7 +92,7 @@ public class RouteMap {
     public static final String PaySelect = "/pay/select";
     /**
      * 选择车辆
-     * shy.car.sdk.travel.rent.ui.CarTypeSelectActivity
+     * shy.car.sdk.travel.pay.ui.CarTypeSelectActivity
      */
     @NotNull
     public static final String CarTypeSelect = "/common/car_type_select";

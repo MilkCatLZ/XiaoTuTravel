@@ -16,6 +16,7 @@
     <string name="str_locationg">正在定位</string>
     <string name="str_money_verify">保证金</string>
     <string name="str_yuan">￥</string>
+    <string name="str_yuan_c">元</string>
     <string name="str_verify_money_already_pay">已缴纳</string>
     <string name="str_verify_money_no_pay">未缴纳</string>
     <string name="str_car_type_select">选择车辆</string>

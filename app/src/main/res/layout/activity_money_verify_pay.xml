@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_money_verify_money"
-        android:name="shy.car.sdk.travel.pay.ui.MoneyVerifyPayFragment"
+        android:name="shy.car.sdk.travel.pay.ui.PromiseMoneyPayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.rent.ui
+package shy.car.sdk.travel.pay.ui
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -11,8 +11,8 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.databinding.FragmentCarSelectBinding
-import shy.car.sdk.travel.rent.data.CarSelectInfo
-import shy.car.sdk.travel.rent.presenter.CarSelectPresenter
+import shy.car.sdk.travel.pay.data.CarSelectInfo
+import shy.car.sdk.travel.pay.presenter.CarSelectPresenter
 
 /**
  * create by LZ at 2018/05/21
@@ -25,7 +25,7 @@ class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPre
     }
 
     lateinit var binding: FragmentCarSelectBinding
-    lateinit var presenter: shy.car.sdk.travel.rent.presenter.CarSelectPresenter
+    lateinit var presenter: CarSelectPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,7 @@ class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPre
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_select, null, false)
+        binding.presenter = presenter
         return binding.root
     }
 

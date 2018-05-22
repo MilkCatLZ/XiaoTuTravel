@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_car_type_select"
-        android:name="shy.car.sdk.travel.rent.ui.CarTypeSelectFragment"
+        android:name="shy.car.sdk.travel.pay.ui.CarTypeSelectFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_car_select"/>

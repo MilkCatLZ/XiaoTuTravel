@@ -1,6 +1,8 @@
 package shy.car.sdk.travel.pay.dialog
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -32,7 +34,6 @@ class PayMethodSelectDialog : BottomSheetDialogFragment() {
     }
 
     var listener: onPayClick? = null
-
     lateinit var binding: DialogPayMethodSelectBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_pay_method_select, null, false)
@@ -41,13 +42,17 @@ class PayMethodSelectDialog : BottomSheetDialogFragment() {
     }
 
 
+    var payMethod = ObservableInt(WeChatPay)
+
     fun onAliPayClick() {
+        payMethod.set(AliPay)
         listener?.onPaySelect(AliPay)
         dismiss()
 
     }
 
     fun onWeChatPayClick() {
+        payMethod.set(WeChatPay)
         listener?.onPaySelect(WeChatPay)
         dismiss()
     }
