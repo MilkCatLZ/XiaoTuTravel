@@ -48,6 +48,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
+                    android:onClick="@{()->fragment.gotoPromiseMoneyDetail()}"
                     android:text="保证金明细"
                     android:textColor="@color/text_third_primary_999999"
                     android:textSize="@dimen/text_second_primary_12dp" />

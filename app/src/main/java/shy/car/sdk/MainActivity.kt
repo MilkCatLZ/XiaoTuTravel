@@ -11,13 +11,17 @@ import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
+import com.base.util.ToastManager
 import com.lianni.mall.location.AmapLocationManager
 import com.lianni.mall.location.AmapOnLocationReceiveListener
 import com.lianni.mall.location.Location
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
@@ -30,8 +34,12 @@ import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearCarListFragment
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.user.data.User
+import java.util.concurrent.TimeUnit
 
-
+/**
+ * create by LZ at 2018/05/22
+ * 首页
+ */
 @Route(path = "/app/homeActivity")
 class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
     override fun onCancelClick() {
@@ -50,6 +58,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     override fun onLocationChange(city: City) {
         currentCity.set(city)
     }
+
     override fun onNearCarClick() {
         isNearVisible.set(!isNearVisible.get())
     }
@@ -189,36 +198,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     }
 
 
-    fun onUserPicClick() {
-        ARouter.getInstance()
-                .build(RouteMap.UserDetail)
-                .navigation()
-        app.startLoginDialog(null, null)
-    }
 
-    fun onWalletClick() {
-        ARouter.getInstance()
-                .build(RouteMap.Wallet)
-                .navigation()
-    }
-
-    fun onSettingClick() {
-        ARouter.getInstance()
-                .build(RouteMap.Setting)
-                .navigation()
-    }
-
-    fun onKeFuClick() {
-        ARouter.getInstance()
-                .build(RouteMap.KeFu)
-                .navigation()
-    }
-
-    fun onOrderClick() {
-        ARouter.getInstance()
-                .build(RouteMap.OrderMine)
-                .navigation()
-    }
 
     fun onMessageClick() {
         ARouter.getInstance()
@@ -231,6 +211,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
         citySelectFragment.getLocation()
     }
 
+    var isBackPress = false
 
     override fun onBackPressed() {
         when {
@@ -240,8 +221,22 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
             isCitySelectVisible.get() -> {
                 isCitySelectVisible.set(false)
             }
-            else -> super.onBackPressed()
-        }
-    }
+            else -> {
 
+                if (isBackPress) {
+                    super.onBackPressed()
+                } else {
+                    isBackPress = true;
+                    ToastManager.showShortToast(this@MainActivity, "再次点击返回退出");
+                    Observable.timer(2, TimeUnit.SECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(Consumer<Long> {
+                                isBackPress = false
+                            })
+                }
+            }
+        }
+
+    }
 }

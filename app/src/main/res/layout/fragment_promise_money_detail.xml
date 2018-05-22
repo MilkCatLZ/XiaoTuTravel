@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils" />
+
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.pay.presenter.PromiseMoneyDetailPresenter" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_promise_money_detail}" />
+
+        <View style="@style/style_shadow" />
+
+        <com.base.widget.UltimateRecyclerView
+            android:id="@+id/recyclerView_car_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_back"
+            android:bindAdapter="@{presenter.adapter}"
+            app:recyclerviewDefaultSwipeColor="@array/google_colors"
+            app:recyclerviewEmptyView="@layout/error_no_record"
+            app:recyclerviewScrollbars="vertical"
+            tools:listItem="@layout/item_car_select" />
+
+
+    </LinearLayout>
+
+
+</layout>

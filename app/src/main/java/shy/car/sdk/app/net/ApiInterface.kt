@@ -7,6 +7,7 @@ import shy.car.sdk.travel.location.data.City
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.pay.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.OrderList
 import shy.car.sdk.travel.rent.data.NearCarList
@@ -107,4 +108,9 @@ interface ApiInterface {
      */
     @GET("xt/car_list")
     fun getCarList(): Observable<ArrayList<CarSelectInfo>>
+    /**
+     * 保证金记录
+     */
+    @GET("xt/promise_detail_list")
+    fun getPromiseMoneyDetailList(): Observable<ArrayList<PromiseMoneyDetail>>
 }

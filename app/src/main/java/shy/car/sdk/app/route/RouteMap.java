@@ -33,10 +33,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-    
+
     @NotNull
     public static final String UserDetail = "/user/detail";
-    
+
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -96,5 +96,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarTypeSelect = "/common/car_type_select";
+    /**
+     * 保证金明细
+     * shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity
+     */
+    @NotNull
+    public static final String PromiseMoneyDetail = "/common/promise_money_detail";
 
 }

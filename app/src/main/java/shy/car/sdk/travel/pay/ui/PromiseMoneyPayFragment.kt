@@ -72,6 +72,12 @@ class PromiseMoneyPayFragment : XTBaseFragment(), PayMethodSelectDialog.onPayCli
 
     @Subscribe
     fun onCarReceive(carSelectInfo: CarSelectInfo) {
-       carSelect.set(carSelectInfo)
+        carSelect.set(carSelectInfo)
+    }
+
+    fun gotoPromiseMoneyDetail() {
+        ARouter.getInstance()
+                .build(RouteMap.PromiseMoneyDetail)
+                .navigation()
     }
 }
