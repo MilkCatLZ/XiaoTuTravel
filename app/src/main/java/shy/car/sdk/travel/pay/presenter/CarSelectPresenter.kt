@@ -30,7 +30,7 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     init {
         val list = ArrayList<CarSelectInfo>()
-        for (i in 1..9) {
+        for (i in 0..9) {
             var car = CarSelectInfo()
             when (i % 3) {
                 0 -> {
