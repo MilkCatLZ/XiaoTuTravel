@@ -32,14 +32,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/bg_car"/>
+            android:src="@drawable/icon_small_car"/>
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="23dp"
             android:text="@{car.carName}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="15sp"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="23dp"
             android:text="@{LNTextUtil.getPriceText(car.promiseMoneyPrice)+@string/str_yuan_c}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="15sp"
