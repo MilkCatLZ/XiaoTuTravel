@@ -15,10 +15,14 @@ import shy.car.sdk.databinding.DialogMoneyVerifyBinding
 import shy.car.sdk.databinding.DialogUserVerifyHintBinding
 import shy.car.sdk.travel.take.data.TakeOrderList
 
+/**
+ * create by LZ at 2018/05/23
+ * 提示未认证
+ */
 class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
     lateinit var binding: DialogUserVerifyHintBinding
-//    @Autowired(name = ObjectSerialisation.object1)
-//    var takeOrderList: TakeOrderList? = null
+
+    var takeOrderList: TakeOrderList? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_user_verify_hint, null, false)
@@ -28,8 +32,6 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        ARouter.getInstance()
-//                .inject(this)
     }
 
     fun onConfirmClick() {
@@ -40,10 +42,10 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
     }
 
     fun goDetail() {
-//        ARouter.getInstance()
-//                .build(RouteMap.OrderTakeDetail)
-//                .withObject(ObjectSerialisation.object1, takeOrderList)
-//                .navigation()
+        ARouter.getInstance()
+                .build(RouteMap.OrderTakeDetail)
+                .withObject(ObjectSerialisation.object1, takeOrderList)
+                .navigation()
     }
 
     fun goVerify() {

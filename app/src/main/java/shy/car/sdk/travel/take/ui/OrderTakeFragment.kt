@@ -6,15 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.ObjectSerialisation
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeBinding
 import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.dialog.UserVerifyHintDialogFragment
 import shy.car.sdk.travel.take.presenter.OrderTakePresenter
+import shy.car.sdk.travel.user.data.User
 
 /**
  * create by LZ at 2018/05/11
@@ -34,7 +38,16 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         activity?.let {
             presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
                 override fun onItemClick(takeOrderList: TakeOrderList) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    if (User.instance.isUserVerify()) {
+                        ARouter.getInstance()
+                                .build(RouteMap.OrderTakeDetail)
+                                .withObject(ObjectSerialisation.object1, takeOrderList)
+                                .navigation()
+                    } else {
+                        var userVerifyDialogFragment = UserVerifyHintDialogFragment()
+                        userVerifyDialogFragment.takeOrderList = takeOrderList
+                        userVerifyDialogFragment.show(childFragmentManager, "fragment_user_verify_hint_dialog")
+                    }
                 }
 
                 override fun getListSuccess(list: ArrayList<TakeOrderList>) {

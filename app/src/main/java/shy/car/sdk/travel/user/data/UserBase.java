@@ -80,6 +80,27 @@ public class UserBase extends BaseObservable {
     private double promiseMoney;
 
     /**
+     * 用户实名认证
+     * .1=已认证，0=未认证
+     */
+    @JSONField(name = "user_verify")
+    private int userVerify;
+
+    public boolean isUserVerify() {
+        return getUserVerify() == 1;
+    }
+
+    @Bindable
+    public int getUserVerify() {
+        return userVerify;
+    }
+
+    public void setUserVerify(int userVerify) {
+        this.userVerify = userVerify;
+        notifyPropertyChanged(BR.userVerify);
+    }
+
+    /**
      * 保证金缴纳：1：已缴纳，2：未缴纳
      */
     @Bindable

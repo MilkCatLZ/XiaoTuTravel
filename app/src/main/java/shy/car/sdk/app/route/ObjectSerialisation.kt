@@ -1,12 +1,14 @@
 package shy.car.sdk.app.route
 
 import android.content.Context
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.SerializationService
 import com.alibaba.fastjson.JSONObject
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import java.lang.reflect.Type
 
+@Route(path = "/service/json")
 class ObjectSerialisation : SerializationService {
     companion object {
        const val object1 = "Object1"
