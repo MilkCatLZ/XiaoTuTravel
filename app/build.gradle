@@ -102,6 +102,10 @@ android {
             //开发版本测试后缀
             applicationIdSuffix "develop"
             manifestPlaceholders = DevelopArray
+            ndk {
+                //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
+            }
         }
         Release_ {
             dimension "debug"
@@ -141,8 +145,8 @@ dependencies {
     implementation project(':BaseProject:PhotoGallery')
     implementation project(':Lib_Map')
     implementation project(':Alipay')
-    implementation project(':Lib_Push')
-    implementation project(':Lib_UmengShare')
+//    implementation project(':Lib_Push')
+//    implementation project(':Lib_UmengShare')
 
     implementation 'com.alibaba:arouter-api:1.3.1'
     kapt 'com.alibaba:arouter-compiler:1.1.4'
