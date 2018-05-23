@@ -28,6 +28,7 @@ import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
@@ -161,7 +162,11 @@ class CarRentFragment : XTBaseFragment() {
         when (user.isLogin) {
             true -> checkPromiseMoneyPay()
             else -> {
-                app.startLoginDialog(null, null)
+                app.startLoginDialog(null, null, object : LoginDialogFragment.onDimiss {
+                    override fun onCancel() {
+                        isRentClick = false
+                    }
+                })
                 isRentClick = true
             }
         }

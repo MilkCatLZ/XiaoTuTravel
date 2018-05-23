@@ -95,19 +95,21 @@ class Application : BaseApplication() {
 
     var postcard: Postcard? = null
     var callback: InterceptorCallback? = null
-    fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?) {
+    fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?, listener: LoginDialogFragment.onDimiss? = null) {
         try {
             this.postcard = postcard
             this.callback = callback
             val dialogFragment = ARouter.getInstance().build(RouteMap.Login).greenChannel().navigation() as LoginDialogFragment
+            dialogFragment.listener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_login_dialog")
         } catch (e: Exception) {
         }
     }
 
-    fun startVerifyDialog(phone: String) {
+    fun startVerifyDialog(phone: String, listener: LoginDialogFragment.onDimiss? = null) {
         try {
             val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).navigation() as VerifyDialogFragment
+            dialogFragment.dismissListener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
         } catch (e: Exception) {
         }

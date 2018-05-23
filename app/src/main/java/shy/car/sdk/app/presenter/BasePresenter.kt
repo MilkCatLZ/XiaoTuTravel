@@ -4,6 +4,7 @@ package shy.car.sdk.app.presenter
 import android.content.Context
 import android.databinding.BaseObservable
 import com.base.util.Log
+import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.Application
 
@@ -17,7 +18,7 @@ abstract class BasePresenter(protected var context: Context) : BaseObservable() 
 
     protected var app: Application = context.applicationContext as Application
     private var isPresenterDestroy: Boolean = false
-
+    var disposable: Disposable? = null
 
     /**
      * 主要功能是将presenter注册到eventbus
@@ -56,6 +57,7 @@ abstract class BasePresenter(protected var context: Context) : BaseObservable() 
         EventBus.getDefault()
                 .unregister(this)
         isPresenterDestroy = true
+        disposable?.dispose()
     }
 
 }

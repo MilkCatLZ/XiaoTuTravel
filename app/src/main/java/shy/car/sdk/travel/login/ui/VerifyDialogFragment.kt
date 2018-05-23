@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit
 @Route(path = RouteMap.Verify)
 class VerifyDialogFragment : XTBaseDialogFragment() {
 
+
     /**
      * 当前所处的EditText位置（0~3）
      */
@@ -63,7 +64,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
 
     lateinit var presenter: VerifyPresenter
-
+    var dismissListener: LoginDialogFragment.onDimiss? = null
     @Autowired(name = "phone")
     @JvmField
     var phone: String = ""
@@ -122,7 +123,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Long> {
                         override fun onComplete() {
-                            dismiss()
+                            dismiss(true)
                             EventBus.getDefault()
                                     .post(LoginSuccess())
                         }
@@ -151,7 +152,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Long> {
                         override fun onComplete() {
-                            dismiss()
+                            dismiss(false)
                         }
 
                         override fun onSubscribe(d: Disposable) {
@@ -177,6 +178,16 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             activity?.let { ToastManager.showLongToast(it, "获取验证码失败，请重试") }
         }
     }
+
+    fun dismiss(isSuccess: Boolean) {
+        if (isSuccess) {
+            dismissListener?.onCancel()
+            dismiss()
+        } else {
+            dismiss()
+        }
+    }
+
     var disposable: Disposable? = null
     override fun onDestroy() {
         disposable?.dispose()
@@ -249,7 +260,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     fun back() {
         dismiss()
-        app.startLoginDialog(null, null)
+        app.startLoginDialog(null, null, dismissListener)
+        dismissListener = null
     }
 
     fun getVerify() {

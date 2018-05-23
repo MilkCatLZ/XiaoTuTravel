@@ -45,23 +45,24 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrdreMineList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderMineList>>{
-            override fun onComplete() {
+        ApiManager.instance.api.getOrdreMineList(pageIndex, pageSize)
+                .subscribe(object : Observer<ArrayList<OrderMineList>> {
+                    override fun onComplete() {
 
-            }
+                    }
 
-            override fun onSubscribe(d: Disposable) {
+                    override fun onSubscribe(d: Disposable) {
+                        disposable = d
+                    }
 
-            }
+                    override fun onNext(t: ArrayList<OrderMineList>) {
+                        callBack.getListSuccess(t)
+                    }
 
-            override fun onNext(t: ArrayList<OrderMineList>) {
-                callBack.getListSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                callBack.getListError(e)
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        callBack.getListError(e)
+                    }
+                })
     }
 
     fun getTotal(): Int {

@@ -52,7 +52,6 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
     private lateinit var lat: String
 
     private lateinit var lng: String
-    var disposable: Disposable? = null
     fun getCarList() {
 
         this.lat = lat

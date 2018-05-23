@@ -22,8 +22,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
 
-
-    var adapter: DataBindingItemClickAdapter<OrderSendList> =DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, object:View.OnClickListener{
+    var adapter: DataBindingItemClickAdapter<OrderSendList> = DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, object : View.OnClickListener {
         override fun onClick(v: View?) {
 
         }
@@ -56,23 +55,24 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrderSendList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<OrderSendList>>{
-            override fun onComplete() {
+        ApiManager.instance.api.getOrderSendList(pageIndex, pageSize)
+                .subscribe(object : Observer<ArrayList<OrderSendList>> {
+                    override fun onComplete() {
 
-            }
+                    }
 
-            override fun onSubscribe(d: Disposable) {
+                    override fun onSubscribe(d: Disposable) {
+                        disposable = d
+                    }
 
-            }
+                    override fun onNext(t: ArrayList<OrderSendList>) {
+                        callBack.getListSuccess(t)
+                    }
 
-            override fun onNext(t: ArrayList<OrderSendList>) {
-                callBack.getListSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                callBack.getListError(e)
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        callBack.getListError(e)
+                    }
+                })
     }
 
     fun getTotal(): Int {
@@ -81,4 +81,5 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
         else
             adapter.adapterItemCount
     }
+
 }

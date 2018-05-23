@@ -17,8 +17,9 @@ import shy.car.sdk.app.presenter.BasePresenter
 
 open class XTBaseFragment : BaseFragment<Application>() {
 
-    protected val presenter: BasePresenter?
-        get() = null
+    open fun getPresenter(): BasePresenter? {
+        return null
+    }
 
     override fun getBaseApplicationInterface(): Application {
         return application as Application
@@ -26,22 +27,16 @@ open class XTBaseFragment : BaseFragment<Application>() {
 
     override fun onResume() {
         super.onResume()
-        if (presenter != null) {
-            presenter!!.onResume()
-        }
+        getPresenter()?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        if (presenter != null) {
-            presenter!!.onPause()
-        }
+        getPresenter()?.onPause()
     }
 
     override fun onDestroy() {
-        if (presenter != null) {
-            presenter!!.destroy()
-        }
+        getPresenter()?.destroy()
         super.onDestroy()
     }
 

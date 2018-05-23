@@ -73,7 +73,6 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
     private lateinit var lat: String
 
     private lateinit var lng: String
-    var disposable: Disposable? = null
     fun getCarList() {
 
         this.lat = lat

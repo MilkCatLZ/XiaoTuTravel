@@ -53,7 +53,6 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     private lateinit var lat: String
 
     private lateinit var lng: String
-    var disposable: Disposable? = null
     fun getNearList(lat: String, lng: String) {
 
         this.lat = lat
@@ -96,4 +95,5 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     fun setKeyWord(keyword: String) {
         this.keyWord = keyword
     }
+
 }

@@ -23,7 +23,7 @@ class LocationPresenter(context: Context, callBack: CallBack) : BasePresenter(co
         }
 
         override fun onSubscribe(d: Disposable) {
-
+            disposable = d
         }
 
         override fun onNext(t: ArrayList<City>) {
