@@ -13,17 +13,14 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentLoginBinding
+import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.login.presenter.LoginPresenter
 import shy.car.sdk.travel.login.presenter.VerifyListener
 
 @Route(path = RouteMap.Login)
 class LoginDialogFragment : XTBaseDialogFragment() {
 
-    interface onDimiss {
-        fun onCancel()
-    }
-
-    var listener: onDimiss? = null
+    var listener: onLoginDismiss? = null
 
     lateinit var binding: FragmentLoginBinding
     lateinit var presenter: LoginPresenter

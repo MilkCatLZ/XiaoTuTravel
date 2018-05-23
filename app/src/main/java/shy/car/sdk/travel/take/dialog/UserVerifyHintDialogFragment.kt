@@ -21,7 +21,6 @@ import shy.car.sdk.travel.take.data.TakeOrderList
  */
 class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
     lateinit var binding: DialogUserVerifyHintBinding
-
     var takeOrderList: TakeOrderList? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,28 +33,24 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    fun onConfirmClick() {
-        ARouter.getInstance()
-                .build(RouteMap.VerifyMoney)
-                .navigation()
-        dismiss()
-    }
-
     fun goDetail() {
         ARouter.getInstance()
                 .build(RouteMap.OrderTakeDetail)
-                .withObject(ObjectSerialisation.object1, takeOrderList)
-                .navigation()
+                .withObject("takeOrderList", takeOrderList)
+                .navigation(app)
+        dismissAllowingStateLoss()
     }
 
     fun goVerify() {
         ARouter.getInstance()
                 .build(RouteMap.VerifyUser)
                 .navigation()
+        dismissAllowingStateLoss()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        takeOrderList = null
     }
 
 }

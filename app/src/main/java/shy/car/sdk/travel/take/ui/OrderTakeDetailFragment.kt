@@ -20,9 +20,9 @@ import shy.car.sdk.travel.take.data.TakeOrderList
 @Route(path = RouteMap.OrderTakeDetailFragment)
 class OrderTakeDetailFragment : XTBaseFragment() {
 
-    @Autowired(name = ObjectSerialisation.object1)
+    @Autowired
     @JvmField
-    var takeOrderList: TakeOrderList? = null
+    public var takeOrderList: TakeOrderList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

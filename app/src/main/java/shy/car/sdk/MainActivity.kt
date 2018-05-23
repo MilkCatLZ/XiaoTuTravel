@@ -83,9 +83,6 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //inject
-        ARouter.getInstance()
-                .inject(this)
         initBinding()
         initPageFragment()
         checkPermissi()

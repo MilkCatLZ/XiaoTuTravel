@@ -13,11 +13,12 @@ import shy.car.sdk.travel.take.data.TakeOrderList
 
 /**
  * create by 过期猫粮 at 2018/05/21
- * 选择车辆
  */
 @Route(path = RouteMap.OrderTakeDetail)
-class OrderTakeDetailActivity : XTBaseActivity() {
-    @Autowired(name = ObjectSerialisation.object1)
+open class OrderTakeDetailActivity : XTBaseActivity() {
+
+
+    @Autowired(name = "takeOrderList")
     @JvmField
     var takeOrderList: TakeOrderList? = null
 
@@ -28,8 +29,8 @@ class OrderTakeDetailActivity : XTBaseActivity() {
                 .inject(this)
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderTakeDetailFragment)
-                .withObject(ObjectSerialisation.object1, takeOrderList)
-                .navigation() as Fragment
+                .withObject("takeOrderList", takeOrderList)
+                .navigation() as OrderTakeDetailFragment
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_order_take_detail, fragment, "fragment_order_take_detail")
                 .commitAllowingStateLoss()

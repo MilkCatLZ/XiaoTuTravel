@@ -31,6 +31,7 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentVerifyBinding
+import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.login.presenter.LoginListener
 import shy.car.sdk.travel.login.presenter.VerifyPresenter
 import java.util.concurrent.TimeUnit
@@ -64,7 +65,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
 
     lateinit var presenter: VerifyPresenter
-    var dismissListener: LoginDialogFragment.onDimiss? = null
+    var dismissListener: onLoginDismiss? = null
     @Autowired(name = "phone")
     @JvmField
     var phone: String = ""
@@ -211,11 +212,16 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      */
     private fun lockAndSubmit() {
         if (binding.edtInput.text.length == 4) {
-            var verify = binding.edtInput.text.toString()
-            presenter.verify.set(verify)
-            presenter.phone.set(phone)
-            presenter.login()
-            isLogining.set(true)
+            Observable.timer(1, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        var verify = binding.edtInput.text.toString()
+                        presenter.verify.set(verify)
+                        presenter.phone.set(phone)
+                        presenter.login()
+                        isLogining.set(true)
+                    })
         }
     }
 

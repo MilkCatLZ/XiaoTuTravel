@@ -71,7 +71,7 @@ class User private constructor() : UserBase() {
                 SPCache.saveObject(context, UserKey, uJson)
                 User.instance.notifyPropertyChanged(BR.login)
             } catch (e: Exception) {
-
+                e.printStackTrace()
             }
 
         }

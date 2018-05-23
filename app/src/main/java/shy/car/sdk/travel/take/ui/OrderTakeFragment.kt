@@ -9,12 +9,17 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
+import io.reactivex.Observable
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
+import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.ObjectSerialisation
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeBinding
+import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.take.data.TakeOrderList
 import shy.car.sdk.travel.take.dialog.UserVerifyHintDialogFragment
 import shy.car.sdk.travel.take.presenter.OrderTakePresenter
@@ -30,23 +35,19 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         return presenter
     }
 
-
+    var isGotoDetailClick = false
     lateinit var binding: FragmentOrderTakeBinding
-
+    var takeOrderList: TakeOrderList? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
             presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
                 override fun onItemClick(takeOrderList: TakeOrderList) {
-                    if (User.instance.isUserVerify()) {
-                        ARouter.getInstance()
-                                .build(RouteMap.OrderTakeDetail)
-                                .withObject(ObjectSerialisation.object1, takeOrderList)
-                                .navigation()
+                    this@OrderTakeFragment.takeOrderList = takeOrderList
+                    if (User.instance.isLogin) {
+                        gotoDetailIsLogin()
                     } else {
-                        var userVerifyDialogFragment = UserVerifyHintDialogFragment()
-                        userVerifyDialogFragment.takeOrderList = takeOrderList
-                        userVerifyDialogFragment.show(childFragmentManager, "fragment_user_verify_hint_dialog")
+                        gotoDetailIsNoLogin()
                     }
                 }
 
@@ -55,6 +56,58 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
                     checkHasMore()
                 }
             })
+        }
+        eventBusDefault.register(this)
+    }
+
+    /**
+     * 未登录 查看详情
+     */
+    private fun gotoDetailIsNoLogin() {
+        isGotoDetailClick = true
+        this@OrderTakeFragment.takeOrderList = takeOrderList
+        app.startLoginDialog(null, null, object : onLoginDismiss {
+            override fun onCancel() {
+                isGotoDetailClick = false
+            }
+        })
+    }
+
+    /**
+     * 已登录 查看详情
+     */
+    private fun gotoDetailIsLogin() {
+        if (User.instance.isUserVerify) {
+            ARouter.getInstance()
+                    .build(RouteMap.OrderTakeDetail)
+                    .withObject("takeOrderList", takeOrderList)
+                    .navigation()
+        } else {
+            var userVerifyDialogFragment = UserVerifyHintDialogFragment()
+            userVerifyDialogFragment.takeOrderList = takeOrderList
+            userVerifyDialogFragment.show(childFragmentManager, "fragment_user_verify_hint_dialog")
+        }
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLoginSuccess(success: LoginSuccess) {
+        if (isGotoDetailClick) {
+            isGotoDetailClick = false
+            checkUerVerify()
+        }
+    }
+
+    private fun checkUerVerify() {
+        if (User.instance.isUserVerify) {
+            ARouter.getInstance()
+                    .build(RouteMap.OrderTakeDetail)
+                    .withObject("takeOrderList", takeOrderList)
+                    .navigation()
+        } else {
+            var userVerifyDialogFragment = UserVerifyHintDialogFragment()
+            userVerifyDialogFragment.takeOrderList = takeOrderList
+            userVerifyDialogFragment.show(childFragmentManager, "fragment_user_verify_hint_dialog")
         }
     }
 

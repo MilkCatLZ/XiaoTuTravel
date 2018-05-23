@@ -18,7 +18,7 @@ import java.util.List;
  *         以前写好的一个类暂时先放上来
  */
 public class SPCache {
-    public static final String SETTINGS = "com.lianni.delivery";
+    public static final String SETTINGS = "shy.car.sdk";
     private static final String tag = "SPCache";
     
     /**

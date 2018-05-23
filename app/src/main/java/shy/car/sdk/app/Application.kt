@@ -19,6 +19,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.net.BaseInterceptor
 import shy.car.sdk.app.net.XTRetrofitInterface
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
 import shy.car.sdk.travel.user.data.User
@@ -95,7 +96,7 @@ class Application : BaseApplication() {
 
     var postcard: Postcard? = null
     var callback: InterceptorCallback? = null
-    fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?, listener: LoginDialogFragment.onDimiss? = null) {
+    fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?, listener: onLoginDismiss? = null) {
         try {
             this.postcard = postcard
             this.callback = callback
@@ -106,7 +107,7 @@ class Application : BaseApplication() {
         }
     }
 
-    fun startVerifyDialog(phone: String, listener: LoginDialogFragment.onDimiss? = null) {
+    fun startVerifyDialog(phone: String, listener: onLoginDismiss? = null) {
         try {
             val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).navigation() as VerifyDialogFragment
             dialogFragment.dismissListener = listener

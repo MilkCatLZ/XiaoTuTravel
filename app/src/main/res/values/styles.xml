@@ -42,7 +42,7 @@
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
         <item name="android:textColor">@color/main_color_green</item>
-        <item name="android:textSize">38sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="style_verify_content">
