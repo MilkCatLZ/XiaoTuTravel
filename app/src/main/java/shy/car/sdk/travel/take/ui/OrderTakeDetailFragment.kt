@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.base.util.Log
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.route.ObjectSerialisation
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.take.data.TakeOrderList
 
@@ -28,7 +26,6 @@ class OrderTakeDetailFragment : XTBaseFragment() {
         super.onCreate(savedInstanceState)
         ARouter.getInstance()
                 .inject(this)
-        Log.d(tag, takeOrderList?.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
