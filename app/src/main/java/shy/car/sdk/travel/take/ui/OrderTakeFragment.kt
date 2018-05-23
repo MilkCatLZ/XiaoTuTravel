@@ -13,7 +13,7 @@ import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeBinding
-import shy.car.sdk.travel.take.data.OrderList
+import shy.car.sdk.travel.take.data.TakeOrderList
 import shy.car.sdk.travel.take.presenter.OrderTakePresenter
 
 /**
@@ -33,7 +33,11 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         super.onCreate(savedInstanceState)
         activity?.let {
             presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
-                override fun getListSuccess(list: ArrayList<OrderList>) {
+                override fun onItemClick(takeOrderList: TakeOrderList) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun getListSuccess(list: ArrayList<TakeOrderList>) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
                 }

@@ -102,5 +102,22 @@ public class RouteMap {
      */
     @NotNull
     public static final String PromiseMoneyDetail = "/common/promise_money_detail";
+    /**
+     * 验证用户
+     */
+    @NotNull
+    public static final String VerifyUser = "/user/verify_user";
+    /**
+     * 接单详情
+     * shy.car.sdk.travel.take.ui.OrderTakeDetailActivity
+     */
+    @NotNull
+    public static final String OrderTakeDetail = "/take/take_order_detail";
+    /**
+     * 接单详情fragment
+     * shy.car.sdk.travel.take.ui.OrderTakeDetailFragment
+     */
+    @NotNull
+    public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
 
 }

@@ -2,7 +2,9 @@
 <layout>
 
     <data>
-
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.take.dialog.UserVerifyHintDialogFragment"/>
     </data>
 
 
@@ -32,14 +34,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="22dp"
                 android:layout_marginStart="22dp"
-                android:layout_marginTop="15dp"
-                android:text="您的xxxxxxxxxxxx账号有未支付的订单，请先完成支付"
+                android:layout_marginTop="20dp"
+                android:text="通过认证，即可联系货主赚大钱"
                 android:textColor="@color/text_second_primary_666666"
                 android:textSize="@dimen/text_primary_14dp" />
 
             <View
                 style="@style/line_horizontal"
-                android:layout_marginTop="18dp" />
+                android:layout_marginTop="15dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +52,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="知道了"
+                    android:text="继续浏览"
+                    android:onClick="@{()->fragment.goDetail()}"
                     android:textColor="@color/text_third_primary_999999"
                     android:textSize="@dimen/text_title_16dp" />
 
@@ -61,7 +64,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="去支付"
+                    android:text="去认证"
+                    android:onClick="@{()->fragment.goVerify()}"
                     android:textColor="@color/main_color_green"
                     android:textSize="@dimen/text_title_16dp" />
             </LinearLayout>
