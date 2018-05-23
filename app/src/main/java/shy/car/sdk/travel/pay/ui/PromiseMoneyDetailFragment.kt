@@ -19,13 +19,10 @@ import shy.car.sdk.travel.pay.presenter.PromiseMoneyDetailPresenter
 
 /**
  * create by LZ at 2018/05/21
- * 选择车辆类型
+ * 保证金明细
  */
 class PromiseMoneyDetailFragment : XTBaseUltimateRecyclerViewFragment(), PromiseMoneyDetailPresenter.CallBack {
-    override fun getListSuccess(list: ArrayList<PromiseMoneyDetail>) {
-        refreshOrLoadMoreComplete()
-        checkHasMore()
-    }
+
 
     lateinit var binding: FragmentPromiseMoneyDetailBinding
     lateinit var presenter: PromiseMoneyDetailPresenter
@@ -70,9 +67,13 @@ class PromiseMoneyDetailFragment : XTBaseUltimateRecyclerViewFragment(), Promise
     }
 
     override fun onError(e: Throwable) {
-
+        refreshOrLoadMoreComplete()
+        checkHasMore()
     }
-
+    override fun getListSuccess(list: ArrayList<PromiseMoneyDetail>) {
+        refreshOrLoadMoreComplete()
+        checkHasMore()
+    }
     private fun checkHasMore() {
         if (presenter.hasMore()) {
             setFooterLoading()

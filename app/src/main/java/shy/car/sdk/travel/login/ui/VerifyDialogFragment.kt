@@ -142,7 +142,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
         }
 
-        override fun loginFailed(e: Throwable) {
+        override fun loginFailed(e: Throwable?) {
             isLoginFailed.set(true)
             //倒计时
             Observable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS)
@@ -169,37 +169,11 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
         }
 
-        override fun loginFailed() {
-            isLoginFailed.set(true)
-            //倒计时
-            Observable.intervalRange(0, 3, 0, 1, TimeUnit.SECONDS)
-                    .map { i -> 3 - i }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<Long> {
-                        override fun onComplete() {
-                            dismiss()
-                        }
-
-                        override fun onSubscribe(d: Disposable) {
-                            disposable = d
-                        }
-
-                        override fun onNext(t: Long) {
-                            binding.txtLoginFailed.text = "登录失败，请重试$t"
-                        }
-
-                        override fun onError(e: Throwable) {
-
-                        }
-                    })
-        }
-
         override fun onGetVerifySuccess() {
             startCountDown()
         }
 
-        override fun onGetVerifyError(e: Throwable) {
+        override fun onGetVerifyError(e: Throwable?) {
             activity?.let { ToastManager.showLongToast(it, "获取验证码失败，请重试") }
         }
     }
@@ -212,161 +186,74 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     private fun progressInput(result: String) {
         currentVerifyNum.set(result.length)
-        val array = result.toCharArray().copyOf(4)
+        val array = result.toCharArray()
+                .copyOf(4)
         binding.edtVerify3.text = array[3].toString()
         binding.edtVerify2.text = array[2].toString()
         binding.edtVerify1.text = array[1].toString()
         binding.edtVerify0.text = array[0].toString()
 
-}
-
-//    /**
-//     * 退回前一个EditText
-//     */
-//    private fun forwardEditTextRequestFocus(): EditText {
-//        repeatCount = 1
-//        return when (currentVerifyNum.get()) {
-//            1 -> {
-//                repeatCount = 0
-//                currentVerifyNum.set(0)
-//                binding.edtVerify0.requestFocus()
-//                binding.edtVerify0
-//            }
-//            2 -> {
-//                currentVerifyNum.set(1)
-//                binding.edtVerify1.requestFocus()
-//                binding.edtVerify1
-//            }
-//            3 -> {
-//                currentVerifyNum.set(2)
-//                binding.edtVerify2.requestFocus()
-//                binding.edtVerify2
-//            }
-//            else -> binding.edtVerify0
-//        }
-//    }
-
-//    /**
-//     * 下一个editText获取焦点
-//     */
-//    private fun nextEditText(): EditText {
-//        repeatCount = 1
-//        return when (currentVerifyNum.get()) {
-//            0 -> {
-//                binding.edtVerify1.requestFocus()
-//                currentVerifyNum.set(1)
-//                binding.edtVerify1
-//            }
-//
-//            1 -> {
-//                binding.edtVerify2.requestFocus()
-//                currentVerifyNum.set(2)
-//                binding.edtVerify2
-//            }
-//            2 -> {
-//                binding.edtVerify3.requestFocus()
-//                currentVerifyNum.set(3)
-//                binding.edtVerify3
-//            }
-//            3 -> {
-//                lockAndSubmit()
-//                repeatCount = 0
-//                binding.edtVerify3
-//            }
-//            else -> binding.edtVerify0
-//        }
-//    }
-
-//    private fun currentEditText(): EditText {
-//        return when (currentVerifyNum.get()) {
-//            0 -> binding.edtVerify0
-//            1 -> binding.edtVerify1
-//            2 -> binding.edtVerify2
-//            3 -> binding.edtVerify3
-//            else -> binding.edtVerify0
-//        }
-//    }
-
-/**
- * 当
- */
-//    private fun backEvent() {
-//        //当输入框已经为空，再次按下退格键，删除前一个editText的内容
-//        forwardEditTextRequestFocus().setText("")
-//    }
-
-//    fun touchEvent() {
-//        binding.edtInput.requestFocus()
-//        binding.edtInput.isFocusable = true;
-//        binding.edtInput.isFocusableInTouchMode = true;
-//        var input = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        input.toggleSoftInput(0, InputMethodManager.SHOW_FORCED)
-//    }
-
-/**
- * 提交验证码
- */
-private fun lockAndSubmit() {
-    if (binding.edtInput.text.length == 4) {
-        var verify = binding.edtInput.text.toString()
-        presenter.verify.set(verify)
-        presenter.phone.set(phone)
-        presenter.login()
-        isLogining.set(true)
     }
-}
 
-/**
- * 倒计时
- */
-private fun startCountDown() {
-    Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map { 60 - it }
-            .subscribe(object : Observer<Long> {
-                override fun onComplete() {
-                    binding.txtCountDown.text = "点击重发"
-                    binding.txtCountDown.isEnabled = true
-                }
+    /**
+     * 提交验证码
+     */
+    private fun lockAndSubmit() {
+        if (binding.edtInput.text.length == 4) {
+            var verify = binding.edtInput.text.toString()
+            presenter.verify.set(verify)
+            presenter.phone.set(phone)
+            presenter.login()
+            isLogining.set(true)
+        }
+    }
 
-                override fun onSubscribe(d: Disposable) {
-                    this@VerifyDialogFragment.d = d
-                }
+    /**
+     * 倒计时
+     */
+    private fun startCountDown() {
+        Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map { 60 - it }
+                .subscribe(object : Observer<Long> {
+                    override fun onComplete() {
+                        binding.txtCountDown.text = "点击重发"
+                        binding.txtCountDown.isEnabled = true
+                    }
 
-                @SuppressLint("SetTextI18n")
-                override fun onNext(t: Long) {
-                    binding.txtCountDown.text = "${t}秒后重发"
-                }
+                    override fun onSubscribe(d: Disposable) {
+                        this@VerifyDialogFragment.d = d
+                    }
 
-                override fun onError(e: Throwable) {
-                }
-            })
+                    @SuppressLint("SetTextI18n")
+                    override fun onNext(t: Long) {
+                        binding.txtCountDown.text = "${t}秒后重发"
+                    }
 
-}
+                    override fun onError(e: Throwable) {
+                    }
+                })
 
-private fun setData() {
-    binding.phone = phone
-    binding.edtInput.addTextChangedListener(textWatcher)
-//        binding.edtVerify0.addTextChangedListener(textWatcher)
-//        binding.edtVerify1.addTextChangedListener(textWatcher)
-//        binding.edtVerify2.addTextChangedListener(textWatcher)
-//        binding.edtVerify3.addTextChangedListener(textWatcher)
+    }
 
-}
+    private fun setData() {
+        binding.phone = phone
+        binding.edtInput.addTextChangedListener(textWatcher)
+    }
 
-override fun dismiss() {
-    d?.dispose()
-    super.dismiss()
-}
+    override fun dismiss() {
+        d?.dispose()
+        super.dismiss()
+    }
 
-fun back() {
-    dismiss()
-    app.startLoginDialog(null, null)
-}
+    fun back() {
+        dismiss()
+        app.startLoginDialog(null, null)
+    }
 
-fun getVerify() {
-    presenter.getVerify()
-}
+    fun getVerify() {
+        presenter.getVerify()
+    }
 
 }

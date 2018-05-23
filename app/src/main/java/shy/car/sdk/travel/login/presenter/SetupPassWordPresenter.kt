@@ -17,20 +17,20 @@ import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.util.PassWordEncode
+import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
 
 
 interface SetupPassWordListener {
-    fun loginSuccess()
-    fun loginFailed(e: Throwable)
-    fun loginFailed()
+    fun setPassSuccess()
+    fun setPassError(e: Throwable?)
 }
 
 /**
  *
  * 设置登录密码
  */
-class SetupPassWordPresenter(val listener: LoginListener? = null, context: Context) : BasePresenter(context) {
+class SetupPassWordPresenter(val listener: SetupPassWordListener? = null, context: Context) : BasePresenter(context) {
 
     var phone = ""
     var password = ObservableField<String>("")
@@ -39,21 +39,6 @@ class SetupPassWordPresenter(val listener: LoginListener? = null, context: Conte
      * 手机输入是否正确，true:正确，false:不正确
      */
     var isPasswordCorrect = ObservableBoolean(false)
-
-    /**
-     * 登录/注册的参数
-     *
-     * @return
-     */
-    private val param: String
-        get() {
-            val data = JSON.parseObject("{}")
-
-            data[UserBase.PHONE] = phone
-            data[ParamsConstant.PASSWORD] = PassWordEncode.encodePass(password.get()!!)
-            return data.toString()
-        }
-
 
     /**
      * 登录/注册按钮点击
@@ -81,10 +66,10 @@ class SetupPassWordPresenter(val listener: LoginListener? = null, context: Conte
     }
 
     /**
-     * 登录
+     * 修改密码
      */
     private fun setupPassWord() {
-        var observer = ApiManager.instance.api.setupPassWord(param)
+        var observer = ApiManager.instance.api.setupPassWord(User.instance.uid.toString(), password.get()!!)
         ApiManager.instance.toSubscribe(observer, object : Observer<String> {
             override fun onComplete() {
                 ProgressDialog.hideLoadingView(context)
@@ -99,7 +84,7 @@ class SetupPassWordPresenter(val listener: LoginListener? = null, context: Conte
             }
 
             override fun onError(e: Throwable) {
-                listener?.loginFailed(e)
+                listener?.setPassError(e)
             }
         })
     }
@@ -107,9 +92,9 @@ class SetupPassWordPresenter(val listener: LoginListener? = null, context: Conte
 
     private fun processResult(result: String) {
         if (isSetupSuccess(result)) {
-            listener?.loginSuccess()
+            listener?.setPassSuccess()
         } else {
-            listener?.loginFailed()
+            listener?.setPassError(null)
         }
     }
 

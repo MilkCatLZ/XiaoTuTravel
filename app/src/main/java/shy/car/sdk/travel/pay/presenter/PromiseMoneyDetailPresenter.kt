@@ -21,7 +21,7 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
         fun onError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<PromiseMoneyDetail> = DataBindingItemClickAdapter(R.layout.item_car_select, BR.car, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<PromiseMoneyDetail> = DataBindingItemClickAdapter(R.layout.item_promise_money_detail, BR.car, BR.click, {})
     var pageSize = 50
     var pageIndex = 1
 

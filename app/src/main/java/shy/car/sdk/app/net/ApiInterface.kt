@@ -45,7 +45,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @PUT("xt/password")
-    fun setupPassWord(@Field("") params: String): Observable<String>
+    fun setupPassWord(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.PASSWORD) passWord: String): Observable<String>
 
     /**
      * 获取城市列表
@@ -108,6 +108,7 @@ interface ApiInterface {
      */
     @GET("xt/car_list")
     fun getCarList(): Observable<ArrayList<CarSelectInfo>>
+
     /**
      * 保证金记录
      */

@@ -39,8 +39,8 @@ class Application : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        CrashHandler.getInstance()
-                .init(this, null)
+//        CrashHandler.getInstance()
+//                .init(this, null)
 
         initNetWork()
         initRouter()

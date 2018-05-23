@@ -24,10 +24,9 @@ import java.util.concurrent.TimeUnit
 
 interface LoginListener {
     fun loginSuccess()
-    fun loginFailed(e: Throwable)
-    fun loginFailed()
+    fun loginFailed(e: Throwable?)
     fun onGetVerifySuccess()
-    fun onGetVerifyError(e: Throwable)
+    fun onGetVerifyError(e: Throwable?)
 }
 
 /**
@@ -38,37 +37,6 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
 
     var phone = ObservableField<String>("")
     var verify = ObservableField<String>("")
-
-//    /**
-//     * 手机输入是否正确，true:正确，false:不正确
-//     */
-//    var isPhoneNumCorrect = ObservableBoolean(false)
-
-
-//    /**
-//     * 下一步
-//     */
-//    var onGetVerifyClickListener: OnClickListener = OnClickListener {
-//        if (ClickUtil.canClick() && !User.instance.isLogin && isPhoneNumCorrect.get())
-//            login()
-//    }
-//
-//    /**
-//     * 电话输入框文字检查
-//     */
-//    var phoneTextWatcher: TextWatcher = object : TextWatcher {
-//        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-//
-//        }
-//
-//        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-//
-//        }
-//
-//        override fun afterTextChanged(editable: Editable) {
-//            isPhoneNumCorrect.set(Phone.isMobile(editable.toString()))
-//        }
-//    }
 
     /**
      * 登录
@@ -90,23 +58,30 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                     savePhoneNumCache()
                     listener?.loginSuccess()
                 } else {
-                    listener?.loginFailed()
+                    listener?.loginFailed(null)
                 }
             }
 
             override fun onError(e: Throwable) {
 
                 if (shy.car.sdk.BuildConfig.DEBUG) {
-                    if ("1234".equals(verify.get())) {
-                        User.instance.access_token = "sdklflkjlksjdf"
-                        User.instance.uid = 1985632
-                        User.instance.nickName = "小兔出行"
-                        User.instance.phone = phone.get()
-                        User.instance.status = 1
-                        listener?.loginSuccess()
-                    }else{
-                        listener?.loginFailed(e)
-                    }
+                    Observable.timer(3, TimeUnit.SECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                if ("1234".equals(verify.get())) {
+                                    User.instance.access_token = "sdklflkjlksjdf"
+                                    User.instance.uid = 1985632
+                                    User.instance.nickName = "小兔出行"
+                                    User.instance.phone = phone.get()
+                                    User.instance.status = 1
+                                    listener?.loginSuccess()
+                                } else {
+                                    listener?.loginFailed(e)
+                                }
+                            })
+
+
                 } else {
                     listener?.loginFailed(e)
                 }
