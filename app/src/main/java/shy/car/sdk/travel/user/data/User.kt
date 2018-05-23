@@ -23,7 +23,7 @@ class User private constructor() : UserBase() {
     companion object {
         @get:JSONField(serialize = false)
         val instance = User()
-        internal val UserKey = "app://user"
+        internal val UserKey = "app:users"
         private val key = "qpelakfjgjfkdlsd"
 
         //region 逻辑相关
@@ -45,7 +45,7 @@ class User private constructor() : UserBase() {
 
             if (StringUtils.isNotEmpty(uJson)) {
                 try {
-                    val user = JSON.parseObject(uJson, User::class.java)
+                    val user = JSONObject.parseObject(uJson, User::class.java)
                     copyUser(user)
                 } catch (e: Exception) {
                     e.printStackTrace()
