@@ -8,8 +8,8 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.google.gson.Gson;
 
 import java.util.Map;
 
@@ -17,35 +17,35 @@ import mall.lianni.alipay.PayResult.Result;
 
 
 public class Alipay {
-
+    
     private static Alipay alipay;
-
+    
     public static final Alipay Init(Context context) {
         if (alipay == null) {
             alipay = new Alipay(context);
         }
         return alipay;
     }
-
+    
     public static Alipay getInstance() {
         return alipay;
     }
-
+    
     private Alipay(Context context) {
-
+    
     }
-
+    
     private static Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Alipay.SDK_PAY_FLAG: {
-                    Map<String, String> mapResult= (Map<String, String>) msg.obj;
-
-                    PayResult payResult =new PayResult();
+                    Map<String, String> mapResult = (Map<String, String>) msg.obj;
+                    
+                    PayResult payResult = new PayResult();
                     payResult.setMemo(mapResult.get("memo"));
                     payResult.setResultStatus(mapResult.get("resultSta  tus"));
-                    payResult.setResult(JSONObject.parseObject(mapResult.get("result"), Result.class));
+                    payResult.setResult(new Gson().fromJson(mapResult.get("result"), Result.class));
                     /**
                      * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
                      * detail.htm?spm=0.0.0.0.xdvAU6&treeId=59&articleId=103665&
@@ -76,16 +76,16 @@ public class Alipay {
                             }
                         }
                     }
-
+                    
                     break;
                 }
             }
         }
     };
-
+    
     OnPayCallBack callBack;
-
-
+    
+    
     public interface OnPayCallBack {
         /**
          * 支付成功
@@ -107,10 +107,10 @@ public class Alipay {
         void onPayConfirming(PayResult payResult);
         void onPayCancel(PayResult payResult);
     }
-
-
+    
+    
     public final static int SDK_PAY_FLAG = 1;
-
+    
     /**
      * 支付
      *
@@ -119,25 +119,25 @@ public class Alipay {
      */
     public void pay(final Activity activity, final String payInfo, @Nullable OnPayCallBack onPayCallBack) {
         this.callBack = onPayCallBack;
-
+        
         Runnable payRunnable = new Runnable() {
-
+            
             @Override
             public void run() {
                 // 构造PayTask 对象
                 PayTask alipay = new PayTask(activity);
                 // 调用支付接口，获取支付结果
 //                String result = alipay.pay(payInfo, true);
-
+                
                 Map<String, String> result = alipay.payV2(payInfo, true);
-
+                
                 Message msg = new Message();
                 msg.what = Alipay.SDK_PAY_FLAG;
                 msg.obj = result;
                 mHandler.sendMessage(msg);
             }
         };
-
+        
         // 必须异步调用
         Thread payThread = new Thread(payRunnable);
         payThread.start();

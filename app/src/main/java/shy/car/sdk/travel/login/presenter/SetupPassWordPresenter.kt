@@ -7,7 +7,6 @@ import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View.OnClickListener
-import com.alibaba.fastjson.JSON
 import com.base.base.ProgressDialog
 import com.base.util.ClickUtil
 import com.base.util.StringUtils

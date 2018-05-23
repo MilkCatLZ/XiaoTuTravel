@@ -7,15 +7,16 @@ import android.content.SharedPreferences.Editor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
 
 /**
  * @author lz
- *         SharedPreferences辅助类，让读写缓存变得更简单一些
- *         以前写好的一个类暂时先放上来
+ * SharedPreferences辅助类，让读写缓存变得更简单一些
+ * 以前写好的一个类暂时先放上来
  */
 public class SPCache {
     public static final String SETTINGS = "shy.car.sdk";
@@ -32,7 +33,7 @@ public class SPCache {
         Object obj) {
         if (context == null) return;
         Editor e = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE).edit();
-        String json = JSON.toJSONString(obj);
+        String json = new Gson().toJson(obj);
         e.putString(cacheName, json);
         e.commit();
     }
@@ -69,7 +70,7 @@ public class SPCache {
 //            T o = (T) new Gson().fromJson(jsonString, classes);
             T o = null;
             try {
-                o = (T) JSON.parseObject(jsonString, classes);
+                o = new Gson().fromJson(jsonString, new TypeToken<T>() {}.getType());
                 if (o == null) {
                     return defaultValue;
                 }
@@ -129,7 +130,7 @@ public class SPCache {
         if (!"".equals(jsonString)) {
             List<T> o = null;
             try {
-                o = JSON.parseArray(jsonString, cls);
+                o = new Gson().fromJson(jsonString, new TypeToken<List<T>>() {}.getType());
             } catch (Exception e) {
                 Log.e(tag, "parse Object list failed", e);
             }

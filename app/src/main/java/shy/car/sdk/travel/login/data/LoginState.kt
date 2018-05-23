@@ -1,7 +1,6 @@
 package shy.car.sdk.travel.login.data
 
-
-import com.alibaba.fastjson.annotation.JSONField
+import com.google.gson.annotations.SerializedName
 
 
 /**
@@ -20,16 +19,16 @@ class LoginState {
      * expires_in : 2592000
      */
 
-    @JSONField(name = "uid")
+    @SerializedName( "uid")
     var uid: String? = null
-    @JSONField(name = "type")
+    @SerializedName( "type")
     var type: Int = 0
-    @JSONField(name = "status")
+    @SerializedName( "status")
     var status: Int = 0
-    @JSONField(name = "first_time")
+    @SerializedName( "first_time")
     var firstTime: Int = 0
-    @JSONField(name = "access_token")
+    @SerializedName( "access_token")
     var accessToken: String? = null
-    @JSONField(name = "expires_in")
+    @SerializedName( "expires_in")
     var expiresIn: Long = 0
 }

@@ -2,13 +2,10 @@ package shy.car.sdk.travel.user.data
 
 
 import android.content.Context
-
-import com.alibaba.fastjson.JSON
-import com.alibaba.fastjson.JSONObject
-import com.alibaba.fastjson.annotation.JSONField
 import com.base.util.AesUtil
 import com.base.util.SPCache
 import com.base.util.StringUtils
+import com.google.gson.Gson
 import shy.car.sdk.BR
 
 
@@ -21,7 +18,6 @@ class User private constructor() : UserBase() {
 
 
     companion object {
-        @get:JSONField(serialize = false)
         val instance = User()
         internal val UserKey = "app:users"
         private val key = "qpelakfjgjfkdlsd"
@@ -33,7 +29,6 @@ class User private constructor() : UserBase() {
          *
          * @param context
          */
-        @JSONField(serialize = false)
         fun initUserCache(context: Context) {
             var uJson: String? = null
             try {
@@ -45,7 +40,7 @@ class User private constructor() : UserBase() {
 
             if (StringUtils.isNotEmpty(uJson)) {
                 try {
-                    val user = JSONObject.parseObject(uJson, User::class.java)
+                    val user = Gson().fromJson(uJson, User::class.java)
                     copyUser(user)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -61,13 +56,12 @@ class User private constructor() : UserBase() {
          *
          * @param context
          */
-        @JSONField(serialize = false)
         fun saveUserState(context: Context) {
             var uJson: String? = null
             try {
                 //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
                 //            uJson = JSONObject.toJSONString(user);
-                uJson = AesUtil.encrypt(key, JSONObject.toJSONString(instance))
+                uJson = AesUtil.encrypt(key, Gson().toJson(instance))
                 SPCache.saveObject(context, UserKey, uJson)
                 User.instance.notifyPropertyChanged(BR.login)
             } catch (e: Exception) {
@@ -77,14 +71,13 @@ class User private constructor() : UserBase() {
         }
 
 
-        @JSONField(serialize = false)
         fun logout(context: Context) {
             val user = User()
             var uJson: String? = null
             try {
                 //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
                 //            uJson = JSONObject.toJSONString(user);
-                uJson = AesUtil.encrypt(key, JSONObject.toJSONString(user))
+                uJson = AesUtil.encrypt(key, Gson().toJson(user))
                 SPCache.saveObject(context, UserKey, uJson)
                 copyUser(user)
                 //            PushManager.deleteAlias(context, user.getUid());
@@ -101,7 +94,6 @@ class User private constructor() : UserBase() {
          *
          * @param dis
          */
-        @JSONField(serialize = false)
         private fun copyUser(dis: User?) {
             if (dis == null) {
                 return

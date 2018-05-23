@@ -4,9 +4,9 @@ package shy.car.sdk.travel.update;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.alibaba.fastjson.JSONObject;
 import com.base.update.update.BaseUpdateHelper;
 import com.base.util.SPCache;
+import com.google.gson.Gson;
 
 
 /**
@@ -21,14 +21,14 @@ public class UpdateHelper extends BaseUpdateHelper<UpdateInfo> {
      * @param isAutoUpdate 是否是自动更新
      * @param needMessage  是否需要显示更新信息
      */
-    public UpdateHelper(@NonNull Context context,  int logo, boolean isAutoUpdate, boolean needMessage) {
+    public UpdateHelper(@NonNull Context context, int logo, boolean isAutoUpdate, boolean needMessage) {
         super(context, logo, isAutoUpdate, needMessage);
     }
     
     
     @Override
     protected UpdateInfo getNewUpdateInfo(String result) {
-        return JSONObject.parseObject(result, UpdateInfo.class);
+        return new Gson().fromJson(result, UpdateInfo.class);
     }
     
     @Override

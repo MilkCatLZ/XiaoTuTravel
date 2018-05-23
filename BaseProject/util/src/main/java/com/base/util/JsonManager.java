@@ -3,8 +3,7 @@ package com.base.util;
 
 import android.support.annotation.NonNull;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import org.json.JSONObject;
 
 
 /**
@@ -19,18 +18,14 @@ public class JsonManager {
      */
     @NonNull
     public static String getJsonString(@NonNull String resource, @NonNull String key) {
-        JSONObject jsonObject;
         try {
-            jsonObject = JSON.parseObject(resource);
-        } catch (Exception e) {
-            Log.e("getJsonString",resource +"不是一个JsonString!!!!!!!!!!!!!!!!!!!!!!");
-            return "";
-        }
-        try {
+            JSONObject jsonObject = new JSONObject(resource);
             return jsonObject.get(key).toString();
         } catch (Exception e) {
+            Log.e("getJsonString", resource + "不是一个JsonString!!!!!!!!!!!!!!!!!!!!!!");
             return "";
         }
+        
     }
     
     /**
@@ -41,8 +36,9 @@ public class JsonManager {
      * @return
      */
     public static String getJsonArrayString(@NonNull String resource, @NonNull String key, int index) {
-        JSONObject jsonObject = JSON.parseObject(resource);
+        
         try {
+            JSONObject jsonObject = new JSONObject(resource);
             return jsonObject.getJSONArray(key).get(index).toString();
         } catch (Exception e) {
             return "";
@@ -56,9 +52,10 @@ public class JsonManager {
      */
     @NonNull
     public static int getJsonInt(@NonNull String resource, @NonNull String key) {
-        JSONObject jsonObject = JSON.parseObject(resource);
+        
         try {
-            return jsonObject.getInteger(key);
+            JSONObject jsonObject = new JSONObject(resource);
+            return jsonObject.getInt(key);
         } catch (Exception e) {
             return 0;
         }
@@ -71,8 +68,9 @@ public class JsonManager {
      */
     @NonNull
     public static double getJsonDouble(@NonNull String resource, @NonNull String key) {
-        JSONObject jsonObject = JSON.parseObject(resource);
+        
         try {
+            JSONObject jsonObject = new JSONObject(resource);
             return jsonObject.getDouble(key);
         } catch (Exception e) {
             return 0;

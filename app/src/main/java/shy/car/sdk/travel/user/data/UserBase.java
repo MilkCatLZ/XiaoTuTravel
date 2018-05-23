@@ -4,7 +4,7 @@ package shy.car.sdk.travel.user.data;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.google.gson.annotations.SerializedName;
 
 import shy.car.sdk.BR;
 
@@ -36,54 +36,54 @@ public class UserBase extends BaseObservable {
      * bind_weixin : 0
      */
 
-    @JSONField(name = UID)
+    @SerializedName( UID)
     private int uid;
-    @JSONField(name = PHONE)
+    @SerializedName( PHONE)
     private String phone;
-    //    @JSONField(name = BIND_WEIXIN)
+    //    @SerializedName( BIND_WEIXIN)
 //    private int bindWeixin;
-    @JSONField(name = ACCESS_TOKEN)
+    @SerializedName( ACCESS_TOKEN)
     private String access_token;
-    @JSONField(name = NICKNAME)
+    @SerializedName( NICKNAME)
     private String nickName;
-    @JSONField(name = AVATAR)
+    @SerializedName( AVATAR)
     private String avatar;
-    @JSONField(name = EXPIRES_IN)
+    @SerializedName( EXPIRES_IN)
     private long expiresIn;
     /**
      * 1:已认证。2：未认证
      */
-    @JSONField(name = STATUS)
+    @SerializedName( STATUS)
     private int status;
 
     /**
      * 密码：1:已设置，0：未设置密码
      */
-    @JSONField(name = PASSWORD)
+    @SerializedName( PASSWORD)
     private int password;
 
     /**
      * 支付密码 1 已设置 0 未设置
      */
-    @JSONField(name = "payment_password")
+    @SerializedName( "payment_password")
     private int paymentPassword;
     /**
      * 推送设置 1 接收 2 不接收
      */
-    @JSONField(name = "msg_remind")
+    @SerializedName( "msg_remind")
     private int msgRemind;
 
     /**
      * 保证金缴纳.>0已缴纳，<=0未缴纳
      */
-    @JSONField(name = "promise_money")
+    @SerializedName( "promise_money")
     private double promiseMoney;
 
     /**
      * 用户实名认证
      * .1=已认证，0=未认证
      */
-    @JSONField(name = "user_verify")
+    @SerializedName( "user_verify")
     private int userVerify;
 
     public boolean isUserVerify() {
@@ -237,8 +237,7 @@ public class UserBase extends BaseObservable {
     public void setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
     }
-
-    @JSONField(serialize = false)
+    
     @Bindable
     public boolean isLogin() {
         return com.base.util.StringUtils.isNotEmpty(access_token);

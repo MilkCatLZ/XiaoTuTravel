@@ -1,14 +1,14 @@
 package shy.car.sdk.app.net
 
-import com.alibaba.fastjson.JSONException
 import com.base.net.BaseRetrofitInterface
 import com.base.util.ToastManager
+import org.greenrobot.eventbus.EventBus
+import org.json.JSONException
+import org.xutils.ex.HttpException
 import shy.car.sdk.R
 import shy.car.sdk.app.Application
 import shy.car.sdk.app.data.LoginOutOfDateException
 import shy.car.sdk.travel.user.data.User
-import org.greenrobot.eventbus.EventBus
-import org.xutils.ex.HttpException
 import java.net.SocketException
 import java.net.SocketTimeoutException
 

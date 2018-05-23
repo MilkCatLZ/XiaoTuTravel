@@ -5,18 +5,14 @@ import android.content.Context
 import android.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
-import com.alibaba.fastjson.JSON
 import com.base.base.ProgressDialog
-import com.base.util.Device
 import com.base.util.Phone
 import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.user.data.UserBase
 
 
 interface VerifyListener {
@@ -33,20 +29,20 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
     var phone = ObservableField<String>("")
     var isPhoneCorrect = false
 
-    /**
-     * 登录/注册的参数
-     *
-     * @return
-     */
-    private val verifyParam: String
-        get() {
-            val data = JSON.parseObject("{}")
-            data[UserBase.PHONE] = phone
-            data[ParamsConstant.UUID] = Device.getUUID(context)
-            data["umeng_device_token"] = app.device_token
-
-            return data.toString()
-        }
+//    /**
+//     * 登录/注册的参数
+//     *
+//     * @return
+//     */
+//    private val verifyParam: String
+//        get() {
+//            val data = JSON.parseObject("{}")
+//            data[UserBase.PHONE] = phone
+//            data[ParamsConstant.UUID] = Device.getUUID(context)
+//            data["umeng_device_token"] = app.device_token
+//
+//            return data.toString()
+//        }
 
     /**
      * 电话输入框文字检查

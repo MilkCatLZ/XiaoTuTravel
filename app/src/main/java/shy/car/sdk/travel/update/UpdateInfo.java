@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.update;
 
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.base.update.model.BaseUpdate;
+import com.google.gson.annotations.SerializedName;
 
 
 /**
@@ -22,21 +22,21 @@ public class UpdateInfo implements BaseUpdate {
      * patchDownload : http://cn2.php.net/get/php-7.1.2.tar.gz/from/this/mirror
      */
     
-    @JSONField(name = "version")
+    @SerializedName( "version")
     private String version;
-    @JSONField(name = "content")
+    @SerializedName( "content")
     private String content;
-    @JSONField(name = "download_url")
+    @SerializedName( "download_url")
     private String downloadUrl;
-    @JSONField(name = "compulsion")
+    @SerializedName( "compulsion")
     private int compulsion;
-    @JSONField(name = "date")
+    @SerializedName( "date")
     private String date;
-    @JSONField(name = "sessionTime")
+    @SerializedName( "sessionTime")
     private int sessionTime;
-    @JSONField(name = "patchVersion")
+    @SerializedName( "patchVersion")
     private String patchVersion;
-    @JSONField(name = "patchDownload")
+    @SerializedName( "patchDownload")
     private String patchDownload;
     
     public String getVersion() { return version;}

@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.base.util.StringUtils;
 import com.base.util.ToastManager;
+import com.google.gson.Gson;
 
 import org.xutils.ex.HttpException;
 
@@ -59,7 +59,6 @@ public class ErrorManager {
      *
      * @return Error的Model，带有code和error信息
      */
-    @JSONField(serialize = false)
     @Nullable
     public static ErrorManager managerError(Context context, Throwable ex, @StringRes int defaultMessage) {
         if (context == null) {
@@ -77,7 +76,6 @@ public class ErrorManager {
      *
      * @return ErrorManager
      */
-    @JSONField(serialize = false)
     @Nullable
     public static ErrorManager managerError(@Nullable Context context, @NonNull Throwable ex, @Nullable String defaultMessage) {
         if (context == null) {
@@ -87,7 +85,7 @@ public class ErrorManager {
         if (ex instanceof HttpException) {
             HttpException httpException = (HttpException) ex;
             try {
-                err = com.alibaba.fastjson.JSONObject.parseObject(httpException.getResult(), ErrorManager.class);
+                err = new Gson().fromJson(httpException.getResult(), ErrorManager.class);
             } catch (Exception e) {
             
             }

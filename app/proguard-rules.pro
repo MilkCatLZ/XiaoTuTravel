@@ -63,45 +63,45 @@
 #保持所有用到了的Serializable的类和它们的名称
 -keepnames class * implements java.io.Serializable
 
-#保持所有实现了JSONAware的类的关键内容
--keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
-    public *;
-}
-#保持所有支持FastJSON的类的关键内容
--keepclassmembers,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
-}
-#保持所有用到了的支持FastJSON的类
--keepclasseswithmembernames,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
-}
--keepnames,includedescriptorclasses class ** {
-    @com.alibaba.fastjson.annotation.JSONField <fields>;
-    @com.alibaba.fastjson.annotation.JSONField <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
-    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
-    !private <init>();
-    public final <fields>;
-    public void set*(***);
-    public boolean is*();
-    public *** get*();
-}
+##保持所有实现了JSONAware的类的关键内容
+#-keepclassmembers,includedescriptorclasses class * implements com.alibaba.fastjson.JSONAware {
+#    public *;
+#}
+##保持所有支持FastJSON的类的关键内容
+#-keepclassmembers,includedescriptorclasses class ** {
+#    @com.alibaba.fastjson.annotation.JSONField <fields>;
+#    @com.alibaba.fastjson.annotation.JSONField <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+#    !private <init>();
+#    public final <fields>;
+#    public void set*(***);
+#    public boolean is*();
+#    public *** get*();
+#}
+##保持所有用到了的支持FastJSON的类
+#-keepclasseswithmembernames,includedescriptorclasses class ** {
+#    @com.alibaba.fastjson.annotation.JSONField <fields>;
+#    @com.alibaba.fastjson.annotation.JSONField <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+#    !private <init>();
+#    public final <fields>;
+#    public void set*(***);
+#    public boolean is*();
+#    public *** get*();
+#}
+#-keepnames,includedescriptorclasses class ** {
+#    @com.alibaba.fastjson.annotation.JSONField <fields>;
+#    @com.alibaba.fastjson.annotation.JSONField <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <methods>;
+#    @com.alibaba.fastjson.annotation.JSONCreator !private <init>(...);
+#    !private <init>();
+#    public final <fields>;
+#    public void set*(***);
+#    public boolean is*();
+#    public *** get*();
+#}
 
 #保持所有用到了的native方法以及方法所在的类
 #但是如果一个类里面所有的native方法一个都没用到，就允许把相应的类优化掉
@@ -164,9 +164,9 @@
 
 
 
-#fastjson
--keep class com.alibaba.fastjson.** { *; }
--dontwarn com.alibaba.fastjson.**
+##fastjson
+#-keep class com.alibaba.fastjson.** { *; }
+#-dontwarn com.alibaba.fastjson.**
 
 
 -keep class okhttp3.** {*;}
