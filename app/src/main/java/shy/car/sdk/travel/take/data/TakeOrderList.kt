@@ -13,4 +13,11 @@ open class TakeOrderList : BaseObservable() {
             field = value
             notifyPropertyChanged(BR.id)
         }
+    @get:Bindable
+    @SerializedName("status")
+    var status: Int = 0
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.status)
+        }
 }

@@ -14,7 +14,7 @@
     </style>
 
 
-    <style name="AppTheme" parent="AppThemeBase"/>
+    <style name="AppTheme" parent="AppThemeBase" />
 
     <style name="line_horizontal">
         <item name="android:background">@color/text_fifth_primary_e5e5e5</item>
@@ -93,8 +93,7 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="style_user_center_bottom_content" parent="style_mw.gcw1">
-    </style>
+    <style name="style_user_center_bottom_content" parent="style_mw.gcw1"/>
 
     <style name="style_ww.user_center_bottom_icon">
         <item name="android:textColor">#353235</item>
@@ -119,46 +118,7 @@
         <item name="android:layout_height">2dp</item>
         <item name="android:background">@drawable/shadow</item>
     </style>
-    <style name="style_indicator_green">
-        <item name="android:layout_width">8dp</item>
-        <item name="android:layout_height">8dp</item>
-        <item name="android:background">@drawable/icon_round_green</item>
-    </style>
-    <style name="style_indicator_grey">
-        <item name="android:layout_width">8dp</item>
-        <item name="android:layout_height">8dp</item>
-        <item name="android:background">@drawable/icon_round_grey</item>
-    </style>
 
-    <style name="style_order_take_state">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/back_order_take_state</item>
-        <item name="android:gravity">center</item>
-        <item name="android:minHeight">45dp</item>
-        <item name="android:textColor">@drawable/color_order_take_state</item>
-        <item name="android:textSize">@dimen/text_second_primary_12dp</item>
-    </style>
-
-    <style name="style_order_take_indicator_out">
-        <item name="android:layout_width">12dp</item>
-        <item name="android:layout_height">12dp</item>
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:background">@drawable/img_circle_white</item>
-    </style>
-
-    <style name="style_order_take_indicator_in">
-        <item name="android:layout_width">10dp</item>
-        <item name="android:layout_height">10dp</item>
-        <item name="android:layout_centerInParent">true</item>
-    </style>
-
-    <style name="style_order_take_indicator_line">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">3dp</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@color/text_forth_primary_cccccc</item>
-    </style>
 
 
 </resources>

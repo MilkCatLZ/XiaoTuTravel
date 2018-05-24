@@ -11,6 +11,7 @@ import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderList
 import shy.car.sdk.travel.rent.data.NearCarList
+import shy.car.sdk.travel.take.data.TakeOrderDetail
 
 
 /**
@@ -61,6 +62,13 @@ interface ApiInterface {
     @GET("xt/takeOrderList")
     fun getTakeOrderList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
                          @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<TakeOrderList>>
+
+    /**
+     * 获取单个接单详情
+     *
+     */
+    @GET("xt/takeOrderList")
+    fun getTakeOrderDetail(@Query(ParamsConstant.OrderId) oid: String): Observable<TakeOrderDetail>
 
     /**
      * 获取发货列表

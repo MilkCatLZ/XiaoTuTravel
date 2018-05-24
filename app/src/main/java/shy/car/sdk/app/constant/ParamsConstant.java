@@ -15,4 +15,5 @@ public class ParamsConstant {
     public static final String Lng = "lng";
     public static final String KeyWord = "keyword";
     public static final String UID = "uid";
+    public static final String OrderId = "oid";
 }

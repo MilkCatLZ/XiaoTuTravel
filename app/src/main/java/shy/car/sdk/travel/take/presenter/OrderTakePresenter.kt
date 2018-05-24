@@ -28,6 +28,7 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
         for (i in 1..9) {
             var orderTakeList = TakeOrderList()
             orderTakeList.id = i.toString()
+            orderTakeList.status = i % 4
             list.add(orderTakeList)
         }
 
