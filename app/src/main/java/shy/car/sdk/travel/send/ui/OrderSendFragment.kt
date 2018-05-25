@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
@@ -60,6 +61,7 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order_send, null, false)
+        binding.fragment = this
         return binding.root
     }
 
@@ -88,4 +90,9 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
         return presenter.adapter
     }
 
+    fun onSendHoleCar() {
+        ARouter.getInstance()
+                .build(RouteMap.SendHoleCarEdit)
+                .navigation()
+    }
 }

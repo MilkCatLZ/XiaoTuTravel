@@ -119,5 +119,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
+    /**
+     * 整车发货 填写发货信息
+     * shy.car.sdk.travel.send.ui.SendHoleCarActivity
+     */
+    @NotNull
+    public static final String SendHoleCarEdit = "/send/send_hole_car_send_edit";
 
 }

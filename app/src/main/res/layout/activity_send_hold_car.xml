@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="util"
+            type="shy.car.sdk.app.LNTextUtil" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/fragment_send_hole_car"
+            android:name="shy.car.sdk.travel.send.ui.SendHoleCarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_send_hole_car}" />
+
+        <View style="@style/style_shadow" />
+
+    </LinearLayout>
+</layout>

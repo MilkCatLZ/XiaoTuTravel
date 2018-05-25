@@ -24,4 +24,5 @@
     <string name="str_promise_money_detail">保证金明细</string>
     <string name="str_take_hole_car">整车接单</string>
     <string name="str_verify_user">服务认证</string>
+    <string name="str_send_hole_car">整车发货</string>
 </resources>
