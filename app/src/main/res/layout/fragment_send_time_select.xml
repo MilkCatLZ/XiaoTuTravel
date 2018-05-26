@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="shy.car.sdk.app.LNTextUtil"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.send.dialog.SendTimeSelectDialogFragment"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{()->fragment.dismissAllowingStateLoss()}"
+                android:paddingStart="20dp"
+                android:text="取消"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_second_primary_12dp"
+                />
+
+            <TextView
+                style="@style/style_ww.text_14_333"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="选择时间"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:onClick="@{()->fragment.onConfirm()}"
+                android:paddingEnd="20dp"
+                android:text="确定"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_second_primary_12dp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal">
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/wheel_send_hole_car_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingMultiplier="3.0"
+                android:layout_weight="1"/>
+
+            <com.contrarywind.view.WheelView
+                android:id="@+id/wheel_send_hole_car_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingMultiplier="3.0"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
