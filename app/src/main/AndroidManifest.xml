@@ -117,6 +117,9 @@
         <activity
             android:name=".travel.send.ui.SendHoleCarActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".travel.location.ui.LocationSelectActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
