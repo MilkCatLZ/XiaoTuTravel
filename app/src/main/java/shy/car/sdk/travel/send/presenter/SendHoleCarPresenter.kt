@@ -1,22 +1,18 @@
 package shy.car.sdk.travel.send.presenter
 
 import android.content.Context
-import android.view.View
-import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.DataBindingPagerAdapter
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
-import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
-import shy.car.sdk.travel.send.data.OrderSendList
 
 /**
  * 发货-整车发货 填写
  */
 class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+    var address: CurrentLocation? = null
 
     interface CallBack {
         fun getCarListSuccess(list: ArrayList<CarInfo>)

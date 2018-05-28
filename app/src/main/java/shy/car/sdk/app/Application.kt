@@ -4,10 +4,9 @@ import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.app.BaseApplication
+import com.base.location.AmapLocationManager
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
-import com.lianni.mall.location.AmapLocationManager
-import com.lianni.mall.location.Location
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -19,6 +18,7 @@ import shy.car.sdk.app.net.BaseInterceptor
 import shy.car.sdk.app.net.XTRetrofitInterface
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.interfaces.onLoginDismiss
+import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
 import shy.car.sdk.travel.user.data.User
@@ -27,7 +27,7 @@ class Application : BaseApplication() {
 
 
     var device_token: String = ""
-    var location: Location? = null
+    var location: CurrentLocation = CurrentLocation()
 
 //    /**
 //     * 高德地图定位回调
@@ -42,7 +42,7 @@ class Application : BaseApplication() {
 //        CrashHandler.getInstance()
 //                .init(this, null)
 
-            initNetWork()
+        initNetWork()
         initRouter()
         initPinYin()
         initAmap()
@@ -124,6 +124,10 @@ class Application : BaseApplication() {
             callback = null
         }
         User.saveUserState(this)
+    }
+
+    fun changeCurrentLocation(city: CurrentLocation) {
+        location = city
     }
 
 }

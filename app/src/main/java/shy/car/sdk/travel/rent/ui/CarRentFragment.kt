@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
+import android.location.Location
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
@@ -28,8 +29,6 @@ import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
-import shy.car.sdk.travel.location.data.City
-import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
@@ -38,6 +37,8 @@ import shy.car.sdk.travel.user.data.User
 /**
  * create by LZ at 2018/05/11
  * 租车
+ * 本应用的经纬度，地址，已这个页面的地图为准
+ * 其他地方需要调用，使用app.location
  */
 @Route(path = RouteMap.CarRent)
 class CarRentFragment : XTBaseFragment() {
@@ -97,20 +98,43 @@ class CarRentFragment : XTBaseFragment() {
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
         map.map.setOnMyLocationChangeListener {
-            var geocoderSearch = GeocodeSearch(context)
-            val query = RegeocodeQuery(LatLonPoint(it.latitude, it.longitude), 200f, GeocodeSearch.AMAP)
-            geocoderSearch.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
-                override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
-                    locationRefreshListener?.onLocationChange(City(p0?.regeocodeAddress?.city!!, ""))
-                }
-
-                override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
-
-                }
-            })
-            geocoderSearch.getFromLocationAsyn(query)
+            updateLatLong(it)
+            locationChange(it)
         }
         activity?.let { map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
+    }
+
+    private fun locationChange(it: Location) {
+        var geocoderSearch = GeocodeSearch(context)
+        val query = RegeocodeQuery(LatLonPoint(it.latitude, it.longitude), 200f, GeocodeSearch.AMAP)
+        geocoderSearch.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
+            override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
+                if (p0 != null) {
+                    updateAddress(p0)
+                }
+                locationRefreshListener?.onLocationChange()
+            }
+
+            override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
+
+            }
+        })
+        geocoderSearch.getFromLocationAsyn(query)
+    }
+
+    private fun updateAddress(p0: RegeocodeResult) {
+        app.location.cityName = p0.regeocodeAddress.city
+        app.location.address = p0.regeocodeAddress.toString()
+        app.location.cityCode = getCityCode()
+    }
+
+    private fun getCityCode(): String {
+        return ""
+    }
+
+    private fun updateLatLong(it: Location) {
+        app.location.lat = it.latitude
+        app.location.lng = it.longitude
     }
 
     /**
@@ -119,9 +143,8 @@ class CarRentFragment : XTBaseFragment() {
     fun refreshLocation() {
         var myLocationStyle = MyLocationStyle().myLocationIcon(bitmap)
                 .anchor(0.5f, 0.5f)
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW)
-        myLocationStyle.interval(60000)
-        map.map.setMyLocationStyle(myLocationStyle)
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
+        map.map.myLocationStyle = myLocationStyle
         map.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
 
     }

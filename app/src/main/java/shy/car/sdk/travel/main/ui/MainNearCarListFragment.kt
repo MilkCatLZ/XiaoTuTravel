@@ -18,6 +18,10 @@ import shy.car.sdk.databinding.LayoutNearCarListBinding
 import shy.car.sdk.travel.rent.data.NearCarList
 import shy.car.sdk.travel.rent.presenter.NearCarPresenter
 
+/**
+ * create by LZ at 2018/05/28
+ * 租车-附近车辆列表
+ */
 class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
 
     interface CancelListener {
@@ -125,7 +129,7 @@ class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
 
     private fun refreshNearCarList() {
         activity?.let {
-            nearCarListPresenter.getNearList(app.location?.latitude.toString(), app.location?.longitude.toString())
+            nearCarListPresenter.getNearList()
         }
     }
 

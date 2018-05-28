@@ -42,23 +42,18 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     fun refresh() {
         pageIndex = 1
-        getNearList(lat, lng)
+        getNearList()
     }
 
     fun nextPage() {
         pageIndex++
-        getNearList(lat, lng)
+        getNearList()
     }
 
-    private lateinit var lat: String
+    fun getNearList() {
 
-    private lateinit var lng: String
-    fun getNearList(lat: String, lng: String) {
-
-        this.lat = lat
-        this.lng = lng
         disposable?.dispose()
-        ApiManager.instance.api.getNearList(lat, lng, keyWord, pageIndex, pageSize)
+        ApiManager.instance.api.getNearList(app.location.lat.toString(), app.location.lng.toString(), keyWord, pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<NearCarList>> {
                     override fun onComplete() {
 

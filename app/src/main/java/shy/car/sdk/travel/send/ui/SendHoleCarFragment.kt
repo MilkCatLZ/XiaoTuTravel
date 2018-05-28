@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
+import org.greenrobot.eventbus.Subscribe
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentSendHoldCarBinding
+import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
 import shy.car.sdk.travel.send.dialog.CommonWheelItem
 import shy.car.sdk.travel.send.dialog.SendTimeSelectDialogFragment
@@ -33,13 +37,19 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { presenter = SendHoleCarPresenter(it, this) }
+        register(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_send_hold_car, null, false)
         binding.fragment = this
-        initPager()
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initPager()
     }
 
     private fun initPager() {
@@ -52,6 +62,12 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
 
     }
 
+    fun onSelectAddressClick() {
+        ARouter.getInstance()
+                .build(RouteMap.LocationSelect)
+                .navigation()
+    }
+
     var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
 
     fun openTimeSelect() {
@@ -60,4 +76,9 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
         timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
     }
 
+
+    @Subscribe
+    fun onLocationSelect(address: CurrentLocation) {
+
+    }
 }

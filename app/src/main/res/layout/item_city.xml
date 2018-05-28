@@ -9,7 +9,7 @@
 
         <variable
             name="city"
-            type="shy.car.sdk.travel.location.data.City"/>
+            type="shy.car.sdk.travel.location.data.CurrentLocation"/>
 
     </data>
 

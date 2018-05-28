@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.amap.api.location.AMapLocation
-import com.lianni.mall.location.AmapLocationManager
-import com.lianni.mall.location.AmapOnLocationReceiveListener
-import com.lianni.mall.location.Location
+import com.base.location.AmapLocationManager
+import com.base.location.AmapOnLocationReceiveListener
+import com.base.location.Location
 import kotlinx.android.synthetic.main.layout_city_select.*
 import me.yokeyword.indexablerv.IndexableLayout
 import me.yokeyword.indexablerv.SimpleHeaderAdapter
@@ -22,14 +22,14 @@ import shy.car.sdk.databinding.LayoutCitySelectBinding
 import shy.car.sdk.travel.location.LocationPresenter
 import shy.car.sdk.travel.location.SearchFragment
 import shy.car.sdk.travel.location.adapter.CityIndexAdapter
-import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.location.data.CurrentLocation
 
 /**
  *
  */
 class MainCitySelectFragment : XTBaseFragment() {
     interface CitySelectListener {
-        fun onCitySelected(get: City)
+        fun onCitySelected(location: CurrentLocation)
         fun onSearchClosed()
 
     }
@@ -40,7 +40,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     //搜索栏 显示的当前城市
     val cityNameLocating = ObservableField<String>(LOCATING)
     lateinit var binding: LayoutCitySelectBinding
-    lateinit var currentCity: City
+    lateinit var currentCity: CurrentLocation
 
     lateinit var locationPresenter: LocationPresenter
     val searchResultFragment = SearchFragment()
@@ -112,7 +112,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     private fun initCityList() {
         activity?.let {
             locationPresenter = LocationPresenter(it, object : LocationPresenter.CallBack {
-                override fun getCitySuccess(list: java.util.ArrayList<City>) {
+                override fun getCitySuccess(list: java.util.ArrayList<CurrentLocation>) {
                     //添加数据
                     addCityInfo(list)
                 }
@@ -121,7 +121,7 @@ class MainCitySelectFragment : XTBaseFragment() {
         }
     }
 
-    private fun addCityInfo(list: java.util.ArrayList<City>) {
+    private fun addCityInfo(list: java.util.ArrayList<CurrentLocation>) {
         //添加城市列表
         activity?.let {
             indexable_layout.setLayoutManager(LinearLayoutManager(it))
@@ -134,17 +134,17 @@ class MainCitySelectFragment : XTBaseFragment() {
             }
 
             //----------------------添加热门城市
-            val hotCity = ArrayList<City>()
-            hotCity.add(City("南宁市", "南宁市"))
-            hotCity.add(City("柳州市", "柳州市"))
-            hotCity.add(City("北海市", "北海市"))
+            val hotCity = ArrayList<CurrentLocation>()
+            hotCity.add(CurrentLocation("南宁市", "南宁市"))
+            hotCity.add(CurrentLocation("柳州市", "柳州市"))
+            hotCity.add(CurrentLocation("北海市", "北海市"))
 
             //添加头部
-            val headerAdapter = SimpleHeaderAdapter<City>(adapter, "热", "热门城市", hotCity)
+            val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)
             indexable_layout.addHeaderAdapter(headerAdapter)
 
             indexable_layout.setCompareMode(IndexableLayout.MODE_FAST)
-            var filterList = ArrayList<City>()
+            var filterList = ArrayList<CurrentLocation>()
             filterList.addAll(list)
             filterList.addAll(hotCity)
 
@@ -154,7 +154,7 @@ class MainCitySelectFragment : XTBaseFragment() {
 
     }
 
-    private fun getCityDetail(cityName: String?): City? {
+    private fun getCityDetail(cityName: String?): CurrentLocation? {
         return currentCity
     }
 
@@ -165,14 +165,12 @@ class MainCitySelectFragment : XTBaseFragment() {
         AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
                 cityNameLocating.set(location.city)
-                currentCity = City(location.city, getCode(location))
-                currentCity.lat = location.latitude
-                currentCity.lng = location.longitude
+                currentCity.copy(location)
             }
         })
     }
 
-    private fun getCode(location: Location): String {
+    private fun getCode(location: CurrentLocation): String {
         return ""
     }
 

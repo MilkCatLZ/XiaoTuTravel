@@ -1,4 +1,4 @@
-package com.lianni.mall.location
+package com.base.location
 
 /**
  * Created by LZ on 2017/11/13.

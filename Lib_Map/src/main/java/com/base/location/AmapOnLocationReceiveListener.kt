@@ -1,4 +1,4 @@
-package com.lianni.mall.location
+package com.base.location
 
 import com.amap.api.location.AMapLocation
 

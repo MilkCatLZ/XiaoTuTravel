@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.location.data.CurrentLocation
 
 /**
  * create by LZ at 2018/05/12
@@ -14,10 +14,10 @@ import shy.car.sdk.travel.location.data.City
 class LocationPresenter(context: Context, callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getCitySuccess(list: ArrayList<City>)
+        fun getCitySuccess(list: ArrayList<CurrentLocation>)
     }
 
-    val observer = object : Observer<ArrayList<City>> {
+    val observer = object : Observer<ArrayList<CurrentLocation>> {
         override fun onComplete() {
 
         }
@@ -26,7 +26,7 @@ class LocationPresenter(context: Context, callBack: CallBack) : BasePresenter(co
             disposable = d
         }
 
-        override fun onNext(t: ArrayList<City>) {
+        override fun onNext(t: ArrayList<CurrentLocation>) {
             callBack.getCitySuccess(t)
         }
 
@@ -34,8 +34,8 @@ class LocationPresenter(context: Context, callBack: CallBack) : BasePresenter(co
 //            val city = arrayOf("东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山", "东莞", "深圳", "广州", "温州", "郑州", "金华", "佛山", "上海", "苏州", "杭州", "长沙", "中山")
             val city = context.resources.getStringArray(R.array.city_array)
 
-            val list = ArrayList<City>()
-            city.map { list.add(City(it, it)) }
+            val list = ArrayList<CurrentLocation>()
+            city.map { list.add(CurrentLocation(it, it)) }
 
             callBack.getCitySuccess(list)
         }

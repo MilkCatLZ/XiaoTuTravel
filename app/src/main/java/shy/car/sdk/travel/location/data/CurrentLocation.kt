@@ -3,10 +3,17 @@ package shy.car.sdk.travel.location.data
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.android.databinding.library.baseAdapters.BR
+import com.base.location.Location
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
-class City(cityName: String, cityCode: String) : BaseObservable(), IndexableEntity {
+class CurrentLocation : BaseObservable, IndexableEntity {
+
+    constructor()
+    constructor(cityName: String, cityCode: String) {
+        this.cityName = cityName
+        this.cityCode = cityCode
+    }
 
     @get:Bindable
     var cityName = ""
@@ -20,6 +27,12 @@ class City(cityName: String, cityCode: String) : BaseObservable(), IndexableEnti
         set(value) {
             field = value
             notifyPropertyChanged(BR.cityCode)
+        }
+    @get:Bindable
+    var address = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.address)
         }
     @get:Bindable
     var pinyin: String = ""
@@ -40,6 +53,13 @@ class City(cityName: String, cityCode: String) : BaseObservable(), IndexableEnti
             notifyPropertyChanged(BR.lng)
         }
 
+    @get:Bindable
+    var district: String = ""
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.district)
+        }
+
     init {
         this.cityName = cityName
         this.cityCode = cityCode
@@ -56,6 +76,14 @@ class City(cityName: String, cityCode: String) : BaseObservable(), IndexableEnti
 
     override fun getFieldIndexBy(): String {
         return cityName
+    }
+
+    fun copy(location: Location) {
+        cityName = location.city
+        lat = location.latitude
+        lng = location.longitude
+        address = location.address
+        district = location.district
     }
 
 }

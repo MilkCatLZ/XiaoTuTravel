@@ -1,5 +1,9 @@
-package com.lianni.mall.location;
+package com.base.location;
 
+
+import org.jetbrains.annotations.Nullable;
+
+import io.reactivex.annotations.NonNull;
 
 /**
  * Created by LZ on 2016/8/22.
@@ -13,18 +17,20 @@ public class Location implements Cloneable {
     private String name;
     private String city;
     private String cityCode;
+    @NonNull
+    public String district;
 
     public Location() {
     }
-    
+
     public String getCityCode() {
         return cityCode;
     }
-    
+
     public void setCityCode(String cityCode) {
         this.cityCode = cityCode;
     }
-    
+
     public double getLatitude() {
         return latitude;
     }
@@ -65,6 +71,15 @@ public class Location implements Cloneable {
         this.city = city;
     }
 
+    @NonNull
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(@NonNull String district) {
+        this.district = district;
+    }
+
     public void clone(Location currentLocation) {
         setAddress(currentLocation.getAddress());
         setName(currentLocation.getName());
@@ -72,5 +87,6 @@ public class Location implements Cloneable {
         setLatitude(currentLocation.getLatitude());
         setCity(currentLocation.getCity());
         setCityCode(currentLocation.getCityCode());
+        setDistrict(currentLocation.getDistrict());
     }
 }

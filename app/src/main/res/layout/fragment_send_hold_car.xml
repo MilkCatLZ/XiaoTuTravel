@@ -14,6 +14,7 @@
         <variable
             name="fragment"
             type="shy.car.sdk.travel.send.ui.SendHoleCarFragment"/>
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -109,6 +110,8 @@
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
                         android:hint="选择出发地"
+                        android:text="@{presenter.address.address}"
+                        android:onClick="@{()->fragment.onSelectAddressClick()}"
                         />
                 </LinearLayout>
 

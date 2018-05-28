@@ -17,7 +17,7 @@
 
         <variable
             name="city"
-            type="shy.car.sdk.travel.location.data.City"/>
+            type="shy.car.sdk.travel.location.data.CurrentLocation"/>
     </data>
 
     <android.support.v4.widget.DrawerLayout

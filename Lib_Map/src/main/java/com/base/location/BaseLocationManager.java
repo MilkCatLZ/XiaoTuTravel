@@ -1,4 +1,4 @@
-package com.lianni.mall.location;
+package com.base.location;
 
 
 import android.content.Context;

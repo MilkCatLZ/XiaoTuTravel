@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shy.car.sdk.R;
-import shy.car.sdk.travel.location.data.City;
+import shy.car.sdk.travel.location.data.CurrentLocation;
 
 
 /**
@@ -31,7 +31,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TextView mTvNoResult;
     private SearchAdapter mAdapter;
-    private List<City> mDatas;
+    private List<CurrentLocation> mDatas;
     
     private String mQueryText;
     
@@ -44,7 +44,7 @@ public class SearchFragment extends Fragment {
         return view;
     }
     
-    public void bindDatas(List<City> datas) {
+    public void bindDatas(List<CurrentLocation> datas) {
         this.mDatas = datas;
         mAdapter = new SearchAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -67,7 +67,7 @@ public class SearchFragment extends Fragment {
     }
     
     private class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.VH> implements Filterable {
-        private List<City> items = new ArrayList<>();
+        private List<CurrentLocation> items = new ArrayList<>();
         
         public SearchAdapter() {
             items.clear();
@@ -102,8 +102,8 @@ public class SearchFragment extends Fragment {
             return new Filter() {
                 @Override
                 protected FilterResults performFiltering(CharSequence constraint) {
-                    ArrayList<City> list = new ArrayList<>();
-                    for(City item : mDatas) {
+                    ArrayList<CurrentLocation> list = new ArrayList<>();
+                    for(CurrentLocation item : mDatas) {
                         if (item.getPinyin().startsWith(constraint.toString()) || item.getCityName().contains(constraint)) {
                             list.add(item);
                         }
@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment {
                 @Override
                 @SuppressWarnings("unchecked")
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    ArrayList<City> list = (ArrayList<City>) results.values;
+                    ArrayList<CurrentLocation> list = (ArrayList<CurrentLocation>) results.values;
                     items.clear();
                     items.addAll(list);
                     if (results.count == 0) {

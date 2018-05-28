@@ -9,9 +9,9 @@ import me.yokeyword.indexablerv.IndexableAdapter
 import shy.car.sdk.R
 import shy.car.sdk.databinding.ItemCityBinding
 import shy.car.sdk.databinding.ItemCityTitleBinding
-import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.location.data.CurrentLocation
 
-class CityIndexAdapter(var context: Context) : IndexableAdapter<City>() {
+class CityIndexAdapter(var context: Context) : IndexableAdapter<CurrentLocation>() {
     private var layoutInflate = LayoutInflater.from(context)
 
     override fun onCreateTitleViewHolder(parent: ViewGroup?): RecyclerView.ViewHolder {
@@ -19,7 +19,7 @@ class CityIndexAdapter(var context: Context) : IndexableAdapter<City>() {
         return TitleHolder(binding)
     }
 
-    override fun onBindContentViewHolder(holder: RecyclerView.ViewHolder, entity: City?) {
+    override fun onBindContentViewHolder(holder: RecyclerView.ViewHolder, entity: CurrentLocation?) {
         val h = holder as CityHolder
         h.binding.city = entity
     }

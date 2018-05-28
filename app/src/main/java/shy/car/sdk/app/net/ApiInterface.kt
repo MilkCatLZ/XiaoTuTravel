@@ -3,7 +3,7 @@ package shy.car.sdk.app.net
 import io.reactivex.Observable
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
-import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.pay.data.CarSelectInfo
@@ -53,7 +53,7 @@ interface ApiInterface {
      * JsonString：{"phone":"","password":""}
      */
     @GET("xt/city")
-    fun getCityList(): Observable<ArrayList<City>>
+    fun getCityList(): Observable<ArrayList<CurrentLocation>>
 
     /**
      * 获取接单列表

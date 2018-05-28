@@ -125,5 +125,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String SendHoleCarEdit = "/send/send_hole_car_send_edit";
+    /**
+     * 选择地址
+     * shy.car.sdk.travel.location.ui.LocationSelectActivity
+     */
+    @NotNull
+    public static final String LocationSelect = "/location/select";
 
 }

@@ -3,18 +3,13 @@ package shy.car.sdk
 import android.Manifest
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.Gravity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.location.AMapLocation
 import com.base.util.ToastManager
-import com.lianni.mall.location.AmapLocationManager
-import com.lianni.mall.location.AmapOnLocationReceiveListener
-import com.lianni.mall.location.Location
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -29,7 +24,7 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityMainBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
-import shy.car.sdk.travel.location.data.City
+import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearCarListFragment
 import shy.car.sdk.travel.rent.ui.CarRentFragment
@@ -42,21 +37,20 @@ import java.util.concurrent.TimeUnit
  */
 @Route(path = "/app/homeActivity")
 class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
-    override fun onCancelClick() {
-        isNearVisible.set(false)
+    override fun onCitySelected(location: CurrentLocation) {
+        isCitySelectVisible.set(false)
     }
 
-    override fun onCitySelected(city: City) {
-        isCitySelectVisible.set(false)
-        currentCity.set(city)
+    override fun onCancelClick() {
+        isNearVisible.set(false)
     }
 
     override fun onSearchClosed() {
         isCitySelectVisible.set(false)
     }
 
-    override fun onLocationChange(city: City) {
-        currentCity.set(city)
+    override fun onLocationChange() {
+
     }
 
     override fun onNearCarClick() {
@@ -78,7 +72,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     var nearCarListFragment = MainNearCarListFragment()
 
 
-    var currentCity = ObservableField<City>()
+    var currentCity = CurrentLocation()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,6 +92,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     private fun initPageFragment() {
 
         carRentFragment.nearCarListener = this
+        carRentFragment.locationRefreshListener = this
         citySelectFragment.listener = this
         nearCarListFragment.listener = this
         var transaction = supportFragmentManager.beginTransaction()
@@ -171,18 +166,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
      * 刷新定位
      */
     private fun refreshLocation() {
-        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
-            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                var city = City(location.city, getCode(location))
-                city.lat = location.latitude
-                city.lng = location.longitude
-                currentCity.set(city)
-            }
-        })
-    }
-
-    private fun getCode(location: Location): String {
-        return ""
+        carRentFragment.refreshLocation()
     }
 
     private fun changeFragment(fragment: Fragment) {
@@ -193,8 +177,6 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
         transaction.show(fragment)
         transaction.commit()
     }
-
-
 
 
     fun onMessageClick() {
