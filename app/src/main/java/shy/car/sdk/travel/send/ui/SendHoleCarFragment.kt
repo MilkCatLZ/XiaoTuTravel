@@ -20,7 +20,7 @@ import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
  */
 class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, SendTimeSelectDialogFragment.OnItemSelectedListener {
     override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
-        binding.txtUseTime.setText(date.name+"   "+time.name)
+        binding.txtUseTime.setText(date.name + "   " + time.name)
     }
 
     override fun getCarListSuccess(list: ArrayList<CarInfo>) {
@@ -56,6 +56,7 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
 
     fun openTimeSelect() {
         timeSelectDialogFragment.listener = this
+        timeSelectDialogFragment.isCancelable = false
         timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
     }
 
