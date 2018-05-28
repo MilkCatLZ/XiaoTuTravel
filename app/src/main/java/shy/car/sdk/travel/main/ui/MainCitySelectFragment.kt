@@ -162,7 +162,7 @@ class MainCitySelectFragment : XTBaseFragment() {
      * 搜索模式下 用于展示搜索的
      */
     fun getLocation() {
-        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
+        AmapLocationManager.getInstance().getLocation(object : AmapOnLocationReceiveListener {
             override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
                 cityNameLocating.set(location.city)
                 currentCity.copy(location)

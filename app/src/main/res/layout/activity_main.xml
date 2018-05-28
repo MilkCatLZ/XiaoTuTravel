@@ -43,6 +43,7 @@
                 <include
 
                     layout="@layout/layout_home_top"
+                    app:city="@{city}"
                     app:ac="@{ac}"/>
             </LinearLayout>
 

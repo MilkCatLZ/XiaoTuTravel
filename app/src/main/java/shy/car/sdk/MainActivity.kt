@@ -50,7 +50,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     }
 
     override fun onLocationChange() {
-
+        binding.city = app.location
     }
 
     override fun onNearCarClick() {
@@ -70,9 +70,6 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
     var citySelectFragment = MainCitySelectFragment()
     var nearCarListFragment = MainNearCarListFragment()
-
-
-    var currentCity = CurrentLocation()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,28 +1,30 @@
 package shy.car.sdk.travel.location.ui
 
 import android.databinding.DataBindingUtil
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.MyLocationStyle
+import com.amap.api.maps.model.*
+import com.amap.api.services.core.PoiItem
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
 import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentLocationSelectBinding
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
+import java.util.concurrent.TimeUnit
 
 /**
  * create by LZ at 2018/05/28
@@ -31,7 +33,9 @@ import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 class LocationSelectFragment : XTBaseFragment() {
 
     lateinit var binding: FragmentLocationSelectBinding
-    lateinit var bitmap: Bitmap
+    lateinit var bitmap: BitmapDescriptor
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_location_select, null, false)
         return binding.root
@@ -41,11 +45,54 @@ class LocationSelectFragment : XTBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
+        initEdit()
         refreshLocation()
     }
 
+    var searchDispose: Disposable? = null
+
+    private fun initEdit() {
+        binding.edtSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                Observable.timer(200, TimeUnit.MILLISECONDS)
+                        .observeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap {
+                            AmapLocationManager.getInstance()
+                                    .searchPoiList(p0?.toString()!!, app.location.cityCode, 1)
+                        }
+                        .subscribe(object : Observer<ArrayList<PoiItem>> {
+                            override fun onComplete() {
+
+                            }
+
+                            override fun onSubscribe(d: Disposable) {
+                                searchDispose?.dispose()
+                                searchDispose = d
+                            }
+
+                            override fun onNext(list: ArrayList<PoiItem>) {
+
+                            }
+
+                            override fun onError(e: Throwable) {
+
+                            }
+                        })
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+    }
+
     private fun initMap() {
-        var bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
+        bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         var myLocationStyle = MyLocationStyle().myLocationIcon(bitmap)
                 .anchor(0.5f, 0.5f)
         binding.mapLocationSelect.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
@@ -63,11 +110,12 @@ class LocationSelectFragment : XTBaseFragment() {
     private fun refreshLocation() {
         binding.mapLocationSelect.map.clear()
         Observable.create<CurrentLocation>({
-            AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
-                override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                    this@LocationSelectFragment.location.copy(location)
-                }
-            })
+            AmapLocationManager.getInstance()
+                    .getLocation(object : AmapOnLocationReceiveListener {
+                        override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                            this@LocationSelectFragment.location.copy(location)
+                        }
+                    })
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

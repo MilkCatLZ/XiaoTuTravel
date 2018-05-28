@@ -5,13 +5,14 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
-import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.LatLng
 import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.core.PoiItem
 import com.amap.api.services.geocoder.GeocodeResult
 import com.amap.api.services.geocoder.GeocodeSearch
 import com.amap.api.services.geocoder.RegeocodeQuery
 import com.amap.api.services.geocoder.RegeocodeResult
+import com.amap.api.services.poisearch.PoiResult
+import com.amap.api.services.poisearch.PoiSearch
 import com.base.util.Log
 import io.reactivex.Observable
 import java.util.*
@@ -20,21 +21,26 @@ import java.util.*
  * Created by LZ on 2017/11/13.
  * 高德地图
  */
-class AmapLocationManager private constructor(var context: Context) {
+class AmapLocationManager {
 
     /**
      * 单实例
      */
     companion object {
-        @JvmStatic
-        fun init(context: Context) {
-            instance = AmapLocationManager(context)
-            instance.initOption()
+        private val amap by lazy { AmapLocationManager() }
+
+        fun getInstance(): AmapLocationManager {
+            return amap
         }
 
-        @Volatile
-        @JvmStatic
-        lateinit var instance: AmapLocationManager
+    }
+
+    lateinit var context: Context
+
+    fun init(context: Context) {
+        this.context = context
+        ampLocationClient = AMapLocationClient(context)
+        initOption()
     }
 
     /**
@@ -53,7 +59,7 @@ class AmapLocationManager private constructor(var context: Context) {
         ampLocationClient.setLocationListener(listener)
     }
 
-    private val ampLocationClient = AMapLocationClient(context)
+    lateinit var ampLocationClient: AMapLocationClient
     var listener = Listener()
     var amapLocationReceive: AmapOnLocationReceiveListener? = null
     private val option: AMapLocationClientOption = AMapLocationClientOption()
@@ -89,6 +95,26 @@ class AmapLocationManager private constructor(var context: Context) {
 
     }
 
+    fun searchPoiList(keyWord: String, cityCode: String, pageIndex: Int): Observable<ArrayList<PoiItem>> {
+        return Observable.create<ArrayList<PoiItem>> {
+            var query = PoiSearch.Query(keyWord, "", cityCode)
+            query.pageSize = 10;// 设置每页最多返回多少条poiitem
+            query.pageNum = pageIndex;//设置查询页码
+
+            val poiSearch = PoiSearch(context, query)
+            poiSearch.setOnPoiSearchListener(object : PoiSearch.OnPoiSearchListener {
+                override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
+
+                }
+
+                override fun onPoiSearched(p0: PoiResult, p1: Int) {
+                    it.onNext(p0.pois)
+                }
+            })
+            poiSearch.searchPOIAsyn()
+        }
+    }
+
     val tag = "AmapLocationManager"
 
     inner class Listener : AMapLocationListener {
@@ -112,6 +138,7 @@ class AmapLocationManager private constructor(var context: Context) {
             location.address = amapLocation.address
             location.district = amapLocation.district
             location.city = amapLocation.city
+            location.cityCode = amapLocation.cityCode
             location.name = amapLocation.poiName
             amapLocationReceive?.onLocationReceive(amapLocation, location)
         }
