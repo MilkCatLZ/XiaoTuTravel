@@ -22,7 +22,7 @@
 -useuniqueclassmembernames
 -dontusemixedcaseclassnames
 -skipnonpubliclibraryclasses
--printusage
+#-printusage
 -dontskipnonpubliclibraryclasses
 -optimizations !code/allocation/variable
 
@@ -35,7 +35,7 @@
 
 #保存并复用名称映射
 #-applymapping ./build/outputs/mapping/debug/mapping.txt
--printmapping
+#-printmapping
 
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
    public *;
