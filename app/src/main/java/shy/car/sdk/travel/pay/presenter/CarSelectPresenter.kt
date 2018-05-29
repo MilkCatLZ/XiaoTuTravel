@@ -78,7 +78,7 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
         this.lat = lat
         this.lng = lng
         disposable?.dispose()
-        ApiManager.instance.api.getCarList()
+        ApiManager.getInstance().api.getCarList()
                 .subscribe(object : Observer<ArrayList<CarSelectInfo>> {
                     override fun onComplete() {
 

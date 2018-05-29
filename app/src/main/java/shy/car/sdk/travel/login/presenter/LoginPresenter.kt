@@ -68,7 +68,7 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
         if (isPhoneCorrect) {
             ProgressDialog.showLoadingView(context)
             d?.dispose()
-            ApiManager.instance.toSubscribe(ApiManager.instance.api.gerVerify(phone.get()!!), object : Observer<String> {
+            ApiManager.getInstance().toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<String> {
                 override fun onComplete() {
                     ProgressDialog.hideLoadingView(context)
                 }

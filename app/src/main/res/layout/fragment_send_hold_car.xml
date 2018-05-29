@@ -110,8 +110,8 @@
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
                         android:hint="选择出发地"
-                        android:text="@{presenter.address.address}"
-                        android:onClick="@{()->fragment.onSelectAddressClick()}"
+                        android:text="@{presenter.startLocation.address}"
+                        android:onClick="@{()->fragment.onSelectStartLocationclick()}"
                         />
                 </LinearLayout>
 
@@ -142,6 +142,8 @@
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
                         android:hint="选择到达地"
+                        android:onClick="@{()->fragment.onSelectEndLocationClick()}"
+                        android:text="@{presenter.endLocation.address}"
                         />
                 </LinearLayout>
 
@@ -171,6 +173,8 @@
                         android:layout_width="match_parent"
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
+                        android:text="@{presenter.goodsType.goodsTypeName}"
+                        android:onClick="@{()->fragment.onSelectGoodsTypeClick()}"
                         android:hint="选择货物类型"
                         />
                 </LinearLayout>

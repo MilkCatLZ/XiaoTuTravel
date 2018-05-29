@@ -17,4 +17,5 @@
     <color name="text_third_primary_999999">#999999</color>
     <color name="text_forth_primary_cccccc">#cccccc</color>
     <color name="text_fifth_primary_e5e5e5">#e5e5e5</color>
+    <color name="main_line_color">@color/text_fifth_primary_e5e5e5</color>
 </resources>

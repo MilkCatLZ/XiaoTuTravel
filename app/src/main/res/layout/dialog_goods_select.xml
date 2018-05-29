@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="shy.car.sdk.app.LNTextUtil"/>
+        <import type="shy.car.sdk.app.LNTextUtil" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.send.dialog.SendTimeSelectDialogFragment"/>
+            type="shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.common.presenter.GoodsSelectPresenter"/>
     </data>
 
     <LinearLayout
@@ -20,7 +24,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
 
@@ -34,16 +38,14 @@
                 android:paddingStart="20dp"
                 android:text="取消"
                 android:textColor="@color/main_color_green"
-                android:textSize="@dimen/text_second_primary_12dp"
-                />
+                android:textSize="@dimen/text_second_primary_12dp" />
 
             <TextView
                 style="@style/style_ww.text_14_333"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="选择时间"
-                />
+                android:text="货物类型" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,8 +55,7 @@
                 android:paddingEnd="20dp"
                 android:text="确定"
                 android:textColor="@color/main_color_green"
-                android:textSize="@dimen/text_second_primary_12dp"
-                />
+                android:textSize="@dimen/text_second_primary_12dp" />
         </LinearLayout>
 
 
@@ -63,19 +64,11 @@
             android:layout_height="200dp"
             android:orientation="horizontal">
 
-            <com.contrarywind.view.WheelView
-                android:id="@+id/wheel_send_hole_car_date"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_goods_select"
+                android:bindAdapter="@{presenter.adapter}"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:lineSpacingMultiplier="3.0"
-                android:layout_weight="1"/>
-
-            <com.contrarywind.view.WheelView
-                android:id="@+id/wheel_send_hole_car_time"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:lineSpacingMultiplier="3.0"
-                android:layout_weight="1"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

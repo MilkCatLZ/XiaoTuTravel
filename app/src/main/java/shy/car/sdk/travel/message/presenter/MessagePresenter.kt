@@ -49,7 +49,7 @@ class MessagePresenter(context: Context, var callBack: CallBack) : BasePresenter
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getMessageList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<MessageList>>{
+        ApiManager.getInstance().api.getMessageList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<MessageList>>{
             override fun onComplete() {
 
             }

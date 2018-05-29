@@ -53,7 +53,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     fun getNearList() {
 
         disposable?.dispose()
-        ApiManager.instance.api.getNearList(app.location.lat.toString(), app.location.lng.toString(), keyWord, pageIndex, pageSize)
+        ApiManager.getInstance().api.getNearList(app.location.lat.toString(), app.location.lng.toString(), keyWord, pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<NearCarList>> {
                     override fun onComplete() {
 

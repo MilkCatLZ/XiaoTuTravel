@@ -261,6 +261,8 @@
 -dontwarn com.xiaomi.**
 -dontwarn com.huawei.**
 -dontwarn com.meizu.**
+-dontwarn com.alipay.sdk.**
+-dontwarn com.ta.utdid2.**
 -keepattributes *Annotation*
 -keep class com.taobao.** {*;}
 -keep class org.android.** {*;}
@@ -401,6 +403,11 @@
 -keep class com.alibaba.idst.nls.** {*;}
 -keep class com.google.**{*;}
 -keep class com.nlspeech.nlscodec.** {*;}
+
+-keep class com.amap.api.col.** {*;}
+-dontwarn com.amap.api.col.**
+
+
 #end----------高德地图
 
 

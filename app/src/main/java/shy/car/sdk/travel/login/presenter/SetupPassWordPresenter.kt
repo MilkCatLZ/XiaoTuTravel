@@ -68,8 +68,8 @@ class SetupPassWordPresenter(val listener: SetupPassWordListener? = null, contex
      * 修改密码
      */
     private fun setupPassWord() {
-        var observer = ApiManager.instance.api.setupPassWord(User.instance.uid.toString(), password.get()!!)
-        ApiManager.instance.toSubscribe(observer, object : Observer<String> {
+        var observer = ApiManager.getInstance().api.setupPassWord(User.instance.uid.toString(), password.get()!!)
+        ApiManager.getInstance().toSubscribe(observer, object : Observer<String> {
             override fun onComplete() {
                 ProgressDialog.hideLoadingView(context)
             }

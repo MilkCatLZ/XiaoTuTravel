@@ -38,7 +38,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("xt/login")
-    fun login(@Field("") params: String): Observable<String>
+    fun login(@Field(ParamsConstant.Phone) phone: String,@Field(ParamsConstant.Verify) verify: String): Observable<String>
 
     /**
      * 修改密码

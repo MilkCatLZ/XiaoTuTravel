@@ -1,5 +1,6 @@
 package shy.car.sdk.travel.send.ui
 
+import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +13,12 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentSendHoldCarBinding
+import shy.car.sdk.travel.common.data.CommonWheelItem
+import shy.car.sdk.travel.common.data.GoodsType
+import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
+import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
-import shy.car.sdk.travel.send.dialog.CommonWheelItem
-import shy.car.sdk.travel.send.dialog.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
 
 
@@ -23,17 +26,19 @@ import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
  * create by LZ at 2018/05/25
  * 整车发货填写
  */
-class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, SendTimeSelectDialogFragment.OnItemSelectedListener {
-    override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
-        binding.txtUseTime.setText(date.name + "   " + time.name)
-    }
+class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
+
+    lateinit var binding: FragmentSendHoldCarBinding
+    lateinit var presenter: SendHoleCarPresenter
+
+    private var isStart = false
+    private var isEnd = false
+
 
     override fun getCarListSuccess(list: ArrayList<CarInfo>) {
 
     }
 
-    lateinit var binding: FragmentSendHoldCarBinding
-    lateinit var presenter: SendHoleCarPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +49,7 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_send_hold_car, null, false)
         binding.fragment = this
-
+        binding.presenter = presenter
         return binding.root
     }
 
@@ -63,23 +68,57 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack, Sen
 
     }
 
-    fun onSelectAddressClick() {
+    fun onSelectStartLocationclick() {
         ARouter.getInstance()
                 .build(RouteMap.LocationSelect)
                 .navigation()
+        isStart = true
+        isEnd = false
+    }
+
+
+    fun onSelectEndLocationClick() {
+        ARouter.getInstance()
+                .build(RouteMap.LocationSelect)
+                .navigation()
+        isStart = false
+        isEnd = true
     }
 
     var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
 
     fun openTimeSelect() {
-        timeSelectDialogFragment.listener = this
+        timeSelectDialogFragment.listener = object : SendTimeSelectDialogFragment.OnItemSelectedListener {
+            @SuppressLint("SetTextI18n")
+            override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
+                binding.txtUseTime.text = "${date.name}     ${time.name}"
+            }
+
+        }
         timeSelectDialogFragment.isCancelable = false
         timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
+    }
+
+    fun onSelectGoodsTypeClick() {
+        val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
+        goodsDialog.listener = object : GoodsTypeSelectDialogFragment.OnItemSelectedListener {
+            override fun onTimeSelect(goodsType: GoodsType) {
+                presenter.goodsType.set(goodsType)
+            }
+
+        }
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLocationSelect(address: CurrentLocation) {
-        presenter.address = address
+        if (isStart) {
+            presenter.startLocation.set(address)
+        } else if (isEnd) {
+            presenter.endLocation.set(address)
+        }
+        isStart = false
+        isEnd = false
+
     }
 }

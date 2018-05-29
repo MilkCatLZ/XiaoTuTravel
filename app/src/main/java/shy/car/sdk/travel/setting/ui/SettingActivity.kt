@@ -99,7 +99,7 @@ class SettingActivity : XTBaseActivity() {
     fun checkUpdate() {
         disposable?.dispose()
         ProgressDialog.showLoadingView(this)
-        val observable = ApiManager.instance.api.getUpdateInfo()
+        val observable = ApiManager.getInstance().api.getUpdateInfo()
         val observer = object : Observer<String> {
             override fun onComplete() {
                 ProgressDialog.hideLoadingView(this@SettingActivity)
@@ -119,7 +119,7 @@ class SettingActivity : XTBaseActivity() {
             }
         }
 
-        ApiManager.instance.toSubscribe(observable, observer)
+        ApiManager.getInstance().toSubscribe(observable, observer)
 
 
     }

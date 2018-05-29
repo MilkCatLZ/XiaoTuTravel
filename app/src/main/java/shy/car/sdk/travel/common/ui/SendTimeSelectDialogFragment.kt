@@ -1,27 +1,24 @@
-package shy.car.sdk.travel.send.dialog
+package shy.car.sdk.travel.common.ui
 
-import android.app.Dialog
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.annotation.Route
 import shy.car.sdk.R
-import shy.car.sdk.app.base.XTBaseDialogFragment
-import shy.car.sdk.databinding.FragmentSendTimeSelectBinding
-import shy.car.sdk.travel.send.presenter.SendTimeSelectPresenter
+import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.databinding.DialogSendTimeSelectBinding
+import shy.car.sdk.travel.common.data.CommonWheelItem
+import shy.car.sdk.travel.common.presenter.SendTimeSelectPresenter
 import java.util.*
-import android.support.design.widget.BottomSheetBehavior
-import java.lang.reflect.AccessibleObject.setAccessible
-import android.support.design.widget.BottomSheetDialog
-import android.widget.FrameLayout
-import io.reactivex.annotations.NonNull
 
 
 /**
  * 选择用车时间
  */
+@Route(path = RouteMap.SendTimeSelect)
 class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelectPresenter.CallBack {
 
     interface OnItemSelectedListener {
@@ -39,7 +36,7 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
 
     lateinit var presenter: SendTimeSelectPresenter
 
-    lateinit var binding: FragmentSendTimeSelectBinding
+    lateinit var binding: DialogSendTimeSelectBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +44,7 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_send_time_select, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_send_time_select, null, false)
         binding.fragment = this
         return binding.root
     }

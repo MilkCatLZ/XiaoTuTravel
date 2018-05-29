@@ -130,6 +130,18 @@ public class RouteMap {
      * shy.car.sdk.travel.location.ui.LocationSelectActivity
      */
     @NotNull
-    public static final String LocationSelect = "/location/select";
+    public static final String LocationSelect = "/common/location_select";
+    /**
+     * 选择地址
+     * shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
+     */
+    @NotNull
+    public static final String SendTimeSelect = "/common/send_time_select";
+    /**
+     * 选择货物类型
+     * shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
+     */
+    @NotNull
+    public static final String GoodsTypeSelect = "/common/goods_type_select";
 
 }

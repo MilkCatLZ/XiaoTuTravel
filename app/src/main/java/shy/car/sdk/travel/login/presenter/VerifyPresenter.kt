@@ -1,40 +1,36 @@
 package shy.car.sdk.travel.login.presenter
 
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.*
 import io.reactivex.Observable
 import io.reactivex.Observer
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
-import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
 import java.util.concurrent.TimeUnit
 
-interface LoginListener {
-    fun loginSuccess()
-    fun loginFailed(e: Throwable?)
-    fun onGetVerifySuccess()
-    fun onGetVerifyError(e: Throwable?)
-}
+
 
 /**
  *
  * 获取验证码
  */
 class VerifyPresenter(val listener: LoginListener? = null, context: Context) : BasePresenter(context) {
-
+    interface LoginListener {
+        fun loginSuccess()
+        fun loginFailed(e: Throwable?)
+        fun onGetVerifySuccess()
+        fun onGetVerifyError(e: Throwable?)
+    }
     var phone = ObservableField<String>("")
     var verify = ObservableField<String>("")
 
@@ -42,51 +38,56 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
      * 登录
      */
     fun login() {
-        var observer = ApiManager.instance.api.login(verify.get()!!)
-        ApiManager.instance.toSubscribe(observer, object : Observer<String> {
-            override fun onComplete() {
-//                    ProgressDialog.hideLoadingView(context)
-            }
 
-            override fun onSubscribe(d: Disposable) {
+        var observer = ApiManager.getInstance()
+                .api.login(phone.get()!!, verify.get()!!)
+        ApiManager.getInstance()
+                .toSubscribe(observer, object : Observer<String> {
+                    override fun onComplete() {
+                    }
 
-            }
+                    override fun onSubscribe(d: Disposable) {
 
-            override fun onNext(result: String) {
-                if (isLoginSuccess(result)) {
-                    saveLoginState(result)
-                    savePhoneNumCache()
-                    listener?.loginSuccess()
-                } else {
-                    listener?.loginFailed(null)
-                }
-            }
+                    }
 
-            override fun onError(e: Throwable) {
+                    override fun onNext(result: String) {
+                        if (isLoginSuccess(result)) {
+                            saveLoginState(result)
+                            savePhoneNumCache()
+                            listener?.loginSuccess()
+                        } else {
+                            listener?.loginFailed(null)
+                        }
+                    }
 
-                if (shy.car.sdk.BuildConfig.DEBUG) {
-                    Observable.timer(3, TimeUnit.SECONDS)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe({
-                                if ("1234".equals(verify.get())) {
-                                    User.instance.access_token = "sdklflkjlksjdf"
-                                    User.instance.uid = 1985632
-                                    User.instance.nickName = "小兔出行"
-                                    User.instance.phone = phone.get()
-                                    User.instance.status = 1
-                                    listener?.loginSuccess()
-                                } else {
-                                    listener?.loginFailed(e)
-                                }
-                            })
+                    override fun onError(e: Throwable) {
 
+                        if (shy.car.sdk.BuildConfig.DEBUG) {
+                            testLogin()
+                        } else {
+                            listener?.loginFailed(e)
+                        }
+                    }
+                })
 
-                } else {
-                    listener?.loginFailed(e)
-                }
-            }
-        })
+    }
+
+    private fun testLogin() {
+        Observable.timer(3, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if ("1234".equals(verify.get())) {
+                        User.instance.access_token = "sdklflkjlksjdf"
+                        User.instance.uid = 1985632
+                        User.instance.nickName = "小兔出行"
+                        User.instance.phone = phone.get()
+                        User.instance.status = 1
+                        listener?.loginSuccess()
+                    } else {
+                        listener?.loginFailed(null)
+                    }
+                })
     }
 
     /**
@@ -103,28 +104,29 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
     fun getVerify() {
         ProgressDialog.showLoadingView(context)
         d?.dispose()
-        ApiManager.instance.toSubscribe(ApiManager.instance.api.gerVerify(phone.get()!!), object : Observer<String> {
-            override fun onComplete() {
-                ProgressDialog.hideLoadingView(context)
-            }
+        ApiManager.getInstance()
+                .toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<String> {
+                    override fun onComplete() {
+                        ProgressDialog.hideLoadingView(context)
+                    }
 
-            override fun onSubscribe(d: Disposable) {
-                this@VerifyPresenter.d = d
-            }
+                    override fun onSubscribe(d: Disposable) {
+                        this@VerifyPresenter.d = d
+                    }
 
-            override fun onNext(t: String) {
-                if (StringUtils.isNotEmpty(t)) {
-                    ToastManager.showLongToast(context, "验证码发送成功")
-                    listener?.onGetVerifySuccess()
-                }
-            }
+                    override fun onNext(t: String) {
+                        if (StringUtils.isNotEmpty(t)) {
+                            ToastManager.showLongToast(context, "验证码发送成功")
+                            listener?.onGetVerifySuccess()
+                        }
+                    }
 
-            override fun onError(e: Throwable) {
-                listener?.onGetVerifyError(e)
-                ProgressDialog.hideLoadingView(context)
+                    override fun onError(e: Throwable) {
+                        listener?.onGetVerifyError(e)
+                        ProgressDialog.hideLoadingView(context)
 
-            }
-        })
+                    }
+                })
     }
 
     init {

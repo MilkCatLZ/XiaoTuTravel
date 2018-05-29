@@ -2,7 +2,6 @@ package shy.car.sdk.travel.login.ui
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableInt
@@ -12,9 +11,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.view.inputmethod.InputMethod
-import android.view.inputmethod.InputMethodManager
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -24,7 +20,6 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_verify.*
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
@@ -32,11 +27,14 @@ import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentVerifyBinding
 import shy.car.sdk.travel.interfaces.onLoginDismiss
-import shy.car.sdk.travel.login.presenter.LoginListener
 import shy.car.sdk.travel.login.presenter.VerifyPresenter
 import java.util.concurrent.TimeUnit
 
 
+/**
+ * create by LZ at 2018/05/29
+ * 验证码-登录
+ */
 @Route(path = RouteMap.Verify)
 class VerifyDialogFragment : XTBaseDialogFragment() {
 
@@ -114,7 +112,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     /**
      * 网络回调监听
      */
-    private var listener = object : LoginListener {
+    private var listener = object : VerifyPresenter.LoginListener {
         override fun loginSuccess() {
             isLoginSuccess.set(true)
 
@@ -212,7 +210,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      */
     private fun lockAndSubmit() {
         if (binding.edtInput.text.length == 4) {
-            Observable.timer(1, TimeUnit.SECONDS)
+            Observable.timer(500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

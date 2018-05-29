@@ -23,6 +23,7 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
     interface CallBack {
         fun onAddressClick(poiItem: PoiItem)
+        fun getPoiListSuccess()
 
     }
 
@@ -55,12 +56,7 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
                     override fun onNext(list: ArrayList<PoiItem>) {
                         adapter.setItems(list, 1)
-                        Log.d("next", list.toString())
-                        if (list.size > 0) {
-                            Log.d("next", list[0].toString())
-                        }
-
-
+callBack.getPoiListSuccess()
                     }
 
                     override fun onError(e: Throwable) {

@@ -7,7 +7,7 @@ import com.base.net.BaseRetrofitInterface
 /**
  * 统一接口管理
  * 所有接口调用都放在这里使用
- * 使用方式ApiManager.instance.method()
+ * 使用方式ApiManager.getInstance().method()
  */
 class ApiManager(baseUrl: String, interceptor: BaseInterceptor, listener: BaseRetrofitInterface, c: Class<ApiInterface>) : BaseApiManager<ApiInterface>(baseUrl, interceptor, listener, c) {
 
@@ -16,11 +16,14 @@ class ApiManager(baseUrl: String, interceptor: BaseInterceptor, listener: BaseRe
      */
     companion object {
         //获取ApiManager的单例
-        lateinit var instance: ApiManager
+        private lateinit var ins: ApiManager
 
+        fun getInstance(): ApiManager {
+            return ins
+        }
 
         fun init(baseUrl: String, interceptor: BaseInterceptor, listener: BaseRetrofitInterface, c: Class<ApiInterface>) {
-            instance = ApiManager(baseUrl, interceptor, listener, c)
+            ins = ApiManager(baseUrl, interceptor, listener, c)
         }
 
     }

@@ -93,7 +93,7 @@ class CurrentLocation : BaseObservable, IndexableEntity {
         lat = location.latLonPoint.latitude
         lng = location.latLonPoint.longitude
         address = location.snippet
-        district = location.provinceName
+        district = location.adName
         cityCode = location.cityCode
     }
 

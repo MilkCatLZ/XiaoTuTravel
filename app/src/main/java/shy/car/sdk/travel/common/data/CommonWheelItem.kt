@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.send.dialog
+package shy.car.sdk.travel.common.data
 
 import com.contrarywind.interfaces.IPickerViewData
 import shy.car.sdk.travel.send.interfaces.WheelItemInerface

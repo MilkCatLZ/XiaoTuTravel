@@ -57,7 +57,7 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
         this.lat = lat
         this.lng = lng
         disposable?.dispose()
-        ApiManager.instance.api.getPromiseMoneyDetailList()
+        ApiManager.getInstance().api.getPromiseMoneyDetailList()
                 .subscribe(object : Observer<ArrayList<PromiseMoneyDetail>> {
                     override fun onComplete() {
 

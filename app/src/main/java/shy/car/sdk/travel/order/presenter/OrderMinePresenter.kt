@@ -45,7 +45,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrdreMineList(pageIndex, pageSize)
+        ApiManager.getInstance().api.getOrdreMineList(pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<OrderMineList>> {
                     override fun onComplete() {
 

@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.send.presenter
+package shy.car.sdk.travel.common.presenter
 
 import android.content.Context
 import io.reactivex.Observable
@@ -6,7 +6,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.send.adapter.WheelAdapter
-import shy.car.sdk.travel.send.dialog.CommonWheelItem
+import shy.car.sdk.travel.common.data.CommonWheelItem
 import java.text.SimpleDateFormat
 import java.util.*
 

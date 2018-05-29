@@ -50,7 +50,7 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getTakeOrderList(pageIndex, pageSize)
+        ApiManager.getInstance().api.getTakeOrderList(pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<TakeOrderList>> {
                     override fun onComplete() {
 

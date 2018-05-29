@@ -24,7 +24,7 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
 
 
     fun getOrderDetail() {
-        var observable = ApiManager.instance.api.getTakeOrderDetail(orderList.id)
+        var observable = ApiManager.getInstance().api.getTakeOrderDetail(orderList.id)
         val obsever = object : Observer<TakeOrderDetail> {
             override fun onComplete() {
 
@@ -43,7 +43,7 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
             }
 
         }
-        ApiManager.instance.toSubscribe(observable, obsever)
+        ApiManager.getInstance().toSubscribe(observable, obsever)
     }
 
     fun postTakeOrder() {

@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.location.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableBoolean
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -34,14 +35,22 @@ import java.util.concurrent.TimeUnit
  * 选择地址
  */
 class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBack {
+    override fun getPoiListSuccess() {
+        isResultVisible.set(true)
+    }
+
     override fun onAddressClick(poiItem: PoiItem) {
         moveCameraAndShowLocation(poiItem)
+        isResultVisible.set(false)
     }
 
     lateinit var binding: FragmentLocationSelectBinding
     lateinit var bitmap: BitmapDescriptor
+    var location = CurrentLocation()
+
 
     lateinit var presenter: LocationSelectPresenter
+    val isResultVisible = ObservableBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +96,6 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
         activity?.let { binding.mapLocationSelect.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
     }
 
-    var location = CurrentLocation()
     /**
      * 刷新定位
      */

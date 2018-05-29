@@ -55,7 +55,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.instance.api.getOrderSendList(pageIndex, pageSize)
+        ApiManager.getInstance().api.getOrderSendList(pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<OrderSendList>> {
                     override fun onComplete() {
 

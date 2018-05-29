@@ -16,4 +16,5 @@ public class ParamsConstant {
     public static final String KeyWord = "keyword";
     public static final String UID = "uid";
     public static final String OrderId = "oid";
+    public static final String Verify = "verify";
 }

@@ -42,8 +42,8 @@ class LocationPresenter(context: Context, callBack: CallBack) : BasePresenter(co
     }
 
     fun getCity() {
-        var o = ApiManager.instance.api.getCityList()
+        var o = ApiManager.getInstance().api.getCityList()
 
-        ApiManager.instance.toSubscribe(o, observer)
+        ApiManager.getInstance().toSubscribe(o, observer)
     }
 }
