@@ -1,7 +1,6 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
-import android.location.Location
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
@@ -9,13 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.*
-import com.amap.api.services.core.LatLonPoint
-import com.amap.api.services.geocoder.GeocodeResult
-import com.amap.api.services.geocoder.GeocodeSearch
-import com.amap.api.services.geocoder.RegeocodeQuery
-import com.amap.api.services.geocoder.RegeocodeResult
+import com.amap.api.maps.model.BitmapDescriptor
+import com.amap.api.maps.model.BitmapDescriptorFactory
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
+import com.base.location.AmapLocationManager
+import com.base.location.AmapOnLocationReceiveListener
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_car_rent.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -95,58 +98,38 @@ class CarRentFragment : XTBaseFragment() {
      * 初始化地图
      */
     private fun initMap() {
+
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
-        map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
-        map.map.setOnMyLocationChangeListener {
-            updateLatLong(it)
-            locationChange(it)
-        }
-        activity?.let { map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
+        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
+        activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
     }
 
-    private fun locationChange(it: Location) {
-        var geocoderSearch = GeocodeSearch(context)
-        val query = RegeocodeQuery(LatLonPoint(it.latitude, it.longitude), 200f, GeocodeSearch.AMAP)
-        geocoderSearch.setOnGeocodeSearchListener(object : GeocodeSearch.OnGeocodeSearchListener {
-            override fun onRegeocodeSearched(p0: RegeocodeResult?, p1: Int) {
-                if (p0 != null) {
-                    updateAddress(p0)
-                }
-                locationRefreshListener?.onLocationChange()
-            }
-
-            override fun onGeocodeSearched(p0: GeocodeResult?, p1: Int) {
-
-            }
-        })
-        geocoderSearch.getFromLocationAsyn(query)
-    }
-
-    private fun updateAddress(p0: RegeocodeResult) {
-        app.location.cityName = p0.regeocodeAddress.city
-        app.location.address = p0.regeocodeAddress.toString()
-        app.location.cityCode = getCityCode()
-    }
-
-    private fun getCityCode(): String {
-        return ""
-    }
-
-    private fun updateLatLong(it: Location) {
-        app.location.lat = it.latitude
-        app.location.lng = it.longitude
-    }
-
-    /**
-     * 刷新定位
-     */
     fun refreshLocation() {
-        var myLocationStyle = MyLocationStyle().myLocationIcon(bitmap)
-                .anchor(0.5f, 0.5f)
-        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
-        map.map.myLocationStyle = myLocationStyle
-        map.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false
+        Observable.create<com.base.location.Location>({
+            AmapLocationManager.getInstance()
+                    .getLocation(object : AmapOnLocationReceiveListener {
+                        override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
+                            app.changeCurrentLocation(location)
+                            moveCameraAndShowLocation(location)
+                            it.onNext(location)
+                        }
+                    })
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    addMarkersToMap(LatLng(it.latitude, it.longitude))
+                })
 
+    }
+
+    private fun moveCameraAndShowLocation(location: com.base.location.Location) {
+        binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.latitude, location.longitude)))
+        binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
+                .anchor(0.5f, 1.0f)
+                .snippet(location.address)
+                .position(LatLng(location.latitude, location.longitude))
+                .draggable(false))
     }
 
 
@@ -216,7 +199,7 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     fun changeZoom() {
-        edt_zoom.text?.let { map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
+        binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
     }
 
 
@@ -231,7 +214,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun addMarkersToMap(latlng: LatLng) {
 
-        var marker = map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
                 .snippet("小兔")
                 .snippet("附近可用车${latlng.latitude}辆")

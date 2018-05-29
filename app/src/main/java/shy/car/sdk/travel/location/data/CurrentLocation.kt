@@ -2,6 +2,7 @@ package shy.car.sdk.travel.location.data
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import com.amap.api.services.core.PoiItem
 import com.android.databinding.library.baseAdapters.BR
 import com.base.location.Location
 import me.yokeyword.indexablerv.IndexableEntity
@@ -84,6 +85,16 @@ class CurrentLocation : BaseObservable, IndexableEntity {
         lng = location.longitude
         address = location.address
         district = location.district
+        cityCode = location.cityCode
+    }
+
+    fun copy(location: PoiItem) {
+        cityName = location.cityName
+        lat = location.latLonPoint.latitude
+        lng = location.latLonPoint.longitude
+        address = location.snippet
+        district = location.provinceName
+        cityCode = location.cityCode
     }
 
 }

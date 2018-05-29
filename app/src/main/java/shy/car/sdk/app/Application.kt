@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.app.BaseApplication
 import com.base.location.AmapLocationManager
+import com.base.location.Location
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import org.greenrobot.eventbus.EventBus
@@ -127,8 +128,8 @@ class Application : BaseApplication() {
         User.saveUserState(this)
     }
 
-    fun changeCurrentLocation(city: CurrentLocation) {
-        location = city
+    fun changeCurrentLocation(l: Location) {
+        location.copy(l)
     }
 
 }
