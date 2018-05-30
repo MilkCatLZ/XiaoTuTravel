@@ -38,7 +38,7 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
     }
 
     fun getAddressList(keyWord: String) {
-        Observable.timer(100, TimeUnit.MILLISECONDS)
+        Observable.timer(500, TimeUnit.MILLISECONDS)
                 .observeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap {

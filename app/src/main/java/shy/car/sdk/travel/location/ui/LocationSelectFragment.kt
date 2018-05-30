@@ -10,25 +10,23 @@ import android.view.View
 import android.view.ViewGroup
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.*
+import com.amap.api.maps.model.BitmapDescriptor
+import com.amap.api.maps.model.BitmapDescriptorFactory
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.services.core.PoiItem
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
-import com.base.util.Log
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentLocationSelectBinding
-import shy.car.sdk.travel.location.LocationPresenter
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.location.presenter.LocationSelectPresenter
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
-import java.util.concurrent.TimeUnit
 
 /**
  * create by LZ at 2018/05/28
@@ -63,6 +61,7 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
         binding.presenter = presenter
         binding.recyclerViewLocationSelect.enableDefaultSwipeRefresh(false)
         binding.recyclerViewLocationSelect.isEnabled = false
+        binding.fragment = this
         return binding.root
 
     }

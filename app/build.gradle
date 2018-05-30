@@ -68,11 +68,19 @@ android {
 
         flavorDimensions "debug"
 
-
-        ndk {
-            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi"
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'armeabi'//只打包armeabi平台的，就算有其他文件夹也不管
+//                include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
+            }
         }
+
+//        ndk {
+//            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+//            abiFilters "armeabi"
+//        }
     }
 
     buildTypes {
@@ -104,10 +112,10 @@ android {
             //开发版本测试后缀
             applicationIdSuffix "develop"
             manifestPlaceholders = DevelopArray
-            ndk {
-                //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-                abiFilters "armeabi"
-            }
+//            ndk {
+//                //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+//                abiFilters "armeabi"
+//            }
         }
         Release_ {
             dimension "debug"
