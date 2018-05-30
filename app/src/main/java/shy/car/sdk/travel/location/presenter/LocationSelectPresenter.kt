@@ -32,7 +32,8 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
     var adapter: DataBindingItemClickAdapter<PoiItem> = DataBindingItemClickAdapter(R.layout.item_location_select, BR.item, BR.click, {
         callBack.onAddressClick(it.tag as PoiItem)
     })
-    init{
+
+    init {
         adapter.disableFooter()
     }
 
@@ -56,11 +57,11 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
                     override fun onNext(list: ArrayList<PoiItem>) {
                         adapter.setItems(list, 1)
-callBack.getPoiListSuccess()
+                        callBack.getPoiListSuccess()
                     }
 
                     override fun onError(e: Throwable) {
-
+                        Log.d("", e.printStackTrace().toString())
                     }
                 })
     }

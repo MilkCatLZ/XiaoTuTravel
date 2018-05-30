@@ -40,10 +40,15 @@ class MainCitySelectFragment : XTBaseFragment() {
     //搜索栏 显示的当前城市
     val cityNameLocating = ObservableField<String>(LOCATING)
     lateinit var binding: LayoutCitySelectBinding
-    lateinit var currentCity: CurrentLocation
+    var currentCity = CurrentLocation()
 
     lateinit var locationPresenter: LocationPresenter
     val searchResultFragment = SearchFragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        currentCity = app.location.copy()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.layout_city_select, null, false)
@@ -162,12 +167,13 @@ class MainCitySelectFragment : XTBaseFragment() {
      * 搜索模式下 用于展示搜索的
      */
     fun getLocation() {
-        AmapLocationManager.getInstance().getLocation(object : AmapOnLocationReceiveListener {
-            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                cityNameLocating.set(location.city)
-                currentCity.copy(location)
-            }
-        })
+        AmapLocationManager.getInstance()
+                .getLocation(object : AmapOnLocationReceiveListener {
+                    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                        cityNameLocating.set(location.city)
+                        currentCity.copy(location)
+                    }
+                })
     }
 
     private fun getCode(location: CurrentLocation): String {

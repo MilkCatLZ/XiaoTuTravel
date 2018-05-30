@@ -17,7 +17,7 @@
 #}
 
 #百度地图
--libraryjars libs/BaiduLBS_Android.jar
+#-libraryjars libs/BaiduLBS_Android.jar
 #-keep class com.baidu.** {*;}
 #-keep class vi.com.** {*;}
 #-dontwarn com.baidu.**

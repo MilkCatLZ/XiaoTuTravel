@@ -97,4 +97,15 @@ class CurrentLocation : BaseObservable, IndexableEntity {
         cityCode = location.cityCode
     }
 
+    fun copy(): CurrentLocation {
+        var newLocation = CurrentLocation()
+        newLocation.cityName = this.cityName
+        newLocation.lat = this.lat
+        newLocation.lng = this.lng
+        newLocation.address = this.address
+        newLocation.district = this.district
+        newLocation.cityCode = this.cityCode
+        return newLocation
+    }
+
 }

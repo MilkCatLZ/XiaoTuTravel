@@ -99,24 +99,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="150dp"
-                    android:onClick="@{()->fragment.onNearCarClick()}"
-                    android:src="@drawable/icon_site" />
+                    android:layout_marginBottom="270dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:onClick="@{()->fragment.onNearCarClick()}"
+                        android:src="@drawable/icon_site" />
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="200dp"
-                    android:onClick="@{()->fragment.refreshLocation()}"
-                    android:src="@drawable/icon_locat" />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginTop="10dp"
+                        android:onClick="@{()->fragment.refreshLocation()}"
+                        android:src="@drawable/icon_locat" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

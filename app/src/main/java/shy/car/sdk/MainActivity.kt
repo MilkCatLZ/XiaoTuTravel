@@ -3,6 +3,7 @@ package shy.car.sdk
 import android.Manifest
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.Gravity
@@ -39,6 +40,8 @@ import java.util.concurrent.TimeUnit
 class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
     override fun onCitySelected(location: CurrentLocation) {
         isCitySelectVisible.set(false)
+        app.location = location.copy()
+        city.set(app.location)
     }
 
     override fun onCancelClick() {
@@ -50,7 +53,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     }
 
     override fun onLocationChange() {
-        binding.city = app.location
+        city.set(app.location)
     }
 
     override fun onNearCarClick() {
@@ -71,6 +74,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     var citySelectFragment = MainCitySelectFragment()
     var nearCarListFragment = MainNearCarListFragment()
 
+    var city = ObservableField<CurrentLocation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

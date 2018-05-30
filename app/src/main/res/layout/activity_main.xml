@@ -15,9 +15,6 @@
             name="user"
             type="shy.car.sdk.travel.user.data.User"/>
 
-        <variable
-            name="city"
-            type="shy.car.sdk.travel.location.data.CurrentLocation"/>
     </data>
 
     <android.support.v4.widget.DrawerLayout
@@ -43,7 +40,6 @@
                 <include
 
                     layout="@layout/layout_home_top"
-                    app:city="@{city}"
                     app:ac="@{ac}"/>
             </LinearLayout>
 

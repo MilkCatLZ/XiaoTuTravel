@@ -111,6 +111,7 @@ class CarRentFragment : XTBaseFragment() {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
                             app.changeCurrentLocation(location)
                             moveCameraAndShowLocation(location)
+                            locationRefreshListener?.onLocationChange()
                             it.onNext(location)
                         }
                     })
