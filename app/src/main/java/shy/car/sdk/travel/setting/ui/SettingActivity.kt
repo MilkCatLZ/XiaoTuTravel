@@ -8,10 +8,8 @@ import com.base.base.ProgressDialog
 import com.base.util.FileManager
 import com.base.util.ToastManager
 import com.base.util.Version
-import com.base.webview.DeviceUtils
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -99,7 +97,8 @@ class SettingActivity : XTBaseActivity() {
     fun checkUpdate() {
         disposable?.dispose()
         ProgressDialog.showLoadingView(this)
-        val observable = ApiManager.getInstance().api.getUpdateInfo()
+        val observable = ApiManager.getInstance()
+                .api.getUpdateInfo()
         val observer = object : Observer<String> {
             override fun onComplete() {
                 ProgressDialog.hideLoadingView(this@SettingActivity)
@@ -119,8 +118,14 @@ class SettingActivity : XTBaseActivity() {
             }
         }
 
-        ApiManager.getInstance().toSubscribe(observable, observer)
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
 
 
+    }
+
+    fun logout() {
+        app.logout()
+        finish()
     }
 }

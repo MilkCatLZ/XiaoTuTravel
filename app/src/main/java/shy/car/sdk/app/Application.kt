@@ -132,4 +132,8 @@ class Application : BaseApplication() {
         location.copy(l)
     }
 
+    fun logout() {
+        User.logout(this)
+    }
+
 }

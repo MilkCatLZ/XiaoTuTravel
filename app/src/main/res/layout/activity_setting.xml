@@ -69,8 +69,8 @@
 
         <LinearLayout
             android:id="@+id/layout_cache"
-            android:onClick="@{()->ac.clearCache()}"
-            style="@style/style_setting_content">
+            style="@style/style_setting_content"
+            android:onClick="@{()->ac.clearCache()}">
 
             <TextView
                 style="@style/style_setting_nav_title"
@@ -92,8 +92,8 @@
 
         <LinearLayout
             android:id="@+id/layout_version"
-            android:onClick="@{()->ac.checkUpdate()}"
-            style="@style/style_setting_content">
+            style="@style/style_setting_content"
+            android:onClick="@{()->ac.checkUpdate()}">
 
             <TextView
                 style="@style/style_setting_nav_title"
@@ -127,5 +127,17 @@
         </LinearLayout>
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="@{()->ac.logout()}"
+            android:background="@drawable/back_button_main_green_corner"
+            android:gravity="center"
+            android:text="退出登录"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp"/>
     </LinearLayout>
 </layout>

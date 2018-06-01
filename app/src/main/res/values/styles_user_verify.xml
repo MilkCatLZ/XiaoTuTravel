@@ -1,0 +1,24 @@
+<resources>
+
+    <style name="style_user_verify_pic_back">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/back_white_coner_2dp_dash</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <style name="style_ww.text_14_333.verify_user_edt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textColorHint">@color/text_forth_primary_cccccc</item>
+    </style>
+
+</resources>
