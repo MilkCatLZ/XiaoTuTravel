@@ -119,8 +119,12 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".travel.location.ui.LocationSelectActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".travel.send.ui.SendCitySmallPackageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 
 </manifest>

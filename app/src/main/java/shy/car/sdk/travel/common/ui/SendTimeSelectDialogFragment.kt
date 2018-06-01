@@ -52,9 +52,6 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWheelView()
-
-
-
         presenter.getList()
     }
 
@@ -76,28 +73,4 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
         dismiss()
     }
 
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-//
-//        try {
-//            val mBehaviorField = bottomSheetDialog.javaClass.getDeclaredField("mBehavior")
-//            mBehaviorField.isAccessible = true
-//            val behavior = mBehaviorField.get(bottomSheetDialog) as? BottomSheetBehavior<*>
-//            behavior?.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-//                override fun onStateChanged(@NonNull bottomSheet: View, newState: Int) {
-//                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
-//                        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//                    }
-//                }
-//
-//                override fun onSlide(@NonNull bottomSheet: View, slideOffset: Float) {}
-//            })
-//        } catch (e: NoSuchFieldException) {
-//            e.printStackTrace()
-//        } catch (e: IllegalAccessException) {
-//            e.printStackTrace()
-//        }
-//
-//        return bottomSheetDialog
-//    }
 }

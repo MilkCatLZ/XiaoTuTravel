@@ -95,4 +95,9 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
                 .build(RouteMap.SendHoleCarEdit)
                 .navigation()
     }
+    fun onSendCitySmallPackageCar() {
+        ARouter.getInstance()
+                .build(RouteMap.SendCitySmallPackageSelect)
+                .navigation()
+    }
 }

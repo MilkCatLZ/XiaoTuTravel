@@ -21,8 +21,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="15dp"
-        android:onClick="@{click}"
-        android:tag="@{goodsType}"
         android:paddingTop="15dp">
 
         <CheckBox
@@ -32,6 +30,8 @@
             android:button="@null"
             android:checked="@{presenter.checkID==goodsType.goodsType}"
             android:gravity="center"
+            android:onClick="@{click}"
+            android:tag="@{goodsType}"
             android:text="@{goodsType.goodsTypeName}"
             android:textColor="@drawable/color_goods_type_selector"
             android:textSize="@dimen/text_primary_14dp"

@@ -5,19 +5,10 @@ import android.databinding.ObservableInt
 import android.view.View
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
-import com.base.databinding.ItemViewHolder
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.send.adapter.WheelAdapter
-import shy.car.sdk.travel.common.data.CommonWheelItem
 import shy.car.sdk.travel.common.data.GoodsType
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 /**
@@ -28,6 +19,8 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
 
     var checkID = ObservableInt(0)
     var checkedGoodsType: GoodsType? = null
+
+
     val adapter = DataBindingItemClickAdapter<GoodsType>(R.layout.item_goods_type, BR.goodsType, BR.click, View.OnClickListener {
         val goodsType = it.tag as GoodsType
         checkedGoodsType = goodsType
@@ -49,6 +42,19 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
             goodsType.goodsType = i
             list.add(goodsType)
         }
+        checkedGoodsType = list[0]
         adapter.setItems(list, 1)
+    }
+
+    fun getCheckedGoodsType(typeString: String): GoodsType {
+
+        return if (checkedGoodsType != null) {
+            checkedGoodsType!!
+        } else {
+            var type = GoodsType()
+            type.goodsTypeName = typeString
+            type
+
+        }
     }
 }

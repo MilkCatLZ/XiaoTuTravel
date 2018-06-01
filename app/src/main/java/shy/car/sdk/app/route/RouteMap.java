@@ -143,5 +143,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String GoodsTypeSelect = "/common/goods_type_select";
+    /**
+     * 选择同城小包
+     * shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity
+     */
+    @NotNull
+    public static final String SendCitySmallPackageSelect = "/common/goods_type_select";
 
 }

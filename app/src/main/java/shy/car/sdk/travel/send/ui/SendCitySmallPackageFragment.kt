@@ -12,42 +12,36 @@ import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.FragmentSendHoldCarBinding
+import shy.car.sdk.databinding.FragmentSendCitySmallPackageBinding
 import shy.car.sdk.travel.common.data.CommonWheelItem
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.location.data.CurrentLocation
-import shy.car.sdk.travel.send.data.CarInfo
-import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
+import shy.car.sdk.travel.send.presenter.SendCitySmallPackagePresenter
 
 
 /**
  * create by LZ at 2018/05/25
  * 整车发货填写
  */
-class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
+class SendCitySmallPackageFragment : XTBaseFragment(), SendCitySmallPackagePresenter.CallBack {
 
-    lateinit var binding: FragmentSendHoldCarBinding
-    lateinit var presenter: SendHoleCarPresenter
+    lateinit var binding: FragmentSendCitySmallPackageBinding
+    lateinit var presenter: shy.car.sdk.travel.send.presenter.SendCitySmallPackagePresenter
 
     private var isStart = false
     private var isEnd = false
 
 
-    override fun getCarListSuccess(list: ArrayList<CarInfo>) {
-
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = SendHoleCarPresenter(it, this) }
+        activity?.let { presenter = SendCitySmallPackagePresenter(it, this) }
         register(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_send_hold_car, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_send_city_small_package, null, false)
         binding.fragment = this
         binding.presenter = presenter
         return binding.root
@@ -55,13 +49,6 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPager()
-    }
-
-    private fun initPager() {
-        binding.viewPagerSendHoldCar.adapter = presenter.adapter
-        binding.viewPagerSendHoldCar.setPageTransformer(true, TransFormer())
-        binding.viewPagerSendHoldCar.offscreenPageLimit = 5
     }
 
     fun onConfirmClick() {

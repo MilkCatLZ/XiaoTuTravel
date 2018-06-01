@@ -99,18 +99,19 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
      * 刷新定位
      */
     private fun refreshLocation() {
-        binding.mapLocationSelect.map.clear()
         Observable.create<CurrentLocation>({
             AmapLocationManager.getInstance()
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                            moveCameraAndShowLocation(location)
+                            this@LocationSelectFragment.location.copy(location)
+                            it.onNext(this@LocationSelectFragment.location)
                         }
                     })
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    moveCameraAndShowLocation(location)
                     addMarkersToMap()
                 })
 
@@ -121,20 +122,17 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
             is PoiItem -> this.location.copy(it)
             is Location -> this.location.copy(it)
         }
-
         binding.mapLocationSelect.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.lat, location.lng)))
-        binding.mapLocationSelect.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
-                .anchor(0.5f, 1.0f)
-                .snippet(location.address)
-                .position(LatLng(location.lat, location.lng))
-                .draggable(false))
     }
 
     /**
      * 在地图上添加marker
      */
     private fun addMarkersToMap() {
-        binding.mapLocationSelect.map.clear()
+        binding.mapLocationSelect.map.mapScreenMarkers.map {
+            it.remove()
+        }
+        binding.mapLocationSelect.map.mapScreenMarkers.clear()
         val marker = binding.mapLocationSelect.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
                 .snippet("当前位置")
