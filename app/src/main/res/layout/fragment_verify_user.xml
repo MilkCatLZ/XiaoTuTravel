@@ -53,7 +53,10 @@
                     android:background="@color/_foreground_material_light"
                     android:orientation="vertical">
 
-                    <LinearLayout style="@style/style_mm.gcw1">
+                    <LinearLayout
+                        style="@style/style_mm.gcw1"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
 
                         <EditText
                             style="@style/style_ww.text_14_333.verify_user_edt"
@@ -64,7 +67,10 @@
 
                     <View style="@style/line_horizontal"/>
 
-                    <LinearLayout style="@style/style_mm.gcw1">
+                    <LinearLayout
+                        style="@style/style_mm.gcw1"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true">
 
                         <EditText
                             android:id="@+id/edt_user_ids"

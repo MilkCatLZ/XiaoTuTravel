@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -361,7 +363,17 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
     public void sendStarCamera() {
         currentfile = getTempFile();
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
+    
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", currentfile);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
+        }
+   
+        
+        
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0.5);
         tempCurrentFilePath = new String(currentfile.getAbsolutePath());
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
