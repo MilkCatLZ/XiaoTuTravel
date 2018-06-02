@@ -43,29 +43,29 @@ import java.util.List;
  * 2. 选择张数 max_chose_count  多选模式默认 9 张
  */
 public class MediaChoseActivityGallery extends GalleryBaseActivity {
-
+    
     public CharSequence getActivityName() {
         return "选择图片";
     }
-
+    
     public static int max_chose_count = 1;
     public static LinkedHashMap imasgemap = new LinkedHashMap();
     //    public LinkedHashSet imagesChose = new LinkedHashSet();
     PhotoGalleryFragment photoGalleryFragment;
-
+    
     int chosemode = PickConfig.MODE_SINGLE_PICK;
     int crop_image_w, crop_image_h;
     int colorPrimary;
     int spanCount;
-
+    
     boolean isCropOver = false;
     boolean isPriview = false;
     boolean isneedCrop = false;
     boolean isNeedActionbar = false;
     boolean isNeedfcamera = false;
-
+    
     private TextView txtCount;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             setSupportActionBar(toolbar);
             setTitle(getActivityName());
         }
-
+        
         txtCount = (TextView) findViewById(R.id.txt_count);
         FragmentTransaction fragmentTransaction =
             getSupportFragmentManager().beginTransaction();
@@ -102,7 +102,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        
         List<String> list = bundle.getStringArrayList(PickConfig.EXTRA_SELECTED_LIST);
         if (list != null && list.size() > 0) {
             for(int i = 0; i < list.size(); i++) {
@@ -110,30 +110,30 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             }
         }
     }
-
-
+    
+    
     public void starPriview(LinkedHashMap map, String currentimage, ArrayList<String> list) {
         if (isneedCrop && !isCropOver) {
             sendStarCrop(currentimage);
         } else {
-
-
+            
+            
             int pos = list.indexOf(currentimage);
-
+            
             Intent intent = new Intent(this, ImagePreviewActivityGallery.class);
             intent.putExtra(ImagePreviewActivityGallery.EXTRA_IMAGES_LIST, list);
             intent.putExtra(ImagePreviewActivityGallery.EXTRA_POS, pos);
 //            intent.putExtra(ImagePreviewActivityGallery.EXTRA_PREVIEW_ONLY, true);
             startActivity(intent);
-
+            
         }
     }
-
+    
     public Fragment getCurrentFragment(String tag) {
         return getSupportFragmentManager().findFragmentByTag(tag);
     }
-
-
+    
+    
     @Override
     protected void onResume() {
         super.onResume();
@@ -141,17 +141,17 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             getSupportActionBar().hide();
         }
     }
-
+    
     public LinkedHashMap getImageChoseMap() {
         return imasgemap;
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.photo_gallery_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -185,7 +185,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         FragmentManager fm = getSupportFragmentManager();
@@ -195,11 +195,11 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
+    
     public void log(String msg) {
         Log.i("gallery", msg);
     }
-
+    
     public void popFragment() {
         FragmentManager fm = getSupportFragmentManager();
         fm.popBackStackImmediate();
@@ -210,7 +210,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             photoGalleryFragment.notifyDataSetChanged();
         }
     }
-
+    
     public void sendImages() {
         if (isneedCrop && !isCropOver) {
             Iterator iterator = imasgemap.keySet()
@@ -236,7 +236,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             finish();
         }
     }
-
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -273,7 +273,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
             }
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CAMERA && (chosemode == PickConfig.MODE_MULTIP_PICK)) {
             new AsyncTask<String, String, String>() {
-
+                
                 @Override
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
@@ -287,7 +287,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
                              .show();
                     }
                 }
-
+                
                 @Override
                 protected String doInBackground(String... params) {
                     for(int i = 0; i < 100; i++) {
@@ -321,7 +321,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
 //            }
         }
     }
-
+    
     public void insertImage(String fileName) {
 //        try {
         //多余了，拍照成功后已经有一张图片了
@@ -339,7 +339,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
                                             @Override
                                             public void onMediaScannerConnected() {
                                             }
-
+            
                                             @Override
                                             public void onScanCompleted(String path, Uri uri) {
                                                 photoGalleryFragment.addCaptureFile(path);
@@ -354,31 +354,35 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
 //            e.printStackTrace();
 //        }
     }
-
+    
     public static final int REQUEST_CODE_CAMERA = 2001;
     public static final int REQUEST_CODE_CROP = 2002;
     File currentfile;
     static String tempCurrentFilePath;
-
+    
     public void sendStarCamera() {
         currentfile = getTempFile();
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    
+        
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", currentfile);
+            String packagName = getPackageName();
+            if (packagName.contains("develop")) {
+                packagName = packagName.replace(".develop", "");
+            }
+            Uri contentUri = FileProvider.getUriForFile(this, packagName + ".provider", currentfile);
+            
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
         }
-   
         
         
         intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0.5);
-        tempCurrentFilePath = new String(currentfile.getAbsolutePath());
+        tempCurrentFilePath = currentfile.getAbsolutePath();
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
-
+    
     public void sendStarCrop(String path) {
         Intent intent = new Intent(this, CropImageActivityGallery.class);
         intent.setData(Uri.fromFile(new File(path)));
@@ -391,7 +395,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getCropFile().getAbsolutePath());
         startActivityForResult(intent, REQUEST_CODE_CROP);
     }
-
+    
     public File getTempFile() {
         String str = null;
         Date date = null;
@@ -401,11 +405,11 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
                         "IMG_" + str + ".jpg");
     }
-
+    
     public File getCropFile() {
         return new File(getTmpPhotos());
     }
-
+    
     /**
      * 获取tmp path
      *
@@ -415,7 +419,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         return new File(getCacheFile(),
                         ".tmpcamara" + System.currentTimeMillis() + ".jpg").getAbsolutePath();
     }
-
+    
     /**
      * 临时缓存目录
      *
@@ -424,20 +428,20 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
     public String getCacheFile() {
         return getDir("post_temp", Context.MODE_PRIVATE).getAbsolutePath();
     }
-
+    
     public void notifySelectedTInfo() {
         try {
             txtCount.setText(imasgemap.size() + "/" + max_chose_count);
         } catch (Exception e) {
-
+        
         }
     }
-
+    
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
+    
     @Override
     public void onRequestPermissionsResult(
         int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
