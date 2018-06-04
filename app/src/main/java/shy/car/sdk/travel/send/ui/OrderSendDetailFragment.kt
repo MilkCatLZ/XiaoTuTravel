@@ -14,13 +14,10 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.FragmentOrderTakeDetailBinding
+import shy.car.sdk.databinding.FragmentOrderSendDetailBinding
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.send.presenter.OrderSendDetailPresenter
-import shy.car.sdk.travel.take.data.TakeOrderDetail
-import shy.car.sdk.travel.take.data.TakeOrderList
-import shy.car.sdk.travel.take.presenter.OrderTakeDetailPresenter
 
 /**
  * create by LZ at 2018/05/23
@@ -44,7 +41,7 @@ class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallB
     @JvmField
     var sendOrderList: OrderSendList = OrderSendList()
 
-    lateinit var binding: FragmentOrderTakeDetailBinding
+    lateinit var binding:FragmentOrderSendDetailBinding
 
     lateinit var presenter: OrderSendDetailPresenter
     override fun onCreate(savedInstanceState: Bundle?) {

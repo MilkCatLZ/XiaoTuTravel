@@ -1,14 +1,13 @@
 package shy.car.sdk.travel.send.ui
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.travel.take.data.TakeOrderList
-import shy.car.sdk.travel.take.ui.OrderTakeDetailFragment
-import shy.car.sdk.R
 import shy.car.sdk.travel.send.data.OrderSendList
 
 /**
@@ -30,9 +29,9 @@ open class OrderSendDetailActivity : XTBaseActivity() {
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderSendDetailFragment)
                 .withObject("sendOrderList", sendOrderList)
-                .navigation()
+                .navigation() as Fragment
         supportFragmentManager.beginTransaction()
-                .add(R.id.frame_order_take_detail, fragment, "fragment_order_send_detail")
+                .add(R.id.frame_order_send_detail, fragment, "fragment_order_send_detail")
                 .commitAllowingStateLoss()
     }
 }
