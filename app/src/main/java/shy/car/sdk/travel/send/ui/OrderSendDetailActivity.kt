@@ -17,7 +17,7 @@ import shy.car.sdk.travel.send.data.OrderSendList
 open class OrderSendDetailActivity : XTBaseActivity() {
 
 
-    @Autowired(name = "takeOrderList")
+    @Autowired(name = RouteMap.OrderSendDetail)
     @JvmField
     var sendOrderList: OrderSendList? = null
 
@@ -28,7 +28,7 @@ open class OrderSendDetailActivity : XTBaseActivity() {
                 .inject(this)
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderSendDetailFragment)
-                .withObject("sendOrderList", sendOrderList)
+                .withObject(RouteMap.OrderSendDetailFragment, sendOrderList)
                 .navigation() as Fragment
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_order_send_detail, fragment, "fragment_order_send_detail")

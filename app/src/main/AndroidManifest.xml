@@ -126,6 +126,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
+        <activity
+            android:name="shy.car.sdk.travel.send.ui.OrderSendDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

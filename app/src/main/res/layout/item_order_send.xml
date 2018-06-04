@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
+        android:onClick="@{click}"
+        android:tag="@{order}"
         app:sl_cornerRadius="2dp"
         app:sl_dx="0dp"
         app:sl_dy="0dp"

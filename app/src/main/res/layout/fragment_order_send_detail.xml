@@ -14,7 +14,7 @@
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.take.ui.OrderSendDetailFragment" />
+            type="shy.car.sdk.travel.send.ui.OrderSendDetailFragment" />
 
         <variable
             name="presenter"

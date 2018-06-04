@@ -2,6 +2,7 @@ package shy.car.sdk.travel.send.presenter
 
 import android.content.Context
 import android.view.View
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -9,6 +10,7 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.send.data.OrderSendList
 
 /**
@@ -22,11 +24,12 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
 
-    var adapter: DataBindingItemClickAdapter<OrderSendList> = DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, object : View.OnClickListener {
-        override fun onClick(v: View?) {
-
-        }
-
+    var adapter: DataBindingItemClickAdapter<OrderSendList> = DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, View.OnClickListener {
+        var orderSendList = it.tag as OrderSendList
+        ARouter.getInstance()
+                .build(RouteMap.OrderSendDetail)
+                .withObject(RouteMap.OrderSendDetail, orderSendList)
+                .navigation()
     })
     var pageSize = 10
     var pageIndex = 1
@@ -55,7 +58,8 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.getInstance().api.getOrderSendList(pageIndex, pageSize)
+        ApiManager.getInstance()
+                .api.getOrderSendList(pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<OrderSendList>> {
                     override fun onComplete() {
 

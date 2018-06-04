@@ -82,7 +82,11 @@ class VerifyUserFragment : XTBaseFragment() {
         activity?.let {
 
             val per = RxPermissions(it)
-            per.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+//            per.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                    .subscribeOn(AndroidSchedulers.mainThread())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe()
+            per.request(Manifest.permission.CAMERA)
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<Boolean> {
@@ -111,10 +115,6 @@ class VerifyUserFragment : XTBaseFragment() {
                             e.printStackTrace()
                         }
                     })
-            per.request(Manifest.permission.CAMERA)
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe()
 
         }
 

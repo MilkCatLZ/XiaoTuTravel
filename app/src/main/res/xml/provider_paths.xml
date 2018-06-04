@@ -3,5 +3,11 @@
 
     <external-path
         name="external_files"
-        path="."/>
+        path="." />
+    <external-file-path
+        name="image_file"
+        path="" />
+    <file-path
+        name="file_file"
+        path="" />
 </paths>

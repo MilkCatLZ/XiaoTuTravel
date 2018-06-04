@@ -366,13 +366,13 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             String packagName = getPackageName();
             if (packagName.contains("develop")) {
                 packagName = packagName.replace(".develop", "");
             }
-            Uri contentUri = FileProvider.getUriForFile(this, packagName + ".provider", currentfile);
-            
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            Uri uri = FileProvider.getUriForFile(this, packagName + ".provider", currentfile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(currentfile));
         }

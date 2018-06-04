@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.take.ui
+package shy.car.sdk.travel.send.ui
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -37,11 +37,11 @@ class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallB
 
     }
 
-    @Autowired
+    @Autowired(name = RouteMap.OrderSendDetailFragment)
     @JvmField
     var sendOrderList: OrderSendList = OrderSendList()
 
-    lateinit var binding:FragmentOrderSendDetailBinding
+    lateinit var binding: FragmentOrderSendDetailBinding
 
     lateinit var presenter: OrderSendDetailPresenter
     override fun onCreate(savedInstanceState: Bundle?) {

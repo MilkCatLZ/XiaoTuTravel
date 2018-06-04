@@ -17,7 +17,7 @@ class OrderSendDetailPresenter(context: Context, var callBack: CallBack) : BaseP
 
     }
 
-    lateinit var orderList: OrderSendList
+    var orderList: OrderSendList=OrderSendList()
 
 
     fun getOrderDetail() {

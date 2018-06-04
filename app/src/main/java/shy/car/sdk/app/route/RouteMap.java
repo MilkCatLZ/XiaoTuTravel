@@ -3,6 +3,15 @@ package shy.car.sdk.app.route;
 
 import org.jetbrains.annotations.NotNull;
 
+import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
+import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
+import shy.car.sdk.travel.location.ui.LocationSelectActivity;
+import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
+import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
+import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
+import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
+import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
+
 
 public class RouteMap {
     /**
@@ -92,13 +101,13 @@ public class RouteMap {
     public static final String PaySelect = "/pay/select";
     /**
      * 选择车辆
-     * shy.car.sdk.travel.pay.ui.CarTypeSelectActivity
+     * {@link CarTypeSelectActivity}
      */
     @NotNull
     public static final String CarTypeSelect = "/common/car_type_select";
     /**
      * 保证金明细
-     * shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity
+     * {@link PromiseMoneyDetailActivity}
      */
     @NotNull
     public static final String PromiseMoneyDetail = "/common/promise_money_detail";
@@ -109,55 +118,55 @@ public class RouteMap {
     public static final String VerifyUser = "/user/verify_user";
     /**
      * 接单详情
-     * shy.car.sdk.travel.take.ui.OrderTakeDetailActivity
+     * {@link OrderTakeDetailActivity}
      */
     @NotNull
     public static final String OrderTakeDetail = "/take/take_order_detail";
     /**
      * 发货详情
-     * shy.car.sdk.travel.send.ui.OrderSendDetailActivity
+     * {@link shy.car.sdk.travel.send.ui.OrderSendDetailActivity}
      */
     @NotNull
     public static final String OrderSendDetail = "/send/send_order_detail";
     /**
      * 接单详情fragment
-     * shy.car.sdk.travel.take.ui.OrderTakeDetailFragment
+     * {@link shy.car.sdk.travel.take.ui.OrderTakeDetailFragment}
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
     /**
      * 发货详情fragment
-     * shy.car.sdk.travel.take.ui.OrderSendDetailFragment
+     * {@link shy.car.sdk.travel.send.ui.OrderSendDetailFragment}
      */
     @NotNull
     public static final String OrderSendDetailFragment = "/send/send_order_detail_fragment";
     /**
      * 整车发货 填写发货信息
-     * shy.car.sdk.travel.send.ui.SendHoleCarActivity
+     * {@link SendHoleCarActivity}
      */
     @NotNull
     public static final String SendHoleCarEdit = "/send/send_hole_car_send_edit";
     /**
      * 选择地址
-     * shy.car.sdk.travel.location.ui.LocationSelectActivity
+     * {@link LocationSelectActivity}
      */
     @NotNull
     public static final String LocationSelect = "/common/location_select";
     /**
      * 选择地址
-     * shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
+     * {@link SendTimeSelectDialogFragment}
      */
     @NotNull
     public static final String SendTimeSelect = "/common/send_time_select";
     /**
      * 选择货物类型
-     * shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
+     * {@link GoodsTypeSelectDialogFragment}
      */
     @NotNull
     public static final String GoodsTypeSelect = "/common/goods_type_select";
     /**
      * 选择同城小包
-     * shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity
+     * {@link SendCitySmallPackageActivity}
      */
     @NotNull
     public static final String SendCitySmallPackageSelect = "/send/city_small_package";
