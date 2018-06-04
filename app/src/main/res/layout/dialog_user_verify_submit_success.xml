@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener"/>
     </data>
 
 
@@ -45,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:onClick="@{onClick}"
                 android:text="确定"
                 android:textColor="@color/main_color_green"
                 android:textSize="@dimen/text_title_16dp"/>

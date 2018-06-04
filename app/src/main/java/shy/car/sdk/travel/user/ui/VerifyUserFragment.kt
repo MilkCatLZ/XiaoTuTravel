@@ -14,6 +14,7 @@ import com.wq.photo.widget.PickConfig
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentVerifyUserBinding
@@ -142,6 +143,11 @@ class VerifyUserFragment : XTBaseFragment() {
 
     fun onSubmitClick() {
         presenter.submit()
+        if(BuildConfig.DEBUG){
+         var dialog=  UserVerifySubmitSuccessDialogFragment  ()
+            dialog.show(childFragmentManager,"dialog_user_verify_success")
+
+        }
     }
 
 }
