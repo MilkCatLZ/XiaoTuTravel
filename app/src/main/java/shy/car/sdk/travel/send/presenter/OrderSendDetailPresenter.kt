@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.send.presenter
 
 import android.content.Context
+import com.base.base.ProgressDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.net.ApiManager
@@ -21,7 +22,8 @@ class OrderSendDetailPresenter(context: Context, var callBack: CallBack) : BaseP
 
 
     fun getOrderDetail() {
-        var observable = ApiManager.getInstance().api.getSendOrderDetail(orderList.id)
+        ProgressDialog.showLoadingView(context)
+        val observable = ApiManager.getInstance().api.getSendOrderDetail(orderList.id)
         val obsever = object : Observer<OrderSendDetail> {
             override fun onComplete() {
 

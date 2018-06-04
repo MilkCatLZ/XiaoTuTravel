@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.send.ui.OrderSendDetailChangeDeliveryMoneyFragmentDialog"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/back_dialog_corner_2dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改运费金额"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_title_16dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@android:color/transparent"
+                android:hint="输入金额"
+                android:text="@{fragment.money}"
+                android:inputType="numberDecimal"
+                android:textColor="@color/text_primary_333333"
+                android:textColorHint="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_primary_14dp"/>
+
+
+            <View style="@style/line_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:onClick="@{()->fragment.dismiss()}"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_title_16dp"/>
+
+                <View style="@style/line_vertical"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:onClick="@{()->fragment.onConfirmClick()}"
+                    android:textColor="@color/main_color_green"
+                    android:textSize="@dimen/text_title_16dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

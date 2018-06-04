@@ -27,6 +27,7 @@ import shy.car.sdk.travel.send.presenter.OrderSendDetailPresenter
 class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallBack {
     override fun onGetDetailSuccess(t: OrderSendDetail) {
         activity?.let { ProgressDialog.hideLoadingView(it) }
+        detail = t
     }
 
     override fun onError(e: Throwable) {
@@ -42,7 +43,7 @@ class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallB
     var sendOrderList: OrderSendList = OrderSendList()
 
     lateinit var binding: FragmentOrderSendDetailBinding
-
+    lateinit var detail: OrderSendDetail
     lateinit var presenter: OrderSendDetailPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,5 +74,17 @@ class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallB
                     .onRightClick { _, _ -> presenter.postTakeOrder() }
                     .show()
         }
+    }
+
+    fun onChangeDeliveryMoneyClick() {
+        var dialog = OrderSendDetailChangeDeliveryMoneyFragmentDialog()
+        dialog.detail = detail
+        dialog.listener= object : OrderSendDetailChangeDeliveryMoneyFragmentDialog.MoneyChangeListener {
+            override fun onChangeSuccess() {
+                presenter.getOrderDetail()
+            }
+
+        }
+        dialog.show(childFragmentManager,"dialog_change_delivery_money")
     }
 }

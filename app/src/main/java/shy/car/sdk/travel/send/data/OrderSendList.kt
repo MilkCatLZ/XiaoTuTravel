@@ -13,7 +13,7 @@ open class OrderSendList : BaseObservable() {
             notifyPropertyChanged(BR.id)
         }
     @get:Bindable
-    var status = 0
+    var status = 2
         set(value) {
             field = value
             notifyPropertyChanged(BR.status)

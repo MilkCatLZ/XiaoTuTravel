@@ -28,7 +28,7 @@
             <TextView
                 style="@style/style_ww.text_14_333"
                 android:layout_marginStart="10dp"
-                android:text="货物信息" />
+                android:text="接单人" />
         </LinearLayout>
 
         <View style="@style/line_horizontal" />
