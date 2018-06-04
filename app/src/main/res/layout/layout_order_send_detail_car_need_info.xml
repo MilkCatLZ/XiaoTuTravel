@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="detail"
+            type="shy.car.sdk.travel.send.data.OrderSendDetail" />
+
+        <import type="shy.car.sdk.travel.take.data.OrderState" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/_foreground_material_light"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_vertical"
+            android:paddingStart="13dp">
+
+            <View style="@style/style_indicator_vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="车辆需求"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_primary_14dp" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/style_mm.gcw1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/style_ww.text_14_333"
+
+                    android:text="520.20kg" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:layout_marginTop="5dp"
+                    android:text="载货重量" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_mm.gcw1"
+
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/style_ww.text_14_333"
+
+                    android:text="4*1.6*1.9m" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:layout_marginTop="5dp"
+                    android:text="长*宽*高" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/style_mm.gcw1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/style_ww.text_14_333"
+                    android:text="10.9m³" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:layout_marginTop="5dp"
+                    android:text="载货体积" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
