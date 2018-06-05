@@ -8,6 +8,7 @@ import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
+import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
 import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
@@ -171,5 +172,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String SendCitySmallPackageSelect = "/send/city_small_package";
+    /**
+     * 找车取车
+     * {@link FindAndRentCarActivity}
+     */
+    @NotNull
+    public static final String FindAndRentCar = "/rent/find_and_rent";
 
 }

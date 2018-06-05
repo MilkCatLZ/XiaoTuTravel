@@ -144,6 +144,12 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
+
+        <activity
+            android:name="shy.car.sdk.travel.rent.ui.FindAndRentCarActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
     </application>
 
 </manifest>

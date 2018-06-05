@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.route.RouteMap
@@ -29,6 +30,13 @@ class DialogMoneyVerify : XTBaseDialogFragment() {
         ARouter.getInstance()
                 .build(RouteMap.MoneyVerify)
                 .navigation()
+        if (BuildConfig.DEBUG) {
+            ARouter.getInstance()
+                    .build(RouteMap.FindAndRentCar)
+                    .navigation()
+        }
         dismiss()
     }
+
+
 }
