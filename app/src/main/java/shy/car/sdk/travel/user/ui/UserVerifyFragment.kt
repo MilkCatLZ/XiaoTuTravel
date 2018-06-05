@@ -18,17 +18,17 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentVerifyUserBinding
-import shy.car.sdk.travel.user.presenter.VerifyUserPresenter
+import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
 
 
 /**
  * create by LZ at 2018/05/24
  * 验证用户
  */
-class VerifyUserFragment : XTBaseFragment() {
+class UserVerifyFragment : XTBaseFragment() {
 
     lateinit var binding: FragmentVerifyUserBinding
-    lateinit var presenter: VerifyUserPresenter
+    lateinit var presenter: UserVerifyPresenter
 
 
     /**
@@ -41,7 +41,7 @@ class VerifyUserFragment : XTBaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = VerifyUserPresenter(it) }
+        activity?.let { presenter = UserVerifyPresenter(it) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

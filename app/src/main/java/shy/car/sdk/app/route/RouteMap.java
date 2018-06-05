@@ -80,7 +80,7 @@ public class RouteMap {
      * 交保证金
      */
     @NotNull
-    public static final String VerifyMoney = "/money/verify";
+    public static final String MoneyVerify = "/money/verify";
     /**
      * 站点信息
      */
@@ -113,9 +113,10 @@ public class RouteMap {
     public static final String PromiseMoneyDetail = "/common/promise_money_detail";
     /**
      * 验证用户
+     * {@link shy.car.sdk.travel.user.ui.UserVerifyActivity}
      */
     @NotNull
-    public static final String VerifyUser = "/user/verify_user";
+    public static final String UserVerify = "/user/verify_user";
     /**
      * 接单详情
      * {@link OrderTakeDetailActivity}

@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
-import shy.car.sdk.app.route.ObjectSerialisation
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.DialogMoneyVerifyBinding
 import shy.car.sdk.databinding.DialogUserVerifyHintBinding
 import shy.car.sdk.travel.take.data.TakeOrderList
 
@@ -43,7 +40,7 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
 
     fun goVerify() {
         ARouter.getInstance()
-                .build(RouteMap.VerifyUser)
+                .build(RouteMap.UserVerify)
                 .navigation()
         dismissAllowingStateLoss()
     }

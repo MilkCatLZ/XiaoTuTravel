@@ -10,11 +10,11 @@ import shy.car.sdk.app.route.RouteMap
  * create by lz at 2018/05/24
  * 提交验证用户信息
  */
-@Route(path = RouteMap.VerifyUser)
-class VerifyUserActivity : XTBaseActivity() {
+@Route(path = RouteMap.UserDetail)
+class UserDetailActivity : XTBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_verify_user)
+        setContentView(R.layout.activity_user_detail)
     }
 }

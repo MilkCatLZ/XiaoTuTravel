@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import
             alias="util"
-            type="shy.car.sdk.app.LNTextUtil"/>
+            type="shy.car.sdk.app.LNTextUtil" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.user.ui.VerifyUserFragment"/>
+            type="shy.car.sdk.travel.user.ui.UserVerifyFragment" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.user.presenter.VerifyUserPresenter"/>
+            type="shy.car.sdk.travel.user.presenter.UserVerifyPresenter" />
     </data>
 
     <ScrollView
@@ -30,9 +29,9 @@
 
             <include
                 layout="@layout/layout_title"
-                app:title="@{@string/str_verify_user}"/>
+                app:title="@{@string/str_verify_user}" />
 
-            <View style="@style/style_shadow"/>
+            <View style="@style/style_shadow" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +43,7 @@
 
                 <TextView
                     style="@style/style_ww.text_14_333"
-                    android:text="您的信息仅用于平台审核，绝不外泄"/>
+                    android:text="您的信息仅用于平台审核，绝不外泄" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -62,10 +61,10 @@
                             style="@style/style_ww.text_14_333.verify_user_edt"
                             android:drawableStart="@drawable/icon_id_per"
                             android:hint="请输入真是姓名"
-                            android:text="@={presenter.name}"/>
+                            android:text="@={presenter.name}" />
                     </LinearLayout>
 
-                    <View style="@style/line_horizontal"/>
+                    <View style="@style/line_horizontal" />
 
                     <LinearLayout
                         style="@style/style_mm.gcw1"
@@ -77,8 +76,7 @@
                             style="@style/style_ww.text_14_333.verify_user_edt"
                             android:drawableStart="@drawable/icon_id_card"
                             android:hint="请输入身份证号"
-                            android:text="@={presenter.idNumber}"
-                            />
+                            android:text="@={presenter.idNumber}" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -93,7 +91,7 @@
 
                 <TextView
                     style="@style/style_ww.text_14_333"
-                    android:text="上传身份证照片"/>
+                    android:text="上传身份证照片" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,14 +104,12 @@
                         style="@style/style_user_verify_pic_back"
                         android:onClick="@{()->fragment.onIDPicFrontClick()}">
 
-                        <LinearLayout
-                            style="@style/style_user_verify_pic_back"
-                            >
+                        <LinearLayout style="@style/style_user_verify_pic_back">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/ic_add_black_36dp"/>
+                                android:src="@drawable/ic_add_black_36dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -121,14 +117,29 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传身份证正面照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp"/>
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:imageURL="@{presenter.frontImagePath}"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#66000000"
+                            android:gravity="center"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="认证中"
+                                android:textColor="@color/_foreground_material_light" />
+
+                        </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -136,14 +147,12 @@
                         android:layout_marginStart="15dp"
                         android:onClick="@{()->fragment.onIDPicBackClick()}">
 
-                        <LinearLayout
-                            style="@style/style_user_verify_pic_back"
-                            >
+                        <LinearLayout style="@style/style_user_verify_pic_back">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/ic_add_black_36dp"/>
+                                android:src="@drawable/ic_add_black_36dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -151,15 +160,29 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传身份证反面照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp"/>
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:imageURL="@{presenter.backImagePath}"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#66000000"
+                            android:gravity="center"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="认证中"
+                                android:textColor="@color/_foreground_material_light" />
+
+                        </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -174,7 +197,7 @@
 
                 <TextView
                     style="@style/style_ww.text_14_333"
-                    android:text="上传驾驶证照片"/>
+                    android:text="上传驾驶证照片" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -186,13 +209,12 @@
                         style="@style/style_user_verify_pic_back"
                         android:onClick="@{()->fragment.onDriveVerifyImgClick()}">
 
-                        <LinearLayout
-                            style="@style/style_user_verify_pic_back">
+                        <LinearLayout style="@style/style_user_verify_pic_back">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/ic_add_black_36dp"/>
+                                android:src="@drawable/ic_add_black_36dp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -200,22 +222,36 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传驾驶证照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp"/>
+                                android:textSize="10sp" />
                         </LinearLayout>
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:imageURL="@{presenter.driveImagePath}"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#66000000"
+                            android:gravity="center"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="认证中"
+                                android:textColor="@color/_foreground_material_light" />
+
+                        </LinearLayout>
                     </RelativeLayout>
 
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -230,7 +266,7 @@
                 android:onClick="@{()->fragment.onSubmitClick()}"
                 android:text="提交认证"
                 android:textColor="@color/_foreground_material_light"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
     </ScrollView>

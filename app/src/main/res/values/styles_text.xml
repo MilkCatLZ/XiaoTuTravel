@@ -6,6 +6,10 @@
         <item name="android:textSize">@dimen/text_primary_14dp</item>
         <item name="android:textColor">@color/text_primary_333333</item>
     </style>
+    <style name="style_mm.text_14_333">
+        <item name="android:textSize">@dimen/text_primary_14dp</item>
+        <item name="android:textColor">@color/text_primary_333333</item>
+    </style>
 
     <style name="style_ww.text_12_999">
         <item name="android:textSize">@dimen/text_second_primary_12dp</item>

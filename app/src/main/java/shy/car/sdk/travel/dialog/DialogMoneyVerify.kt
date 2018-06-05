@@ -27,7 +27,7 @@ class DialogMoneyVerify : XTBaseDialogFragment() {
 
     fun onConfirmClick() {
         ARouter.getInstance()
-                .build(RouteMap.VerifyMoney)
+                .build(RouteMap.MoneyVerify)
                 .navigation()
         dismiss()
     }

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User" />
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.user.ui.UserDetailFragment"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingEnd="17dp"
+        android:paddingStart="17dp">
+
+
+        <include layout="@layout/layout_title" />
+
+        <View style="@style/style_shadow" />
+
+        <ImageView
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginTop="54dp"
+            android:src="@drawable/icon_infor_header" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{user.nickName}"
+            android:textColor="@color/text_primary_333333"
+            android:textSize="24sp"
+            tools:text="小兔用户" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/icon_identy_selector"
+            android:enabled="@{user.status==1}"
+            android:gravity="center"
+            android:text="@{user.status==1?@string/str_already_verify:@string/str_no_verify}"
+            android:textColor="@drawable/color_user_verify_text_color"
+            android:textSize="@dimen/text_second_primary_12dp"
+            tools:enabled="false"
+            tools:text="未认证" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/back_white_corner_stroke"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:onClick="@{()->fragment.goVipHomeClick()}"
+                android:paddingStart="10dp">
+
+                <TextView
+                    style="@style/style_mm.text_14_333"
+
+                    android:layout_weight="1"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/icon_infor_member"
+                    android:gravity="center_vertical"
+                    android:text="我的会员" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:gravity="center_vertical"
+                    android:text="进入会员主页" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/back_white_corner_stroke"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:onClick="@{()->fragment.goUserVerifyClick()}"
+                android:paddingStart="10dp">
+
+                <TextView
+                    style="@style/style_mm.text_14_333"
+
+                    android:layout_weight="1"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/icon_infor_id"
+                    android:gravity="center_vertical"
+                    android:text="身份认证" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/enable_common"
+                    android:enabled="@{user.isUserVerify}"
+                    android:gravity="center_vertical"
+                    android:text="未认证"
+                    android:textColor="@drawable/color_user_verify_text_color_detail" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/back_white_corner_stroke"
+                android:orientation="horizontal"
+                android:paddingEnd="10dp"
+                android:onClick="@{()->fragment.goMoneyVerifyClick()}"
+                android:paddingStart="10dp">
+
+                <TextView
+                    style="@style/style_mm.text_14_333"
+
+                    android:layout_weight="1"
+                    android:drawablePadding="15dp"
+                    android:drawableStart="@drawable/icon_infor_cash"
+                    android:gravity="center_vertical"
+                    android:text="保证金" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:drawablePadding="10dp"
+                    android:drawableStart="@drawable/enable_common"
+                    android:enabled="@{user.promiseMoneyState}"
+                    android:gravity="center_vertical"
+                    android:text="未缴纳"
+                    android:textColor="@drawable/color_user_verify_text_color_detail" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

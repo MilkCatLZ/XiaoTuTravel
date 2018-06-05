@@ -26,7 +26,7 @@ class UserCenterFragment : XTBaseFragment() {
         ARouter.getInstance()
                 .build(RouteMap.UserDetail)
                 .navigation()
-        app.startLoginDialog(null, null)
+//        app.startLoginDialog(null, null)
     }
 
 

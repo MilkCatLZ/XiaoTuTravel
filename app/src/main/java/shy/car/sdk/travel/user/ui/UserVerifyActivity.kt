@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.pay.ui
+package shy.car.sdk.travel.user.ui
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -6,11 +6,15 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
 
-@Route(path = RouteMap.MoneyVerify)
-class PromiseMoneyPayActivity:XTBaseActivity() {
+/**
+ * create by lz at 2018/05/24
+ * 提交验证用户信息
+ */
+@Route(path = RouteMap.UserVerify)
+class UserVerifyActivity : XTBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_money_verify_pay)
+        setContentView(R.layout.activity_verify_user)
     }
 }

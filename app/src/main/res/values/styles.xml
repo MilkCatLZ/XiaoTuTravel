@@ -92,6 +92,9 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_weight">1</item>
     </style>
+    <style name="style_mm.w1">
+        <item name="android:layout_weight">1</item>
+    </style>
 
     <style name="style_user_center_bottom_content" parent="style_mw.gcw1"/>
 

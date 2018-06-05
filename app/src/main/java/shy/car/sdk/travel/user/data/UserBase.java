@@ -101,7 +101,7 @@ public class UserBase extends BaseObservable {
     }
 
     /**
-     * 保证金缴纳：1：已缴纳，2：未缴纳
+     * 保证金缴纳：true：已缴纳，false：未缴纳
      */
     @Bindable
     public boolean getPromiseMoneyState() {

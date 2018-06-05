@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragment_verify_user"
-        android:name="shy.car.sdk.travel.user.ui.VerifyUserFragment"
+        android:name="shy.car.sdk.travel.user.ui.UserVerifyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </android.support.constraint.ConstraintLayout>

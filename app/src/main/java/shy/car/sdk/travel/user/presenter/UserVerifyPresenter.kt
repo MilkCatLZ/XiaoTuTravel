@@ -11,7 +11,7 @@ import shy.car.sdk.app.presenter.BasePresenter
  * create by lz at 2018/06/01
  * 服务认证
  */
-class VerifyUserPresenter(context: Context) : BasePresenter(context) {
+class UserVerifyPresenter(context: Context) : BasePresenter(context) {
     fun submit() {
 
         if (checkInput()) {
