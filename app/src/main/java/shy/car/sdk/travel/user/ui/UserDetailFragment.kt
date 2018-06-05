@@ -25,6 +25,7 @@ class UserDetailFragment : XTBaseFragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_detail, null, false)
         binding.user = User.instance
+        binding.fragment = this
         return binding.root
 
     }
