@@ -38,42 +38,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/group_radio">
 
-                <LinearLayout
-                    style="@style/style_user_center_bottom_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        style="@style/style_wm.car"
-                        android:checked="true"
-                        android:text="全部车型" />
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/style_user_center_bottom_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        style="@style/style_wm.car"
-                        android:text="小兔EQ1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/style_user_center_bottom_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        style="@style/style_wm.car"
-                        android:text="小兔EQ2" />
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/style_user_center_bottom_content"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        style="@style/style_wm.car"
-                        android:text="小兔EQ3" />
-                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_car_category"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:bindAdapter="@{p.carCategoryListAdapter}"
+                    android:layout_weight="1" />
 
                 <RelativeLayout
                     android:layout_width="20dp"

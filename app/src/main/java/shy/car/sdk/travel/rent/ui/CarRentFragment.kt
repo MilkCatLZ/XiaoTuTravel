@@ -3,6 +3,7 @@ package shy.car.sdk.travel.rent.ui
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,12 +65,28 @@ class CarRentFragment : XTBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
-        binding.p = carRentPresenter
-        binding.fragment = this
+        initLayoutManager()
+        initBottomSheet()
+        setBinding()
 
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         binding.map.onCreate(savedInstanceState)
+        return binding.root
+    }
 
+    private fun setBinding() {
+        binding.p = carRentPresenter
+        binding.fragment = this
+    }
+
+    private fun initLayoutManager() {
+        var layoutManager = LinearLayoutManager(activity)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        binding.recyclerViewCarCategory.layoutManager = layoutManager
+    }
+
+    private fun initBottomSheet() {
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.viewBottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -80,7 +97,6 @@ class CarRentFragment : XTBaseFragment() {
                 view_back.alpha = slideOffset
             }
         })
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

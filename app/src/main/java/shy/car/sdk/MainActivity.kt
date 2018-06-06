@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityMainBinding
+import shy.car.sdk.travel.home.ui.DeliveryFragment
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.CurrentLocation
@@ -69,8 +70,9 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     lateinit var binding: ActivityMainBinding
 
     private val carRentFragment = ARouter.getInstance().build(RouteMap.CarRent).navigation() as CarRentFragment
-    private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
-    private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
+//    private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
+//    private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
+    private val deliveryFragment = DeliveryFragment()
     var citySelectFragment = MainCitySelectFragment()
     var nearCarListFragment = MainNearCarListFragment()
 
@@ -97,13 +99,15 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
         citySelectFragment.listener = this
         nearCarListFragment.listener = this
         var transaction = supportFragmentManager.beginTransaction()
+
+
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
-        transaction.add(R.id.frame_fragment_content, orderTakeFragment, tag)
-        transaction.add(R.id.frame_fragment_content, orderSendFragment, tag)
+        transaction.add(R.id.frame_fragment_content, deliveryFragment, tag)
+
+
         transaction.add(R.id.frame_city_select, citySelectFragment, "citySelectFragment")
         transaction.add(R.id.frame_near_car_list, nearCarListFragment, "nearCarListFragment")
-        transaction.hide(orderSendFragment)
-        transaction.hide(orderTakeFragment)
+        transaction.hide(deliveryFragment)
         transaction.commit()
 
         radio_car_rent.performClick()
@@ -147,16 +151,16 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
         app.startLoginDialog(null, null)
     }
 
-    fun changeToOrderTakeFragment() {
-        changeFragment(orderTakeFragment)
-    }
+//    fun changeToOrderTakeFragment() {
+//        changeFragment(orderTakeFragment)
+//    }
 
     fun changeToCarRentFragment() {
         changeFragment(carRentFragment)
     }
 
-    fun changeToOrderSendFragment() {
-        changeFragment(orderSendFragment)
+    fun changeToDelivery() {
+        changeFragment(deliveryFragment)
     }
 
     fun onAvatarClick() {
@@ -173,8 +177,8 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     private fun changeFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.hide(carRentFragment)
-        transaction.hide(orderTakeFragment)
-        transaction.hide(orderSendFragment)
+        transaction.hide(deliveryFragment)
+//        transaction.hide(orderSendFragment)
         transaction.show(fragment)
         transaction.commit()
     }
