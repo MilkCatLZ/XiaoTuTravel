@@ -24,7 +24,8 @@ class FindAndRentCarFragment : XTBaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
+        binding.mapView.onCreate(savedInstanceState)
         return binding.root
 
     }
