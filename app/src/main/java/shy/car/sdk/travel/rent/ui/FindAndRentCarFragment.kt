@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.MyLocationStyle
+import com.amap.api.services.core.AMapException
+import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
+import com.base.overlay.DrivingRouteOverlay
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
@@ -16,11 +19,12 @@ import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
  * create by lz at 2018/06/05
  * 找车取车
  */
-class FindAndRentCarFragment : XTBaseFragment(), RouteSearch.OnRouteSearchListener {
+class FindAndRentCarFragment : XTBaseFragment() {
 
 
     lateinit var binding: FragmentFindAndRentCarBinding
-
+    private val mStartPoint = LatLonPoint(39.942295, 116.335891)//起点，39.942295,116.335891
+    private val mEndPoint = LatLonPoint(39.995576, 116.481288)//终点，39.995576,116.481288
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
@@ -42,13 +46,63 @@ class FindAndRentCarFragment : XTBaseFragment(), RouteSearch.OnRouteSearchListen
         getRoute()
     }
 
+    var mDriveRouteResult: DriveRouteResult? = null
     private fun getRoute() {
         val routeSearch = RouteSearch(activity)
 
-        val query = RouteSearch.DriveRouteQuery(RouteSearch.FromAndTo(), RouteSearch.DRIVING_SINGLE_SHORTEST, null, null, "")
+        val query = RouteSearch.DriveRouteQuery(RouteSearch.FromAndTo(mStartPoint, mEndPoint), RouteSearch.DRIVING_SINGLE_SHORTEST, null, null, "")
 
         routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
-            override fun onDriveRouteSearched(p0: DriveRouteResult?, p1: Int) {
+            override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
+                binding.mapView.map.clear()// 清理地图上的所有覆盖物
+
+
+                activity?.let {
+                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+                        if (result?.paths != null) {
+                            if (result.paths.size > 0) {
+                                mDriveRouteResult = result
+                                val drivePath = mDriveRouteResult!!.paths[0] ?: return
+                                val drivingRouteOverlay = DrivingRouteOverlay(
+                                        it, binding.mapView.map, drivePath,
+                                        mDriveRouteResult!!.startPos,
+                                        mDriveRouteResult!!.targetPos, null)
+                                drivingRouteOverlay.setNodeIconVisibility(false)//设置节点marker是否显示
+                                drivingRouteOverlay.setIsColorfulline(true)//是否用颜色展示交通拥堵情况，默认true
+                                drivingRouteOverlay.removeFromMap()
+                                drivingRouteOverlay.addToMap()
+                                drivingRouteOverlay.zoomToSpan()
+//                            mBottomLayout.setVisibility(View.VISIBLE)
+//                            val dis = drivePath.getDistance()
+//                                    .toInt()
+//                            val dur = drivePath.getDuration()
+//                                    .toInt()
+//                            val des = AMapUtil.getFriendlyTime(dur) + "(" + AMapUtil.getFriendlyLength(dis) + ")"
+//                            mRotueTimeDes.setText(des)
+//                            mRouteDetailDes.setVisibility(View.VISIBLE)
+//                            val taxiCost = mDriveRouteResult.getTaxiCost()
+//                                    .toInt()
+//                            mRouteDetailDes.setText("打车约" + taxiCost + "元")
+//                            mBottomLayout.setOnClickListener(View.OnClickListener {
+//                                val intent = Intent(it,
+//                                        DriveRouteDetailActivity::class.java)
+//                                intent.putExtra("drive_path", drivePath)
+//                                intent.putExtra("drive_result",
+//                                        mDriveRouteResult)
+//                                startActivity(intent)
+//                            })
+
+                            } else if (result != null && result.getPaths() == null) {
+//                            ToastUtil.show(mContext, R.string.no_result)
+                            }
+
+                        } else {
+//                        ToastUtil.show(mContext, R.string.no_result)
+                        }
+                    } else {
+//                    ToastUtil.showerror(this.getApplicationContext(), errorCode)
+                    }
+                }
 
             }
 
