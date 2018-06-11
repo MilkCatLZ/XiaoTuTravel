@@ -12,6 +12,7 @@ import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
 import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
+import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
 
 public class RouteMap {
@@ -43,10 +44,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-
+    
     @NotNull
     public static final String UserDetail = "/user/detail";
-
+    
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -87,13 +88,13 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-
+    
     /**
      * 租车详情
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-
+    
     /**
      * 支付方式选择
      * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
@@ -178,5 +179,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String FindAndRentCar = "/rent/find_and_rent";
-
+    /**
+     * 编辑资料
+     * {@link UserInfoEditActivity}
+     */
+    @NotNull
+    public static final String UserInfoEdit = "/user/user_info_edit";
+    
 }

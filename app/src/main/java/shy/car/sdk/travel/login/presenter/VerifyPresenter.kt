@@ -4,10 +4,10 @@ package shy.car.sdk.travel.login.presenter
 import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
-import com.base.util.*
-import com.google.gson.Gson
+import com.base.util.SPCache
+import com.base.util.StringUtils
+import com.base.util.ToastManager
 import com.google.gson.JsonObject
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,7 +19,6 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
 import shy.car.sdk.travel.user.data.UserDetailCache
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -143,7 +142,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
         ProgressDialog.showLoadingView(context)
         d?.dispose()
         ApiManager.getInstance()
-                .toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<String> {
+                .toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<JsonObject> {
                     override fun onComplete() {
                         ProgressDialog.hideLoadingView(context)
                     }
@@ -152,8 +151,8 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                         this@VerifyPresenter.d = d
                     }
 
-                    override fun onNext(t: String) {
-                        if (StringUtils.isNotEmpty(t)) {
+                    override fun onNext(t: JsonObject) {
+                        if (StringUtils.isNotEmpty(t.toString())) {
                             ToastManager.showLongToast(context, "验证码发送成功")
                             listener?.onGetVerifySuccess()
                         }

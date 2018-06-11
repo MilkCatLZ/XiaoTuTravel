@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
 
         <variable
             name="click"
-            type="android.view.View.OnClickListener" />
+            type="android.view.View.OnClickListener"/>
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter" />
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
 
         <variable
             name="car"
-            type="shy.car.sdk.travel.rent.data.CarCategory" />
+            type="shy.car.sdk.travel.rent.data.CarCategory"/>
     </data>
 
 
@@ -27,10 +27,10 @@
 
         <RadioButton
             style="@style/style_wm.car"
-            android:checked="@{presenter.selectedCarID.equals(car.id)}"
+            android:checked="@{presenter.selectedCarID==car.id}"
             android:onClick="@{click}"
             android:tag="@{car}"
-            android:text="@{car.carName}" />
+            android:text="@{car.carName}"/>
     </LinearLayout>
 
 

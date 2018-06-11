@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.base.util.key.KeyValue"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="@{item.value.toString()}"
+            android:textColorHint="@color/text_third_primary_999999"
+            android:textSize="@dimen/text_primary_14dp"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

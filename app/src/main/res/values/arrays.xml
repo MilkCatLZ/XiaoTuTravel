@@ -321,4 +321,9 @@
         <item>高雄市</item>
         <item>台中市</item>
     </string-array>
+
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
 </resources>

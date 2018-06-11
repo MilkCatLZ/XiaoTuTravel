@@ -9,6 +9,7 @@ import com.base.base.ProgressDialog
 import com.base.util.Phone
 import com.base.util.StringUtils
 import com.base.util.ToastManager
+import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.data.ErrorManager
@@ -69,7 +70,7 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
         if (isPhoneCorrect) {
             ProgressDialog.showLoadingView(context)
             d?.dispose()
-            ApiManager.getInstance().toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<String> {
+            ApiManager.getInstance().toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<JsonObject> {
                 override fun onComplete() {
                     ProgressDialog.hideLoadingView(context)
                 }
@@ -78,8 +79,8 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
                     this@LoginPresenter.d = d
                 }
 
-                override fun onNext(t: String) {
-                    if (StringUtils.isNotEmpty(t)) {
+                override fun onNext(t: JsonObject) {
+                    if (StringUtils.isNotEmpty(t.toString())) {
                         ToastManager.showLongToast(context, "验证码发送成功")
                         listener?.onGetVerifySuccess()
                     }
