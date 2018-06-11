@@ -14,7 +14,7 @@
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.user.ui.UserDetailFragment"/>
+            type="shy.car.sdk.travel.user.ui.UserDetailFragment" />
     </data>
 
     <LinearLayout
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{user.nickName}"
+            android:text="@{user.name}"
             android:textColor="@color/text_primary_333333"
             android:textSize="24sp"
             tools:text="小兔用户" />
@@ -52,9 +52,9 @@
             android:layout_marginTop="20dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
-            android:enabled="@{user.status==1}"
+            android:enabled="@{user.isIdentityAuth()}"
             android:gravity="center"
-            android:text="@{user.status==1?@string/str_already_verify:@string/str_no_verify}"
+            android:text="@{user.isIdentityAuth()?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
             tools:enabled="false"
@@ -69,10 +69,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/back_white_corner_stroke"
+                android:onClick="@{()->fragment.goVipHomeClick()}"
                 android:orientation="horizontal"
                 android:paddingEnd="10dp"
-                android:onClick="@{()->fragment.goVipHomeClick()}"
                 android:paddingStart="10dp">
 
                 <TextView
@@ -97,9 +98,9 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/back_white_corner_stroke"
+                android:onClick="@{()->fragment.goUserVerifyClick()}"
                 android:orientation="horizontal"
                 android:paddingEnd="10dp"
-                android:onClick="@{()->fragment.goUserVerifyClick()}"
                 android:paddingStart="10dp">
 
                 <TextView
@@ -115,7 +116,7 @@
                     style="@style/style_ww.text_12_999"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/enable_common"
-                    android:enabled="@{user.isUserVerify}"
+                    android:enabled="@{user.isIdentityAuth()}"
                     android:gravity="center_vertical"
                     android:text="未认证"
                     android:textColor="@drawable/color_user_verify_text_color_detail" />
@@ -128,9 +129,9 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/back_white_corner_stroke"
+                android:onClick="@{()->fragment.goMoneyVerifyClick()}"
                 android:orientation="horizontal"
                 android:paddingEnd="10dp"
-                android:onClick="@{()->fragment.goMoneyVerifyClick()}"
                 android:paddingStart="10dp">
 
                 <TextView
@@ -146,7 +147,7 @@
                     style="@style/style_ww.text_12_999"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/enable_common"
-                    android:enabled="@{user.promiseMoneyState}"
+                    android:enabled="@{user.isDeposit()}"
                     android:gravity="center_vertical"
                     android:text="未缴纳"
                     android:textColor="@drawable/color_user_verify_text_color_detail" />

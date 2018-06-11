@@ -19,7 +19,7 @@ class XTRetrofitInterface(var app: Application) : BaseRetrofitInterface {
             //登录超时，需要重新登录，或者token失效都要重新登录
             if (httpException.code() == 401) {
                 if (User.instance
-                                .isLogin) {
+                                .login) {
                     User.logout(app)
                     EventBus.getDefault()
                             .post(LoginOutOfDateException())

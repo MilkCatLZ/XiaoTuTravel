@@ -67,14 +67,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{util.getPriceText(user.promiseMoney)}"
+
                     android:textColor="@color/text_primary_333333"
                     android:textSize="45sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.promiseMoneyState?@string/str_verify_money_already_pay:@string/str_verify_money_no_pay}"
+                    android:text="@{user.isDeposit() ? @string/str_verify_money_already_pay:@string/str_verify_money_no_pay}"
                     android:textColor="@color/text_third_primary_999999"
                     android:textSize="12sp" />
 

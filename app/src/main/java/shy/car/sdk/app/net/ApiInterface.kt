@@ -1,5 +1,6 @@
 package shy.car.sdk.app.net
 
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
@@ -13,6 +14,7 @@ import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.user.data.UserDetailCache
 
 
 /**
@@ -32,14 +34,21 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("phone/{phone}/captcha")
-    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") params: String=""): Observable<String>
+    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") name: String = ""): Observable<String>
 
     /**
      * 登录
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */
     @GET("oauth/access_token")
-    fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.PASSWORD) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<String>
+    fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.GrantType) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<JsonObject>
+
+    /**
+     * 获取用户详情
+     * JsonString：{"phone":"","verify":"","uuid":"",}
+     */
+    @GET("users/info")
+    fun gerUserDetail(): Observable<UserDetailCache>
 
     /**
      * 修改密码

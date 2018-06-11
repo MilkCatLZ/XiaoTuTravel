@@ -183,7 +183,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     fun onRentClick() {
         val user = User.instance
-        when (user.isLogin) {
+        when (user.login) {
             true -> checkPromiseMoneyPay()
             else -> {
                 app.startLoginDialog(null, null, object : onLoginDismiss {
@@ -202,7 +202,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun checkPromiseMoneyPay() {
         //已交保证金
-        if (User.instance.promiseMoneyState) {
+        if (User.instance.isDeposit()) {
             ARouter.getInstance()
                     .build(RouteMap.RentCarDetail)
                     .navigation()

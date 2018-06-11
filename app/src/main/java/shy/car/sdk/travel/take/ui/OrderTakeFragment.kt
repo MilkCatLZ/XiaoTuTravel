@@ -42,7 +42,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
             presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
                 override fun onItemClick(takeOrderList: TakeOrderList) {
                     this@OrderTakeFragment.takeOrderList = takeOrderList
-                    if (User.instance.isLogin) {
+                    if (User.instance.login) {
                         gotoDetailIsLogin()
                     } else {
                         gotoDetailIsNoLogin()
@@ -75,7 +75,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
      * 已登录 查看详情
      */
     private fun gotoDetailIsLogin() {
-        if (User.instance.isUserVerify) {
+        if (User.instance.identityAuth==2) {
             ARouter.getInstance()
                     .build(RouteMap.OrderTakeDetail)
                     .withObject("takeOrderList", takeOrderList)
@@ -90,7 +90,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
 
 
     private fun checkUerVerify() {
-        if (User.instance.isUserVerify) {
+        if (User.instance.isIdentityAuth()) {
             ARouter.getInstance()
                     .build(RouteMap.OrderTakeDetail)
                     .withObject("takeOrderList", takeOrderList)

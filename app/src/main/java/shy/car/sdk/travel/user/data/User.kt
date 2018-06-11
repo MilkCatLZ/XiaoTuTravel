@@ -14,8 +14,20 @@ import shy.car.sdk.BR
  * 用户信息
  */
 class User private constructor() : UserBase() {
-    //endregion
 
+    fun copy(detail:UserDetailCache){
+        instance.phone = detail.phone
+        instance.name = detail.name
+        instance.avatar = detail.avatar
+        instance.type = detail.type
+        instance.typeText = detail.typeText
+        instance.identityAuth = detail.isIdentityAuth
+        instance.deposit = detail.isDeposit
+        instance.balance = detail.balance
+        instance.bankCardNum = detail.bankCardNum
+        instance.couponNum = detail.couponNum
+        instance.rank = detail.rank
+    }
 
     companion object {
         val instance = User()
@@ -73,12 +85,9 @@ class User private constructor() : UserBase() {
             val user = User()
             var uJson: String? = null
             try {
-                //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
-                //            uJson = JSONObject.toJSONString(user);
                 uJson = AesUtil.encrypt(key, Gson().toJson(user))
                 SPCache.saveObject(context, UserKey, uJson)
                 copyUser(user)
-                //            PushManager.deleteAlias(context, user.getUid());
                 User.instance.notifyPropertyChanged(BR.login)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -96,20 +105,20 @@ class User private constructor() : UserBase() {
             if (dis == null) {
                 return
             }
-            User.instance.access_token = dis.access_token
-            User.instance.avatar = dis.avatar
-            User.instance.loginType = dis.loginType
-            User.instance.nickName = dis.nickName
-            User.instance.phone = dis.phone
-            User.instance.expiresIn = dis.expiresIn
-            User.instance.password = dis.password
-            User.instance.paymentPassword = dis.paymentPassword
-            User.instance.status = dis.status
-            User.instance.msgRemind = dis.msgRemind
-            User.instance.loginTime = dis.loginTime
-            User.instance.refreshToken = dis.refreshToken
-            User.instance.scope = dis.scope
-            User.instance.tokenType = dis.tokenType
+            instance.phone = dis.phone
+            instance.accessToken = dis.accessToken
+            instance.refreshToken = dis.refreshToken
+            instance.name = dis.name
+            instance.avatar = dis.avatar
+            instance.type = dis.type
+            instance.typeText = dis.typeText
+            instance.identityAuth = dis.identityAuth
+            instance.identityAuth = dis.identityAuth
+            instance.balance = dis.balance
+            instance.scope = dis.scope
+            instance.bankCardNum = dis.bankCardNum
+            instance.couponNum = dis.couponNum
+            instance.rank = dis.rank
         }
 
     }

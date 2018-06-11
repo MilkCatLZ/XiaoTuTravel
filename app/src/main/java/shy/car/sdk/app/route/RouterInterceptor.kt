@@ -18,7 +18,7 @@ open class RouterInterceptor : IInterceptor {
 
     override fun process(postcard: Postcard, callback: InterceptorCallback) {
         // 处理完成，交还控制权
-        if (User.instance.isLogin) {
+        if (User.instance.login) {
             callback.onContinue(postcard)
         } else {
             Observable.just("").observeOn(AndroidSchedulers.mainThread()).subscribe({ ToastManager.showShortToast(app, "请先登录...") })

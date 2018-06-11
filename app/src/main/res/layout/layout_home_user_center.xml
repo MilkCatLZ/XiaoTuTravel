@@ -30,6 +30,7 @@
             android:layout_height="62dp"
             android:layout_marginTop="54dp"
             android:onClick="@{()->ac.onUserPicClick()}"
+            android:imageURL="@{user.avatar}"
             android:src="@drawable/icon_pre_header" />
 
         <TextView
@@ -47,9 +48,9 @@
             android:layout_marginTop="15dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
-            android:enabled="@{user.status==1}"
+            android:enabled="@{user.isIdentityAuth()}"
             android:gravity="center"
-            android:text="@{user.status==1?@string/str_already_verify:@string/str_no_verify}"
+            android:text="@{user.isIdentityAuth()?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
             tools:enabled="false"

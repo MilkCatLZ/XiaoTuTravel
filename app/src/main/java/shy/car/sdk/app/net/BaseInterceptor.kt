@@ -51,12 +51,12 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
      */
     override fun postUrl(url: String, rootParams: HashMap<String, String>): String {
 //        getSign(url, rootParams)
-        return url
+        return createUrl(url,rootParams)
     }
 
     override fun getUrl(url: String, rootParams: HashMap<String, String>): String {
 //        getSign(url, rootParams)
-        return url
+        return createUrl(url,rootParams)
     }
 
     /**
@@ -88,9 +88,9 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
      */
     private fun addParams(params: HashMap<String, String>) {
         if (!StringUtils.isEmpty(User.instance
-                        .access_token)) {
+                        .accessToken)) {
             params[ACCESS_TOKEN] = User.instance
-                    .access_token
+                    .accessToken
         }
         params[TIMESTAMP] = (Calendar.getInstance().timeInMillis / 1000).toString()
         params[APPID1] = APPID
@@ -155,8 +155,8 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
     }
 
     override fun addHeader(newRequest: Request.Builder) {
-        if (User.instance.isLogin) {
-            newRequest.addHeader("authorization", "Bearer " + User.instance.access_token)
+        if (User.instance.login) {
+            newRequest.addHeader("authorization", "Bearer " + User.instance.accessToken)
         }
     }
 }

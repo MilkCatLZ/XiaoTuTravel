@@ -5,6 +5,8 @@ import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.*
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,6 +18,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserBase
+import shy.car.sdk.travel.user.data.UserDetailCache
 import java.util.concurrent.TimeUnit
 
 
@@ -39,41 +42,90 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
      */
     fun login() {
 
-        var observer = ApiManager.getInstance()
-                .api.login(phone.get()!!, verify.get()!!)
         ApiManager.getInstance()
-                .toSubscribe(observer, object : Observer<String> {
+                .api.login(phone.get()!!, verify.get()!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext({
+                    if (isLoginSuccess(it)) {
+                        copyLoginInfo(it)
+                    } else {
+                        disposable?.dispose()
+                        listener?.loginFailed(null)
+                    }
+
+                })
+
+                .flatMap {
+                    ApiManager.getInstance()
+                            .api.gerUserDetail()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                }
+                .subscribe(object : Observer<UserDetailCache> {
                     override fun onComplete() {
                     }
 
                     override fun onSubscribe(d: Disposable) {
-
+                        disposable = d
                     }
 
-                    override fun onNext(result: String) {
-                        if (isLoginSuccess(result)) {
-                            saveLoginState(result)
-                            savePhoneNumCache()
-                            listener?.loginSuccess()
-                        } else {
-                            listener?.loginFailed(null)
-                        }
+                    override fun onNext(result: UserDetailCache) {
+                        User.instance.copy(result)
+                        saveLoginState()
+                        savePhoneNumCache()
+                        listener?.loginSuccess()
                     }
 
                     override fun onError(e: Throwable) {
+                        manageVerifyError(e)
                         listener?.loginFailed(e)
                     }
                 })
 
+
+//        var observer = ApiManager.getInstance()
+//                .api.login(phone.get()!!, verify.get()!!)
+//
+//
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observer, object : Observer<String> {
+//                    override fun onComplete() {
+//                    }
+//
+//                    override fun onSubscribe(d: Disposable) {
+//                        disposable = d
+//                    }
+//
+//                    override fun onNext(result: String) {
+//                        if (isLoginSuccess(result)) {
+//                            saveLoginState(result)
+//                            savePhoneNumCache()
+//                            listener?.loginSuccess()
+//                        } else {
+//                            listener?.loginFailed(null)
+//                        }
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                        listener?.loginFailed(e)
+//                    }
+//                })
+
     }
 
-    private fun testLogin() {
-        Observable.timer(3, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listener?.loginFailed(null)
-                })
+    private fun copyLoginInfo(result: JsonObject) {
+        User.instance.tokenType = result.get(UserBase.TokenType)
+                .asString
+        User.instance.expiresIn = result.get(UserBase.EXPIRES_IN)
+                .asLong
+        User.instance.accessToken = result.get(UserBase.ACCESS_TOKEN)
+                .asString
+        User.instance.scope = result.get(UserBase.Scope)
+                .asString
+        User.instance.refreshToken = result.get(UserBase.REFRESH_TOKEN)
+                .asString
     }
 
     /**
@@ -136,20 +188,14 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
      *
      * @param result
      */
-    private fun isLoginSuccess(result: String): Boolean {
-        val accessToken = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
+    private fun isLoginSuccess(result: JsonObject): Boolean {
+        val accessToken = result.get(UserBase.ACCESS_TOKEN)
+                .asString
         return StringUtils.isNotEmpty(accessToken)
     }
 
 
-    private fun saveLoginState(result: String) {
-        User.instance.access_token = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
-        User.instance.refreshToken = JsonManager.getJsonString(result, UserBase.REFRESH_TOKEN)
-        User.instance.expiresIn = java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN))
-        User.instance.scope = JsonManager.getJsonString(result, UserBase.Scope)
-        User.instance.tokenType = JsonManager.getJsonString(result, UserBase.TokenType)
-        User.instance.loginTime = System.currentTimeMillis() / 1000L
-        User.instance.phone = phone.get()
+    private fun saveLoginState() {
         User.saveUserState(context)
     }
 

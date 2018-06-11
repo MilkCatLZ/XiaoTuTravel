@@ -20,4 +20,5 @@ public class ParamsConstant {
     public static final String UserName = "username";
     public static final String ClientID = "client_id";
     public static final String Version = "version";
+    public static final String GrantType = "grant_type";
 }
