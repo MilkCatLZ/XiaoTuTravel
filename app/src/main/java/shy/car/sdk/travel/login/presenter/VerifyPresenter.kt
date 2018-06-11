@@ -176,7 +176,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
     }
 
     private fun savePhoneNumCache() {
-        SPCache.saveObject(context, LAST_LOGIN_PHONE, phone)
+        SPCache.saveObject(context, LAST_LOGIN_PHONE, phone.get())
     }
 
     companion object {

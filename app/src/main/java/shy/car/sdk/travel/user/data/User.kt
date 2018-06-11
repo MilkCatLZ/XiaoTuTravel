@@ -27,6 +27,7 @@ class User private constructor() : UserBase() {
         instance.bankCardNum = detail.bankCardNum
         instance.couponNum = detail.couponNum
         instance.rank = detail.rank
+        instance.rankText = detail.rankText
     }
 
     companion object {
@@ -85,10 +86,10 @@ class User private constructor() : UserBase() {
             val user = User()
             var uJson: String? = null
             try {
-                uJson = AesUtil.encrypt(key, Gson().toJson(user))
+                uJson =  Gson().toJson(user)
                 SPCache.saveObject(context, UserKey, uJson)
                 copyUser(user)
-                User.instance.notifyPropertyChanged(BR.login)
+                User.instance.notifyChange()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -119,6 +120,7 @@ class User private constructor() : UserBase() {
             instance.bankCardNum = dis.bankCardNum
             instance.couponNum = dis.couponNum
             instance.rank = dis.rank
+            instance.rankText = dis.rankText
         }
 
     }

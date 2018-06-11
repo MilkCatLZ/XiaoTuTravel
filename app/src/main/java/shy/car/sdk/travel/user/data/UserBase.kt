@@ -82,14 +82,14 @@ open class UserBase : BaseObservable() {
     @SerializedName("rank_text")
     @get:Bindable
     var rankText: String = ""
-        set(rank_text) {
-            field = rank_text
+        set(value) {
+            field = value
             notifyPropertyChanged(BR.rankText)
         }
     /**
      * 用户类型
      */
-    @SerializedName("rank_text")
+    @SerializedName("type")
     @get:Bindable
     var type: Int = 0
         set(type) {

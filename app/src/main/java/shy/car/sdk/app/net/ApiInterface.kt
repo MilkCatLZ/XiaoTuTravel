@@ -44,6 +44,13 @@ interface ApiInterface {
     fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.GrantType) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<JsonObject>
 
     /**
+     * 登录
+     * JsonString：{"phone":"","verify":"","uuid":"",}
+     */
+    @DELETE("oauth/access_token")
+    fun logout(@Query("") params: String = ""): Observable<JsonObject>
+
+    /**
      * 获取用户详情
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */

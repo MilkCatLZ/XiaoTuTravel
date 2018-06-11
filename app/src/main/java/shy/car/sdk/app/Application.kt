@@ -8,6 +8,7 @@ import com.base.location.AmapLocationManager
 import com.base.location.Location
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
+import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -136,6 +137,10 @@ class Application : BaseApplication() {
 
     fun logout() {
         User.logout(this)
+        ApiManager.getInstance()
+                .api.logout()
+                .subscribeOn(Schedulers.io())
+                .subscribe()
     }
 
 }

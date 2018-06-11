@@ -30,14 +30,14 @@
             android:layout_height="62dp"
             android:layout_marginTop="54dp"
             android:onClick="@{()->ac.onUserPicClick()}"
-            android:imageURL="@{user.avatar}"
+            android:appAvatarURL="@{user.avatar}"
             android:src="@drawable/icon_pre_header" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@{Phone.phoneEncode(user.phone)}"
+            android:text="@{util.isEmpty(user.phone)?@string/str_login_please:Phone.phoneEncode(user.phone)}"
             android:textColor="@color/text_primary_333333"
             android:textSize="@dimen/text_title_17dp"
             tools:text="177****4949" />
@@ -53,6 +53,7 @@
             android:text="@{user.isIdentityAuth()?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
+            android:visibleOrGone="@{user.login}"
             tools:enabled="false"
             tools:text="未认证" />
 

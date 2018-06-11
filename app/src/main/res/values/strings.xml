@@ -30,4 +30,5 @@
     <string name="str_send_detail">整车发货</string>
     <string name="str_find_and_rent">找车取车</string>
     <string name="str_order_detail">订单详情</string>
+    <string name="str_login_please">点击头像登录</string>
 </resources>
