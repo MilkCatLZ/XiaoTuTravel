@@ -41,7 +41,7 @@ class FindAndRentCarFragment : XTBaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(14f), 1000, null)
+        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(12f), 1000, null)
 //        binding.mapView.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(app.location.lat, app.location.lng)))
         initMap()
 //        binding.mapView.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))

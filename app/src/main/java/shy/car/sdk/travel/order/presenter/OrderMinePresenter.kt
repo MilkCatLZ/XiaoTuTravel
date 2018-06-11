@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.order.presenter
 
 import android.content.Context
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -8,6 +9,7 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
 
 class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
@@ -17,7 +19,11 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
         fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {
+        ARouter.getInstance()
+                .build(RouteMap.RentCarDetail)
+                .navigation()
+    })
     var pageSize = 10
     var pageIndex = 1
 
@@ -45,7 +51,8 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.getInstance().api.getOrdreMineList(pageIndex, pageSize)
+        ApiManager.getInstance()
+                .api.getOrdreMineList(pageIndex, pageSize)
                 .subscribe(object : Observer<ArrayList<OrderMineList>> {
                     override fun onComplete() {
 

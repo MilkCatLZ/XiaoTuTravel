@@ -24,6 +24,8 @@
         android:layout_marginTop="5dp"
         android:background="@color/main_back"
         app:sl_cornerRadius="2dp"
+        android:onClick="@{click}"
+        android:tag="@{order}"
         app:sl_dx="0dp"
         app:sl_dy="0dp"
         app:sl_shadowColor="#08c9cfd1"
