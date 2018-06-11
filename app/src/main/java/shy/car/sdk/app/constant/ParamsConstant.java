@@ -17,4 +17,7 @@ public class ParamsConstant {
     public static final String UID = "uid";
     public static final String OrderId = "oid";
     public static final String Verify = "verify";
+    public static final String UserName = "username";
+    public static final String ClientID = "client_id";
+    public static final String Version = "version";
 }

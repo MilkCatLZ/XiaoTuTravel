@@ -23,67 +23,103 @@ public class UserBase extends BaseObservable {
     public static final String UID = "uid";
     public static final String PHONE = "phone";
     public static final String ACCESS_TOKEN = "access_token";
+    public static final String REFRESH_TOKEN = "refresh_token";
     public static final String AVATAR = "avatar";
     public static final String NICKNAME = "name";
     public static final String EXPIRES_IN = "expires_in";
     public static final String BUYER_TYPE = "type";
     public static final String PASSWORD = "password";
     public static final String STATUS = "status";
+    public static final String TokenType = "token_type";
+    public static final String Scope = "scope";
 
     /**
      * uid : 10314
      * phone : 18577845220
      * bind_weixin : 0
      */
-
-    @SerializedName( UID)
-    private int uid;
-    @SerializedName( PHONE)
+    @SerializedName(PHONE)
     private String phone;
     //    @SerializedName( BIND_WEIXIN)
 //    private int bindWeixin;
-    @SerializedName( ACCESS_TOKEN)
+    @SerializedName(ACCESS_TOKEN)
     private String access_token;
-    @SerializedName( NICKNAME)
+    @SerializedName(REFRESH_TOKEN)
+    private String refreshToken;
+    @SerializedName(NICKNAME)
     private String nickName;
-    @SerializedName( AVATAR)
+    @SerializedName(AVATAR)
     private String avatar;
-    @SerializedName( EXPIRES_IN)
+    @SerializedName(EXPIRES_IN)
     private long expiresIn;
     /**
      * 1:已认证。2：未认证
      */
-    @SerializedName( STATUS)
+    @SerializedName(STATUS)
     private int status;
 
     /**
      * 密码：1:已设置，0：未设置密码
      */
-    @SerializedName( PASSWORD)
+    @SerializedName(PASSWORD)
     private int password;
 
     /**
      * 支付密码 1 已设置 0 未设置
      */
-    @SerializedName( "payment_password")
+    @SerializedName("payment_password")
     private int paymentPassword;
     /**
      * 推送设置 1 接收 2 不接收
      */
-    @SerializedName( "msg_remind")
+    @SerializedName("msg_remind")
     private int msgRemind;
 
     /**
      * 保证金缴纳.>0已缴纳，<=0未缴纳
      */
-    @SerializedName( "promise_money")
+    @SerializedName("promise_money")
     private double promiseMoney;
+    /**
+     * "user"
+     */
+    @SerializedName("scope")
+    private String scope;
+    /**
+     * "user"
+     */
+    @SerializedName("token_type")
+    private String tokenType;
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 
     /**
      * 用户实名认证
      * .1=已认证，0=未认证
      */
-    @SerializedName( "user_verify")
+    @SerializedName("user_verify")
     private int userVerify;
 
     public boolean isUserVerify() {
@@ -178,16 +214,6 @@ public class UserBase extends BaseObservable {
     }
 
     @Bindable
-    public int getUid() {
-        return uid;
-    }
-
-    public void setUid(int uid) {
-        this.uid = uid;
-        notifyPropertyChanged(BR.uid);
-    }
-
-    @Bindable
     public String getPhone() {
         return phone;
     }
@@ -237,24 +263,10 @@ public class UserBase extends BaseObservable {
     public void setExpiresIn(long expiresIn) {
         this.expiresIn = expiresIn;
     }
-    
+
     @Bindable
     public boolean isLogin() {
         return com.base.util.StringUtils.isNotEmpty(access_token);
     }
 
-    @Override
-    public String toString() {
-        return "UserBase{" +
-                "uid=" + uid +
-                ", phone='" + phone + '\'' +
-//               ", bindWeixin=" + bindWeixin +
-                ", access_token='" + access_token + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", expiresIn=" + expiresIn +
-                ", loginType=" + loginType +
-                ", loginTime=" + loginTime +
-                '}';
-    }
 }

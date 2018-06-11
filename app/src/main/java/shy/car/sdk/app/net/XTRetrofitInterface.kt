@@ -4,7 +4,7 @@ import com.base.net.BaseRetrofitInterface
 import com.base.util.ToastManager
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONException
-import org.xutils.ex.HttpException
+import retrofit2.HttpException
 import shy.car.sdk.R
 import shy.car.sdk.app.Application
 import shy.car.sdk.app.data.LoginOutOfDateException
@@ -17,7 +17,7 @@ class XTRetrofitInterface(var app: Application) : BaseRetrofitInterface {
         if (ex is HttpException) {
             val httpException = ex as HttpException
             //登录超时，需要重新登录，或者token失效都要重新登录
-            if (httpException.code == 401) {
+            if (httpException.code() == 401) {
                 if (User.instance
                                 .isLogin) {
                     User.logout(app)
@@ -25,7 +25,7 @@ class XTRetrofitInterface(var app: Application) : BaseRetrofitInterface {
                             .post(LoginOutOfDateException())
                     ToastManager.showShortToast(app, R.string.str_login_out_date)
                 }
-            } else if (httpException.code == 502) {
+            } else if (httpException.code() == 502) {
                 ToastManager.showShortToast(app, R.string.str_network_error)
             }
         } else if (ex is SocketException || ex is SocketTimeoutException) {

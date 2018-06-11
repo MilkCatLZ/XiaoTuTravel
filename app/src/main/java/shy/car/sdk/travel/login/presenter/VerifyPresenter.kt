@@ -19,7 +19,6 @@ import shy.car.sdk.travel.user.data.UserBase
 import java.util.concurrent.TimeUnit
 
 
-
 /**
  *
  * 获取验证码
@@ -31,6 +30,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
         fun onGetVerifySuccess()
         fun onGetVerifyError(e: Throwable?)
     }
+
     var phone = ObservableField<String>("")
     var verify = ObservableField<String>("")
 
@@ -61,12 +61,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                     }
 
                     override fun onError(e: Throwable) {
-
-                        if (shy.car.sdk.BuildConfig.DEBUG) {
-                            testLogin()
-                        } else {
-                            listener?.loginFailed(e)
-                        }
+                        listener?.loginFailed(e)
                     }
                 })
 
@@ -77,16 +72,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if ("1234".equals(verify.get())) {
-                        User.instance.access_token = "sdklflkjlksjdf"
-                        User.instance.uid = 1985632
-                        User.instance.nickName = "小兔出行"
-                        User.instance.phone = phone.get()
-                        User.instance.status = 1
-                        listener?.loginSuccess()
-                    } else {
-                        listener?.loginFailed(null)
-                    }
+                    listener?.loginFailed(null)
                 })
     }
 
@@ -158,9 +144,10 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
 
     private fun saveLoginState(result: String) {
         User.instance.access_token = JsonManager.getJsonString(result, UserBase.ACCESS_TOKEN)
-        User.instance.uid = Integer.parseInt(JsonManager.getJsonString(result, UserBase.UID))
+        User.instance.refreshToken = JsonManager.getJsonString(result, UserBase.REFRESH_TOKEN)
         User.instance.expiresIn = java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN))
-        Log.d("LoginPresenter", "Long.parseLong(JsonManager.getJsonString(result, User.EXPIRES_IN)" + java.lang.Long.parseLong(JsonManager.getJsonString(result, UserBase.EXPIRES_IN) + ""))
+        User.instance.scope = JsonManager.getJsonString(result, UserBase.Scope)
+        User.instance.tokenType = JsonManager.getJsonString(result, UserBase.TokenType)
         User.instance.loginTime = System.currentTimeMillis() / 1000L
         User.instance.phone = phone.get()
         User.saveUserState(context)

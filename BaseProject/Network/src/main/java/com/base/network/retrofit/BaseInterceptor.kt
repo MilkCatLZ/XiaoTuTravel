@@ -52,12 +52,14 @@ abstract class BaseInterceptor : Interceptor {
                 formBody.addEncoded(body.encodedName(i), body.encodedValue(i))
             }
         }
-        var url = request.url().toString()
+        var url = request.url()
+                .toString()
         val index = url.indexOf("?")
         if (index > 0) {
             url = url.substring(0, index)
         }
-        val builder = request.newBuilder().url(postUrl(url, rootParams))
+        val builder = request.newBuilder()
+                .url(postUrl(url, rootParams))
         builder.method(request.method(), formBody.build())
         return builder.build()
     }
@@ -85,7 +87,8 @@ abstract class BaseInterceptor : Interceptor {
             url = url.substring(0, index)
         }
         //重新构建请求
-        var newRequest=request.newBuilder().url(getUrl(url, rootParams))
+        var newRequest = request.newBuilder()
+                .url(getUrl(url, rootParams))
         addHeader(newRequest)
         return newRequest.build()
     }
@@ -93,7 +96,7 @@ abstract class BaseInterceptor : Interceptor {
     /**
      * 添加header,有需要的在这里添加
      */
-    protected fun addHeader(newRequest: Request.Builder) {
+    open fun addHeader(newRequest: Request.Builder) {
 
     }
 

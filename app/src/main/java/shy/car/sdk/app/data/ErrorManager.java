@@ -6,11 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
+import com.base.util.JsonManager;
 import com.base.util.StringUtils;
 import com.base.util.ToastManager;
 import com.google.gson.Gson;
 
-import org.xutils.ex.HttpException;
+import retrofit2.HttpException;
 
 
 /**
@@ -19,35 +20,21 @@ import org.xutils.ex.HttpException;
  * ErrorManager.managerError(context, ex, 默认提示语);
  */
 public class ErrorManager {
-    
-    String code;
-    String error;
-    int httpCode;
-    
-    public int getHttpCode() {
-        return httpCode;
-    }
-    
-    public void setHttpCode(int httpCode) {
-        this.httpCode = httpCode;
-    }
-    
-    public String getCode() {
-        return code;
-    }
-    
-    public void setCode(String code) {
-        this.code = code;
-    }
-    
-    public String getError() {
-        return error;
-    }
-    
-    public void setError(String error) {
-        this.error = error;
-    }
-    
+
+
+    /**
+     * type : ShangYou\Sms\Exception
+     * message : 短信发送失败：用户名或者密码不正确
+     * file : /home/www/car/app/library/Sms/Adapter/Samton.php
+     * line : 88
+     */
+
+    private String type;
+    private String message;
+    private String file;
+    private String line;
+    private int httpCode;
+
     /**
      * 逻辑为：
      * 1、如果有返回的错误有Result，就将其解析，展示error信息
@@ -85,12 +72,12 @@ public class ErrorManager {
         if (ex instanceof HttpException) {
             HttpException httpException = (HttpException) ex;
             try {
-                err = new Gson().fromJson(httpException.getResult(), ErrorManager.class);
+                err = new Gson().fromJson(JsonManager.getJsonString(httpException.response().errorBody().string(),"error"), ErrorManager.class);
             } catch (Exception e) {
             
             }
             if (err != null) {
-                err.setHttpCode(httpException.getCode());
+                err.setHttpCode(httpException.code());
                 if (StringUtils.isNotEmpty(defaultMessage)) {
                     {
                         if (StringUtils.isNotEmpty(err.getError())) {
@@ -107,5 +94,49 @@ public class ErrorManager {
                 ToastManager.showShortToast(context, defaultMessage);
         }
         return err;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getError() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public int getHttpCode() {
+        return httpCode;
+    }
+
+    public void setHttpCode(int httpCode) {
+        this.httpCode = httpCode;
     }
 }

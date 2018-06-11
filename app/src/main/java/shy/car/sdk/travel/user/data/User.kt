@@ -59,8 +59,6 @@ class User private constructor() : UserBase() {
         fun saveUserState(context: Context) {
             var uJson: String? = null
             try {
-                //            uJson = KeyStoreUtil.encryptString(context, JSONObject.toJSONString(user));
-                //            uJson = JSONObject.toJSONString(user);
                 uJson = AesUtil.encrypt(key, Gson().toJson(instance))
                 SPCache.saveObject(context, UserKey, uJson)
                 User.instance.notifyPropertyChanged(BR.login)
@@ -100,33 +98,20 @@ class User private constructor() : UserBase() {
             }
             User.instance.access_token = dis.access_token
             User.instance.avatar = dis.avatar
-            //        User.user.setBindWeixin(dis.getBindWeixin());
             User.instance.loginType = dis.loginType
             User.instance.nickName = dis.nickName
             User.instance.phone = dis.phone
-            if (dis.uid != 0)
-                User.instance.uid = dis.uid
             User.instance.expiresIn = dis.expiresIn
             User.instance.password = dis.password
             User.instance.paymentPassword = dis.paymentPassword
             User.instance.status = dis.status
             User.instance.msgRemind = dis.msgRemind
             User.instance.loginTime = dis.loginTime
+            User.instance.refreshToken = dis.refreshToken
+            User.instance.scope = dis.scope
+            User.instance.tokenType = dis.tokenType
         }
 
-
-        fun updateDetails(user: User) {
-            if (user.uid != 0)
-                User.instance.uid = user.uid
-            User.instance.avatar = user.avatar
-            User.instance.nickName = user.nickName
-            User.instance.phone = user.phone
-            User.instance.password = user.password
-            User.instance.paymentPassword = user.paymentPassword
-            User.instance.status = user.status
-            User.instance.msgRemind = user.msgRemind
-
-        }
     }
 
 

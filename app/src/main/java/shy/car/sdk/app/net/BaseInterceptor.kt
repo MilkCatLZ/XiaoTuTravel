@@ -6,6 +6,7 @@ import com.base.net.BaseInterceptor
 import com.base.util.Log
 import com.base.util.StringUtils
 import com.base.util.Version
+import okhttp3.Request
 import org.xutils.common.util.KeyValue
 import org.xutils.common.util.MD5
 import shy.car.sdk.BuildConfig
@@ -37,7 +38,6 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
     private val TIMESTAMP = "timestamp"
     private val APPID1 = "appid"
     private val SIGN = "sign"
-
 //    private val securityCipher: SecurityCipher = SecurityCipher(app)
 
     init {
@@ -50,13 +50,13 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
      * 截取url 重新拼接公共参数
      */
     override fun postUrl(url: String, rootParams: HashMap<String, String>): String {
-        getSign(url, rootParams)
-        return createUrl(url, rootParams)
+//        getSign(url, rootParams)
+        return url
     }
 
     override fun getUrl(url: String, rootParams: HashMap<String, String>): String {
-        getSign(url, rootParams)
-        return createUrl(url, rootParams)
+//        getSign(url, rootParams)
+        return url
     }
 
     /**
@@ -146,9 +146,17 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
     }
 
     private fun getRelativeUrl(url: String): String {
-        val strings = url.split(BuildConfig.Host.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val strings = url.split(BuildConfig.Host.toRegex())
+                .dropLastWhile { it.isEmpty() }
+                .toTypedArray()
         return if (strings.size == 2) {
             "/" + strings[1]
         } else url
+    }
+
+    override fun addHeader(newRequest: Request.Builder) {
+        if (User.instance.isLogin) {
+            newRequest.addHeader("authorization", "Bearer " + User.instance.access_token)
+        }
     }
 }

@@ -30,16 +30,16 @@ interface ApiInterface {
     /**
      * 获取验证码
      */
-    @GET("phone/captcha")
-    fun gerVerify(@Query(ParamsConstant.Phone) params: String): Observable<String>
+    @FormUrlEncoded
+    @POST("phone/{phone}/captcha")
+    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") params: String=""): Observable<String>
 
     /**
      * 登录
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */
-    @FormUrlEncoded
-    @POST("xt/login")
-    fun login(@Field(ParamsConstant.Phone) phone: String,@Field(ParamsConstant.Verify) verify: String): Observable<String>
+    @GET("oauth/access_token")
+    fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.PASSWORD) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<String>
 
     /**
      * 修改密码
@@ -47,7 +47,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @PUT("xt/password")
-    fun setupPassWord(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.PASSWORD) passWord: String): Observable<String>
+    fun setupPassWord(@Query(ParamsConstant.UID) uid: String, @Query(ParamsConstant.PASSWORD) passWord: String): Observable<String>
 
     /**
      * 获取城市列表
@@ -70,6 +70,7 @@ interface ApiInterface {
      */
     @GET("xt/takeOrderDetail")
     fun getTakeOrderDetail(@Query(ParamsConstant.OrderId) oid: String): Observable<TakeOrderDetail>
+
     /**
      * 获取单个接单详情
      *

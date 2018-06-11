@@ -86,13 +86,15 @@ class Application : BaseApplication() {
         ARouter.init(this)
     }
 
+    private val InterfaceVersion = "v1"
+
     /**
      * 初始化网络
      */
     private fun initNetWork() {
         val interceptor = BaseInterceptor(this)
         val iterator = XTRetrofitInterface(this)
-        ApiManager.init("https://www.baidu.com", interceptor, iterator, ApiInterface::class.java)
+        ApiManager.init(BuildConfig.Host + "$InterfaceVersion/", interceptor, iterator, ApiInterface::class.java)
     }
 
     var postcard: Postcard? = null

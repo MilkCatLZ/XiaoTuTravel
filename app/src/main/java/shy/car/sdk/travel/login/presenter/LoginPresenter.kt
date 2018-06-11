@@ -11,6 +11,7 @@ import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 
@@ -86,6 +87,7 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
 
                 override fun onError(e: Throwable) {
                     listener?.onGetVerifyError(e)
+                    ErrorManager.managerError(context,e,"获取验证码失败")
                     ProgressDialog.hideLoadingView(context)
 
                 }

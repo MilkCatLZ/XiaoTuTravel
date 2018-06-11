@@ -65,10 +65,10 @@ class LoginDialogFragment : XTBaseDialogFragment() {
 
     fun dismiss(isSuccess: Boolean) {
         if (isSuccess) {
-            dismiss()
+            dismissAllowingStateLoss()
         } else {
             listener?.onCancel()
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 }
