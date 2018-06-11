@@ -15,6 +15,7 @@ import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.TakeOrderList
 import shy.car.sdk.travel.user.data.UserDetailCache
+import java.io.File
 
 
 /**
@@ -146,4 +147,11 @@ interface ApiInterface {
      */
     @GET("xt/promise_detail_list")
     fun getPromiseMoneyDetailList(): Observable<ArrayList<PromiseMoneyDetail>>
+
+    /**
+     * 保证金记录
+     */
+    @FormUrlEncoded
+    @POST("avatar")
+    fun uploadAvatar(@Field("img") image: File): Observable<JsonObject>
 }

@@ -27,7 +27,9 @@
         android:paddingStart="17dp">
 
 
-        <include layout="@layout/layout_title" />
+        <include
+
+            layout="@layout/layout_title" />
 
         <View style="@style/style_shadow" />
 
@@ -35,6 +37,7 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_marginTop="54dp"
+            android:onClick="@{()->fragment.onAvatarClick()}"
             android:src="@drawable/icon_infor_header" />
 
         <TextView

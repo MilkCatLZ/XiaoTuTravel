@@ -61,6 +61,7 @@ abstract class BaseInterceptor : Interceptor {
         val builder = request.newBuilder()
                 .url(postUrl(url, rootParams))
         builder.method(request.method(), formBody.build())
+        addHeader(builder)
         return builder.build()
     }
 
