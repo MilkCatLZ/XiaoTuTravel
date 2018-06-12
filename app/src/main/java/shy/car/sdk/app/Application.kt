@@ -21,6 +21,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BuildConfig
+import shy.car.sdk.app.data.LoginOutOfDateException
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.net.ApiInterface
 import shy.car.sdk.app.net.ApiManager
@@ -157,6 +158,11 @@ class Application : BaseApplication() {
 
     fun changeCurrentLocation(l: Location) {
         location.copy(l)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun tokenOutDate(oudate: LoginOutOfDateException) {
+        logout()
     }
 
     fun logout() {

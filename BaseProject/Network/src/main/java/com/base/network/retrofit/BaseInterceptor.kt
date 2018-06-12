@@ -1,10 +1,7 @@
 package com.base.net
 
 import com.google.gson.JsonSyntaxException
-import okhttp3.FormBody
-import okhttp3.Interceptor
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
 
 /**
  * 拦截器，主要功能是拦截url和参数。方便重新构造url和添加公共参数
@@ -43,26 +40,47 @@ abstract class BaseInterceptor : Interceptor {
      * @return
      */
     private fun postMethodRequest(request: Request): Request {
-        val rootParams = HashMap<String, String>()
-        val formBody = FormBody.Builder()
+
         val body = request.body()
         if (body is FormBody) {
+            val rootParams = HashMap<String, String>()
+            val formBody = FormBody.Builder()
+
             for (i in 0 until body.size()) {
                 rootParams[body.encodedName(i)] = body.encodedValue(i)
                 formBody.addEncoded(body.encodedName(i), body.encodedValue(i))
             }
+
+            var url = request.url()
+                    .toString()
+            val index = url.indexOf("?")
+            if (index > 0) {
+                url = url.substring(0, index)
+            }
+            val builder = request.newBuilder()
+                    .url(postUrl(url, rootParams))
+            addHeader(builder)
+            builder.method(request.method(), formBody.build())
+            return builder.build()
+        } else if (body is MultipartBody) {
+            //-----------------MultipartBody--------------
+            var url = request.url()
+                    .toString()
+            val builder = request.newBuilder()
+                    .url(postUrlMul(url, body.parts()))
+            val formBody = MultipartBody.Builder()
+
+            for (i in 0 until body.size()) {
+                formBody.addPart(body.part(i))
+            }
+
+            addHeader(builder)
+            builder.method(request.method(), formBody.build())
+            return builder.build()
         }
-        var url = request.url()
-                .toString()
-        val index = url.indexOf("?")
-        if (index > 0) {
-            url = url.substring(0, index)
-        }
-        val builder = request.newBuilder()
-                .url(postUrl(url, rootParams))
-        addHeader(builder)
-        builder.method(request.method(), formBody.build())
-        return builder.build()
+
+        return request
+
     }
 
 
@@ -105,6 +123,11 @@ abstract class BaseInterceptor : Interceptor {
      * 拦截到的url和参数，如果需要重构url和参数，在这里进行
      */
     abstract fun postUrl(url: String, rootParams: HashMap<String, String>): String
+
+    /**
+     * 拦截到的url和参数，如果需要重构url和参数，在这里进行
+     */
+    abstract fun postUrlMul(url: String, rootParams: MutableList<MultipartBody.Part>): String
 
     /**
      *

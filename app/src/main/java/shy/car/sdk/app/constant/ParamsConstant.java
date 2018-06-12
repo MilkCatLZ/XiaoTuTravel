@@ -21,4 +21,9 @@ public class ParamsConstant {
     public static final String ClientID = "client_id";
     public static final String Version = "version";
     public static final String GrantType = "grant_type";
+    public static final String Name = "name";
+    public static final String IDcard = "idcard";
+    public static final String DriveLicencePhoto = "driving_licence_photo";
+    public static final String IDCarImage = "idcard_img_photo";
+    public static final String HoldIDCardImage = "hold_idcard_photo";
 }

@@ -22,6 +22,7 @@ public class JsonManager {
             JSONObject jsonObject = new JSONObject(resource);
             return jsonObject.get(key).toString();
         } catch (Exception e) {
+            e.printStackTrace();
             Log.e("getJsonString", resource + "不是一个JsonString!!!!!!!!!!!!!!!!!!!!!!");
             return "";
         }

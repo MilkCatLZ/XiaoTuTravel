@@ -2,6 +2,9 @@ package shy.car.sdk.app.net
 
 import com.google.gson.JsonObject
 import io.reactivex.Observable
+import okhttp3.MultipartBody
+import okhttp3.Request
+import okhttp3.RequestBody
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.location.data.CurrentLocation
@@ -155,4 +158,31 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("avatar")
     fun uploadAvatar(@Field("img") image: File): Observable<JsonObject>
+
+    /**
+     * 提交身份认证
+     */
+    @Multipart
+    @Headers("Content-Type: text/plain")
+    @POST("users/identity")
+    fun uploadUserVerify(@Part imageList: List<MultipartBody.Part>): Observable<JsonObject>
+//    /**
+//     * 提交身份认证
+//     */
+//    @Multipart
+//    @Headers("Content-Type: text/plain")
+//    @POST("users/identity")
+//    fun uploadUserVerify(@PartMap map: Map<String, String>, @Part imageList: List<MultipartBody.Part>): Observable<JsonObject>
+//    /**
+//     * 提交身份认证
+//     */
+//    @Multipart
+//    @POST("users/identity")
+//    fun uploadUserVerify(@Part(ParamsConstant.Name) name:String,@Part(ParamsConstant.IDcard) idNum:String,@Part imageList:List<MultipartBody.Part>): Observable<JsonObject>
+
+//    @Multipart
+//    @POST("users/identity")
+//    fun uploadUserVerify(@Part(ParamsConstant.Name) name: String, @Part(ParamsConstant.IDcard) idNum: String, @Part holdImage: MultipartBody.Part, @Part frontImage: MultipartBody.Part, @Part driveImage: MultipartBody.Part): Observable<JsonObject>
+
+
 }

@@ -11,6 +11,8 @@ import com.base.util.StringUtils;
 import com.base.util.ToastManager;
 import com.google.gson.Gson;
 
+import java.util.Objects;
+
 import retrofit2.HttpException;
 
 
@@ -31,6 +33,7 @@ public class ErrorManager {
 
     private String type;
     private String message;
+    private String error_message;
     private String file;
     private String line;
     private int httpCode;
@@ -43,7 +46,6 @@ public class ErrorManager {
      * @param context        上下文
      * @param ex             错误内容
      * @param defaultMessage 默认的出错提示语
-     *
      * @return Error的Model，带有code和error信息
      */
     @Nullable
@@ -53,14 +55,13 @@ public class ErrorManager {
         }
         return managerError(context, ex, context.getString(defaultMessage));
     }
-    
+
     /**
      * 这个需要手动调用
      *
      * @param context        上下文
      * @param ex             Xutil返回的错误信息
      * @param defaultMessage 传null的话就不显示任何提示信息
-     *
      * @return ErrorManager
      */
     @Nullable
@@ -72,10 +73,18 @@ public class ErrorManager {
         if (ex instanceof HttpException) {
             HttpException httpException = (HttpException) ex;
             try {
-                err = new Gson().fromJson(JsonManager.getJsonString(httpException.response().errorBody().string(),"error"), ErrorManager.class);
+                String result = JsonManager.getJsonString(httpException.response().errorBody().string(), "error");
+                if (StringUtils.isEmpty(result)) {
+                    result = httpException.response().message();
+                }
+
+
+                err = new Gson().fromJson(result, ErrorManager.class);
             } catch (Exception e) {
-            
+
             }
+
+
             if (err != null) {
                 err.setHttpCode(httpException.code());
                 if (StringUtils.isNotEmpty(defaultMessage)) {
@@ -109,7 +118,7 @@ public class ErrorManager {
     }
 
     public String getError() {
-        return message;
+        return StringUtils.isEmpty(message) ? error_message : message;
     }
 
     public void setMessage(String message) {
@@ -138,5 +147,13 @@ public class ErrorManager {
 
     public void setHttpCode(int httpCode) {
         this.httpCode = httpCode;
+    }
+
+    public String getError_message() {
+        return error_message;
+    }
+
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
     }
 }

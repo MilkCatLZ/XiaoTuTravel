@@ -2,9 +2,22 @@ package shy.car.sdk.travel.user.presenter
 
 import android.content.Context
 import android.databinding.ObservableField
+import com.base.base.ProgressDialog
 import com.base.util.StringUtils
 import com.base.util.ToastManager
+import com.google.gson.JsonObject
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import shy.car.sdk.app.constant.ParamsConstant
+import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import java.io.File
 
 
 /**
@@ -12,12 +25,97 @@ import shy.car.sdk.app.presenter.BasePresenter
  * 服务认证
  */
 class UserVerifyPresenter(context: Context) : BasePresenter(context) {
+
+    interface SubmitListener {
+        fun onUploadSuccess()
+        fun onUploadError(e: Throwable)
+    }
+
+    var listener: SubmitListener? = null
+
     fun submit() {
 
         if (checkInput()) {
+            ProgressDialog.showLoadingView(context)
 
+            val partText = createParams()
+            val partImages = createImageParams()
+
+            ApiManager.getInstance()
+                    .toSubscribe(ApiManager.getInstance()
+                            .api.uploadUserVerify(/*partText,*/ partImages), object : Observer<JsonObject> {
+                        //                        .api.uploadUserVerify(name.get()!!, idNumber.get()!!, createImagePart(frontImagePath.get()!!), createImagePart(backImagePath.get()!!), createImagePart(driveImagePath.get()!!)), object : Observer<JsonObject> {
+                        override fun onComplete() {
+
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: JsonObject) {
+                            ProgressDialog.hideLoadingView(context)
+                            listener?.onUploadSuccess()
+                        }
+
+                        override fun onError(e: Throwable) {
+                            e.printStackTrace()
+                            ProgressDialog.hideLoadingView(context)
+                            ErrorManager.managerError(context, e, "提交失败，请重试")
+                            listener?.onUploadError(e)
+                        }
+
+                    })
         }
     }
+
+    private fun createParams(): Map<String, String> {
+        val params = HashMap<String, String>()
+        params[ParamsConstant.Name] = name.get()!!
+        params[ParamsConstant.IDcard] = idNumber.get()!!
+
+        return params
+    }
+
+
+    private fun createImageParams(): List<MultipartBody.Part> {
+        val driveFile = File(driveImagePath.get())
+        val idCardFile = File(backImagePath.get())
+        val holdIDFile = File(frontImagePath.get())
+
+        val builder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+
+        val drive = RequestBody.create(MediaType.parse("image/*"), driveFile)
+        val idCard = RequestBody.create(MediaType.parse("image/*"), idCardFile)
+        val holdIDCard = RequestBody.create(MediaType.parse("image/*"), holdIDFile)
+        val namebody = RequestBody.create(MediaType.parse("text/plain"), name.get())
+        val idNum = RequestBody.create(MediaType.parse("text/plain"), idNumber.get())
+
+
+        builder.addFormDataPart("driving_licence_photo", driveFile.name, drive)
+        builder.addFormDataPart("idcard_img_photo", idCardFile.name, idCard)
+        builder.addFormDataPart("hold_idcard_photo", holdIDFile.name, holdIDCard)
+        builder.addPart(namebody)
+        builder.addPart(idNum)
+
+        return builder.build()
+                .parts()
+
+    }
+
+//    private fun createImagePart(path: String): MultipartBody.Part {
+//        val driveFile = File(driveImagePath.get())
+//
+//        return MultipartBody.Part.createFormData("driving_licence_photo", driveFile.name, RequestBody.create(MediaType.parse("image/*"), driveFile))
+//
+//
+//    }
+
+//    private fun convertToRequestBody(param: String?): RequestBody {
+//        return RequestBody.create(MediaType.parse("text/plain"), param)
+//    }
+
 
     private fun checkInput(): Boolean {
 
@@ -36,11 +134,11 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
                 return false
             }
             StringUtils.isEmpty(frontImagePath.get()) -> {
-                ToastManager.showShortToast(context, "请选择身份证正面照片")
+                ToastManager.showShortToast(context, "请选择手持身份证照片")
                 return false
             }
             StringUtils.isEmpty(backImagePath.get()) -> {
-                ToastManager.showShortToast(context, "请选择身份证反面照片")
+                ToastManager.showShortToast(context, "请选择身份证正面照片")
                 return false
             }
             StringUtils.isEmpty(driveImagePath.get()) -> {
@@ -59,5 +157,6 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
     var frontImagePath = ObservableField<String>("")
     var backImagePath = ObservableField<String>("")
     var driveImagePath = ObservableField<String>("")
+
 
 }

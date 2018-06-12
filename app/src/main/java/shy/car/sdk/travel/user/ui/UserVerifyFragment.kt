@@ -2,6 +2,7 @@ package shy.car.sdk.travel.user.ui
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
+import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -25,7 +26,23 @@ import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
  * create by LZ at 2018/05/24
  * 验证用户
  */
-class UserVerifyFragment : XTBaseFragment() {
+class UserVerifyFragment : XTBaseFragment(),
+        UserVerifyPresenter.SubmitListener,
+        DialogInterface.OnDismissListener {
+    override fun onDismiss(dialog: DialogInterface?) {
+        finish()
+    }
+
+    override fun onUploadSuccess() {
+        var dialog = UserVerifySubmitSuccessDialogFragment()
+        dialog.listener = this
+        dialog.show(childFragmentManager, "dialog_user_verify_success")
+
+    }
+
+    override fun onUploadError(e: Throwable) {
+
+    }
 
     lateinit var binding: FragmentVerifyUserBinding
     lateinit var presenter: UserVerifyPresenter
@@ -41,7 +58,10 @@ class UserVerifyFragment : XTBaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = UserVerifyPresenter(it) }
+        activity?.let {
+            presenter = UserVerifyPresenter(it)
+            presenter.listener = this
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -106,7 +126,7 @@ class UserVerifyFragment : XTBaseFragment() {
                                             .isneedcamera(true)
                                             .start()
                                 }
-                            }else{
+                            } else {
                                 ToastManager.showShortToast(it, "请先允许相机权限");
                             }
                         }
@@ -143,11 +163,11 @@ class UserVerifyFragment : XTBaseFragment() {
 
     fun onSubmitClick() {
         presenter.submit()
-        if(BuildConfig.DEBUG){
-         var dialog=  UserVerifySubmitSuccessDialogFragment  ()
-            dialog.show(childFragmentManager,"dialog_user_verify_success")
-
-        }
+//        if(BuildConfig.DEBUG){
+//         var dialog=  UserVerifySubmitSuccessDialogFragment  ()
+//            dialog.show(childFragmentManager,"dialog_user_verify_success")
+//
+//        }
     }
 
 }

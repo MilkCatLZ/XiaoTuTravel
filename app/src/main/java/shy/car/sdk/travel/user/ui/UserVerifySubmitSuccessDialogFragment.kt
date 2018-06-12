@@ -1,5 +1,7 @@
 package shy.car.sdk.travel.user.ui
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,13 +17,22 @@ import shy.car.sdk.databinding.DialogUserVerifySubmitSuccessBinding
  */
 class UserVerifySubmitSuccessDialogFragment : XTBaseDialogFragment() {
 
+
+    var listener: DialogInterface.OnDismissListener? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var binding: DialogUserVerifySubmitSuccessBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_user_verify_submit_success, null, false)
         binding.onClick = View.OnClickListener {
-            dismiss()
+            dismissAllowingStateLoss()
         }
         return binding.root
 
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        var dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setOnDismissListener(listener)
+        return dialog
     }
 
 }
