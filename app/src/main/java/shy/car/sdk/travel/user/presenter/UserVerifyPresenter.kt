@@ -7,9 +7,7 @@ import com.base.util.StringUtils
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -43,7 +41,8 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
 
             ApiManager.getInstance()
                     .toSubscribe(ApiManager.getInstance()
-                            .api.uploadUserVerify(/*partText,*/ partImages), object : Observer<JsonObject> {
+                            .api.uploadUserVerify(partText,partImages.parts(),partImages.boundary()), object : Observer<JsonObject> {
+//                            .api.uploadUserVerify(partText, partImages), object : Observer<JsonObject> {
                         //                        .api.uploadUserVerify(name.get()!!, idNumber.get()!!, createImagePart(frontImagePath.get()!!), createImagePart(backImagePath.get()!!), createImagePart(driveImagePath.get()!!)), object : Observer<JsonObject> {
                         override fun onComplete() {
 
@@ -69,16 +68,23 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
         }
     }
 
-    private fun createParams(): Map<String, String> {
-        val params = HashMap<String, String>()
-        params[ParamsConstant.Name] = name.get()!!
-        params[ParamsConstant.IDcard] = idNumber.get()!!
+    private fun createParams(): Map<String, RequestBody> {
+        val params = HashMap<String, RequestBody>()
+        params[ParamsConstant.Name] = convertToRequestBody(name.get()!!)
+        params[ParamsConstant.IDcard] = convertToRequestBody(idNumber.get()!!)
 
         return params
     }
+//    private fun createParams(): Map<String, String> {
+//        val params = HashMap<String, String>()
+//        params[ParamsConstant.Name] = name.get()!!
+//        params[ParamsConstant.IDcard] = idNumber.get()!!
+//
+//        return params
+//    }
 
 
-    private fun createImageParams(): List<MultipartBody.Part> {
+    private fun createImageParams(): MultipartBody {
         val driveFile = File(driveImagePath.get())
         val idCardFile = File(backImagePath.get())
         val holdIDFile = File(frontImagePath.get())
@@ -89,18 +95,17 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
         val drive = RequestBody.create(MediaType.parse("image/*"), driveFile)
         val idCard = RequestBody.create(MediaType.parse("image/*"), idCardFile)
         val holdIDCard = RequestBody.create(MediaType.parse("image/*"), holdIDFile)
-        val namebody = RequestBody.create(MediaType.parse("text/plain"), name.get())
-        val idNum = RequestBody.create(MediaType.parse("text/plain"), idNumber.get())
+//        val namebody = RequestBody.create(MediaType.parse("text/plain"), name.get())
+//        val idNum = RequestBody.create(MediaType.parse("text/plain"), idNumber.get())
 
 
         builder.addFormDataPart("driving_licence_photo", driveFile.name, drive)
         builder.addFormDataPart("idcard_img_photo", idCardFile.name, idCard)
         builder.addFormDataPart("hold_idcard_photo", holdIDFile.name, holdIDCard)
-        builder.addPart(namebody)
-        builder.addPart(idNum)
+//        builder.addFormDataPart(ParamsConstant.Name, name.get())
+//        builder.addFormDataPart(ParamsConstant.IDcard, idNumber.get())
 
         return builder.build()
-                .parts()
 
     }
 
@@ -112,9 +117,9 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
 //
 //    }
 
-//    private fun convertToRequestBody(param: String?): RequestBody {
-//        return RequestBody.create(MediaType.parse("text/plain"), param)
-//    }
+    private fun convertToRequestBody(param: String?): RequestBody {
+        return RequestBody.create(MediaType.parse("text/plain"), param)
+    }
 
 
     private fun checkInput(): Boolean {

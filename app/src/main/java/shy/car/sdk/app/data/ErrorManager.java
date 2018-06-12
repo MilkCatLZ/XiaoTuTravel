@@ -11,8 +11,6 @@ import com.base.util.StringUtils;
 import com.base.util.ToastManager;
 import com.google.gson.Gson;
 
-import java.util.Objects;
-
 import retrofit2.HttpException;
 
 
@@ -73,9 +71,11 @@ public class ErrorManager {
         if (ex instanceof HttpException) {
             HttpException httpException = (HttpException) ex;
             try {
-                String result = JsonManager.getJsonString(httpException.response().errorBody().string(), "error");
+                String body=httpException.response().errorBody().string();
+                
+                String result = JsonManager.getJsonString(body, "error");
                 if (StringUtils.isEmpty(result)) {
-                    result = httpException.response().message();
+                    result = body;
                 }
 
 

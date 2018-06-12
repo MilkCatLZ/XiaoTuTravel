@@ -77,9 +77,12 @@ abstract class BaseInterceptor : Interceptor {
             addHeader(builder)
             builder.method(request.method(), formBody.build())
             return builder.build()
-        }
+        } else {
 
-        return request
+            val builder = request.newBuilder()
+            addHeader(builder)
+            return builder.build()
+        }
 
     }
 
