@@ -128,22 +128,22 @@
                                 android:enabled="@{fragment.currentVerifyNum>=3}"
                                 tools:text="1" />
                         </LinearLayout>
-                        <LinearLayout style="@style/style_verify_content">
+                        <!--<LinearLayout style="@style/style_verify_content">-->
 
-                            <TextView
-                                android:id="@+id/edt_verify_4"
-                                style="@style/style_verify_edt"
-                                android:enabled="@{fragment.currentVerifyNum>=4}"
-                                tools:text="1" />
-                        </LinearLayout>
-                        <LinearLayout style="@style/style_verify_content">
+                            <!--<TextView-->
+                                <!--android:id="@+id/edt_verify_4"-->
+                                <!--style="@style/style_verify_edt"-->
+                                <!--android:enabled="@{fragment.currentVerifyNum>=4}"-->
+                                <!--tools:text="1" />-->
+                        <!--</LinearLayout>-->
+                        <!--<LinearLayout style="@style/style_verify_content">-->
 
-                            <TextView
-                                android:id="@+id/edt_verify_5"
-                                style="@style/style_verify_edt"
-                                android:enabled="@{fragment.currentVerifyNum>=5}"
-                                tools:text="1" />
-                        </LinearLayout>
+                            <!--<TextView-->
+                                <!--android:id="@+id/edt_verify_5"-->
+                                <!--style="@style/style_verify_edt"-->
+                                <!--android:enabled="@{fragment.currentVerifyNum>=5}"-->
+                                <!--tools:text="1" />-->
+                        <!--</LinearLayout>-->
 
                     </LinearLayout>
 

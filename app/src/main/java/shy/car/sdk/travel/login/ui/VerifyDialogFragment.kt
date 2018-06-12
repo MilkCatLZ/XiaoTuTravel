@@ -198,8 +198,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         currentVerifyNum.set(result.length)
         val array = result.toCharArray()
                 .copyOf(VerifyLenght)
-        binding.edtVerify5.text = array[5].toString()
-        binding.edtVerify4.text = array[4].toString()
+//        binding.edtVerify5.text = array[5].toString()
+//        binding.edtVerify4.text = array[4].toString()
         binding.edtVerify3.text = array[3].toString()
         binding.edtVerify2.text = array[2].toString()
         binding.edtVerify1.text = array[1].toString()
@@ -207,7 +207,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     }
 
-    var VerifyLenght = 6
+    var VerifyLenght = 4
     /**
      * 提交验证码
      */

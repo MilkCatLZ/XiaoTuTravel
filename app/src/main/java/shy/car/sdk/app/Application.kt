@@ -9,6 +9,10 @@ import com.base.location.Location
 import com.base.util.SPCache
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
+import com.google.gson.JsonObject
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -156,11 +160,30 @@ class Application : BaseApplication() {
     }
 
     fun logout() {
-        User.logout(this)
         ApiManager.getInstance()
                 .api.logout()
                 .subscribeOn(Schedulers.io())
-                .subscribe()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<JsonObject> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(t: JsonObject) {
+                        User.logout(this@Application)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                        User.logout(this@Application)
+                    }
+
+                })
+
     }
 
 }

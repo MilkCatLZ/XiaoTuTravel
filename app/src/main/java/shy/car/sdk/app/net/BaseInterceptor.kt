@@ -158,9 +158,10 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
         if (User.instance.login) {
             newRequest.addHeader("authorization", "Bearer " + User.instance.accessToken)
         }
-        else if(BuildConfig.DEBUG){
-            newRequest.addHeader("authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhmMmI4MzEyMWNkNzkwYjZiNTBhM2QwNTNiOWMxN2RmNGMxNDQzYzhhMmY5YmRmZWEwYTI5ZGNmMTMwNzc1ZWVmZTFmMWRhZThhMDA4MDU2In0.eyJhdWQiOiIxMDAwMSIsImp0aSI6IjhmMmI4MzEyMWNkNzkwYjZiNTBhM2QwNTNiOWMxN2RmNGMxNDQzYzhhMmY5YmRmZWEwYTI5ZGNmMTMwNzc1ZWVmZTFmMWRhZThhMDA4MDU2IiwiaWF0IjoxNTI2NTI1NDc5LCJuYmYiOjE1MjY1MjU0NzksImV4cCI6MTUyNjUyOTA3OSwic3ViIjoiMSIsInNjb3BlcyI6WyJ1c2VyIl19.wxRRH1xE-cFeUbbRG97qfyAx0MFwUVeflD1SZpphOd9y_bXCc7knlfUfFEjgkWoyZLCsHIOspToLGJVH6NGqpUnyRcSS19e0IYyrnyGhgj7ub09QkeWFY7r-dpBxtXns2c3d3cVx90e3iYjc2qS65m-S5O41KUv8Owzv7WShUuI")
-        }
+//
+//        else if(BuildConfig.DEBUG){
+//            newRequest.addHeader("authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjhmMmI4MzEyMWNkNzkwYjZiNTBhM2QwNTNiOWMxN2RmNGMxNDQzYzhhMmY5YmRmZWEwYTI5ZGNmMTMwNzc1ZWVmZTFmMWRhZThhMDA4MDU2In0.eyJhdWQiOiIxMDAwMSIsImp0aSI6IjhmMmI4MzEyMWNkNzkwYjZiNTBhM2QwNTNiOWMxN2RmNGMxNDQzYzhhMmY5YmRmZWEwYTI5ZGNmMTMwNzc1ZWVmZTFmMWRhZThhMDA4MDU2IiwiaWF0IjoxNTI2NTI1NDc5LCJuYmYiOjE1MjY1MjU0NzksImV4cCI6MTUyNjUyOTA3OSwic3ViIjoiMSIsInNjb3BlcyI6WyJ1c2VyIl19.wxRRH1xE-cFeUbbRG97qfyAx0MFwUVeflD1SZpphOd9y_bXCc7knlfUfFEjgkWoyZLCsHIOspToLGJVH6NGqpUnyRcSS19e0IYyrnyGhgj7ub09QkeWFY7r-dpBxtXns2c3d3cVx90e3iYjc2qS65m-S5O41KUv8Owzv7WShUuI")
+//        }
 
 //        newRequest.addHeader("Accept-Language", "zh-CN,zh;q=0.8" )
 //        newRequest.addHeader("Accept-Language", "gzip, deflate" )
