@@ -197,7 +197,9 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     private fun progressInput(result: String) {
         currentVerifyNum.set(result.length)
         val array = result.toCharArray()
-                .copyOf(4)
+                .copyOf(VerifyLenght)
+        binding.edtVerify5.text = array[5].toString()
+        binding.edtVerify4.text = array[4].toString()
         binding.edtVerify3.text = array[3].toString()
         binding.edtVerify2.text = array[2].toString()
         binding.edtVerify1.text = array[1].toString()
@@ -205,11 +207,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     }
 
+    var VerifyLenght = 6
     /**
      * 提交验证码
      */
     private fun lockAndSubmit() {
-        if (binding.edtInput.text.length == 4) {
+        if (binding.edtInput.text.length == VerifyLenght) {
             Observable.timer(500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

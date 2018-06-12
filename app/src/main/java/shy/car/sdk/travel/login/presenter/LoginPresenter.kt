@@ -87,6 +87,7 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
                 }
 
                 override fun onError(e: Throwable) {
+                    e.printStackTrace()
                     listener?.onGetVerifyError(e)
                     ErrorManager.managerError(context,e,"获取验证码失败")
                     ProgressDialog.hideLoadingView(context)

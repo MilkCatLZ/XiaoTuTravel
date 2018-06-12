@@ -5,6 +5,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,6 +20,7 @@ open class BaseApiManager<T>(baseUrl: String, interceptor: BaseInterceptor? = nu
     var builder = OkHttpClient.Builder()
     var client: OkHttpClient
     var retrofit: Retrofit
+    var cookieJar: CookieJar? = null
 
     init {
         //初始化拦截器
@@ -26,7 +28,11 @@ open class BaseApiManager<T>(baseUrl: String, interceptor: BaseInterceptor? = nu
             builder.addInterceptor(interceptor)
         }
         builder.addInterceptor(HttpLoggingInterceptor())
+        if (cookieJar != null) {
+            builder.cookieJar(cookieJar)
+        }
         client = builder.build()
+
 
         //初始化retrofit
         retrofit = Retrofit.Builder()

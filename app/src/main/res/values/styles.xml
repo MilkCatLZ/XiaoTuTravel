@@ -35,14 +35,14 @@
     </style>
 
     <style name="style_verify_edt">
-        <item name="android:layout_width">52dp</item>
-        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
         <item name="android:background">@drawable/back_verify_edit</item>
         <item name="android:gravity">center</item>
         <item name="android:inputType">number</item>
         <item name="android:maxLength">1</item>
         <item name="android:textColor">@color/main_color_green</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="style_verify_content">

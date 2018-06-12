@@ -37,6 +37,7 @@ interface ApiInterface {
     @POST("phone/{phone}/captcha")
     fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") name: String = ""): Observable<JsonObject>
 
+
     /**
      * 登录
      * JsonString：{"phone":"","verify":"","uuid":"",}

@@ -6,9 +6,13 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.base.app.BaseApplication
 import com.base.location.AmapLocationManager
 import com.base.location.Location
+import com.base.util.SPCache
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -95,6 +99,22 @@ class Application : BaseApplication() {
     private fun initNetWork() {
         val interceptor = BaseInterceptor(this)
         val iterator = XTRetrofitInterface(this)
+        val cookieJar = object : CookieJar {
+            override fun saveFromResponse(url: HttpUrl?, cookies: MutableList<Cookie>?) {
+
+            }
+
+            override fun loadForRequest(url: HttpUrl?): MutableList<Cookie> {
+                val cookies = ArrayList<Cookie>()
+                val token = SPCache.getObject<String>(this@Application, "set-cookie", String::class.java)
+                if (token != null) {
+                    var cookie = Cookie.parse(url, token)
+                    cookies.add(cookie!!)
+                }
+                return cookies;
+            }
+
+        }
         ApiManager.init(BuildConfig.Host + "$InterfaceVersion/", interceptor, iterator, ApiInterface::class.java)
     }
 
