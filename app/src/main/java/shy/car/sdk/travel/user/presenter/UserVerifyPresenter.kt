@@ -41,7 +41,7 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
 
             ApiManager.getInstance()
                     .toSubscribe(ApiManager.getInstance()
-                            .api.uploadUserVerify(partText,partImages.parts(),partImages.boundary()), object : Observer<JsonObject> {
+                            .api.uploadUserVerify(partText,partImages.parts(),";boundary="+partImages.boundary()), object : Observer<JsonObject> {
 //                            .api.uploadUserVerify(partText, partImages), object : Observer<JsonObject> {
                         //                        .api.uploadUserVerify(name.get()!!, idNumber.get()!!, createImagePart(frontImagePath.get()!!), createImagePart(backImagePath.get()!!), createImagePart(driveImagePath.get()!!)), object : Observer<JsonObject> {
                         override fun onComplete() {
@@ -162,5 +162,5 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
     var frontImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
     var backImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
     var driveImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
-    
+
 }

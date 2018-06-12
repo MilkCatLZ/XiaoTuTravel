@@ -170,9 +170,8 @@ interface ApiInterface {
      * 提交身份认证
      */
     @Multipart
-    @Headers("Content-Type: multipart/form-data;boundary={boundary}")
     @POST("users/identity")
-    fun uploadUserVerify(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part imageList: List<MultipartBody.Part>, @Header("boundary") boundary: String): Observable<JsonObject>
+    fun uploadUserVerify(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part imageList: List<MultipartBody.Part>, @Header("Content-Type\\: multipart/form-data") boundary: String): Observable<JsonObject>
 //    /**
 //     * 提交身份认证
 //     */
