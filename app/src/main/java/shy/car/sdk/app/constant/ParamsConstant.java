@@ -26,4 +26,6 @@ public class ParamsConstant {
     public static final String DriveLicencePhoto = "driving_licence_photo";
     public static final String IDCarImage = "idcard_img_photo";
     public static final String HoldIDCardImage = "hold_idcard_photo";
+    public static final String Offset = "offset";
+    public static final String Limit = "limit";
 }

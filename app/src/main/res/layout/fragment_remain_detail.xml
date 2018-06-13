@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.remain.ui.RemainDetailFragment" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.remain.presenter.RemainDetailPresenter"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/layout_title"
+            app:title="@{@string/str_my_remain}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="176dp"
+                android:background="@color/main_color_green"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="17dp"
+                    android:paddingTop="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="余额"
+                        android:textColor="@color/_foreground_material_light"
+                        android:textSize="@dimen/text_primary_14dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="常见问题"
+                        android:textColor="@color/_foreground_material_light"
+                        android:textSize="@dimen/text_second_primary_12dp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="100.00"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="46sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="7dp"
+                    android:text="余额可用于支付车费"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_second_primary_12dp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="145dp"
+            android:background="@drawable/back_dialog_corner_2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center_vertical"
+                android:text="余额明细"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="15sp" />
+
+            <View style="@style/line_horizontal" />
+
+            <com.base.widget.UltimateRecyclerView
+                android:id="@+id/recyclerView_remain_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:bindAdapter="@{presenter.adapter}"
+                android:background="@color/_foreground_material_light"
+                app:recyclerviewDefaultSwipeColor="@array/google_colors"
+                app:recyclerviewEmptyView="@layout/error_no_record"
+                app:recyclerviewScrollbars="vertical"
+                tools:listItem="@layout/item_remain_detail" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

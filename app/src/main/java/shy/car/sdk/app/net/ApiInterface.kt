@@ -11,6 +11,7 @@ import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
+import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.NearCarList
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
@@ -163,5 +164,11 @@ interface ApiInterface {
     @Multipart
     @POST("users/identity")
     fun uploadUserVerify(@Part(ParamsConstant.Name) name: RequestBody, @Part(ParamsConstant.IDcard) idCard: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+
+    /**
+     * 获取余额明细
+     */
+    @GET("users/bill")
+    fun getRemainDetailList(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<RemainList>>
 
 }

@@ -185,5 +185,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String UserInfoEdit = "/user/user_info_edit";
+    /**
+     * 我的余额
+     * {@link shy.car.sdk.travel.remain.ui.RemainDetailActivity}
+     */
+    @NotNull
+    public static final String RemainDetail = "/remain/detail";
     
 }

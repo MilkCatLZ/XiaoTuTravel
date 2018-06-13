@@ -1,18 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils" />
+            type="shy.car.sdk.app.LNTextUtil" />
 
+        <variable
+            name="remain"
+            type="shy.car.sdk.travel.remain.data.RemainList" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="106dp">
+        android:layout_height="70dp"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{remain.typeText}"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="15sp"
+                tools:text="在线支付" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{remain.createdAt}"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_second_primary_12dp"
+                tools:text="2018-05-05" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="余额:0.00"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_second_primary_12dp"
+                tools:text="余额" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{util.getPriceText(remain.money)}"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="15sp"
+                tools:text="7.5" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
     </LinearLayout>
 
 </layout>

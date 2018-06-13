@@ -154,6 +154,10 @@
             android:name=".travel.user.ui.UserInfoEditActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".travel.remain.ui.RemainDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
     </application>
 

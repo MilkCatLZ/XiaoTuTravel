@@ -3,6 +3,7 @@ package shy.car.sdk.travel.wallet.ui
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
@@ -20,6 +21,7 @@ class WalletActivity : XTBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_wallet)
+        binding.ac=this
     }
 
     /**
@@ -33,7 +35,9 @@ class WalletActivity : XTBaseActivity() {
      * 余额
      */
     fun onRemainClick() {
-
+        ARouter.getInstance()
+                .build(RouteMap.RemainDetail)
+                .navigation()
     }
 
     /**
