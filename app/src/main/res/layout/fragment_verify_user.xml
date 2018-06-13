@@ -83,6 +83,7 @@
                             style="@style/style_ww.text_14_333.verify_user_edt"
                             android:drawableStart="@drawable/icon_id_card"
                             android:hint="请输入身份证号"
+                            android:enabled="@{user.identityAuth==UserIdentityAuth.NoIdentity}"
                             android:text="@={presenter.idNumber}" />
                     </LinearLayout>
                 </LinearLayout>

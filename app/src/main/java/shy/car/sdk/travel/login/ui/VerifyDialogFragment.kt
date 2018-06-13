@@ -55,10 +55,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      * 登录失败
      */
     var isLoginFailed = ObservableBoolean(false)
-    /**
-     * 记录返回键按下的次数
-     */
-//    private var repeatCount: Int = 0
+
     private var d: Disposable? = null
 
 
@@ -230,6 +227,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      * 倒计时
      */
     private fun startCountDown() {
+        d?.dispose()
+        binding.txtCountDown.isEnabled = false
         Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

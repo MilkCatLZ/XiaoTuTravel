@@ -20,6 +20,8 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentVerifyUserBinding
 import shy.car.sdk.travel.user.data.RefreshUserInfo
+import shy.car.sdk.travel.user.data.User
+import shy.car.sdk.travel.user.data.UserState
 import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
 
 
@@ -70,30 +72,36 @@ class UserVerifyFragment : XTBaseFragment(),
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_verify_user, null, false)
         binding.fragment = this
         binding.presenter = presenter
+        binding.user = User.instance
         return binding.root
     }
 
 
     fun onIDPicFrontClick() {
-        idFront = true
-        idBack = false
-        drive = false
-        openAlbum()
+        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+            idFront = true
+            idBack = false
+            drive = false
+            openAlbum()
+        }
     }
 
     fun onIDPicBackClick() {
-        idFront = false
-        idBack = true
-        drive = false
-        openAlbum()
-
+        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+            idFront = false
+            idBack = true
+            drive = false
+            openAlbum()
+        }
     }
 
     fun onDriveVerifyImgClick() {
-        idFront = false
-        idBack = false
-        drive = true
-        openAlbum()
+        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+            idFront = false
+            idBack = false
+            drive = true
+            openAlbum()
+        }
     }
 
     private fun openAlbum() {
@@ -104,10 +112,6 @@ class UserVerifyFragment : XTBaseFragment(),
         activity?.let {
 
             val per = RxPermissions(it)
-//            per.request(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                    .subscribeOn(AndroidSchedulers.mainThread())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe()
             per.request(Manifest.permission.CAMERA)
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -165,11 +169,6 @@ class UserVerifyFragment : XTBaseFragment(),
 
     fun onSubmitClick() {
         presenter.submit()
-//        if(BuildConfig.DEBUG){
-//         var dialog=  UserVerifySubmitSuccessDialogFragment  ()
-//            dialog.show(childFragmentManager,"dialog_user_verify_success")
-//
-//        }
     }
 
 }
