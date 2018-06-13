@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import com.base.base.ProgressDialog
 import com.wq.photo.widget.PickConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentUserInfoEditBinding
+import shy.car.sdk.travel.user.data.RefreshUserInfo
 import shy.car.sdk.travel.user.presenter.UserDetailPresenter
 import java.util.*
 
@@ -20,9 +22,15 @@ import java.util.*
  * create by lz at 2018/06/11
  *
  */
-class UserInfoEditFragment : XTBaseFragment(), UserDetailPresenter.UploadListener {
-    override fun onUploadSuccess() {
+class UserInfoEditFragment : XTBaseFragment(),
+        UserDetailPresenter.UserEditListener {
+    override fun onUploadAvatarSuccess() {
+        activity?.let { ProgressDialog.hideLoadingView(it) }
+        eventBusDefault.post(RefreshUserInfo())
+    }
 
+    override fun onUploadAvatar() {
+        activity?.let { ProgressDialog.hideLoadingView(it) }
     }
 
     lateinit var binding: FragmentUserInfoEditBinding
@@ -31,8 +39,7 @@ class UserInfoEditFragment : XTBaseFragment(), UserDetailPresenter.UploadListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
-            presenter = UserDetailPresenter(it)
-            presenter.listener = this
+            presenter = UserDetailPresenter(it, this)
         }
     }
 
@@ -98,6 +105,7 @@ class UserInfoEditFragment : XTBaseFragment(), UserDetailPresenter.UploadListene
         if (resultCode == Activity.RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
+                activity?.let{ProgressDialog.showLoadingView(it)}
                 presenter.uploadAvatar(imgs[0])
             }
         }

@@ -12,6 +12,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
@@ -109,7 +110,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
 
                     override fun onNext(t: JsonObject) {
                         if (StringUtils.isNotEmpty(t.toString())) {
-                            ToastManager.showLongToast(context, "验证码发送成功")
+                            ToastManager.showLongToast(context, "验证码发送成功${if (BuildConfig.DEBUG) t.toString() else ""}")
                             listener?.onGetVerifySuccess()
                         }
                     }

@@ -10,9 +10,13 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.user.data.User
@@ -22,16 +26,14 @@ import java.io.File
  * create by LZ at 2018/06/11
  *
  */
-class UserDetailPresenter(context: Context) : BasePresenter(context) {
+class UserDetailPresenter(context: Context,var listener: UserEditListener? = null) : BasePresenter(context) {
+    interface UserEditListener {
+        fun onUploadAvatarSuccess()
+        fun onUploadAvatar()
 
-    interface UploadListener {
-        fun onUploadSuccess()
     }
 
     var nickName = ObservableField<String>("")
-
-
-    var listener: UploadListener? = null
     var sex: Int = 0
     var birthDay = ObservableField<String>("")
     var jobAdapter = DataBindingBaseAdapter<com.base.util.key.KeyValue>(R.layout.item_spinner, BR.item, context, null)
@@ -45,31 +47,45 @@ class UserDetailPresenter(context: Context) : BasePresenter(context) {
         jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
     }
 
-    fun uploadAvatar(url: String) {
-        ProgressDialog.showLoadingView(context)
+
+
+    fun uploadAvatar(path: String) {
+
+
+        var observable = ApiManager.getInstance()
+                .api.uploadAvatar(getAvatarPat(path).parts())
+        var observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: JsonObject) {
+                listener?.onUploadAvatarSuccess()
+            }
+
+            override fun onError(e: Throwable) {
+                ErrorManager.managerError(context, e, "上传失败，请重试")
+                listener?.onUploadAvatar()
+            }
+
+        }
+
         ApiManager.getInstance()
-                .api.uploadAvatar(File(url))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<JsonObject> {
-                    override fun onComplete() {
+                .toSubscribe(observable, observer)
+    }
 
-                    }
+    private fun getAvatarPat(path: String): MultipartBody {
+        val image = File(path)
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+        val builder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
 
-                    override fun onNext(t: JsonObject) {
-                        User.instance.avatar = BuildConfig.Host + t.get("avatar")
-                        ProgressDialog.hideLoadingView(context)
-                        listener?.onUploadSuccess()
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-
-                })
+        val imageBody = RequestBody.create(MediaType.parse("image/*"), image)
+        builder.addFormDataPart("avatar", image.name, imageBody)
+        return builder.build()
     }
 }

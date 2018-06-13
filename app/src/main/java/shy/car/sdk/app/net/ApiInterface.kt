@@ -16,9 +16,7 @@ import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.TakeOrderList
-import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserDetailCache
-import java.io.File
 
 
 /**
@@ -153,11 +151,11 @@ interface ApiInterface {
     fun getPromiseMoneyDetailList(): Observable<ArrayList<PromiseMoneyDetail>>
 
     /**
-     * 保证金记录
+     * 修改用户头像
      */
-    @FormUrlEncoded
+    @Multipart
     @POST("avatar")
-    fun uploadAvatar(@Field("img") image: File): Observable<JsonObject>
+    fun uploadAvatar(@Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     /**
      * 提交身份认证

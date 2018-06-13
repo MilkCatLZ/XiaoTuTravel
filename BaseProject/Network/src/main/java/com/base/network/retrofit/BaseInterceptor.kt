@@ -42,41 +42,45 @@ abstract class BaseInterceptor : Interceptor {
     private fun postMethodRequest(request: Request): Request {
 
         val body = request.body()
-        if (body is FormBody) {
-            val rootParams = HashMap<String, String>()
-            val formBody = FormBody.Builder()
+        when (body) {
+            is FormBody -> {
+                val rootParams = HashMap<String, String>()
+                val formBody = FormBody.Builder()
 
-            for (i in 0 until body.size()) {
-                rootParams[body.encodedName(i)] = body.encodedValue(i)
-                formBody.addEncoded(body.encodedName(i), body.encodedValue(i))
+                for (i in 0 until body.size()) {
+                    rootParams[body.encodedName(i)] = body.encodedValue(i)
+                    formBody.addEncoded(body.encodedName(i), body.encodedValue(i))
+                }
+
+                var url = request.url()
+                        .toString()
+                val index = url.indexOf("?")
+                if (index > 0) {
+                    url = url.substring(0, index)
+                }
+                val builder = request.newBuilder()
+                        .url(postUrl(url, rootParams))
+                addHeader(builder)
+                builder.method(request.method(), formBody.build())
+                return builder.build()
             }
+            is MultipartBody -> {
+                //-----------------MultipartBody--------------
+                var url = request.url()
+                        .toString()
+                val builder = request.newBuilder()
+                        .url(postUrlMul(url, body.parts()))
 
-            var url = request.url()
-                    .toString()
-            val index = url.indexOf("?")
-            if (index > 0) {
-                url = url.substring(0, index)
+                addHeader(builder)
+                builder.method(request.method(), body)
+                return builder.build()
             }
-            val builder = request.newBuilder()
-                    .url(postUrl(url, rootParams))
-            addHeader(builder)
-            builder.method(request.method(), formBody.build())
-            return builder.build()
-        } else if (body is MultipartBody) {
-            //-----------------MultipartBody--------------
-            var url = request.url()
-                    .toString()
-            val builder = request.newBuilder()
-                    .url(postUrlMul(url, body.parts()))
+            else -> {
 
-            addHeader(builder)
-            builder.method(request.method(), body)
-            return builder.build()
-        } else {
-
-            val builder = request.newBuilder()
-            addHeader(builder)
-            return builder.build()
+                val builder = request.newBuilder()
+                addHeader(builder)
+                return builder.build()
+            }
         }
 
     }

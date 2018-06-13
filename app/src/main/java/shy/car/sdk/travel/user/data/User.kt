@@ -43,28 +43,33 @@ class User private constructor() : UserBase() {
 
     fun getUserDetail(context: Context, listener: OnGetUserDetailSuccess? = null) {
 
-        ApiManager.getInstance()
+        var observable = ApiManager.getInstance()
                 .api.gerUserDetail()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<UserDetailCache> {
-                    override fun onComplete() {
-                    }
 
-                    override fun onSubscribe(d: Disposable) {
+        val observer = object : Observer<UserDetailCache> {
+            override fun onComplete() {
+            }
 
-                    }
+            override fun onSubscribe(d: Disposable) {
 
-                    override fun onNext(result: UserDetailCache) {
-                        copy(result)
-                        saveUserState(context)
-                        listener?.onSuccess()
-                    }
+            }
 
-                    override fun onError(e: Throwable) {
-                        listener?.onError()
-                    }
-                })
+            override fun onNext(result: UserDetailCache) {
+                copy(result)
+                saveUserState(context)
+                listener?.onSuccess()
+            }
+
+            override fun onError(e: Throwable) {
+                listener?.onError()
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
     }
 
     companion object {
