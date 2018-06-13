@@ -16,6 +16,7 @@ import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserDetailCache
 import java.io.File
 
@@ -158,30 +159,11 @@ interface ApiInterface {
     @POST("avatar")
     fun uploadAvatar(@Field("img") image: File): Observable<JsonObject>
 
-
-// /**
-//     * 提交身份认证
-//     */
-//    @FormUrlEncoded
-//    @POST("users/identity")
-//    fun uploadUserVerify(@Field(ParamsConstant.Name) name: String, @Field(ParamsConstant.IDcard) carNum: String, @Body multipartBody: MultipartBody): Observable<JsonObject>
-
     /**
      * 提交身份认证
      */
     @Multipart
     @POST("users/identity")
-    fun uploadUserVerify(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part imageList: List<MultipartBody.Part>, @Header("Content-Type\\: multipart/form-data") boundary: String): Observable<JsonObject>
-//    /**
-//     * 提交身份认证
-//     */
-//    @Multipart
-//    @POST("users/identity")
-//    fun uploadUserVerify(@Part(ParamsConstant.Name) name:String,@Part(ParamsConstant.IDcard) idNum:String,@Part imageList:List<MultipartBody.Part>): Observable<JsonObject>
-
-//    @Multipart
-//    @POST("users/identity")
-//    fun uploadUserVerify(@Part(ParamsConstant.Name) name: String, @Part(ParamsConstant.IDcard) idNum: String, @Part holdImage: MultipartBody.Part, @Part frontImage: MultipartBody.Part, @Part driveImage: MultipartBody.Part): Observable<JsonObject>
-
+    fun uploadUserVerify(@Part(ParamsConstant.Name) name: RequestBody, @Part(ParamsConstant.IDcard) idCard: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
 }

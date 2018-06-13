@@ -68,14 +68,9 @@ abstract class BaseInterceptor : Interceptor {
                     .toString()
             val builder = request.newBuilder()
                     .url(postUrlMul(url, body.parts()))
-            val formBody = MultipartBody.Builder()
-
-            for (i in 0 until body.size()) {
-                formBody.addPart(body.part(i))
-            }
 
             addHeader(builder)
-            builder.method(request.method(), formBody.build())
+            builder.method(request.method(), body)
             return builder.build()
         } else {
 

@@ -18,8 +18,10 @@
         >
 
         <LinearLayout
-            android:layout_width="270dp"
+            android:layout_width="match_parent"
             android:layout_height="197dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:background="@drawable/back_dialog_corner_2dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"

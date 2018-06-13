@@ -29,10 +29,8 @@ class UserVerifySubmitSuccessDialogFragment : XTBaseDialogFragment() {
 
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        var dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setOnDismissListener(listener)
-        return dialog
+    override fun onDismiss(dialog: DialogInterface?) {
+        super.onDismiss(dialog)
+        listener?.onDismiss(null)
     }
-
 }

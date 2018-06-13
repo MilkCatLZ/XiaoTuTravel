@@ -19,6 +19,7 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentVerifyUserBinding
+import shy.car.sdk.travel.user.data.RefreshUserInfo
 import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
 
 
@@ -30,6 +31,7 @@ class UserVerifyFragment : XTBaseFragment(),
         UserVerifyPresenter.SubmitListener,
         DialogInterface.OnDismissListener {
     override fun onDismiss(dialog: DialogInterface?) {
+        eventBusDefault.post(RefreshUserInfo())
         finish()
     }
 

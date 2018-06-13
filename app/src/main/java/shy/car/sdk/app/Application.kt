@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.app.BaseApplication
+import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
 import com.base.location.Location
 import com.base.util.SPCache
@@ -32,6 +33,7 @@ import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
+import shy.car.sdk.travel.user.data.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 
 class Application : BaseApplication() {
@@ -148,12 +150,29 @@ class Application : BaseApplication() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(success: LoginSuccess) {
-        if (postcard != null && callback != null) {
-            callback?.onContinue(postcard)
-            postcard = null
-            callback = null
-        }
-        User.saveUserState(this)
+        ProgressDialog.showLoadingView(activityList[0])
+        if (User.instance.login)
+            User.instance.getUserDetail(this, object : User.OnGetUserDetailSuccess {
+                override fun onError() {
+                    ProgressDialog.hideLoadingView(activityList[0])
+                }
+
+                override fun onSuccess() {
+                    ProgressDialog.hideLoadingView(activityList[0])
+                    if (postcard != null && callback != null) {
+                        callback?.onContinue(postcard)
+                        postcard = null
+                        callback = null
+                    }
+                }
+            })
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRefreshUserInfo(refreshUserInfo: RefreshUserInfo?) {
+        if (User.instance.login)
+            User.instance.getUserDetail(this)
     }
 
     fun changeCurrentLocation(l: Location) {
@@ -162,6 +181,11 @@ class Application : BaseApplication() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun tokenOutDate(oudate: LoginOutOfDateException) {
+        if (activityList.size >= 2)
+            for (i in activityList.size - 1 downTo 1) {
+                activityList[i].finish()
+                activityList.removeAt(i)
+            }
         logout()
     }
 

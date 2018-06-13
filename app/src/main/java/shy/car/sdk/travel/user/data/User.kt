@@ -6,7 +6,13 @@ import com.base.util.AesUtil
 import com.base.util.SPCache
 import com.base.util.StringUtils
 import com.google.gson.Gson
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.BR
+import shy.car.sdk.app.net.ApiManager
 
 
 /**
@@ -15,7 +21,12 @@ import shy.car.sdk.BR
  */
 class User private constructor() : UserBase() {
 
-    fun copy(detail:UserDetailCache){
+    interface OnGetUserDetailSuccess {
+        fun onSuccess()
+        fun onError()
+    }
+
+    fun copy(detail: UserDetailCache) {
         instance.phone = detail.phone
         instance.name = detail.name
         instance.avatar = detail.avatar
@@ -28,6 +39,32 @@ class User private constructor() : UserBase() {
         instance.couponNum = detail.couponNum
         instance.rank = detail.rank
         instance.rankText = detail.rankText
+    }
+
+    fun getUserDetail(context: Context, listener: OnGetUserDetailSuccess? = null) {
+
+        ApiManager.getInstance()
+                .api.gerUserDetail()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<UserDetailCache> {
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(result: UserDetailCache) {
+                        copy(result)
+                        saveUserState(context)
+                        listener?.onSuccess()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        listener?.onError()
+                    }
+                })
     }
 
     companion object {
@@ -86,7 +123,7 @@ class User private constructor() : UserBase() {
             val user = User()
             var uJson: String? = null
             try {
-                uJson =  Gson().toJson(user)
+                uJson = Gson().toJson(user)
                 SPCache.saveObject(context, UserKey, uJson)
                 copyUser(user)
                 User.instance.notifyChange()

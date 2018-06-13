@@ -15,6 +15,12 @@
         <variable
             name="presenter"
             type="shy.car.sdk.travel.user.presenter.UserVerifyPresenter" />
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User" />
+
+        <import type="shy.car.sdk.travel.user.data.UserState.UserIdentityAuth"/>
     </data>
 
     <ScrollView
@@ -60,6 +66,7 @@
                         <EditText
                             style="@style/style_ww.text_14_333.verify_user_edt"
                             android:drawableStart="@drawable/icon_id_per"
+                            android:enabled="@{user.identityAuth==UserIdentityAuth.NoIdentity}"
                             android:hint="请输入真是姓名"
                             android:text="@={presenter.name}" />
                     </LinearLayout>
@@ -131,7 +138,7 @@
                             android:layout_height="match_parent"
                             android:background="#66000000"
                             android:gravity="center"
-                            android:visibility="gone">
+                            android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -174,7 +181,7 @@
                             android:layout_height="match_parent"
                             android:background="#66000000"
                             android:gravity="center"
-                            android:visibility="gone">
+                            android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -236,7 +243,7 @@
                             android:layout_height="match_parent"
                             android:background="#66000000"
                             android:gravity="center"
-                            android:visibility="gone">
+                            android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -262,6 +269,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/back_button_main_green_clickable_corner_2dp"
+                android:enabled="@{user.identityAuth==UserIdentityAuth.NoIdentity}"
                 android:gravity="center"
                 android:onClick="@{()->fragment.onSubmitClick()}"
                 android:text="提交认证"

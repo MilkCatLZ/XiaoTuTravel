@@ -45,23 +45,7 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                 .api.login(phone.get()!!, verify.get()!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext({
-                    if (isLoginSuccess(it)) {
-                        copyLoginInfo(it)
-                    } else {
-                        disposable?.dispose()
-                        listener?.loginFailed(null)
-                    }
-
-                })
-
-                .flatMap {
-                    ApiManager.getInstance()
-                            .api.gerUserDetail()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                }
-                .subscribe(object : Observer<UserDetailCache> {
+                .subscribe(object : Observer<JsonObject> {
                     override fun onComplete() {
                     }
 
@@ -69,49 +53,21 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
                         disposable = d
                     }
 
-                    override fun onNext(result: UserDetailCache) {
-                        User.instance.copy(result)
-                        saveLoginState()
-                        savePhoneNumCache()
-                        listener?.loginSuccess()
+                    override fun onNext(result: JsonObject) {
+                        if (isLoginSuccess(result)) {
+                            copyLoginInfo(result)
+                            savePhoneNumCache()
+                            listener?.loginSuccess()
+                        } else {
+                            listener?.loginFailed(null)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
-                        manageVerifyError(e)
                         listener?.loginFailed(e)
+                        manageVerifyError(e)
                     }
                 })
-
-
-//        var observer = ApiManager.getInstance()
-//                .api.login(phone.get()!!, verify.get()!!)
-//
-//
-//
-//        ApiManager.getInstance()
-//                .toSubscribe(observer, object : Observer<String> {
-//                    override fun onComplete() {
-//                    }
-//
-//                    override fun onSubscribe(d: Disposable) {
-//                        disposable = d
-//                    }
-//
-//                    override fun onNext(result: String) {
-//                        if (isLoginSuccess(result)) {
-//                            saveLoginState(result)
-//                            savePhoneNumCache()
-//                            listener?.loginSuccess()
-//                        } else {
-//                            listener?.loginFailed(null)
-//                        }
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                        listener?.loginFailed(e)
-//                    }
-//                })
-
     }
 
     private fun copyLoginInfo(result: JsonObject) {

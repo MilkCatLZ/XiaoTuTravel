@@ -38,7 +38,11 @@ import java.util.concurrent.TimeUnit
  * 首页
  */
 @Route(path = "/app/homeActivity")
-class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySelectFragment.CitySelectListener, XTBaseActivity(), MainNearCarListFragment.CancelListener {
+class MainActivity : NearCarOpenListener,
+        MapLocationRefreshListener,
+        MainCitySelectFragment.CitySelectListener,
+        XTBaseActivity(),
+        MainNearCarListFragment.CancelListener {
     override fun onCitySelected(location: CurrentLocation) {
         isCitySelectVisible.set(false)
         app.location = location.copy()
@@ -70,7 +74,7 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
     lateinit var binding: ActivityMainBinding
 
     private val carRentFragment = ARouter.getInstance().build(RouteMap.CarRent).navigation() as CarRentFragment
-//    private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
+    //    private val orderTakeFragment = ARouter.getInstance().build(RouteMap.OrderTake).navigation() as Fragment
 //    private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
     private val deliveryFragment = DeliveryFragment()
     var citySelectFragment = MainCitySelectFragment()
@@ -221,6 +225,6 @@ class MainActivity : NearCarOpenListener, MapLocationRefreshListener, MainCitySe
                 }
             }
         }
-
     }
+
 }

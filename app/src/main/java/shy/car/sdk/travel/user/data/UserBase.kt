@@ -120,7 +120,7 @@ open class UserBase : BaseObservable() {
         }
 
     fun isIdentityAuth(): Boolean {
-        return identityAuth == 2
+        return identityAuth == UserState.UserIdentityAuth.Identited
     }
 
     /**

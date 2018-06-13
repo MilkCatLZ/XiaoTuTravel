@@ -16,6 +16,7 @@
         <variable
             name="user"
             type="shy.car.sdk.travel.user.data.User" />
+        <import type="shy.car.sdk.travel.user.data.UserState.UserIdentityAuth"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -50,7 +51,7 @@
             android:drawableStart="@drawable/icon_identy_selector"
             android:enabled="@{user.isIdentityAuth()}"
             android:gravity="center"
-            android:text="@{user.isIdentityAuth()?@string/str_already_verify:@string/str_no_verify}"
+            android:text="@{user.identityAuth==UserIdentityAuth.Identiting?@string/str_verifing:user.identityAuth==UserIdentityAuth.Identited?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
             android:textSize="@dimen/text_second_primary_12dp"
             android:visibleOrGone="@{user.login}"
