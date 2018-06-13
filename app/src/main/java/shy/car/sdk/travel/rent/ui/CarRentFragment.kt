@@ -27,7 +27,6 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.data.LoginSuccess
-import shy.car.sdk.app.eventbus.RefreshNearCarList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
@@ -106,7 +105,6 @@ class CarRentFragment : XTBaseFragment() {
         refreshLocation()
         //通知 shy.car.sdk.travel.main.ui.MainNearCarListFragment中 刷新列表
         register(this)
-        eventBusDefault.postSticky(RefreshNearCarList())
     }
 
     lateinit var bitmap: BitmapDescriptor

@@ -5,6 +5,7 @@ import android.databinding.Bindable
 import com.amap.api.services.core.PoiItem
 import com.android.databinding.library.baseAdapters.BR
 import com.base.location.Location
+import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
@@ -15,7 +16,7 @@ class CurrentLocation : BaseObservable, IndexableEntity {
         this.cityName = cityName
         this.cityCode = cityCode
     }
-
+    @SerializedName("name")
     @get:Bindable
     var cityName = ""
         set(value) {
@@ -23,6 +24,7 @@ class CurrentLocation : BaseObservable, IndexableEntity {
             pinyin = PinyinUtil.getPingYin(field)
             notifyPropertyChanged(BR.cityName)
         }
+    @SerializedName("id")
     @get:Bindable
     var cityCode = ""
         set(value) {

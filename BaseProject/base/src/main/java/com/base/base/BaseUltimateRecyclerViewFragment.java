@@ -136,7 +136,7 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
             }
             refresh();
         } catch (Exception e) {
-//            e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

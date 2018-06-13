@@ -28,12 +28,12 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     var pageIndex = 1
 
     init {
-        val list = ArrayList<NearCarList>()
-        for (i in 1..9) {
-            list.add(NearCarList())
-        }
-
-        adapter.setItems(list, 1)
+//        val list = ArrayList<NearCarList>()
+//        for (i in 1..9) {
+//            list.add(NearCarList())
+//        }
+//
+//        adapter.setItems(list, 1)
     }
 
     fun hasMore(): Boolean {
@@ -53,25 +53,31 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     fun getNearList() {
 
         disposable?.dispose()
-        ApiManager.getInstance().api.getNearList(app.location.lat.toString(), app.location.lng.toString(), keyWord, pageIndex, pageSize)
-                .subscribe(object : Observer<ArrayList<NearCarList>> {
-                    override fun onComplete() {
+        val observable = ApiManager.getInstance()
+                .api.getNearList(app.location.cityCode,app.location.lat.toString(), app.location.lng.toString(),  (pageIndex - 1) * pageSize, pageSize)
+        val observer = object : Observer<ArrayList<NearCarList>> {
+            override fun onComplete() {
 
-                    }
+            }
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
 
-                    override fun onNext(t: ArrayList<NearCarList>) {
-                        EventBus.getDefault()
-                                .post(t)
-                    }
+            override fun onNext(t: ArrayList<NearCarList>) {
+                EventBus.getDefault()
+                        .post(t)
+                adapter.setItems(t, 1)
+                callBack.getListSuccess(t)
+            }
 
-                    override fun onError(e: Throwable) {
-                        callBack.onError(e)
-                    }
-                })
+            override fun onError(e: Throwable) {
+                callBack.onError(e)
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun getTotal(): Int {

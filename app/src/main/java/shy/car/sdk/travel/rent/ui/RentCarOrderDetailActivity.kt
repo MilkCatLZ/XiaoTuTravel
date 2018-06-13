@@ -8,7 +8,7 @@ import shy.car.sdk.app.route.RouteMap
 
 /**
  * create by lz at 2018/06/05
- * 找车取车
+ * 租车详情
  */
 @Route(path=RouteMap.RentCarDetail)
 class RentCarOrderDetailActivity:XTBaseActivity() {

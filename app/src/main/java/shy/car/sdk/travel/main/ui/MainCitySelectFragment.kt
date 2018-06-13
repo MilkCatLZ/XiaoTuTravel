@@ -13,7 +13,6 @@ import com.amap.api.location.AMapLocation
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
-import kotlinx.android.synthetic.main.layout_city_select.*
 import me.yokeyword.indexablerv.IndexableLayout
 import me.yokeyword.indexablerv.SimpleHeaderAdapter
 import shy.car.sdk.R
@@ -69,7 +68,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     private var searchEditText: TextView? = null
 
     private fun initSearch() {
-        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -99,10 +98,9 @@ class MainCitySelectFragment : XTBaseFragment() {
 
 
         try {
-            searchEditText = search_view.findViewById<TextView>(R.id.search_src_text)
+            searchEditText = binding.searchView.findViewById<TextView>(R.id.search_src_text)
             searchEditText?.setTextColor(resources.getColor(R.color.main_color_green))//字体颜色
 
-//            textView.textSize = resources.getDimensionPixelOffset(R.dimen.text_primary_14dp).toFloat()//字体、提示字体大小
             searchEditText?.textSize = 14f//字体、提示字体大小
             searchEditText?.setHintTextColor(resources.getColor(R.color.text_third_primary_999999))//提示字体颜色
         } catch (e: Exception) {
@@ -117,7 +115,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     private fun initCityList() {
         activity?.let {
             locationPresenter = LocationPresenter(it, object : LocationPresenter.CallBack {
-                override fun getCitySuccess(list: java.util.ArrayList<CurrentLocation>) {
+                override fun getCitySuccess(list: List<CurrentLocation>) {
                     //添加数据
                     addCityInfo(list)
                 }
@@ -126,12 +124,12 @@ class MainCitySelectFragment : XTBaseFragment() {
         }
     }
 
-    private fun addCityInfo(list: java.util.ArrayList<CurrentLocation>) {
+    private fun addCityInfo(list: List<CurrentLocation>) {
         //添加城市列表
         activity?.let {
-            indexable_layout.setLayoutManager(LinearLayoutManager(it))
+            binding.indexableLayout.setLayoutManager(LinearLayoutManager(it))
             val adapter = CityIndexAdapter(it)
-            indexable_layout.setAdapter(adapter)
+            binding.indexableLayout.setAdapter(adapter)
             adapter.setDatas(list)
             adapter.setOnItemContentClickListener { _, _, _, entity ->
                 //                ToastManager.showShortToast(it, entity.cityName)
@@ -146,9 +144,9 @@ class MainCitySelectFragment : XTBaseFragment() {
 
             //添加头部
             val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)
-            indexable_layout.addHeaderAdapter(headerAdapter)
+            binding.indexableLayout.addHeaderAdapter(headerAdapter)
 
-            indexable_layout.setCompareMode(IndexableLayout.MODE_FAST)
+            binding.indexableLayout.setCompareMode(IndexableLayout.MODE_FAST)
             var filterList = ArrayList<CurrentLocation>()
             filterList.addAll(list)
             filterList.addAll(hotCity)
@@ -157,10 +155,6 @@ class MainCitySelectFragment : XTBaseFragment() {
         }
 
 
-    }
-
-    private fun getCityDetail(cityName: String?): CurrentLocation? {
-        return currentCity
     }
 
     /**
@@ -174,10 +168,6 @@ class MainCitySelectFragment : XTBaseFragment() {
                         currentCity.copy(location)
                     }
                 })
-    }
-
-    private fun getCode(location: CurrentLocation): String {
-        return ""
     }
 
     fun onCitySelected() {

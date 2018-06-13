@@ -74,8 +74,8 @@ interface ApiInterface {
      * 获取城市列表
      * JsonString：{"phone":"","password":""}
      */
-    @GET("xt/city")
-    fun getCityList(): Observable<ArrayList<CurrentLocation>>
+    @GET("cities")
+    fun getCityList(): Observable<List<CurrentLocation>>
 
     /**
      * 获取接单列表
@@ -133,12 +133,14 @@ interface ApiInterface {
     /**
      * 附近车辆列表
      */
-    @GET("xt/near_List")
-    fun getNearList(@Query(ParamsConstant.Lat) lat: String,
+    @GET("cities/{city_id}/networks")
+    fun getNearList(@Path(ParamsConstant.CityID) cityIDs: String,
+                    @Query(ParamsConstant.Lat) lat: String,
                     @Query(ParamsConstant.Lng) lng: String,
-                    @Query(ParamsConstant.KeyWord) keyWord: String,
-                    @Query(ParamsConstant.PageIndex) pageIndex: Int,
-                    @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<NearCarList>>
+                    @Query(ParamsConstant.Offset) offset: Int,
+                    @Query(ParamsConstant.Limit) pageSize: Int,
+                    @Query(ParamsConstant.CityID) cityID: String = cityIDs
+    ): Observable<ArrayList<NearCarList>>
 
     /**
      * 附近车辆列表

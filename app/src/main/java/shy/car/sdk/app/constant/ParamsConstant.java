@@ -28,4 +28,5 @@ public class ParamsConstant {
     public static final String HoldIDCardImage = "hold_idcard_photo";
     public static final String Offset = "offset";
     public static final String Limit = "limit";
+    public static final String CityID = "city_id";
 }
