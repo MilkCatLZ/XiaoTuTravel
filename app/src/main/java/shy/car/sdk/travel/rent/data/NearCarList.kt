@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
+/**
+ * 车辆信息
+ */
 class NearCarList : BaseObservable(), IndexableEntity {
     override fun setFieldIndexBy(indexField: String?) {
         this.address = indexField!!
