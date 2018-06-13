@@ -10,6 +10,7 @@ import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.pay.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.NearCarList
@@ -170,5 +171,12 @@ interface ApiInterface {
      */
     @GET("users/bill")
     fun getRemainDetailList(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<RemainList>>
+
+    /**
+     * 获取支付方式
+     * type：1充值2个人中心
+     */
+    @GET("users/bill")
+    fun getPayMethod(@Query("type") type: Int): Observable<List<PayMethod>>
 
 }

@@ -1,7 +1,6 @@
 package shy.car.sdk.travel.pay.data
 
 import android.content.Context
-import android.databinding.ObservableInt
 import shy.car.sdk.app.presenter.BasePresenter
 
 /**
@@ -16,5 +15,5 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
     /**
      *
      */
-    var payMethod = ObservableInt(0)
+    var payMethod: PayMethod? = null
 }

@@ -12,16 +12,17 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentMoneyVerifyPayBinding
+import shy.car.sdk.travel.pay.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyPayPresenter
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
-import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.user.data.User
 
 /**
  * create by LZ at 2018/05/21
  * 支付保证金
  */
-class PromiseMoneyPayFragment : XTBaseFragment(), PayMethodSelectDialog.onPayClick {
+class PromiseMoneyPayFragment : XTBaseFragment(), PayMethodSelectDialog.OnPayClick {
 
     lateinit var moneyVerifyPayPresenter: PromiseMoneyPayPresenter
     lateinit var binding: FragmentMoneyVerifyPayBinding
@@ -29,13 +30,10 @@ class PromiseMoneyPayFragment : XTBaseFragment(), PayMethodSelectDialog.onPayCli
     var carSelect = ObservableField<CarSelectInfo>()
 
 
-    override fun onPaySelect(paytMethod: Int) {
-        when (paytMethod) {
-            PayMethodSelectDialog.WeChatPay -> payName.set("微信支付")
-            PayMethodSelectDialog.AliPay -> payName.set("支付宝")
-            else -> payName.set("请选择支付方式")
-        }
-        moneyVerifyPayPresenter?.payMethod.set(paytMethod)
+    override fun onPaySelect(paytMethod: PayMethod) {
+        payName.set(paytMethod.name)
+        payName.set("请选择支付方式")
+        moneyVerifyPayPresenter.payMethod = paytMethod
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +56,8 @@ class PromiseMoneyPayFragment : XTBaseFragment(), PayMethodSelectDialog.onPayCli
     var dialog: PayMethodSelectDialog? = null
     fun onSelectPayClick() {
         if (dialog == null) {
-            dialog = ARouter.getInstance().build(RouteMap.PaySelect).navigation() as PayMethodSelectDialog
+            //2:充值的可用支付方式
+            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt("type", 2).navigation() as PayMethodSelectDialog
             dialog?.listener = this
         }
         dialog?.show(childFragmentManager, "dialog_pay_method_select")
