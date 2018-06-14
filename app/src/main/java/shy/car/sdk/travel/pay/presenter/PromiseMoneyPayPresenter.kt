@@ -64,7 +64,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.createDeposits(User.instance.phone, carSelect.get()?.id!!, payMethod?.id.toString())
+                .api.createDeposits(User.instance.phone, carSelect.get()?.id!!, payMethod?.id.toString(),"")
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

@@ -33,4 +33,5 @@ public class ParamsConstant {
     public static final String NetWorkID = "network_id";
     public static final String CarModelID = "car_model_id";
     public static final String PaymentID = "payment";
+    public static final String Amount = "amount";
 }

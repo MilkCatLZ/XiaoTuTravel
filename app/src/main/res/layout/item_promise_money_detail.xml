@@ -9,8 +9,8 @@
             type="com.base.util.StringUtils" />
 
         <variable
-            name="message"
-            type="shy.car.sdk.travel.message.data.MessageList" />
+            name="detail"
+            type="shy.car.sdk.travel.pay.data.PromiseMoneyDetail" />
 
     </data>
 
@@ -35,14 +35,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="缴纳保证金"
+                android:text="@{detail.txt}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017-12-12"
+                android:text="@{detail.date}"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_second_primary_12dp" />
         </LinearLayout>
@@ -64,7 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-7.50"
+                android:text="@{detail.amount}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="15sp" />
         </LinearLayout>

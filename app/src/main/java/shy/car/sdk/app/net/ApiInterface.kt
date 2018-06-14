@@ -150,12 +150,6 @@ interface ApiInterface {
     fun getCarList(): Observable<ArrayList<CarSelectInfo>>
 
     /**
-     * 保证金记录
-     */
-    @GET("xt/promise_detail_list")
-    fun getPromiseMoneyDetailList(): Observable<ArrayList<PromiseMoneyDetail>>
-
-    /**
      * 修改用户头像
      */
     @Multipart
@@ -197,5 +191,8 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("users/deposits")
-    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String, @Field(ParamsConstant.PaymentID) payMethodID: String): Observable<JsonObject>
+    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String): Observable<JsonObject>
+
+    @GET("users/deposits/logs")
+    fun getDepositsLogs(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<PromiseMoneyDetail>>
 }

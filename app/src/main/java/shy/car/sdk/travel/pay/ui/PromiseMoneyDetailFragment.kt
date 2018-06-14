@@ -10,11 +10,8 @@ import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.databinding.FragmentCarSelectBinding
 import shy.car.sdk.databinding.FragmentPromiseMoneyDetailBinding
-import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
-import shy.car.sdk.travel.pay.presenter.CarSelectPresenter
 import shy.car.sdk.travel.pay.presenter.PromiseMoneyDetailPresenter
 
 /**
@@ -36,6 +33,11 @@ class PromiseMoneyDetailFragment : XTBaseUltimateRecyclerViewFragment(), Promise
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_promise_money_detail, null, false)
         binding.presenter = presenter
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onRefresh()
     }
 
     override fun getFragmentName(): String {
@@ -70,7 +72,7 @@ class PromiseMoneyDetailFragment : XTBaseUltimateRecyclerViewFragment(), Promise
         refreshOrLoadMoreComplete()
         checkHasMore()
     }
-    override fun getListSuccess(list: ArrayList<PromiseMoneyDetail>) {
+    override fun getListSuccess(list: List<PromiseMoneyDetail>) {
         refreshOrLoadMoreComplete()
         checkHasMore()
     }

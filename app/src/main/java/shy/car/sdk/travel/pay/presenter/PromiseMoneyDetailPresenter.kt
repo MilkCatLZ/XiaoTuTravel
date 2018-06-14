@@ -4,7 +4,6 @@ import android.content.Context
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
@@ -17,22 +16,22 @@ import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
  */
 class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     interface CallBack {
-        fun getListSuccess(list: ArrayList<PromiseMoneyDetail>)
+        fun getListSuccess(list: List<PromiseMoneyDetail>)
         fun onError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<PromiseMoneyDetail> = DataBindingItemClickAdapter(R.layout.item_promise_money_detail, BR.car, BR.click, {})
-    var pageSize = 50
+    var adapter: DataBindingItemClickAdapter<PromiseMoneyDetail> = DataBindingItemClickAdapter(R.layout.item_promise_money_detail, BR.detail, BR.click, {})
+    var pageSize = 10
     var pageIndex = 1
 
     init {
-        val list = ArrayList<PromiseMoneyDetail>()
-        for (i in 0..9) {
-            var car = PromiseMoneyDetail()
-            list.add(car)
-        }
-
-        adapter.setItems(list, 1)
+//        val list = ArrayList<PromiseMoneyDetail>()
+//        for (i in 0..9) {
+//            var car = PromiseMoneyDetail()
+//            list.add(car)
+//        }
+//
+//        adapter.setItems(list, 1)
     }
 
     fun hasMore(): Boolean {
@@ -41,24 +40,20 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
 
     fun refresh() {
         pageIndex = 1
-        getCarList()
+        getDepositsLogs()
     }
 
     fun nextPage() {
         pageIndex++
-        getCarList()
+        getDepositsLogs()
     }
 
-    private lateinit var lat: String
+    fun getDepositsLogs() {
 
-    private lateinit var lng: String
-    fun getCarList() {
-
-        this.lat = lat
-        this.lng = lng
         disposable?.dispose()
-        ApiManager.getInstance().api.getPromiseMoneyDetailList()
-                .subscribe(object : Observer<ArrayList<PromiseMoneyDetail>> {
+        ApiManager.getInstance()
+                .api.getDepositsLogs((pageIndex - 1) * pageSize, pageSize)
+                .subscribe(object : Observer<List<PromiseMoneyDetail>> {
                     override fun onComplete() {
 
                     }
@@ -67,7 +62,7 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
                         disposable = d
                     }
 
-                    override fun onNext(t: ArrayList<PromiseMoneyDetail>) {
+                    override fun onNext(t: List<PromiseMoneyDetail>) {
                         adapter.setItems(t, pageIndex)
                         callBack.getListSuccess(t)
                     }
