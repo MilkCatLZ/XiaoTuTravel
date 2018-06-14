@@ -10,7 +10,7 @@ import me.yokeyword.indexablerv.PinyinUtil
 /**
  * 车辆信息
  */
-class NearCarList : BaseObservable(), IndexableEntity {
+class NearCarPoint : BaseObservable(), IndexableEntity {
     override fun setFieldIndexBy(indexField: String?) {
         this.address = indexField!!
     }

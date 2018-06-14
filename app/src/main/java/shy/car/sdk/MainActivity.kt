@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
-import shy.car.sdk.app.eventbus.RefreshNearCarList
+import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityMainBinding
 import shy.car.sdk.travel.home.ui.DeliveryFragment
@@ -65,7 +65,7 @@ class MainActivity : NearCarOpenListener,
     override fun onNearCarClick() {
         isNearVisible.set(!isNearVisible.get())
         //刷新附近网点列表
-        eventBusDefault.postSticky(RefreshNearCarList())
+        eventBusDefault.post(RefreshCarPointList())
     }
 
 

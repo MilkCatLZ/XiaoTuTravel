@@ -29,4 +29,6 @@ public class ParamsConstant {
     public static final String Offset = "offset";
     public static final String Limit = "limit";
     public static final String CityID = "city_id";
+    public static final String Type = "type";
+    public static final String NetWorkID = "network_id";
 }

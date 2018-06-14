@@ -10,7 +10,7 @@
 
         <variable
             name="near"
-            type="shy.car.sdk.travel.rent.data.NearCarList"/>
+            type="shy.car.sdk.travel.rent.data.NearCarPoint"/>
 
         <variable
             name="click"

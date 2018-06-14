@@ -1,4 +1,4 @@
 package shy.car.sdk.app.eventbus
 
-class RefreshNearCarList {
+class RefreshCarPointList {
 }

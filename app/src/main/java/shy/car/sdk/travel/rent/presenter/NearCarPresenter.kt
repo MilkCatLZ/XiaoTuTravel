@@ -11,15 +11,15 @@ import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.travel.rent.data.NearCarList
+import shy.car.sdk.travel.rent.data.NearCarPoint
 
 class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     interface CallBack {
-        fun getListSuccess(list: ArrayList<NearCarList>)
+        fun getListSuccess(list: ArrayList<NearCarPoint>)
         fun onError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<NearCarList> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {
+    var adapter: DataBindingItemClickAdapter<NearCarPoint> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {
         ARouter.getInstance()
                 .build(RouteMap.CarPointDetail)
                 .navigation()
@@ -28,9 +28,9 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     var pageIndex = 1
 
     init {
-//        val list = ArrayList<NearCarList>()
+//        val list = ArrayList<NearCarPoint>()
 //        for (i in 1..9) {
-//            list.add(NearCarList())
+//            list.add(NearCarPoint())
 //        }
 //
 //        adapter.setItems(list, 1)
@@ -55,7 +55,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
         disposable?.dispose()
         val observable = ApiManager.getInstance()
                 .api.getNearList(app.location.cityCode,app.location.lat.toString(), app.location.lng.toString(),  (pageIndex - 1) * pageSize, pageSize)
-        val observer = object : Observer<ArrayList<NearCarList>> {
+        val observer = object : Observer<ArrayList<NearCarPoint>> {
             override fun onComplete() {
 
             }
@@ -64,7 +64,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 disposable = d
             }
 
-            override fun onNext(t: ArrayList<NearCarList>) {
+            override fun onNext(t: ArrayList<NearCarPoint>) {
                 EventBus.getDefault()
                         .post(t)
                 adapter.setItems(t, 1)
@@ -73,6 +73,10 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
             override fun onError(e: Throwable) {
                 callBack.onError(e)
+                var list=ArrayList<NearCarPoint>()
+                EventBus.getDefault()
+                        .post(list)
+                callBack.getListSuccess(list)
             }
         }
 
@@ -87,7 +91,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
             adapter.adapterItemCount
     }
 
-    fun setItems(list: List<NearCarList>) {
+    fun setItems(list: List<NearCarPoint>) {
         adapter.setItems(list, pageIndex)
     }
 

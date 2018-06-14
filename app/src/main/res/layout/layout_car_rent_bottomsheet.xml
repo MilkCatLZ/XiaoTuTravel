@@ -5,20 +5,19 @@
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
-            name="p"
-            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.rent.ui.CarRentFragment"/>
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
 
     </data>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -49,7 +48,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_adv"/>
+                    android:src="@drawable/icon_adv" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -64,7 +63,7 @@
                     android:maxLines="2"
                     android:text="身份证和保证金缴纳未完成不能用车，请完成服务认证与缴纳"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="@dimen/text_second_primary_12dp"/>
+                    android:textSize="@dimen/text_second_primary_12dp" />
 
                 <Button
                     style="?android:attr/borderlessButtonStyle"
@@ -73,7 +72,7 @@
                     android:background="@drawable/back_button_main_green_stroke_corner"
                     android:text="点我完成"
                     android:textColor="@color/main_color_green"
-                    android:textSize="@dimen/text_second_primary_12dp"/>
+                    android:textSize="@dimen/text_second_primary_12dp" />
             </LinearLayout>
 
         </com.dd.ShadowLayout>
@@ -89,8 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/back_white_coner_4dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/layout_main_ad"
@@ -102,7 +100,7 @@
                         android:id="@+id/viewPager_car_list"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:adapter="@{p.carListAdapter}"/>
+                        android:adapter="@{presenter.carListAdapter}" />
 
                     <me.relex.circleindicator.CircleIndicator
                         android:id="@+id/circle_indicator"
@@ -110,11 +108,11 @@
                         android:layout_height="20dp"
                         android:layout_alignParentBottom="true"
                         app:ci_drawable="@drawable/indicator_selected"
-                        app:ci_drawable_unselected="@drawable/indicator_unselected"/>
+                        app:ci_drawable_unselected="@drawable/indicator_unselected" />
 
                 </RelativeLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,15 +127,14 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        >
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="距3.5km 步行3小时38分钟"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="13sp"/>
+                            android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -147,7 +144,7 @@
                             android:singleLine="true"
                             android:text="广西南宁市西乡塘区鲁班路83号"
                             android:textColor="@color/text_third_primary_999999"
-                            android:textSize="10sp"/>
+                            android:textSize="10sp" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -164,7 +161,7 @@
                             android:onClick="@{()->fragment.onRentClick()}"
                             android:text="租车"
                             android:textColor="@color/_foreground_material_light"
-                            android:textSize="@dimen/text_primary_14dp"/>
+                            android:textSize="@dimen/text_primary_14dp" />
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -185,8 +182,7 @@
                 android:orientation="vertical"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                >
+                android:paddingTop="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,9 +190,10 @@
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/icon_money"
                     android:gravity="center"
-                    android:text="￥0.2/分钟+￥0.88/公里"
+                    android:text="@{fragment.currentSelectedCarInfo.costText()}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="11sp"/>
+                    android:textSize="11sp"
+                    tools:text="￥0.2/分钟+￥0.88/公里" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -204,59 +201,18 @@
                     android:layout_marginTop="12dp"
                     android:text="以下仅限时长优惠封顶，里程费用另计"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="9sp"/>
+                    android:textSize="9sp" />
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_car_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/icon_night"
-                        android:text="￥88"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20:00-次日8:00"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableStart="@drawable/icon_24"
-                        android:text="￥88"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="24小时整日租"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp"/>
-
-                </LinearLayout>
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_car_discount" />
 
                 <View
                     style="@style/line_horizontal"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -267,16 +223,17 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="最低消费8元"
+                        android:text="@{fragment.currentSelectedCarInfo.cost.lowPrice}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="@dimen/text_second_primary_12dp"/>
+                        android:textSize="@dimen/text_second_primary_12dp"
+                        tools:text="最低消费8元" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="必选"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="@dimen/text_second_primary_12dp"/>
+                        android:textSize="@dimen/text_second_primary_12dp" />
 
                 </LinearLayout>
             </LinearLayout>

@@ -13,10 +13,10 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
-import shy.car.sdk.app.eventbus.RefreshNearCarList
+import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.databinding.LayoutNearCarListBinding
-import shy.car.sdk.travel.rent.data.NearCarList
+import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.NearCarPresenter
 
 /**
@@ -82,7 +82,7 @@ class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
                     checkHasMore()
                 }
 
-                override fun getListSuccess(list: ArrayList<NearCarList>) {
+                override fun getListSuccess(list: ArrayList<NearCarPoint>) {
                     if (binding.recyclerViewNearCarList.adapter == null)
                         binding.recyclerViewNearCarList.setAdapter(nearCarListPresenter.adapter)
                     refreshOrLoadMoreComplete()
@@ -139,12 +139,13 @@ class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    fun onRefreshCarListReceive(refresh: RefreshNearCarList) {
+    fun onRefreshCarListReceive(refresh: RefreshCarPointList) {
+        eventBusDefault.removeStickyEvent(refresh)
         refreshNearCarList()
     }
 
     @Subscribe
-    fun onCarListReceive(list: List<NearCarList>) {
+    fun onCarListReceive(list: List<NearCarPoint>) {
         nearCarListPresenter.setItems(list)
     }
 }

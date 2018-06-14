@@ -13,7 +13,8 @@ import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
-import shy.car.sdk.travel.rent.data.NearCarList
+import shy.car.sdk.travel.rent.data.CarInfo
+import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
@@ -140,7 +141,7 @@ interface ApiInterface {
                     @Query(ParamsConstant.Offset) offset: Int,
                     @Query(ParamsConstant.Limit) pageSize: Int,
                     @Query(ParamsConstant.CityID) cityID: String = cityIDs
-    ): Observable<ArrayList<NearCarList>>
+    ): Observable<ArrayList<NearCarPoint>>
 
     /**
      * 附近车辆列表
@@ -179,6 +180,13 @@ interface ApiInterface {
      * type：1充值2个人中心
      */
     @GET("users/bill")
-    fun getPayMethod(@Query("type") type: Int): Observable<List<PayMethod>>
+    fun getPayMethod(@Query(ParamsConstant.Type) type: Int): Observable<List<PayMethod>>
+
+    /**
+     * 获取支付方式
+     * type：1充值2个人中心
+     */
+    @GET("cars")
+    fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double): Observable<List<CarInfo>>
 
 }

@@ -1,8 +1,10 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -15,26 +17,35 @@ import com.amap.api.maps.model.BitmapDescriptor
 import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MarkerOptions
+import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_car_rent.*
+import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
+import shy.car.sdk.BR
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.data.LoginSuccess
+import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
+import shy.car.sdk.travel.rent.data.CarInfo
+import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -51,8 +62,20 @@ class CarRentFragment : XTBaseFragment() {
 
     var nearCarListener: NearCarOpenListener? = null
     var locationRefreshListener: MapLocationRefreshListener? = null
+    var currentSelectedCarInfo = ObservableField<CarInfo>()
 
-    private val callBack = object : CarRentPresenter.CallBack {}
+
+    private val callBack = object : CarRentPresenter.CallBack {
+        override fun onGetCarError(e: Throwable) {
+
+        }
+
+        override fun onGetCarSuccess(t: List<CarInfo>) {
+            if (t.isNotEmpty())
+                currentSelectedCarInfo.set(t[0])
+        }
+    }
+
     override fun getFragmentName(): CharSequence {
         return "租车"
     }
@@ -71,6 +94,66 @@ class CarRentFragment : XTBaseFragment() {
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         binding.map.onCreate(savedInstanceState)
         return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initMap()
+        refreshLocation()
+        //通知 shy.car.sdk.travel.main.ui.MainNearCarListFragment中 刷新列表
+        register(this)
+
+
+        initData()
+    }
+
+    lateinit var carListViewPager: ViewPager
+    private fun initData() {
+        //通知刷新列表
+        var disposable: Disposable? = null
+        Observable.interval(1, 0, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(object : Observer<Long> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        disposable = d
+                    }
+
+                    override fun onNext(t: Long) {
+                        if (app.location.cityCode.isNotEmpty()) {
+                            eventBusDefault.postSticky(RefreshCarPointList())
+                            disposable?.dispose()
+                        }
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+                })
+
+
+        carListViewPager = binding.root.findViewById(R.id.viewPager_car_list)
+        carListViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                var carInfo = carRentPresenter.carListAdapter.items[position]
+                val adapter = DataBindingAdapter<CarInfo.Discounts>(R.layout.item_car_discount, BR.discount, null)
+                adapter.setItems(carInfo.discounts, 1)
+                recyclerView_car_discount.adapter = adapter
+            }
+        })
     }
 
     private fun setBinding() {
@@ -96,16 +179,9 @@ class CarRentFragment : XTBaseFragment() {
                 view_back.alpha = slideOffset
             }
         })
+
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initMap()
-        addCarLocation()
-        refreshLocation()
-        //通知 shy.car.sdk.travel.main.ui.MainNearCarListFragment中 刷新列表
-        register(this)
-    }
 
     lateinit var bitmap: BitmapDescriptor
     /**
@@ -116,8 +192,25 @@ class CarRentFragment : XTBaseFragment() {
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
+        binding.map.map.setOnMarkerClickListener(
+                {
+                    var carPoint = findCarPoint(it.position)
+                    carRentPresenter.getUsableCarList(carPoint)
+                    true
+                }
+        )
     }
 
+    private fun findCarPoint(position: LatLng): NearCarPoint? {
+        carPointList.map {
+            if (it.lat == position.latitude && it.lng == position.longitude) {
+                return it
+            }
+        }
+        return null
+    }
+
+    //刷新位置
     fun refreshLocation() {
         Observable.create<com.base.location.Location>({
             AmapLocationManager.getInstance()
@@ -132,9 +225,7 @@ class CarRentFragment : XTBaseFragment() {
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    addMarkersToMap(LatLng(it.latitude, it.longitude))
-                })
+                .subscribe()
 
     }
 
@@ -217,26 +308,28 @@ class CarRentFragment : XTBaseFragment() {
         binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
     }
 
-
-    fun addCarLocation() {
-        addMarkersToMap(LatLng(22.817746, 108.36637))
-        addMarkersToMap(LatLng(22.873487, 108.275277))
-        addMarkersToMap(LatLng(22.823181, 108.300745))
+    /**
+     * 添加附近网点
+     */
+    private fun addCarPointToMap(list: List<NearCarPoint>) {
+        binding.map.map.clear()
+        list.map {
+            addMarkersToMap(it)
+        }
     }
 
     /**
      * 在地图上添加marker
      */
-    private fun addMarkersToMap(latlng: LatLng) {
+    private fun addMarkersToMap(point: NearCarPoint) {
 
         var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
-                .snippet("小兔")
-                .snippet("附近可用车${latlng.latitude}辆")
-                .position(latlng)
+                .snippet(point.name)
+                .snippet("附近可用车${point.usableCarsNum}辆")
+                .position(LatLng(point.lat, point.lng))
                 .draggable(false))
         marker.showInfoWindow()
-
     }
 
     fun onNearCarClick() {
@@ -248,6 +341,18 @@ class CarRentFragment : XTBaseFragment() {
         if (isRentClick) {
             isRentClick = false
             checkPromiseMoneyPay()
+        }
+    }
+
+    private var carPointList = ArrayList<NearCarPoint>()
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLoginSuccess(list: List<NearCarPoint>) {
+        if (list.isNotEmpty()) {
+            carRentPresenter.getUsableCarList(list[0])
+            this.carPointList.clear()
+            this.carPointList.addAll(list)
+            addCarPointToMap(list)
         }
     }
 }

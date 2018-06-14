@@ -36,4 +36,5 @@
     <string name="str_user_deposit">已缴纳</string>
     <string name="str_verifing">认证中</string>
     <string name="str_my_remain">余额</string>
+    <string name="str_line"> | </string>
 </resources>
