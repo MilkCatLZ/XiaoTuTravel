@@ -14,7 +14,7 @@ public class ParamsConstant {
     public static final String Lat = "lat";
     public static final String Lng = "lng";
     public static final String KeyWord = "keyword";
-    public static final String UID = "uid";
+    public static final String UID = "user_id";
     public static final String OrderId = "oid";
     public static final String Verify = "verify";
     public static final String UserName = "username";
@@ -31,4 +31,6 @@ public class ParamsConstant {
     public static final String CityID = "city_id";
     public static final String Type = "type";
     public static final String NetWorkID = "network_id";
+    public static final String CarModelID = "car_model_id";
+    public static final String PaymentID = "payment";
 }

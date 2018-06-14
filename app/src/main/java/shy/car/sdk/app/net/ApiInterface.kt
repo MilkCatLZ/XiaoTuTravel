@@ -191,4 +191,11 @@ interface ApiInterface {
 
     @GET("users/deposits")
     fun getPromiseMoney(): Observable<JsonObject>
+
+    /**
+     *
+     */
+    @FormUrlEncoded
+    @POST("users/deposits")
+    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String, @Field(ParamsConstant.PaymentID) payMethodID: String): Observable<JsonObject>
 }
