@@ -18,9 +18,6 @@
 
         <import type="shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog" />
 
-        <variable
-            name="presenter"
-            type="shy.car.sdk.travel.pay.data.PromiseMoneyPayPresenter" />
     </data>
 
 
@@ -67,7 +64,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:text="@{fragment.promiseMoney}"
                     android:textColor="@color/text_primary_333333"
                     android:textSize="45sp" />
 
@@ -129,7 +126,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/back_button_main_green_corner"
                 android:gravity="center"
-                android:text="@{@string/str_pay_promise_pay+util.getPriceText(fragment.carSelect.promiseMoneyPrice)+@string/str_yuan_c}"
+                android:text="@{fragment.btnText}"
                 android:textColor="@color/_foreground_material_light"
                 android:textSize="16sp" />
 

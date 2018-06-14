@@ -20,7 +20,7 @@
     <string name="str_verify_money_already_pay">已缴纳</string>
     <string name="str_verify_money_no_pay">未缴纳</string>
     <string name="str_car_type_select">选择车辆</string>
-    <string name="str_pay_promise_pay">选支付保证金</string>
+    <string name="str_pay_promise_pay">支付保证金</string>
     <string name="str_promise_money_detail">保证金明细</string>
     <string name="str_take_hole_car">整车接单</string>
     <string name="str_verify_user">服务认证</string>
