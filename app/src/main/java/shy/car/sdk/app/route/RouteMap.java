@@ -10,8 +10,10 @@ import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
+import shy.car.sdk.travel.send.data.OrderSendList;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
+import shy.car.sdk.travel.take.data.TakeOrderList;
 import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
@@ -28,7 +30,7 @@ public class RouteMap {
     /**
      * 输入验证码
      * {@link VerifyDialogFragment}
-     * withString("phone", phone).withInt("interval",interval)
+     * withString(ParamsConstant.String1, phone).withInt(ParamsConstant.Int1,interval)
      */
     public static final String Verify = "/user/verify";
     /**
@@ -77,7 +79,7 @@ public class RouteMap {
     @NotNull
     public static final String MessageCenter = "/message/center";
     /**
-     * shy.car.sdk.travel.dialog.DialogMoneyVerify
+     * {@link shy.car.sdk.travel.dialog.DialogMoneyVerify}
      */
     @NotNull
     public static final String Dialog_Money_Verify = "/dialog/money_verify";
@@ -101,7 +103,9 @@ public class RouteMap {
 
     /**
      * 支付方式选择
-     * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
+     * {@link * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog}
+     * withObject(Object1,{@link shy.car.sdk.travel.pay.data.PayMethod})
+     * withInt(Int1,1:充值 2:个人中心)
      */
     @NotNull
     public static final String PaySelect = "/pay/select";
@@ -126,12 +130,14 @@ public class RouteMap {
     /**
      * 接单详情
      * {@link OrderTakeDetailActivity}
+     * withObject(Object1,{@link TakeOrderList})
      */
     @NotNull
     public static final String OrderTakeDetail = "/take/take_order_detail";
     /**
      * 发货详情
      * {@link shy.car.sdk.travel.send.ui.OrderSendDetailActivity}
+     * withObject(Object,{@link OrderSendList})
      */
     @NotNull
     public static final String OrderSendDetail = "/send/send_order_detail";

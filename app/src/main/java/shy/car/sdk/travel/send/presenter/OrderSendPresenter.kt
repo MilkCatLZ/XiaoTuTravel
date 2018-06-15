@@ -8,6 +8,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
@@ -28,7 +29,7 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
         var orderSendList = it.tag as OrderSendList
         ARouter.getInstance()
                 .build(RouteMap.OrderSendDetail)
-                .withObject(RouteMap.OrderSendDetail, orderSendList)
+                .withObject(Object1, orderSendList)
                 .navigation()
     })
     var pageSize = 10

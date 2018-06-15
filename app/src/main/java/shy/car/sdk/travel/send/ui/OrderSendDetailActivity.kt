@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.send.data.OrderSendList
 
@@ -17,7 +18,7 @@ import shy.car.sdk.travel.send.data.OrderSendList
 open class OrderSendDetailActivity : XTBaseActivity() {
 
 
-    @Autowired(name = RouteMap.OrderSendDetail)
+    @Autowired(name = Object1)
     @JvmField
     var sendOrderList: OrderSendList? = null
 

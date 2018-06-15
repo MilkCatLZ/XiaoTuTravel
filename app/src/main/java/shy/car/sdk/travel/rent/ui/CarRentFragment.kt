@@ -31,6 +31,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.BR
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.data.LoginSuccess
@@ -310,6 +311,12 @@ class CarRentFragment : XTBaseFragment() {
                     .build(RouteMap.Dialog_Money_Verify)
                     .navigation() as XTBaseDialogFragment
             dialog.show(fragmentManager, "dialog_money_verify")
+            if (BuildConfig.DEBUG) {
+                ARouter.getInstance()
+                        .build(RouteMap.FindAndRentCar)
+                        .withObject(RouteMap.FindAndRentCar,currentSelectedCarInfo.get())
+                        .navigation()
+            }
         }
     }
 

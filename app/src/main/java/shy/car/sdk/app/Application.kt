@@ -22,6 +22,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BuildConfig
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.LoginOutOfDateException
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.net.ApiInterface
@@ -113,7 +114,9 @@ class Application : BaseApplication() {
 
             override fun loadForRequest(url: HttpUrl?): MutableList<Cookie> {
                 val cookies = ArrayList<Cookie>()
-                val token = SPCache.getObject<String>(this@Application, "set-cookie", String::class.java)
+                val token = SPCache.getObject<String>(this@Application,
+                        "set-cookie",
+                        String::class.java)
                 if (token != null) {
                     var cookie = Cookie.parse(url, token)
                     cookies.add(cookie!!)
@@ -122,7 +125,10 @@ class Application : BaseApplication() {
             }
 
         }
-        ApiManager.init(BuildConfig.Host + "$InterfaceVersion/", interceptor, iterator, ApiInterface::class.java)
+        ApiManager.init(BuildConfig.Host + "$InterfaceVersion/",
+                interceptor,
+                iterator,
+                ApiInterface::class.java)
     }
 
     var postcard: Postcard? = null
@@ -140,7 +146,11 @@ class Application : BaseApplication() {
 
     fun startVerifyDialog(phone: String, interval: Int = 60, listener: onLoginDismiss? = null) {
         try {
-            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).withInt("interval", interval).navigation() as VerifyDialogFragment
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify)
+                    .greenChannel()
+                    .withString(ParamsConstant.String1, phone)
+                    .withInt(ParamsConstant.Int1, interval)
+                    .navigation() as VerifyDialogFragment
             dialogFragment.dismissListener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
         } catch (e: Exception) {

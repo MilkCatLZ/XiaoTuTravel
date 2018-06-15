@@ -23,6 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentVerifyBinding
@@ -61,11 +62,11 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     lateinit var presenter: VerifyPresenter
     var dismissListener: onLoginDismiss? = null
-    @Autowired(name = "phone")
+    @Autowired(name = ParamsConstant.String1)
     @JvmField
     var phone: String = ""
 
-    @Autowired(name = "interval")
+    @Autowired(name = ParamsConstant.Int1)
     @JvmField
     var interval: Int = 60
 

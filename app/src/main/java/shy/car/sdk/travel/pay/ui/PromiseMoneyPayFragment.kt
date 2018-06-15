@@ -11,6 +11,8 @@ import org.greenrobot.eventbus.Subscribe
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.Int1
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentMoneyVerifyPayBinding
 import shy.car.sdk.travel.pay.data.CarSelectInfo
@@ -73,7 +75,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     fun onSelectPayClick() {
 //        if (dialog == null) {
             //2:充值的可用支付方式
-            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt("type", 2).withObject("payMethod", presenter.payMethod).navigation() as PayMethodSelectDialog
+            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 2).withObject(Object1, presenter.payMethod).navigation() as PayMethodSelectDialog
             dialog?.listener = this
 //        }
         dialog?.show(childFragmentManager, "dialog_pay_method_select")

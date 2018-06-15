@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.take.data.TakeOrderList
 
@@ -16,7 +17,7 @@ import shy.car.sdk.travel.take.data.TakeOrderList
 open class OrderTakeDetailActivity : XTBaseActivity() {
 
 
-    @Autowired(name = "takeOrderList")
+    @Autowired(name = Object1)
     @JvmField
     var takeOrderList: TakeOrderList? = null
 
@@ -27,7 +28,7 @@ open class OrderTakeDetailActivity : XTBaseActivity() {
                 .inject(this)
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderTakeDetailFragment)
-                .withObject("takeOrderList", takeOrderList)
+                .withObject(Object1, takeOrderList)
                 .navigation() as OrderTakeDetailFragment
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_order_take_detail, fragment, "fragment_order_take_detail")

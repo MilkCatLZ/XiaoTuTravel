@@ -5,7 +5,23 @@ package shy.car.sdk.app.constant;
  * Created by Syokora on 2016/9/3.
  */
 public class ParamsConstant {
-    
+
+    public static final String Object1 = "object1";
+    public static final String Object2 = "object2";
+    public static final String Object3 = "object3";
+
+    public static final String Int1= "int1";
+    public static final String Int2 = "int2";
+    public static final String Int3 = "int3";
+
+    public static final String String1= "string1";
+    public static final String String2 = "string2";
+    public static final String String3 = "string3";
+
+
+
+
+
     public static final String UUID = "UUID";
     public static final String PASSWORD = "password";
     public static final String Phone = "phone";

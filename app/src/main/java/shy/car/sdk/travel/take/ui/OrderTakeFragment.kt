@@ -13,6 +13,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
@@ -78,7 +79,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         if (User.instance.identityAuth==2) {
             ARouter.getInstance()
                     .build(RouteMap.OrderTakeDetail)
-                    .withObject("takeOrderList", takeOrderList)
+                    .withObject(Object1, takeOrderList)
                     .navigation()
         } else {
             var userVerifyDialogFragment = UserVerifyHintDialogFragment()
@@ -93,7 +94,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         if (User.instance.isIdentityAuth()) {
             ARouter.getInstance()
                     .build(RouteMap.OrderTakeDetail)
-                    .withObject("takeOrderList", takeOrderList)
+                    .withObject(Object1, takeOrderList)
                     .navigation()
         } else {
             var userVerifyDialogFragment = UserVerifyHintDialogFragment()

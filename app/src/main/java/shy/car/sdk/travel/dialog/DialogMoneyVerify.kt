@@ -30,11 +30,6 @@ class DialogMoneyVerify : XTBaseDialogFragment() {
         ARouter.getInstance()
                 .build(RouteMap.MoneyVerify)
                 .navigation()
-        if (BuildConfig.DEBUG) {
-            ARouter.getInstance()
-                    .build(RouteMap.FindAndRentCar)
-                    .navigation()
-        }
         dismiss()
     }
 
