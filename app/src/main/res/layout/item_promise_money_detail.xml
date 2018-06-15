@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="余额:0.00"
+                android:visibility="invisible"
                 android:textColor="@color/text_second_primary_666666"
                 android:textSize="@dimen/text_second_primary_12dp" />
 

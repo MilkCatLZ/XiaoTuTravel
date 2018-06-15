@@ -65,6 +65,10 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     @JvmField
     var phone: String = ""
 
+    @Autowired(name = "interval")
+    @JvmField
+    var interval: Int = 60
+
     lateinit var binding: FragmentVerifyBinding
 
     /**
@@ -229,7 +233,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     private fun startCountDown() {
         d?.dispose()
         binding.txtCountDown.isEnabled = false
-        Observable.intervalRange(1, 60, 0, 1, TimeUnit.SECONDS)
+        Observable.intervalRange(1, interval.toLong(), 0, 1, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { 60 - it }

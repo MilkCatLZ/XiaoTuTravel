@@ -20,8 +20,10 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {
+        var order= it.tag as OrderMineList
         ARouter.getInstance()
                 .build(RouteMap.RentCarDetail)
+                .withString("orderID",order.id)
                 .navigation()
     })
     var pageSize = 10

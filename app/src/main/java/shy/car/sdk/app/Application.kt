@@ -138,9 +138,9 @@ class Application : BaseApplication() {
         }
     }
 
-    fun startVerifyDialog(phone: String, listener: onLoginDismiss? = null) {
+    fun startVerifyDialog(phone: String, interval: Int = 60, listener: onLoginDismiss? = null) {
         try {
-            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).navigation() as VerifyDialogFragment
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify).greenChannel().withString("phone", phone).withInt("interval", interval).navigation() as VerifyDialogFragment
             dialogFragment.dismissListener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
         } catch (e: Exception) {

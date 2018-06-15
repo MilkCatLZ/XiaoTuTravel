@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
+import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
@@ -21,19 +22,21 @@ public class RouteMap {
      */
     public static final String Home = "/app/homeActivity";
     /**
-     * shy.car.sdk.travel.login.ui.LoginDialogFragment
+     * {@link * shy.car.sdk.travel.login.ui.LoginDialogFragment}
      */
     public static final String Login = "/user/login";
     /**
-     * shy.car.sdk.travel.login.ui.VerifyDialogFragment
+     * 输入验证码
+     * {@link VerifyDialogFragment}
+     * withString("phone", phone).withInt("interval",interval)
      */
     public static final String Verify = "/user/verify";
     /**
-     * shy.car.sdk.travel.take.ui.OrderTakeFragment
+     * {@link * shy.car.sdk.travel.take.ui.OrderTakeFragment}
      */
     public static final String OrderTake = "/order/take";
     /**
-     * shy.car.sdk.travel.take.ui.OrderTakeFragment
+     * {@link * shy.car.sdk.travel.take.ui.OrderTakeFragment}
      */
     public static final String OrderSend = "/order/send";
     /**
@@ -44,10 +47,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-    
+
     @NotNull
     public static final String UserDetail = "/user/detail";
-    
+
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -88,13 +91,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-    
+
     /**
      * 租车详情
+     * params:  withString("orderID",orderID)
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-    
+
     /**
      * 支付方式选择
      * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
@@ -191,5 +195,5 @@ public class RouteMap {
      */
     @NotNull
     public static final String RemainDetail = "/remain/detail";
-    
+
 }

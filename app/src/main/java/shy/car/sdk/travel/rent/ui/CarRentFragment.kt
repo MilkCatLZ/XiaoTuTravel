@@ -89,6 +89,7 @@ class CarRentFragment : XTBaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
+
         initLayoutManager()
         initBottomSheet()
         setBinding()
@@ -159,8 +160,9 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     private fun setBinding() {
-        binding.p = carRentPresenter
         binding.fragment = this
+        binding.p = carRentPresenter
+        binding.user = User.instance
     }
 
     private fun initLayoutManager() {
@@ -238,7 +240,7 @@ class CarRentFragment : XTBaseFragment() {
     }
 
 
-    fun addUserLocationMarker(){
+    fun addUserLocationMarker() {
         binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
                 .anchor(0.5f, 1.0f)
                 .snippet(app.location.address)
@@ -362,6 +364,7 @@ class CarRentFragment : XTBaseFragment() {
             addCarPointToMap(list)
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(change: LocationChange) {
         moveCameraAndShowLocation(app.location)

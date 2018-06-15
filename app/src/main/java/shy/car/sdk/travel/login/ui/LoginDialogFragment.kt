@@ -32,9 +32,9 @@ class LoginDialogFragment : XTBaseDialogFragment() {
             }
         }
 
-        override fun onGetVerifySuccess() {
+        override fun onGetVerifySuccess(interval: Int) {
             dismiss(true)
-            app.startVerifyDialog(presenter.phone.get()!!)
+            app.startVerifyDialog(presenter.phone.get()!!, interval)
         }
 
 

@@ -15,6 +15,9 @@
             name="fragment"
             type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
 
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -42,6 +45,7 @@
                 android:background="@drawable/back_white_coner_4dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:visibleOrGone="@{!user.isDeposit()}"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp">
 

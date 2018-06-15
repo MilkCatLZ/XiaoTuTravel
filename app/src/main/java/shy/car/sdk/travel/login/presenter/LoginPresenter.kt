@@ -19,7 +19,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 
 
 interface VerifyListener {
-    fun onGetVerifySuccess()
+    fun onGetVerifySuccess(interval:Int)
     fun onGetVerifyError(e: Throwable)
 }
 
@@ -71,30 +71,31 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
         if (isPhoneCorrect) {
             ProgressDialog.showLoadingView(context)
             d?.dispose()
-            ApiManager.getInstance().toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<JsonObject> {
-                override fun onComplete() {
-                    ProgressDialog.hideLoadingView(context)
-                }
+            ApiManager.getInstance()
+                    .toSubscribe(ApiManager.getInstance().api.gerVerify(phone.get()!!), object : Observer<JsonObject> {
+                        override fun onComplete() {
+                            ProgressDialog.hideLoadingView(context)
+                        }
 
-                override fun onSubscribe(d: Disposable) {
-                    this@LoginPresenter.d = d
-                }
+                        override fun onSubscribe(d: Disposable) {
+                            this@LoginPresenter.d = d
+                        }
 
-                override fun onNext(t: JsonObject) {
-                    if (StringUtils.isNotEmpty(t.toString())) {
-                        ToastManager.showLongToast(context, "验证码发送成功${if (BuildConfig.DEBUG) t.toString() else ""}")
-                        listener?.onGetVerifySuccess()
-                    }
-                }
+                        override fun onNext(t: JsonObject) {
+                            if (StringUtils.isNotEmpty(t.toString())) {
+                                ToastManager.showLongToast(context, "验证码发送成功${if (BuildConfig.DEBUG) t.toString() else ""}")
+                                listener?.onGetVerifySuccess(t.get("interval").asInt)
+                            }
+                        }
 
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                    listener?.onGetVerifyError(e)
-                    ErrorManager.managerError(context,e,"获取验证码失败")
-                    ProgressDialog.hideLoadingView(context)
+                        override fun onError(e: Throwable) {
+                            e.printStackTrace()
+                            listener?.onGetVerifyError(e)
+                            ErrorManager.managerError(context, e, "获取验证码失败")
+                            ProgressDialog.hideLoadingView(context)
 
-                }
-            })
+                        }
+                    })
         } else {
             ToastManager.showLongToast(context, "请输入正确的手机号")
         }

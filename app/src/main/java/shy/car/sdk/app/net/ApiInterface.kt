@@ -15,6 +15,7 @@ import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
+import shy.car.sdk.travel.rent.data.RentOrderDetail
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
@@ -197,4 +198,10 @@ interface ApiInterface {
      */
     @GET("users/deposits/logs")
     fun getDepositsLogs(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<PromiseMoneyDetail>>
+
+    /**
+     * 获取租车订单详情
+     */
+    @GET("users/deposits/logs")
+    fun getRentOrderDetail(@Query(ParamsConstant.OrderId) order_id: String): Observable<RentOrderDetail>
 }
