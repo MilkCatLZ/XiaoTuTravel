@@ -10,16 +10,13 @@ public class ParamsConstant {
     public static final String Object2 = "object2";
     public static final String Object3 = "object3";
 
-    public static final String Int1= "int1";
+    public static final String Int1 = "int1";
     public static final String Int2 = "int2";
     public static final String Int3 = "int3";
 
-    public static final String String1= "string1";
+    public static final String String1 = "string1";
     public static final String String2 = "string2";
     public static final String String3 = "string3";
-
-
-
 
 
     public static final String UUID = "UUID";
@@ -50,4 +47,5 @@ public class ParamsConstant {
     public static final String CarModelID = "car_model_id";
     public static final String PaymentID = "payment";
     public static final String Amount = "amount";
+    public static final String Status = "status";
 }

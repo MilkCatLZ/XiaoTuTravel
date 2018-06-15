@@ -150,6 +150,7 @@ public class RouteMap {
     /**
      * 发货详情fragment
      * {@link shy.car.sdk.travel.send.ui.OrderSendDetailFragment}
+     * withObject(Object1,{@link OrderSendList})
      */
     @NotNull
     public static final String OrderSendDetailFragment = "/send/send_order_detail_fragment";

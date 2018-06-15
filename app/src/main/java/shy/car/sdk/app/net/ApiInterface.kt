@@ -40,7 +40,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("phone/{phone}/captcha")
-    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") name: String = ""): Observable<JsonObject>
+    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") name: String? = null): Observable<JsonObject>
 
 
     /**
@@ -55,7 +55,7 @@ interface ApiInterface {
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */
     @DELETE("oauth/access_token")
-    fun logout(@Query("") params: String = ""): Observable<JsonObject>
+    fun logout(@Query("") params: String? = null): Observable<JsonObject>
 
     /**
      * 获取用户详情
@@ -204,4 +204,14 @@ interface ApiInterface {
      */
     @GET("users/deposits/logs")
     fun getRentOrderDetail(@Query(ParamsConstant.OrderId) order_id: String): Observable<RentOrderDetail>
+
+
+    /**
+     * 获取租车订单详情
+     * status=1时，不用传orderid
+     * 	status:状态（1寻车鸣笛、2开门、3锁车），固定传值为2
+     */
+    @FormUrlEncoded
+    @POST("cars/{carID}")
+    fun ringCar(@Path("carID") carId: String, @Query(ParamsConstant.OrderId) oid: String? = null, @Query(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
 }

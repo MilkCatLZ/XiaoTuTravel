@@ -30,35 +30,35 @@ class CarInfo : BaseObservable() {
 
     @SerializedName("car_id")
     @get:Bindable
-    var carId: String? = null
+    var carId: String = ""
         set(carId) {
             field = carId
             notifyChange(BR.carId)
         }
     @SerializedName("car_model")
     @get:Bindable
-    var carModel: String? = null
+    var carModel: String = ""
         set(carModel) {
             field = carModel
             notifyChange(BR.carModel)
         }
     @SerializedName("car_model_img")
     @get:Bindable
-    var carModelImg: String? = null
+    var carModelImg: String = ""
         set(carModelImg) {
             field = carModelImg
             notifyChange(BR.carModelImg)
         }
     @SerializedName("plate_number")
     @get:Bindable
-    var plateNumber: String? = null
+    var plateNumber: String = ""
         set(plateNumber) {
             field = plateNumber
             notifyChange(BR.plateNumber)
         }
     @SerializedName("color")
     @get:Bindable
-    var color: String? = null
+    var color: String = ""
         set(color) {
             field = color
             notifyChange(BR.color)
@@ -72,7 +72,7 @@ class CarInfo : BaseObservable() {
         }
     @SerializedName("address")
     @get:Bindable
-    var address: String? = null
+    var address: String = ""
         set(address) {
             field = address
             notifyChange(BR.address)
@@ -155,7 +155,7 @@ class CarInfo : BaseObservable() {
             }
         @SerializedName("low_price")
         @get:Bindable
-        var lowPrice: String? = null
+        var lowPrice: String = ""
             set(lowPrice) {
                 field = lowPrice
                 notifyChange(BR.lowPrice)
@@ -198,21 +198,21 @@ class CarInfo : BaseObservable() {
 
         @SerializedName("id")
         @get:Bindable
-        var id: String? = null
+        var id: String = ""
             set(id) {
                 field = id
                 notifyChange(BR.id)
             }
         @SerializedName("txt")
         @get:Bindable
-        var txt: String? = null
+        var txt: String = ""
             set(txt) {
                 field = txt
                 notifyChange(BR.txt)
             }
         @SerializedName("price")
         @get:Bindable
-        var price: String? = null
+        var price: String = ""
             set(price) {
                 field = price
                 notifyChange(BR.price)

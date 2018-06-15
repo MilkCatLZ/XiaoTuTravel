@@ -29,7 +29,7 @@ open class OrderSendDetailActivity : XTBaseActivity() {
                 .inject(this)
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderSendDetailFragment)
-                .withObject(RouteMap.OrderSendDetailFragment, sendOrderList)
+                .withObject(Object1, sendOrderList)
                 .navigation() as Fragment
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_order_send_detail, fragment, "fragment_order_send_detail")

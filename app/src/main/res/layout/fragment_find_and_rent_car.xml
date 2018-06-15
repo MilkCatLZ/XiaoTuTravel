@@ -273,6 +273,7 @@
                             android:drawablePadding="5dp"
                             android:drawableStart="@drawable/icon_whistle"
                             android:text="鸣笛找车"
+                            android:onClick="@{()->fragment.ringCar()}"
                             android:textColor="@color/text_second_primary_666666"
                             />
                     </LinearLayout>

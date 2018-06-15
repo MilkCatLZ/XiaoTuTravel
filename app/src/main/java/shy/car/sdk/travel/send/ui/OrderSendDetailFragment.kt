@@ -12,6 +12,7 @@ import com.base.base.ProgressDialog
 import com.base.util.DialogManager
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderSendDetailBinding
@@ -38,7 +39,7 @@ class OrderSendDetailFragment : XTBaseFragment(), OrderSendDetailPresenter.CallB
 
     }
 
-    @Autowired(name = RouteMap.OrderSendDetailFragment)
+    @Autowired(name = Object1)
     @JvmField
     var sendOrderList: OrderSendList = OrderSendList()
 

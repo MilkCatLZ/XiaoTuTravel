@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.MyLocationStyle
 import com.amap.api.services.core.AMapException
@@ -19,12 +20,18 @@ import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
+import shy.car.sdk.travel.rent.data.CarInfo
+import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
  * create by lz at 2018/06/05
  * 找车取车
  */
-class FindAndRentCarFragment : XTBaseFragment() {
+class FindAndRentCarFragment : XTBaseFragment(),
+        FindAndRentCarPresenter.CallBack {
+    override fun onRingError(e: Throwable) {
+
+    }
 
 
     lateinit var binding: FragmentFindAndRentCarBinding
@@ -32,8 +39,18 @@ class FindAndRentCarFragment : XTBaseFragment() {
     private val mStartPoint = LatLonPoint(22.823181, 108.300745)//起点，108.300745,22.823181
     private val mEndPoint = LatLonPoint(22.873487, 108.275277)//终点，108.275277,22.873487
 
+    lateinit var presenter: FindAndRentCarPresenter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.let {
+            presenter = FindAndRentCarPresenter(it, this)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
+        binding.fragment = this
         binding.mapView.onCreate(savedInstanceState)
         return binding.root
 
@@ -47,6 +64,12 @@ class FindAndRentCarFragment : XTBaseFragment() {
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
+    var carInfo = CarInfo()
+        set(value) {
+            field = value
+            presenter.carInfo = carInfo
+        }
+
     private fun getRoute() {
         val routeSearch = RouteSearch(activity)
 
@@ -155,5 +178,9 @@ class FindAndRentCarFragment : XTBaseFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         binding.mapView.onSaveInstanceState(outState)
+    }
+
+    fun ringCar() {
+        presenter.carRing()
     }
 }

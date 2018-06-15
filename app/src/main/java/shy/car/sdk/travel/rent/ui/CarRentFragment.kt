@@ -20,6 +20,7 @@ import com.amap.api.maps.model.MarkerOptions
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
+import com.base.util.ToastManager
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,6 +35,7 @@ import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
@@ -226,6 +228,7 @@ class CarRentFragment : XTBaseFragment() {
                             addUserLocationMarker()
                             locationRefreshListener?.onLocationChange()
                             it.onNext(location)
+                            eventBusDefault.post(RefreshCarPointList())
                         }
                     })
         })
@@ -312,10 +315,14 @@ class CarRentFragment : XTBaseFragment() {
                     .navigation() as XTBaseDialogFragment
             dialog.show(fragmentManager, "dialog_money_verify")
             if (BuildConfig.DEBUG) {
-                ARouter.getInstance()
-                        .build(RouteMap.FindAndRentCar)
-                        .withObject(RouteMap.FindAndRentCar,currentSelectedCarInfo.get())
-                        .navigation()
+                if (currentSelectedCarInfo.get() != null)
+                    ARouter.getInstance()
+                            .build(RouteMap.FindAndRentCar)
+                            .withObject(Object1, currentSelectedCarInfo.get())
+                            .navigation()
+
+            } else {
+                ToastManager.showShortToast(activity, "当前没有可用车辆")
             }
         }
     }
@@ -369,11 +376,17 @@ class CarRentFragment : XTBaseFragment() {
             this.carPointList.clear()
             this.carPointList.addAll(list)
             addCarPointToMap(list)
+        }else if(BuildConfig.DEBUG){
+            var l=ArrayList<NearCarPoint>()
+            for(i in 0..5){
+
+            }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(change: LocationChange) {
         moveCameraAndShowLocation(app.location)
+        eventBusDefault.post(RefreshCarPointList())
     }
 }

@@ -3,10 +3,12 @@ package shy.car.sdk.travel.rent.presenter
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
+import com.google.gson.Gson
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -54,7 +56,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getNearList(app.location.cityCode,app.location.lat.toString(), app.location.lng.toString(),  (pageIndex - 1) * pageSize, pageSize)
+                .api.getNearList(app.location.cityCode, if (app.location.lat != 0.0) 22.817746.toString() else app.location.lat.toString(), if (app.location.lng != 0.0) 108.36637.toString() else app.location.lng.toString(), (pageIndex - 1) * pageSize, pageSize)
         val observer = object : Observer<ArrayList<NearCarPoint>> {
             override fun onComplete() {
 
@@ -72,10 +74,26 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onError(e: Throwable) {
-                callBack.onError(e)
-                var list=ArrayList<NearCarPoint>()
+                var list = ArrayList<NearCarPoint>()
+                if (BuildConfig.DEBUG) {
+                    var gson = Gson()
+                    var s = "{\n" +
+                            "    \"id\": 1,\n" +
+                            "    \"name\": \"南宁万达时代广场\",\n" +
+                            "    \"address\": \"西乡塘鲁班路10号\",\n" +
+                            "    \"lng\": 108.248593,\n" +
+                            "    \"lat\": 22.921449,\n" +
+                            "    \"usable_cars_num\": 10,\n" +
+                            "    \"usable_parking_place\": 10\n" +
+                            "}"
+                    for (i in 0..5) {
+                        val nearCarPoint = gson.fromJson(s, NearCarPoint::class.java)
+                        list.add(nearCarPoint)
+                    }
+                }
                 EventBus.getDefault()
                         .post(list)
+                callBack.onError(e)
                 callBack.getListSuccess(list)
             }
         }
