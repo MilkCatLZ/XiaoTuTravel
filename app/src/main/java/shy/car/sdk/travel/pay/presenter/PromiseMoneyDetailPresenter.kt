@@ -6,6 +6,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
@@ -51,26 +52,31 @@ class PromiseMoneyDetailPresenter(context: Context, var callBack: CallBack) : Ba
     fun getDepositsLogs() {
 
         disposable?.dispose()
-        ApiManager.getInstance()
+        var observable = ApiManager.getInstance()
                 .api.getDepositsLogs((pageIndex - 1) * pageSize, pageSize)
-                .subscribe(object : Observer<List<PromiseMoneyDetail>> {
-                    override fun onComplete() {
 
-                    }
+        var observer = object : Observer<List<PromiseMoneyDetail>> {
+            override fun onComplete() {
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+            }
 
-                    override fun onNext(t: List<PromiseMoneyDetail>) {
-                        adapter.setItems(t, pageIndex)
-                        callBack.getListSuccess(t)
-                    }
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
 
-                    override fun onError(e: Throwable) {
-                        callBack.onError(e)
-                    }
-                })
+            override fun onNext(t: List<PromiseMoneyDetail>) {
+                adapter.setItems(t, pageIndex)
+                callBack.getListSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+                ErrorManager.managerError(context, e, "")
+                callBack.onError(e)
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun getTotal(): Int {

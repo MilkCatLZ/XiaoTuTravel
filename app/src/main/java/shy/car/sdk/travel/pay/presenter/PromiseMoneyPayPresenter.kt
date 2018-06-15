@@ -3,6 +3,7 @@ package shy.car.sdk.travel.pay.presenter
 import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
+import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -29,6 +30,8 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
     }
 
 
+    private var amount: Double = 0.0
+
     fun getPromiseMoney() {
         val observable = ApiManager.getInstance()
                 .api.getPromiseMoney()
@@ -40,6 +43,9 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
             }
 
             override fun onNext(t: JsonObject) {
+                amount = t.get("amount")
+                        .toString()
+                        .toDouble()
                 callBack.onGetPromiseMoneySuccess(t.get("amount").toString().toDouble())
             }
 
@@ -54,6 +60,17 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
     }
 
     fun createPay() {
+        when {
+            payMethod != null -> {
+                ToastManager.showShortToast(context, "请选择支付方式")
+                return
+            }
+            carSelect.get() != null -> {
+                ToastManager.showShortToast(context, "请选择车辆类型")
+                return
+            }
+        }
+
         if (payMethod != null && carSelect.get() != null) {
             pay()
         }
@@ -64,7 +81,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.createDeposits(User.instance.phone, carSelect.get()?.id!!, payMethod?.id.toString(),"")
+                .api.createDeposits(User.instance.phone, if (User.instance.isDeposit()) "" else carSelect.get()?.id!!, payMethod?.id.toString(), if (amount > 0.0) amount.toString() else "")
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

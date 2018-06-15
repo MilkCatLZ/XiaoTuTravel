@@ -26,8 +26,8 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator;
  * 用于在使用SuperRecyclerView的Fragment统一处理刷新和下一页的逻辑，继承的子fragment就不用重新写这些代码了
  */
 public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicationInterface> extends BaseFragment<App> implements OnRefreshListener, OnLoadMoreListener {
-    
-    
+
+
     public static final int MAX_LOAD_MORE_COUNT = 0;
     //    public static final int MAX = 2;
     private boolean isGettingMore = false;
@@ -55,9 +55,9 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
 
         getUltimateRecyclerView().setItemAnimator(new FadeInAnimator(new OvershootInterpolator(0.5f)));
         getUltimateRecyclerView().getItemAnimator()
-                                 .setAddDuration(350);
+                .setAddDuration(350);
         getUltimateRecyclerView().getItemAnimator()
-                                 .setRemoveDuration(0);
+                .setRemoveDuration(0);
         //加载更多
         getUltimateRecyclerView().addOnScrollListener(new OnScrollListener() {
 
@@ -85,14 +85,17 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
         });
 
     }
+
     LinearLayoutManager linearLayoutManager;
+
     /**
      * 获取LayoutManager，子类需要其他Manager的重写这个方法就可以
+     *
      * @return LayoutManager
      */
     protected LayoutManager getLayoutManager() {
 //        if (linearLayoutManager == null) {
-        return   linearLayoutManager = new LinearLayoutManager(getActivity());
+        return linearLayoutManager = new LinearLayoutManager(getActivity());
 //        }
 //        return linearLayoutManager;
     }
@@ -177,7 +180,7 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
      * 隐藏footer
      */
     protected void disableLoadMore() {
-    
+
         try {
             if (getAdapter() != null) {
                 getAdapter().disableFooter();
@@ -191,7 +194,7 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
      * footer设置成loading状态
      */
     protected void setFooterLoading() {
-    
+
         try {
             if (getAdapter() != null) {
                 if (!getAdapter().isEnableLoadMore()) {
@@ -203,6 +206,7 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
                     getAdapter().setFooterState(FooterState.Loading);
                 }
             }
+            refreshOrLoadMoreComplete();
         } catch (Exception e) {
 //            e.printStackTrace();
         }
@@ -223,16 +227,16 @@ public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicati
                     getAdapter().setFooterState(FooterState.NoMore);
                 }
             }
+            refreshOrLoadMoreComplete();
         } catch (Exception e) {
 //            e.printStackTrace();
         }
     }
 
     /**
-     *
      * @param hasMore true:footer设置为loading状态；false:没有更多
      */
-    protected void refreshFooterState(boolean hasMore){
+    protected void refreshFooterState(boolean hasMore) {
         if (hasMore) {
             setFooterNoMore();
         } else {
