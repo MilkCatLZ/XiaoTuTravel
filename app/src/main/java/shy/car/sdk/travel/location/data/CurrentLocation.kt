@@ -9,13 +9,8 @@ import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
-class CurrentLocation : BaseObservable, IndexableEntity {
+class CurrentLocation : BaseObservable(), IndexableEntity {
 
-    constructor()
-    constructor(cityName: String, cityCode: String) {
-        this.cityName = cityName
-        this.cityCode = cityCode
-    }
     @SerializedName("name")
     @get:Bindable
     var cityName = ""

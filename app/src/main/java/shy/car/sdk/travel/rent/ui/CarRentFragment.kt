@@ -40,6 +40,8 @@ import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
+import shy.car.sdk.travel.location.data.CurrentLocation
+import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -217,7 +219,8 @@ class CarRentFragment : XTBaseFragment() {
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
                             app.changeCurrentLocation(location)
-                            moveCameraAndShowLocation(location)
+                            moveCameraAndShowLocation(app.location)
+                            addUserLocationMarker()
                             locationRefreshListener?.onLocationChange()
                             it.onNext(location)
                         }
@@ -229,15 +232,19 @@ class CarRentFragment : XTBaseFragment() {
 
     }
 
-    private fun moveCameraAndShowLocation(location: com.base.location.Location) {
-        binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.latitude, location.longitude)))
-        binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
-                .anchor(0.5f, 1.0f)
-                .snippet(location.address)
-                .position(LatLng(location.latitude, location.longitude))
-                .draggable(false))
+    private fun moveCameraAndShowLocation(location: CurrentLocation) {
+        binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.lat, location.lng)))
+
     }
 
+
+    fun addUserLocationMarker(){
+        binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
+                .anchor(0.5f, 1.0f)
+                .snippet(app.location.address)
+                .position(LatLng(app.location.lat, app.location.lng))
+                .draggable(false))
+    }
 
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
@@ -354,5 +361,9 @@ class CarRentFragment : XTBaseFragment() {
             this.carPointList.addAll(list)
             addCarPointToMap(list)
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLoginSuccess(change: LocationChange) {
+        moveCameraAndShowLocation(app.location)
     }
 }

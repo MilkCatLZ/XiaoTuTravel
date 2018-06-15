@@ -49,7 +49,8 @@ class PayMethodPresenter(context: Context, var listener: GetPayMethodListener? =
             }
 
             override fun onNext(list: List<PayMethod>) {
-                checkPayID.set(list[0].id)
+                if (checkPayID.get() == 0)
+                    checkPayID.set(list[0].id)
                 adapter.setItems(list, 1)
                 listener?.onGetListSuccess(list)
             }

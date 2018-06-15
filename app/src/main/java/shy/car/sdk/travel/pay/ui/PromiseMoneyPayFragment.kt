@@ -1,6 +1,5 @@
 package shy.car.sdk.travel.pay.ui
 
-import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -47,10 +46,9 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
 
     val promiseMoney = ObservableField<String>("0.00")
     val btnText = ObservableField<String>("支付保证金0.00元")
-    override fun onPaySelect(paytMethod: PayMethod) {
-        payName.set(paytMethod.name)
-        payName.set("请选择支付方式")
-        presenter.payMethod = paytMethod
+    override fun onPaySelect(payMethod: PayMethod) {
+        payName.set(payMethod.name)
+        presenter.payMethod = payMethod
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,11 +71,11 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
 
     var dialog: PayMethodSelectDialog? = null
     fun onSelectPayClick() {
-        if (dialog == null) {
+//        if (dialog == null) {
             //2:充值的可用支付方式
-            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt("type", 2).navigation() as PayMethodSelectDialog
+            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt("type", 2).withObject("payMethod", presenter.payMethod).navigation() as PayMethodSelectDialog
             dialog?.listener = this
-        }
+//        }
         dialog?.show(childFragmentManager, "dialog_pay_method_select")
     }
 

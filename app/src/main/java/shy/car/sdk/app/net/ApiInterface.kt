@@ -173,12 +173,11 @@ interface ApiInterface {
      * 获取支付方式
      * type：1充值2个人中心
      */
-    @GET("users/bill")
+    @GET("users/pay/type")
     fun getPayMethod(@Query(ParamsConstant.Type) type: Int): Observable<List<PayMethod>>
 
     /**
-     * 获取支付方式
-     * type：1充值2个人中心
+     * 附近可用车辆
      */
     @GET("cars")
     fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double): Observable<List<CarInfo>>
@@ -187,12 +186,15 @@ interface ApiInterface {
     fun getPromiseMoney(): Observable<JsonObject>
 
     /**
-     *
+     * 创建充值订单
      */
     @FormUrlEncoded
     @POST("users/deposits")
     fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String): Observable<JsonObject>
 
+    /**
+     * 押金列表
+     */
     @GET("users/deposits/logs")
     fun getDepositsLogs(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<PromiseMoneyDetail>>
 }

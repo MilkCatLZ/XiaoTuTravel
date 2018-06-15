@@ -15,13 +15,15 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogPayMethodSelectBinding
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.presenter.PayMethodPresenter
+import java.lang.reflect.Method
 
 /**
  * create by LZ at 2018/05/21
  * 选择支付方式
  */
 @Route(path = RouteMap.PaySelect)
-class PayMethodSelectDialog : BottomSheetDialogFragment(), PayMethodPresenter.GetPayMethodListener {
+class PayMethodSelectDialog : BottomSheetDialogFragment(),
+        PayMethodPresenter.GetPayMethodListener {
     override fun onPayMethodClick(tag: PayMethod) {
         listener?.onPaySelect(tag)
         dismissAllowingStateLoss()
@@ -49,12 +51,19 @@ class PayMethodSelectDialog : BottomSheetDialogFragment(), PayMethodPresenter.Ge
     @JvmField
     var type = 0
 
+    @Autowired(name = "payMethod")
+    @JvmField
+    var payMethod: PayMethod? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { presenter = PayMethodPresenter(it, this) }
         ARouter.getInstance()
                 .inject(this)
         presenter.type = type
+        if (payMethod != null) {
+            presenter.checkPayID.set(payMethod!!.id)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
