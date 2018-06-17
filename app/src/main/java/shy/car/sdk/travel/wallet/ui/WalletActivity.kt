@@ -6,29 +6,42 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityWalletBinding
+import shy.car.sdk.travel.pay.data.PayMethod
+import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
+import shy.car.sdk.travel.wallet.presenter.WalletPresenter
 
 /**
  * create by LZ at 2018/05/15
  * 钱包
  */
 @Route(path = RouteMap.Wallet)
-class WalletActivity : XTBaseActivity() {
+class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
 
     lateinit var binding: ActivityWalletBinding
 
+    lateinit var presenter: WalletPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        presenter = WalletPresenter(this, this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_wallet)
-        binding.ac=this
+        binding.ac = this
     }
 
     /**
-     * 支付
+     * 支付方式
      */
     fun onPayClick() {
+        var dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 1).navigation() as PayMethodSelectDialog
+        dialog.listener = object : PayMethodSelectDialog.OnPayClick {
+            override fun onPaySelect(payMethod: PayMethod) {
 
+            }
+        }
+        dialog.show(supportFragmentManager, "fragment_pay_method")
     }
 
     /**
@@ -44,7 +57,7 @@ class WalletActivity : XTBaseActivity() {
      * 充值
      */
     fun onChargeMoneyClick() {
-
+        ARouter.getInstance().build(RouteMap.Pay).navigation()
     }
 
     /**

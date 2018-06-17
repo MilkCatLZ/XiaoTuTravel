@@ -30,9 +30,9 @@ import kotlinx.android.synthetic.main.fragment_car_rent.*
 import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import shy.car.sdk.R
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
+import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.Object1
@@ -352,6 +352,7 @@ class CarRentFragment : XTBaseFragment() {
                 .snippet("附近可用车${point.usableCarsNum}辆")
                 .position(LatLng(point.lat, point.lng))
                 .draggable(false))
+        marker.isClickable=true
         marker.showInfoWindow()
     }
 

@@ -37,4 +37,6 @@
     <string name="str_verifing">认证中</string>
     <string name="str_my_remain">余额</string>
     <string name="str_line"> | </string>
+    <string name="str_pay">充值</string>
+    <string name="str_real_price">售价</string>
 </resources>

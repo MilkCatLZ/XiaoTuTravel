@@ -202,5 +202,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String RemainDetail = "/remain/detail";
+    /**
+     * 充值
+     * {@link shy.car.sdk.travel.pay.ui.PayActivity}
+     */
+    @NotNull
+    public static final String Pay = "/pay/charge";
 
 }

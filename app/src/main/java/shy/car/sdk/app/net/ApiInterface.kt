@@ -10,6 +10,7 @@ import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.pay.data.CarSelectInfo
+import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
@@ -191,7 +192,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("users/deposits")
-    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String): Observable<JsonObject>
+    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String? = null, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String): Observable<JsonObject>
 
     /**
      * 押金列表
@@ -214,4 +215,10 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("cars/{carID}")
     fun ringCar(@Path("carID") carId: String, @Query(ParamsConstant.OrderId) oid: String? = null, @Query(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
+
+    /**
+     * 获取充值可用列表
+     */
+    @GET("users/deposits/logs")
+    fun getPayAmountList(): Observable<List<PayAmount>>
 }

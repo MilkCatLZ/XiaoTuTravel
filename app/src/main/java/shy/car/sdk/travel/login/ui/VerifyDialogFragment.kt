@@ -62,13 +62,15 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     lateinit var presenter: VerifyPresenter
     var dismissListener: onLoginDismiss? = null
-    @Autowired(name = ParamsConstant.String1)
+
     @JvmField
+    @Autowired(name = ParamsConstant.String1)
     var phone: String = ""
 
-    @Autowired(name = ParamsConstant.Int1)
+
     @JvmField
-    var interval: Int = 60
+    @Autowired(name = ParamsConstant.Int1)
+    var interval: Int = 118
 
     lateinit var binding: FragmentVerifyBinding
 
@@ -237,7 +239,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         Observable.intervalRange(1, interval.toLong(), 0, 1, TimeUnit.SECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { 60 - it }
+                .map { interval - it }
                 .subscribe(object : Observer<Long> {
                     override fun onComplete() {
                         binding.txtCountDown.text = "点击重发"

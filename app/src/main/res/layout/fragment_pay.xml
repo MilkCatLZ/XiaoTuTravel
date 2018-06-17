@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.pay.presenter.PayPresenter"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.pay.ui.PayFragment"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_pay}"/>
+
+        <View style="@style/style_shadow"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="@color/_foreground_material_light"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="￥125.00"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="45sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="账户余额"
+                        android:textColor="@color/text_third_primary_999999"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/_foreground_material_light"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_pay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:bindAdapter="@{presenter.adapter}"
+                        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        tools:listitem="@layout/item_pay_amount"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="49dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back_stroke_2dp"
+                        android:ellipsize="end"
+                        android:hint="请输入其他充值金额（元）"
+                        android:maxLines="1"
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp"
+                        android:text="@={presenter.amount}"
+                        android:textColor="@color/text_third_primary_999999"
+                        android:textSize="@dimen/text_primary_14dp"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/style_setting_content"
+                    android:layout_marginTop="15dp"
+                    android:onClick="@{()->fragment.selectPayMethod()}">
+
+                    <TextView
+                        style="@style/style_setting_nav_title"
+                        android:text="支付方式"/>
+
+
+                    <TextView
+                        style="@style/style_setting_nav_hint"
+                        android:text="请选择支付方式"/>
+
+                    <ImageView
+                        style="@style/style_setting_nav_arrow"
+                        android:src="@drawable/login_return"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/back_button_main_green_clickable"
+                    android:gravity="center"
+                    android:onClick="@{()->fragment.pay()}"
+                    android:text="立即充值"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_title_16dp"/>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+</layout>
