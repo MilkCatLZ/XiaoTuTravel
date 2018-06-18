@@ -1,12 +1,12 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
+import android.databinding.ObservableDouble
 import android.databinding.ObservableField
 import android.view.View
 import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
-import com.base.util.StringUtils
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
@@ -29,13 +29,14 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     }
 
     var selectedPayAmount = ObservableField<PayAmount>()
-    var amount = ObservableField<String>()
+    var amount = ObservableDouble(0.0)
     var payMethod = ObservableField<PayMethod>()
 
     val adapter = DataBindingItemClickAdapter<PayAmount>(R.layout.item_pay_amount, BR.pay, BR.click, View.OnClickListener {
 
         val payAmount = it.tag as PayAmount
         selectedPayAmount.set(payAmount)
+        amount.set(payAmount.price)
     }, DataBindingAdapter.CallBack { holder, position ->
         holder.binding.setVariable(BR.presenter, this@PayPresenter)
     })
@@ -89,8 +90,8 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         var price = ""
-        price = if (StringUtils.isNotEmpty(amount.get())) {
-            amount.get()!!
+        price = if (amount.get() > 0.0) {
+            amount.get().toString()
         } else {
             selectedPayAmount.get()?.realPrice.toString()
         }

@@ -1,6 +1,8 @@
 package shy.car.sdk.travel.pay.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.Observable
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,13 +33,18 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
 
     lateinit var binding: FragmentPayBinding
     lateinit var presenter: PayPresenter
-
+    val amountText = ObservableField<String>("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
             presenter = PayPresenter(it, this)
         }
+        amountText.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                presenter.amount.set(amountText.get()?.toDouble()!!)
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,10 +66,10 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
                 presenter.payMethod.set(payMethod)
             }
         }
-        dialog.show(childFragmentManager,"fragment_pay")
+        dialog.show(childFragmentManager, "fragment_pay")
     }
 
-    fun pay(){
+    fun pay() {
         presenter.pay()
     }
 }

@@ -24,7 +24,7 @@
                   android:layout_marginStart="9dp"
                   android:layout_marginTop="10dp"
                   android:background="@drawable/back_pay_amount"
-                  android:enabled="@{presenter.selectedPayAmount.price==pay.price}"
+                  android:enabled="@{presenter.amount==0.0?presenter.selectedPayAmount.price==pay.price:presenter.amount==pay.price}"
                   android:gravity="center"
 
         >
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:enabled="@{presenter.selectedPayAmount.price==pay.price}"
+                android:enabled="@{presenter.amount==0.0?presenter.selectedPayAmount.price==pay.price:presenter.amount==pay.price}"
                 android:text="@{LNTextUtil.getPriceText(pay.price)+@string/str_yuan_c}"
                 android:textColor="@drawable/color_333_whie_enable"
                 android:textSize="18sp"
@@ -50,8 +50,7 @@
             <TextView
                 style="@style/style_ww.text_12_999"
                 android:layout_marginTop="5dp"
-
-                android:enabled="@{presenter.selectedPayAmount.price==pay.price}"
+                android:enabled="@{presenter.amount==0.0?presenter.selectedPayAmount.price==pay.price:presenter.amount==pay.price}"
                 android:text="@{@string/str_real_price+LNTextUtil.getPriceText(pay.realPrice)+@string/str_yuan_c}"
                 android:textColor="@drawable/color_999_whie_enable"
                 tools:text="售价99.5元"

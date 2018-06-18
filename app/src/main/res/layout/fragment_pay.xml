@@ -14,6 +14,8 @@
         <variable
             name="fragment"
             type="shy.car.sdk.travel.pay.ui.PayFragment"/>
+
+        <import type="shy.car.sdk.app.LNTextUtil"/>
     </data>
 
 
@@ -92,9 +94,10 @@
                         android:ellipsize="end"
                         android:hint="请输入其他充值金额（元）"
                         android:maxLines="1"
+                        android:inputType="number"
                         android:paddingEnd="15dp"
                         android:paddingStart="15dp"
-                        android:text="@={presenter.amount}"
+                        android:text="@={fragment.amountText}"
                         android:textColor="@color/text_third_primary_999999"
                         android:textSize="@dimen/text_primary_14dp"/>
                 </LinearLayout>
@@ -112,7 +115,7 @@
 
                     <TextView
                         style="@style/style_setting_nav_hint"
-                        android:text="请选择支付方式"/>
+                        android:text="@{LNTextUtil.isEmpty(presenter.payMethod.name)?@string/str_select_pay:presenter.payMethod.name}"/>
 
                     <ImageView
                         style="@style/style_setting_nav_arrow"
