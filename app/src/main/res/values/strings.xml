@@ -40,4 +40,6 @@
     <string name="str_pay">充值</string>
     <string name="str_real_price">售价</string>
     <string name="str_select_pay">请选择支付方式</string>
+    <string name="str_bank_card">银行卡</string>
+    <string name="str_bank_card_add">添加银行卡</string>
 </resources>

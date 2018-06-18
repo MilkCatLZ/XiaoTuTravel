@@ -3,6 +3,7 @@ package shy.car.sdk.app.route;
 
 import org.jetbrains.annotations.NotNull;
 
+import shy.car.sdk.travel.bank.data.BankCard;
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
@@ -49,10 +50,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-
+    
     @NotNull
     public static final String UserDetail = "/user/detail";
-
+    
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -93,14 +94,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-
+    
     /**
      * 租车详情
      * params:  withString("orderID",orderID)
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-
+    
     /**
      * 支付方式选择
      * {@link * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog}
@@ -208,5 +209,19 @@ public class RouteMap {
      */
     @NotNull
     public static final String Pay = "/pay/charge";
-
+    /**
+     * 银行卡
+     * {@link BankCard}
+     * withBoolean(ParamsConstant.Boolean1)
+     */
+    @NotNull
+    public static final String BankCard = "/bank/BankCard";
+    /**
+     * 添加银行卡
+     * {@link BankCard}
+     *
+     */
+    @NotNull
+    public static final String AddBankCard = "/bank/add";
+    
 }

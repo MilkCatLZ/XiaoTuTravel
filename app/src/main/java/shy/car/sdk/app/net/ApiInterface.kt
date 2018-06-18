@@ -6,6 +6,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
+import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
@@ -221,4 +222,10 @@ interface ApiInterface {
      */
     @GET("users/deposits/logs")
     fun getPayAmountList(): Observable<List<PayAmount>>
+
+    /**
+     * 获取银行卡列表
+     */
+    @GET("users/bank_cards")
+    fun getBankCardList(@Query(ParamsConstant.UID) uid: String): Observable<List<BankCard>>
 }

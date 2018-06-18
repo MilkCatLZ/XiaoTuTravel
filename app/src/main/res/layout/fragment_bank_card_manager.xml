@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.bank.ui.BankCarManagerFragment"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.bank.presenter.BankCardManagerPresenter"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp">
+
+            <include
+                layout="@layout/layout_title"
+                app:title="@{@string/str_bank_card}"/>
+
+            <View style="@style/style_shadow"/>
+
+            <com.base.widget.UltimateRecyclerView
+                android:id="@+id/recyclerView_bank_card_manage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_back"
+                android:bindAdapter="@{presenter.adapter}"
+                app:recyclerviewDefaultSwipeColor="@array/google_colors"
+                app:recyclerviewEmptyView="@layout/error_no_record"
+                app:recyclerviewScrollbars="vertical"
+                tools:listitem="@layout/item_bank_card"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/back_dialog_corner_2dp"
+                android:gravity="center"
+                android:onClick="@{()->fragment.addBankCard()}">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_add_black_36dp"
+                    android:tint="@color/text_third_primary_999999"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center"
+
+                    android:text="添加银行卡"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_primary_14dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

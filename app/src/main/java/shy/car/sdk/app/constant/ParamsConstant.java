@@ -17,6 +17,9 @@ public class ParamsConstant {
     public static final String String1 = "string1";
     public static final String String2 = "string2";
     public static final String String3 = "string3";
+    
+    public static final String Boolean1 = "boolean1";
+    
 
 
     public static final String UUID = "UUID";

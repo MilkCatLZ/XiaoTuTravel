@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityWalletBinding
@@ -57,7 +58,9 @@ class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
      * 充值
      */
     fun onChargeMoneyClick() {
-        ARouter.getInstance().build(RouteMap.Pay).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.Pay)
+                .navigation()
     }
 
     /**
@@ -71,7 +74,10 @@ class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
      * 银行卡
      */
     fun onBankCarClick() {
-
+        ARouter.getInstance()
+                .build(RouteMap.BankCard)
+                .withBoolean(ParamsConstant.Boolean1, false)
+                .navigation()
     }
 
     /**
