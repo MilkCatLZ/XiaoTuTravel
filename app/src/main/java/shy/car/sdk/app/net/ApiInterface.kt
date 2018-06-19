@@ -153,7 +153,7 @@ interface ApiInterface {
     /**
      * 附近车辆列表
      */
-    @GET("xt/car_list")
+    @GET("users/deposits/car")
     fun getCarList(): Observable<ArrayList<CarSelectInfo>>
 
     /**

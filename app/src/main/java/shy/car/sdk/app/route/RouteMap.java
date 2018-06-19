@@ -10,7 +10,9 @@ import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
+import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
+import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.data.OrderSendList;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
@@ -223,5 +225,17 @@ public class RouteMap {
      */
     @NotNull
     public static final String AddBankCard = "/bank/add";
+    
+    /**
+     * {@link PromiseMoneyPaySuccessActivity}
+     */
+    @NotNull
+    public static final String PaySuccess = "/pay/success";
+    
+    /**
+     * {@link UnLockCarActivity}
+     */
+    @NotNull
+    public static final String UnLockCar = "/car/unlock";
     
 }

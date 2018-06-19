@@ -171,6 +171,14 @@
             android:name=".travel.bank.ui.AddBankCardActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".travel.pay.ui.PromiseMoneyPaySuccessActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".travel.rent.ui.UnLockCarActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
     </application>
 

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.rent.ui.UnLockCarActivity"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/layout_title"
+                app:title="@{@string/str_rent_car_photo}"/>
+
+            <View style="@style/style_shadow"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="80dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="10dp"
+                android:text="为保证您的权益以免因车损产生争议，请严格按照图例角度拍摄并保证清晰"
+                android:textColor="@color/main_color_red"
+                android:textSize="@dimen/text_second_primary_12dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:onClick="@{()->ac.rightPhotoClick()}"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pho_car_right"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_camera"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:onClick="@{()->ac.leftPhotoClick()}"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pho_car_left"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/icon_camera"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/back_button_main_green_clickable"
+                android:gravity="center"
+                android:text="提交解锁"
+                android:onClick="@{()->ac.submitAndUnLock()}"
+                android:textColor="@color/_foreground_material_light"
+                android:textSize="@dimen/text_title_16dp"/>
+        </LinearLayout>
+    </ScrollView>
+</layout>
