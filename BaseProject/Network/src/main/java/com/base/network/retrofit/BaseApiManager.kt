@@ -1,5 +1,6 @@
 package com.base.net
 
+import com.base.network.retrofit.BaseRetrofitInterface
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

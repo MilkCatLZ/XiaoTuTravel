@@ -138,24 +138,25 @@ class MainCitySelectFragment : XTBaseFragment() {
 
             //----------------------添加热门城市
             val hotCity = ArrayList<CurrentLocation>()
-            var l1=CurrentLocation()
-            l1.cityName="南宁市"
-            l1.cityCode="0771"
-            l1.lng=108.36637
-            l1.lat=22.817746
-            var l2=CurrentLocation()
-            l2.cityName="柳州"
-            l2.cityCode="0772"
-            l2.lng=109.411703
-            l2.lat=24.314617
-            var l3=CurrentLocation()
-            l3.cityName="北海"
-            l3.cityCode="0773"
-            l3.lng=109.119254
-            l3.lat=21.473343
-            hotCity.add(l1)
-            hotCity.add(l2)
-            hotCity.add(l3)
+            hotCity.addAll(list)
+//            var l1=CurrentLocation()
+//            l1.cityName="南宁市"
+//            l1.cityCode="0771"
+//            l1.lng=108.36637
+//            l1.lat=22.817746
+//            var l2=CurrentLocation()
+//            l2.cityName="柳州"
+//            l2.cityCode="0772"
+//            l2.lng=109.411703
+//            l2.lat=24.314617
+//            var l3=CurrentLocation()
+//            l3.cityName="北海"
+//            l3.cityCode="0773"
+//            l3.lng=109.119254
+//            l3.lat=21.473343
+//            hotCity.add(l1)
+//            hotCity.add(l2)
+//            hotCity.add(l3)
 
             //添加头部
             val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)

@@ -4,9 +4,12 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.Response
+import okhttp3.ResponseBody
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.bank.data.BankCard
+import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
@@ -79,7 +82,7 @@ interface ApiInterface {
      * JsonString：{"phone":"","password":""}
      */
     @GET("cities")
-    fun getCityList(): Observable<List<CurrentLocation>>
+    fun getCityList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 1000): Observable<List<CurrentLocation>>
 
     /**
      * 获取接单列表
@@ -228,4 +231,19 @@ interface ApiInterface {
      */
     @GET("users/bank_cards")
     fun getBankCardList(@Query(ParamsConstant.UID) uid: String): Observable<List<BankCard>>
+
+    /**
+     * 获取支持银行列表
+     */
+    @GET("banks")
+    fun getBankTypedList(): Observable<List<BankType>>
+
+    /**
+     * 添加银行卡
+     *
+     */
+    @FormUrlEncoded
+    @POST("users/bank_cards")
+    fun addBankCard(@Query(ParamsConstant.UID) uid: String, @Field(ParamsConstant.BankID) bankID: String, @Field(ParamsConstant.Bank) bank: String, @Field(ParamsConstant.AccountHolder) accountHolder: String, @Field(ParamsConstant.AccountNumber) accountNumber: String, @Field(ParamsConstant.Phone) phone: String, @Field(ParamsConstant.Default) default: String = "1"): Observable<retrofit2.Response<Void>>
+
 }

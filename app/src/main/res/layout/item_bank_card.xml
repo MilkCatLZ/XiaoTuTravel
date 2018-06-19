@@ -5,22 +5,24 @@
 
         <variable
             name="click"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
 
         <variable
             name="bank"
-            type="shy.car.sdk.travel.bank.data.BankCard"/>
+            type="shy.car.sdk.travel.bank.data.BankCard" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="130dp"
-                  android:background="@drawable/back_main_green_botom_coner_2dp_normal"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back_main_green_botom_coner_2dp_normal"
             android:onClick="@{click}"
             android:orientation="horizontal"
             android:paddingStart="24dp"
@@ -28,10 +30,9 @@
             android:tag="@{bank}">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:imageURL="@{bank.logo}"
-                android:src="@drawable/img_upgrade"/>
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:imageURL="@{bank.logo}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{bank.name}"
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -53,15 +54,15 @@
                     android:layout_marginTop="15dp"
                     android:text="储蓄卡"
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:text="@{bank.description}"
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
 
             </LinearLayout>

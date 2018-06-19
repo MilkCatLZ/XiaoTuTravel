@@ -1,6 +1,6 @@
 package shy.car.sdk.app.net
 
-import com.base.net.BaseRetrofitInterface
+import com.base.network.retrofit.BaseRetrofitInterface
 import com.base.util.ToastManager
 import org.greenrobot.eventbus.EventBus
 import org.json.JSONException

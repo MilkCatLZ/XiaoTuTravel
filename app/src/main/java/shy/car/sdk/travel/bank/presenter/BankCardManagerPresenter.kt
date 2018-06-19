@@ -36,7 +36,7 @@ class BankCardManagerPresenter(context: Context, var callBack: CallBack) : BaseP
         }
     })
 
-    private fun getBankCardList() {
+    fun getBankCardList() {
         val observable = ApiManager.getInstance()
                 .api.getBankCardList(User.instance.phone)
 
@@ -75,14 +75,5 @@ class BankCardManagerPresenter(context: Context, var callBack: CallBack) : BaseP
     fun refresh() {
         getBankCardList()
     }
-
-    fun nextPage() {
-        getBankCardList()
-    }
-
-    fun getTotal(): Int {
-        return adapter.adapterItemCount
-    }
-
 
 }

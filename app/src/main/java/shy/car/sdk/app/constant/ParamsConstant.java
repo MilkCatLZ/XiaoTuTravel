@@ -51,4 +51,9 @@ public class ParamsConstant {
     public static final String PaymentID = "payment";
     public static final String Amount = "amount";
     public static final String Status = "status";
+    public static final String BankID = "bank_id";
+    public static final String Bank = "bank";
+    public static final String AccountHolder = "account_holder";
+    public static final String AccountNumber = "account_number";
+    public static final String Default = "default";
 }

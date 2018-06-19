@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="type"
+            type="shy.car.sdk.travel.bank.data.BankType" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:onClick="@{click}"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="8dp"
+            android:tag="@{type}">
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:imageURL="@{type.logo}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@{type.name}"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+    </LinearLayout>
+</layout>
