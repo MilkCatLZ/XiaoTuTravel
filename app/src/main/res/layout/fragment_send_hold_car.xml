@@ -5,28 +5,28 @@
 
         <import
             alias="util"
-            type="shy.car.sdk.app.LNTextUtil"/>
+            type="shy.car.sdk.app.LNTextUtil" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.send.presenter.SendHoleCarPresenter"/>
+            type="shy.car.sdk.travel.send.presenter.SendHoleCarPresenter" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.send.ui.SendHoleCarFragment"/>
+            type="shy.car.sdk.travel.send.ui.SendHoleCarFragment" />
 
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_send_hole_car}"/>
+            app:title="@{@string/str_send_hole_car}" />
 
-        <View style="@style/style_shadow"/>
+        <View style="@style/style_shadow" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="60dp"
                         android:layout_marginRight="60dp"
-                        android:clipChildren="false"/>
+                        android:clipChildren="false" />
 
                 </LinearLayout>
 
@@ -71,7 +71,7 @@
                         android:gravity="center_vertical"
                         android:text="用车时间"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/txt_use_time"
@@ -79,11 +79,10 @@
                         android:layout_width="match_parent"
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
-                        android:hint="输入时间"
-                        />
+                        android:hint="输入时间" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_send_address"
@@ -102,7 +101,7 @@
                         android:gravity="center_vertical"
                         android:text="出发地点"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -111,11 +110,10 @@
                         android:background="@android:color/transparent"
                         android:hint="选择出发地"
                         android:onClick="@{()->fragment.onSelectStartLocationclick()}"
-                        android:text="@{presenter.startLocation.address}"
-                        />
+                        android:text="@{presenter.startLocation.address}" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_arrive_address"
@@ -134,7 +132,7 @@
                         android:gravity="center_vertical"
                         android:text="到达地点"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -143,11 +141,10 @@
                         android:background="@android:color/transparent"
                         android:hint="选择到达地"
                         android:onClick="@{()->fragment.onSelectEndLocationClick()}"
-                        android:text="@{presenter.endLocation.address}"
-                        />
+                        android:text="@{presenter.endLocation.address}" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_goods_type"
@@ -166,7 +163,7 @@
                         android:gravity="center_vertical"
                         android:text="货物类型"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -175,11 +172,10 @@
                         android:background="@android:color/transparent"
                         android:hint="选择货物类型"
                         android:onClick="@{()->fragment.onSelectGoodsTypeClick()}"
-                        android:text="@{presenter.goodsType.goodsTypeName}"
-                        />
+                        android:text="@{presenter.goodsType.goodsTypeName}" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_goods_weight"
@@ -198,7 +194,7 @@
                         android:gravity="center_vertical"
                         android:text="货物重量"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/edt_weight"
@@ -207,13 +203,50 @@
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
                         android:ellipsize="end"
-                        android:hint="输入重量"
+                        android:hint="输入货物重量（单位：kg）"
+                        android:inputType="number"
                         android:maxLines="1"
-                        android:textColorHint="@color/text_third_primary_999999"
-                        />
+                        android:text="@={presenter.weight}"
+                        android:textColorHint="@color/text_third_primary_999999" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+                <View style="@style/line_horizontal" />
+
+
+                <LinearLayout
+                    android:id="@+id/layout_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="18dp"
+                    android:paddingStart="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:drawableStart="@drawable/icon_send_time"
+                        android:gravity="center_vertical"
+                        android:text="货物体积"
+                        android:textColor="#4b4b4b"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/edt_volume"
+                        style="@style/style_ww.text_12_999"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:background="@android:color/transparent"
+                        android:ellipsize="end"
+                        android:hint="输入货物体积（单位：m³）"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="@={presenter.volume}"
+                        android:textColorHint="@color/text_third_primary_999999" />
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_send_momey"
@@ -232,7 +265,7 @@
                         android:gravity="center_vertical"
                         android:text="运费金额"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/edt_price"
@@ -241,14 +274,15 @@
                         android:layout_marginStart="20dp"
                         android:background="@android:color/transparent"
                         android:ellipsize="end"
-                        android:hint="输入金额"
-                        android:inputType="numberDecimal"
+                        android:hint="输入金额（单位：元）"
+                        android:inputType="number"
                         android:maxLines="1"
-                        android:textColorHint="@color/text_third_primary_999999"
-                        />
+                        android:text="@={presenter.price}"
+                        android:textColorHint="@color/text_third_primary_999999" />
                 </LinearLayout>
 
-                <View style="@style/line_horizontal"/>
+
+                <View style="@style/line_horizontal" />
 
                 <LinearLayout
                     android:id="@+id/layout_mark"
@@ -267,7 +301,7 @@
                         android:gravity="center_vertical"
                         android:text="备注信息"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp" />
 
                     <EditText
                         style="@style/style_ww.text_12_999"
@@ -277,6 +311,7 @@
                         android:ellipsize="end"
                         android:hint="装卸/付款方式等"
                         android:maxLines="1"
+                        android:text="@={presenter.remark}"
                         android:textColorHint="@color/text_third_primary_999999"
 
                         />
@@ -294,24 +329,27 @@
                     android:onClick="@{()->fragment.onConfirmClick()}"
                     android:text="确认发布  "
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:paddingBottom="25dp"
                     android:paddingStart="18dp">
 
                     <CheckBox
                         style="@style/style_ww.text_12_999"
                         android:button="@null"
+                        android:checked="@={presenter.agree}"
                         android:drawableStart="@drawable/check_rule"
-                        android:text="确认表示同意"/>
+                        android:text="确认表示同意" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
+                        android:layout_marginStart="5dp"
                         android:text="《小兔出行运单契约条款》"
-                        android:textColor="@color/main_color_red"/>
+                        android:textColor="@color/main_color_red" />
 
                 </LinearLayout>
             </LinearLayout>

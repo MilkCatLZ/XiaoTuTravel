@@ -67,7 +67,7 @@ class SendHoleCarFragment : XTBaseFragment(),
     }
 
     fun onConfirmClick() {
-
+        presenter.submit()
     }
 
     fun onSelectStartLocationclick() {

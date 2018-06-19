@@ -278,7 +278,7 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("users/orders")
     fun postDeliveryOrder(
-            @Field(ParamsConstant.City) carID: String,
+            @Field(ParamsConstant.City) cityID: String,
             @Field(ParamsConstant.ModelID) modelID: String,
             @Field(ParamsConstant.UseCarStart) use_car_at_strart: String,
             @Field(ParamsConstant.UseCarEnd) use_car_at_end: String,
@@ -289,12 +289,12 @@ interface ApiInterface {
             @Field(ParamsConstant.ToLng) to_lng: String,
             @Field(ParamsConstant.ToLat) to_lat: String,
             @Field(ParamsConstant.Type) type: String,
-            @Field(ParamsConstant.FreightType) freight_type: String,
+            @Field(ParamsConstant.FreightType) freight_type: String? = null,
             @Field(ParamsConstant.FreightOther) freight_other: String,
             @Field(ParamsConstant.Freight) freight: String,
             @Field(ParamsConstant.Weight) weight: String,
             @Field(ParamsConstant.Volume) volume: String,
-            @Field(ParamsConstant.Remark) remark: String
+            @Field(ParamsConstant.Remark) remark: String? = null
     ): Observable<JsonObject>
 
 
