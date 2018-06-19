@@ -17,9 +17,8 @@ public class ParamsConstant {
     public static final String String1 = "string1";
     public static final String String2 = "string2";
     public static final String String3 = "string3";
-    
+
     public static final String Boolean1 = "boolean1";
-    
 
 
     public static final String UUID = "UUID";
@@ -45,9 +44,11 @@ public class ParamsConstant {
     public static final String Offset = "offset";
     public static final String Limit = "limit";
     public static final String CityID = "city_id";
+    public static final String City = "city";
     public static final String Type = "type";
     public static final String NetWorkID = "network_id";
     public static final String CarModelID = "car_model_id";
+    public static final String ModelID = "model_id";
     public static final String PaymentID = "payment";
     public static final String Amount = "amount";
     public static final String Status = "status";
@@ -58,4 +59,17 @@ public class ParamsConstant {
     public static final String Default = "default";
     public static final String CarID = "car_id";
     public static final String FreightType = "freight_type";
+    public static final String UseCarStart = "use_car_at_strart";
+    public static final String UseCarEnd = "use_car_at_end";
+    public static final String Remark = "remark";
+    public static final String Volume = "volume";
+    public static final String Weight = "weight";
+    public static final String Freight = "freight";
+    public static final String FreightOther = "freight_other";
+    public static final String ToLat = "to_lat";
+    public static final String ToLng = "to_lng";
+    public static final String ToAddress = "to_address";
+    public static final String FromLat = "from_lat";
+    public static final String FromLng = "from_lng";
+    public static final String FromAddress = "from_address";
 }

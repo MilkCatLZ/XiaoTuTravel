@@ -123,6 +123,7 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
             is Location -> this.location.copy(it)
         }
         binding.mapLocationSelect.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.lat, location.lng)))
+        addMarkersToMap()
     }
 
     /**

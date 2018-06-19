@@ -24,6 +24,8 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
 
 
     var adapter = DataBindingPagerAdapter<CarInfo>(context, R.layout.item_send_hole_car_select, BR.car, null)
+    var startTime: String = ""
+    var endTime: String = ""
 
 
     init {

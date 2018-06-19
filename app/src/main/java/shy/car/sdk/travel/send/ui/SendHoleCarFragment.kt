@@ -20,13 +20,15 @@ import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
 import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
+import java.util.*
 
 
 /**
  * create by LZ at 2018/05/25
  * 整车发货填写
  */
-class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
+class SendHoleCarFragment : XTBaseFragment(),
+        SendHoleCarPresenter.CallBack {
 
     lateinit var binding: FragmentSendHoldCarBinding
     lateinit var presenter: SendHoleCarPresenter
@@ -92,6 +94,13 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
             @SuppressLint("SetTextI18n")
             override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
                 binding.txtUseTime.text = "${date.name}     ${time.name}"
+                if ("全天" == time.name) {
+                    presenter.startTime = date.name + " 00:00:00"
+                    presenter.endTime = "0"
+                } else {
+                    presenter.startTime = date.name + " 18:00:00"
+                    presenter.startTime = date.name + " 23:59:59"
+                }
             }
 
         }
@@ -108,7 +117,7 @@ class SendHoleCarFragment : XTBaseFragment(), SendHoleCarPresenter.CallBack {
 
         }
         goodsDialog.isCancelable
-        goodsDialog.show(childFragmentManager,"dialog_select_goods_type")
+        goodsDialog.show(childFragmentManager, "dialog_select_goods_type")
     }
 
 

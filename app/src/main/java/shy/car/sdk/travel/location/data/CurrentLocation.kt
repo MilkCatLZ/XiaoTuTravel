@@ -113,7 +113,7 @@ class CurrentLocation : BaseObservable(),
         cityName = location.cityName
         lat = location.latLonPoint.latitude
         lng = location.latLonPoint.longitude
-        address = location.snippet
+        address =location.provinceName+location.cityName+location.businessArea+ location.snippet
         district = location.adName
         cityCode = location.cityCode
     }

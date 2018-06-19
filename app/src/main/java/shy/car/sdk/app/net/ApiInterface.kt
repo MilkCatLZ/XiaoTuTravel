@@ -255,4 +255,47 @@ interface ApiInterface {
     @POST("users/orders")
     fun createRentCarOrder(@Field(ParamsConstant.CarID) carID: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Type) type: String = "1"): Observable<JsonObject>
 
+    /**
+     * 创建租车订单
+    city	integer	是	服务城市ID
+    model_id	integer	是	车型（整车发布时必须，同城不填）
+    use_car_at_strart	string	是	用车时段开始
+    use_car_at_end	string	是	用车时段结束（全天传0）
+    from_address	string	是	出发地址
+    from_lng	float	是	出发经度
+    from_lat	float	是	出发纬度
+    to_address	string	是	到达地址
+    to_lng	float	是	达到经度
+    to_lat	float	是	达到纬度
+    type	integer	是	货运类型：1同城小包2整车物流
+    freight_type	integer	是	货物类型
+    freight_other	string	是	货物类型其它添加
+    freight	float	是	运费
+    weight	float	是	重量：单位千克
+    volume	float	是	体积：单位立方
+    remark	string	是	备注
+     */
+    @FormUrlEncoded
+    @POST("users/orders")
+    fun postDeliveryOrder(
+            @Field(ParamsConstant.City) carID: String,
+            @Field(ParamsConstant.ModelID) modelID: String,
+            @Field(ParamsConstant.UseCarStart) use_car_at_strart: String,
+            @Field(ParamsConstant.UseCarEnd) use_car_at_end: String,
+            @Field(ParamsConstant.FromAddress) from_address: String,
+            @Field(ParamsConstant.FromLng) from_lng: String,
+            @Field(ParamsConstant.FromLat) from_lat: String,
+            @Field(ParamsConstant.ToAddress) to_address: String,
+            @Field(ParamsConstant.ToLng) to_lng: String,
+            @Field(ParamsConstant.ToLat) to_lat: String,
+            @Field(ParamsConstant.Type) type: String,
+            @Field(ParamsConstant.FreightType) freight_type: String,
+            @Field(ParamsConstant.FreightOther) freight_other: String,
+            @Field(ParamsConstant.Freight) freight: String,
+            @Field(ParamsConstant.Weight) weight: String,
+            @Field(ParamsConstant.Volume) volume: String,
+            @Field(ParamsConstant.Remark) remark: String
+    ): Observable<JsonObject>
+
+
 }
