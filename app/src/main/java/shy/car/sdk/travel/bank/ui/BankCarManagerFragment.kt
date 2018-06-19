@@ -56,6 +56,9 @@ class BankCarManagerFragment : XTBaseFragment(),
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bank_card_manager, null, false)
         binding.fragment = this
         binding.presenter = presenter
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.refresh()
+        }
         return binding.root
 
     }

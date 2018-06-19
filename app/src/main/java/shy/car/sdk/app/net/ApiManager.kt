@@ -1,7 +1,7 @@
 package shy.car.sdk.app.net
 
 
-import com.base.net.BaseApiManager
+import com.base.network.retrofit.BaseApiManager
 import com.base.network.retrofit.BaseRetrofitInterface
 
 /**

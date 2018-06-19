@@ -26,7 +26,7 @@ class AddBankCardActivity : XTBaseActivity(),
 
     }
 
-    override fun onSubmitSuccess(t: retrofit2.Response<Void>) {
+    override fun onSubmitSuccess(t: JsonObject) {
         ToastManager.showShortToast(this, "添加成功")
         finish()
     }

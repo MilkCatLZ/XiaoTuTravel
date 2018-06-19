@@ -27,7 +27,7 @@ class AddBankCarPresenter(context: Context, var callBack: CallBack) : BasePresen
 
     interface CallBack {
         fun onError(e: Throwable)
-        fun onSubmitSuccess(t: retrofit2.Response<Void>)
+        fun onSubmitSuccess(t: JsonObject)
 
     }
 
@@ -42,7 +42,7 @@ class AddBankCarPresenter(context: Context, var callBack: CallBack) : BasePresen
 
         val observable = ApiManager.getInstance()
                 .api.addBankCard(User.instance.phone, bankType.get()?.id!!, bankName.get()!!, name.get()!!, cardNum.get()!!, phone.get()!!)
-        val observer = object : Observer<retrofit2.Response<Void>> {
+        val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
             }
@@ -51,7 +51,7 @@ class AddBankCarPresenter(context: Context, var callBack: CallBack) : BasePresen
 
             }
 
-            override fun onNext(t: retrofit2.Response<Void>) {
+            override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
                 callBack.onSubmitSuccess(t)
             }

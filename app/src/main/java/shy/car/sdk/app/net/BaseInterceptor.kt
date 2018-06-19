@@ -2,19 +2,12 @@ package shy.car.sdk.app.net
 
 
 import android.content.Context
-import com.base.net.BaseInterceptor
-import com.base.util.Log
-import com.base.util.StringUtils
-import com.base.util.Version
+import com.base.network.retrofit.BaseInterceptor
 import okhttp3.MultipartBody
 import okhttp3.Request
-import org.xutils.common.util.KeyValue
-import org.xutils.common.util.MD5
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.travel.user.data.User
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * 该类是retrofit拦截器，用于给每个请求的链接上 添加公共参数

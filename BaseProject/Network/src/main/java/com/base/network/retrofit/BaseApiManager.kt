@@ -1,6 +1,6 @@
-package com.base.net
+package com.base.network.retrofit
 
-import com.base.network.retrofit.BaseRetrofitInterface
+import com.base.network.gson.GsonConverterFactory
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 /**
  * 管理类

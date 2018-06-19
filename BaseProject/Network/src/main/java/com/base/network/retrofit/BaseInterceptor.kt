@@ -1,4 +1,4 @@
-package com.base.net
+package com.base.network.retrofit
 
 import com.google.gson.JsonSyntaxException
 import okhttp3.*
