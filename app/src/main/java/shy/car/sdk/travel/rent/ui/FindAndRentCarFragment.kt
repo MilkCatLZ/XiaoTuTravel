@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MyLocationStyle
@@ -52,6 +51,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
         binding.fragment = this
+
         binding.mapView.onCreate(savedInstanceState)
         return binding.root
 
@@ -67,14 +67,24 @@ class FindAndRentCarFragment : XTBaseFragment(),
     var carInfo = CarInfo()
         set(value) {
             field = value
-            presenter.carInfo = carInfo
+            initValue(value)
+            setupMap()
 
-            mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
-            mEndPoint = LatLonPoint(carInfo.lat, carInfo.lng)
-
-            moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
-            getRoute()
         }
+
+    private fun setupMap() {
+
+        mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
+        mEndPoint = LatLonPoint(carInfo.lat, carInfo.lng)
+
+        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+        getRoute()
+    }
+
+    private fun initValue(value: CarInfo) {
+        presenter.carInfo = carInfo
+        binding.car = value
+    }
 
     private fun getRoute() {
         val routeSearch = RouteSearch(activity)

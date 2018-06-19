@@ -29,31 +29,31 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
     var pageIndex = 1
 
     init {
-        val list = ArrayList<CarSelectInfo>()
-        for (i in 0..9) {
-            var car = CarSelectInfo()
-            when (i % 3) {
-                0 -> {
-                    car.carName = "小兔e1"
-                    car.id = i.toString()
-                    car.promiseMoneyPrice = 999.0
-                }
-                1 -> {
-                    car.carName = "小兔e2"
-                    car.id = i.toString()
-                    car.promiseMoneyPrice = 1999.0
-                }
-                2 -> {
-                    car.carName = "小兔e3"
-                    car.id = i.toString()
-                    car.promiseMoneyPrice = 2999.0
-                }
-            }
-
-            list.add(car)
-        }
-
-        adapter.setItems(list, 1)
+//        val list = ArrayList<CarSelectInfo>()
+//        for (i in 0..9) {
+//            var car = CarSelectInfo()
+//            when (i % 3) {
+//                0 -> {
+//                    car.carName = "小兔e1"
+//                    car.id = i.toString()
+//                    car.promiseMoneyPrice = 999.0
+//                }
+//                1 -> {
+//                    car.carName = "小兔e2"
+//                    car.id = i.toString()
+//                    car.promiseMoneyPrice = 1999.0
+//                }
+//                2 -> {
+//                    car.carName = "小兔e3"
+//                    car.id = i.toString()
+//                    car.promiseMoneyPrice = 2999.0
+//                }
+//            }
+//
+//            list.add(car)
+//        }
+//
+//        adapter.setItems(list, 1)
     }
 
     fun hasMore(): Boolean {
@@ -78,7 +78,8 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
         this.lat = lat
         this.lng = lng
         disposable?.dispose()
-        ApiManager.getInstance().api.getCarList()
+        ApiManager.getInstance()
+                .api.getCarList()
                 .subscribe(object : Observer<ArrayList<CarSelectInfo>> {
                     override fun onComplete() {
 
@@ -89,8 +90,8 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
                     }
 
                     override fun onNext(t: ArrayList<CarSelectInfo>) {
-                        EventBus.getDefault()
-                                .post(t)
+                        adapter.setItems(t, 1)
+                        callBack.getListSuccess(t)
                     }
 
                     override fun onError(e: Throwable) {

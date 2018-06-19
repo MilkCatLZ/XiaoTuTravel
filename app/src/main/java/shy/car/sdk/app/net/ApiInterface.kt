@@ -84,11 +84,14 @@ interface ApiInterface {
 
     /**
      * 获取接单列表
-     *
+     * type	integer	否	类型：1同城小包2整车物流
      */
-    @GET("xt/takeOrderList")
-    fun getTakeOrderList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<TakeOrderList>>
+    @GET("users/freights")
+    fun getOrderList(
+            @Query(ParamsConstant.FreightType) freight_type: String = "1",
+            @Query(ParamsConstant.Type) type: String? = null,
+            @Query(ParamsConstant.Offset) offset: Int,
+            @Query(ParamsConstant.Limit) limit: Int): Observable<List<TakeOrderList>>
 
     /**
      * 获取单个接单详情

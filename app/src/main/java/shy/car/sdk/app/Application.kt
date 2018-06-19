@@ -70,6 +70,8 @@ class Application : BaseApplication() {
 
     private fun initUserCache() {
         User.initUserCache(this)
+        if (User.instance.login)
+            User.instance.getUserDetail(this)
     }
 
     private fun initAmap() {

@@ -13,8 +13,9 @@ import shy.car.sdk.travel.take.data.TakeOrderList
 class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getListSuccess(list: ArrayList<TakeOrderList>)
+        fun getListSuccess(list: List<TakeOrderList>)
         fun onItemClick(takeOrderList: TakeOrderList)
+        fun getListError(e: Throwable)
     }
 
     var adapter: DataBindingItemClickAdapter<TakeOrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {
@@ -24,15 +25,15 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
     var pageIndex = 1
 
     init {
-        val list = ArrayList<TakeOrderList>()
-        for (i in 1..9) {
-            var orderTakeList = TakeOrderList()
-            orderTakeList.id = i.toString()
-            orderTakeList.status = i % 4
-            list.add(orderTakeList)
-        }
-
-        adapter.setItems(list, 1)
+//        val list = ArrayList<TakeOrderList>()
+//        for (i in 1..9) {
+//            var orderTakeList = TakeOrderList()
+//            orderTakeList.id = i.toString()
+//            orderTakeList.status = i % 4
+//            list.add(orderTakeList)
+//        }
+//
+//        adapter.setItems(list, 1)
     }
 
     fun hasMore(): Boolean {
@@ -50,24 +51,29 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     private fun getOrderList() {
-        ApiManager.getInstance().api.getTakeOrderList(pageIndex, pageSize)
-                .subscribe(object : Observer<ArrayList<TakeOrderList>> {
-                    override fun onComplete() {
+        val observable = ApiManager.getInstance()
+                .api.getOrderList(offset = (pageIndex - 1) * pageSize, limit = pageSize)
+        val observer = object : Observer<List<TakeOrderList>> {
+            override fun onComplete() {
 
-                    }
+            }
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
 
-                    override fun onNext(t: ArrayList<TakeOrderList>) {
-                        callBack.getListSuccess(t)
-                    }
+            override fun onNext(t: List<TakeOrderList>) {
+                callBack.getListSuccess(t)
+            }
 
-                    override fun onError(e: Throwable) {
+            override fun onError(e: Throwable) {
+                callBack.getListError(e)
+            }
+        }
 
-                    }
-                })
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
     }
 
     fun getTotal(): Int {

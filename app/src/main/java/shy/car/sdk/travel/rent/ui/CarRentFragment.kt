@@ -64,8 +64,17 @@ class CarRentFragment : XTBaseFragment() {
     var locationRefreshListener: MapLocationRefreshListener? = null
     var currentSelectedCarInfo = ObservableField<CarInfo>()
 
+    var markerList = ArrayList<Marker>()
+    private var carPointList = ArrayList<NearCarPoint>()
 
     private val callBack = object : CarRentPresenter.CallBack {
+        override fun onCreateRentOrderSuccess() {
+            ARouter.getInstance()
+                    .build(RouteMap.FindAndRentCar)
+                    .withObject(Object1, currentSelectedCarInfo.get())
+                    .navigation()
+        }
+
         override fun onGetCarError(e: Throwable) {
 
         }
@@ -315,34 +324,42 @@ class CarRentFragment : XTBaseFragment() {
             showConfirmDialog()
         } else {
             //提示未交保证金
-            val dialog = ARouter.getInstance()
-                    .build(RouteMap.Dialog_Money_Verify)
-                    .navigation() as XTBaseDialogFragment
-            dialog.show(fragmentManager, "dialog_money_verify")
+
             if (BuildConfig.DEBUG) {
                 if (currentSelectedCarInfo.get() != null)
-                    ARouter.getInstance()
-                            .build(RouteMap.FindAndRentCar)
-                            .withObject(Object1, currentSelectedCarInfo.get())
-                            .navigation()
-
+                    showConfirmDialog()
+                else {
+                    ToastManager.showShortToast(activity, "当前没有可用车辆")
+                }
             } else {
-                ToastManager.showShortToast(activity, "当前没有可用车辆")
+                val dialog = ARouter.getInstance()
+                        .build(RouteMap.Dialog_Money_Verify)
+                        .navigation() as XTBaseDialogFragment
+                dialog.show(fragmentManager, "dialog_money_verify")
             }
         }
     }
 
     private fun showConfirmDialog() {
-        activity?.let {
-            DialogManager.with(it, childFragmentManager)
-                    .title("提示")
-                    .message("确定租用该车辆？\n 车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}" +
-                            " 车型：")
-                    .leftButtonText("取消")
-                    .rightButtonText("确定")
-                    .onRightClick({ dialog, witch ->
-                        carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.networkID!!)
-                    })
+
+        if (currentSelectedCarInfo.get() != null) {
+            activity?.let {
+                DialogManager.with(it, childFragmentManager)
+                        .title("提示")
+                        .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
+                        .leftButtonText("取消")
+                        .rightButtonText("确定")
+                        .onRightClick({ dialog, witch ->
+                            if (currentSelectedCarInfo.get()?.netWork == null) {
+                                currentSelectedCarInfo.get()
+                                        ?.netWork = carPointList[0]
+                            }
+                            carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
+                        })
+                        .show()
+            }
+        } else {
+            ToastManager.showShortToast(activity, "当前没有可用车辆")
         }
     }
 
@@ -361,7 +378,6 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
-    var markerList = ArrayList<Marker>()
     /**
      * 在地图上添加marker
      */
@@ -393,7 +409,6 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
-    private var carPointList = ArrayList<NearCarPoint>()
 
     /**
      * 附近网点刷新事件监听

@@ -41,6 +41,11 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
         super.onCreate(savedInstanceState)
         activity?.let {
             presenter = OrderTakePresenter(it, object : OrderTakePresenter.CallBack {
+                override fun getListError(e: Throwable) {
+                    refreshOrLoadMoreComplete()
+                    checkHasMore()
+                }
+
                 override fun onItemClick(takeOrderList: TakeOrderList) {
                     this@OrderTakeFragment.takeOrderList = takeOrderList
                     if (User.instance.login) {
@@ -50,7 +55,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
                     }
                 }
 
-                override fun getListSuccess(list: ArrayList<TakeOrderList>) {
+                override fun getListSuccess(list: List<TakeOrderList>) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
                 }
@@ -119,6 +124,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
+        onRefresh()
     }
 
     lateinit var presenter: OrderTakePresenter

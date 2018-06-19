@@ -10,7 +10,8 @@ import me.yokeyword.indexablerv.PinyinUtil
 /**
  * 车辆信息
  */
-class NearCarPoint : BaseObservable(), IndexableEntity {
+class NearCarPoint : BaseObservable(),
+        IndexableEntity {
     override fun setFieldIndexBy(indexField: String?) {
         this.address = indexField!!
     }
@@ -51,10 +52,10 @@ class NearCarPoint : BaseObservable(), IndexableEntity {
      */
 
     @SerializedName("id")
-    var id: String? = null
+    var id: String = "8"
     @SerializedName("name")
     @get:Bindable
-    var name: String? = null
+    var name: String = ""
         set(name) {
             field = name
             notifyPropertyChanged(shy.car.sdk.BR.name)

@@ -57,4 +57,5 @@ public class ParamsConstant {
     public static final String AccountNumber = "account_number";
     public static final String Default = "default";
     public static final String CarID = "car_id";
+    public static final String FreightType = "freight_type";
 }

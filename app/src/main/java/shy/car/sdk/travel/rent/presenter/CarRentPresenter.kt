@@ -66,6 +66,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     interface CallBack {
         fun onGetCarError(e: Throwable)
         fun onGetCarSuccess(t: List<CarInfo>)
+        fun onCreateRentOrderSuccess()
 
     }
 
@@ -156,6 +157,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
+                callBack.onCreateRentOrderSuccess()
             }
 
             override fun onError(e: Throwable) {

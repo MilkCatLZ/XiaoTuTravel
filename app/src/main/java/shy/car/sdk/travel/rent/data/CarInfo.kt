@@ -41,6 +41,13 @@ class CarInfo : BaseObservable() {
             field = carModel
             notifyChange(BR.carModel)
         }
+    @SerializedName("battery")
+    @get:Bindable
+    var battery: String = ""
+        set(value) {
+            field = value
+            notifyChange(BR.battery)
+        }
     @SerializedName("car_img")
     @get:Bindable
     var carImg: String = ""
@@ -103,6 +110,13 @@ class CarInfo : BaseObservable() {
         set(discounts) {
             field = discounts
             notifyChange(BR.discounts)
+        }
+    @SerializedName("net_work")
+    @get:Bindable
+    var netWork: NearCarPoint? = null
+        set(netWork) {
+            field = netWork
+            notifyChange(BR.netWork)
         }
     @SerializedName("network_id")
     @get:Bindable

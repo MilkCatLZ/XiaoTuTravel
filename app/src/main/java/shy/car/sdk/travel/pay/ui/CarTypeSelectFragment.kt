@@ -18,7 +18,8 @@ import shy.car.sdk.travel.pay.presenter.CarSelectPresenter
  * create by LZ at 2018/05/21
  * 选择车辆类型
  */
-class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPresenter.CallBack {
+class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(),
+        CarSelectPresenter.CallBack {
     override fun onCarSelected(carSelectInfo: CarSelectInfo) {
         eventBusDefault.post(carSelectInfo)
         finish()
@@ -36,6 +37,11 @@ class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPre
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_select, null, false)
         binding.presenter = presenter
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onRefresh()
     }
 
     override fun getFragmentName(): String {
@@ -72,7 +78,8 @@ class CarTypeSelectFragment : XTBaseUltimateRecyclerViewFragment(), CarSelectPre
     }
 
     override fun onError(e: Throwable) {
-
+        refreshOrLoadMoreComplete()
+        checkHasMore()
     }
 
     private fun checkHasMore() {
