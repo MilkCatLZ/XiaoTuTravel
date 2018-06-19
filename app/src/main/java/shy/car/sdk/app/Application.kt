@@ -133,6 +133,8 @@ class Application : BaseApplication() {
 
     var postcard: Postcard? = null
     var callback: InterceptorCallback? = null
+    var cityList: List<CurrentLocation> = ArrayList<CurrentLocation>()
+
     fun startLoginDialog(postcard: Postcard?, callback: InterceptorCallback?, listener: onLoginDismiss? = null) {
         try {
             this.postcard = postcard

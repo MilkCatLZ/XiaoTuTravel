@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="near"
-            type="shy.car.sdk.travel.rent.data.NearCarPoint"/>
+            type="shy.car.sdk.travel.rent.data.NearCarPoint" />
 
         <variable
             name="click"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
     </data>
 
 
@@ -26,6 +26,7 @@
         android:gravity="center_vertical"
         android:onClick="@{click}"
         android:orientation="horizontal"
+        android:tag="@{near}"
         android:paddingEnd="15dp"
         android:paddingStart="15dp">
 
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_orient"
-            android:tint="@color/text_third_primary_999999"/>
+            android:tint="@color/text_third_primary_999999" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,18 +55,20 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="小兔科技"
+                    android:text="@{near.name}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    tools:text="小兔科技" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="13辆可用车"
+                    android:text='@{""+near.usableCarsNum+@string/str_car_usable}'
                     android:textColor="@color/main_color_red"
-                    android:textSize="@dimen/text_second_primary_12dp"/>
+                    android:textSize="@dimen/text_second_primary_12dp"
+                    tools:text="12辆车可用" />
             </LinearLayout>
 
             <TextView
@@ -74,9 +77,10 @@
                 android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="广西壮族自治区向南宁市西乡塘区滨河路"
+                android:text="@{near.address}"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp"/>
+                android:textSize="@dimen/text_second_primary_12dp"
+                tools:text="广西壮族自治区向南宁市西乡塘区滨河路" />
 
         </LinearLayout>
 

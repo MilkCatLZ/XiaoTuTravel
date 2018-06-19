@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.CameraUpdateFactory
+import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MyLocationStyle
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
@@ -36,8 +37,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     lateinit var binding: FragmentFindAndRentCarBinding
 
-    private val mStartPoint = LatLonPoint(22.823181, 108.300745)//起点，108.300745,22.823181
-    private val mEndPoint = LatLonPoint(22.873487, 108.275277)//终点，108.275277,22.873487
+    private var mStartPoint = LatLonPoint(22.823181, 108.300745)//起点，108.300745,22.823181
+    private var mEndPoint = LatLonPoint(22.873487, 108.275277)//终点，108.275277,22.873487
 
     lateinit var presenter: FindAndRentCarPresenter
 
@@ -58,9 +59,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(12f), 1000, null)
+        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
         initMap()
-        getRoute()
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
@@ -68,6 +68,12 @@ class FindAndRentCarFragment : XTBaseFragment(),
         set(value) {
             field = value
             presenter.carInfo = carInfo
+
+            mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
+            mEndPoint = LatLonPoint(carInfo.lat, carInfo.lng)
+
+            moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+            getRoute()
         }
 
     private fun getRoute() {
@@ -182,5 +188,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     fun ringCar() {
         presenter.carRing()
+    }
+
+    private fun moveCameraAndShowLocation(latLng: LatLng) {
+        binding.mapView.map.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 }

@@ -19,12 +19,17 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     interface CallBack {
         fun getListSuccess(list: ArrayList<NearCarPoint>)
         fun onError(e: Throwable)
+        fun onNearClick(nearPoint: NearCarPoint)
     }
 
     var adapter: DataBindingItemClickAdapter<NearCarPoint> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {
-        ARouter.getInstance()
-                .build(RouteMap.CarPointDetail)
-                .navigation()
+
+        val nearPoint=it.tag as NearCarPoint
+        callBack.onNearClick(nearPoint)
+
+//        ARouter.getInstance()
+//                .build(RouteMap.CarPointDetail)
+//                .navigation()
     })
     var pageSize = 50
     var pageIndex = 1

@@ -31,6 +31,7 @@ import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearCarListFragment
+import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.user.data.User
 import java.util.concurrent.TimeUnit
@@ -46,11 +47,16 @@ class MainActivity : NearCarOpenListener,
         XTBaseActivity(),
         MainNearCarListFragment.CancelListener {
 
+
     override fun onCitySelected(location: CurrentLocation) {
         isCitySelectVisible.set(false)
         app.location = location.copy()
         city.set(app.location)
         eventBusDefault.post(LocationChange())
+    }
+
+    override fun onNearPointClick(nearPoint: NearCarPoint) {
+        isNearVisible.set(false)
     }
 
     override fun onCancelClick() {

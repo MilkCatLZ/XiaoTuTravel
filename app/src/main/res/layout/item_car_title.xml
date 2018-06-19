@@ -27,7 +27,7 @@
 
         <RadioButton
             style="@style/style_wm.car"
-            android:checked="@{presenter.selectedCarID==car.id}"
+            android:checked="@{presenter.selectedCarCaterogyID==car.id}"
             android:onClick="@{click}"
             android:tag="@{car}"
             android:text="@{car.carName}"/>

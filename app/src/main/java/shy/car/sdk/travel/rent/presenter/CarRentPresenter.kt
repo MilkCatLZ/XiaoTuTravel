@@ -3,10 +3,12 @@ package shy.car.sdk.travel.rent.presenter
 import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
+import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.DataBindingPagerAdapter
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
@@ -33,12 +35,12 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
      */
     var carCategoryListAdapter: DataBindingItemClickAdapter<CarCategory> = DataBindingItemClickAdapter(R.layout.item_car_title, BR.car, BR.click, View.OnClickListener {
         val carCategory = it.tag as CarCategory
-        selectedCarID.set(carCategory.id)
+        selectedCarCaterogyID.set(carCategory.id)
     }, DataBindingAdapter.CallBack { holder, position ->
         holder.binding.setVariable(BR.presenter, this@CarRentPresenter)
     })
 
-    var selectedCarID = ObservableField<String>("")
+    var selectedCarCaterogyID = ObservableField<String>("")
 
     init {
 //        for (i in 1..4) {
@@ -129,6 +131,36 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 }
                 ErrorManager.managerError(context, e, "获取车辆失败")
                 callBack.onGetCarError(e)
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    fun createRentCarOrder(carId: String, pointID: String) {
+
+        ProgressDialog.showLoadingView(context)
+        disposable?.dispose()
+        val observable = ApiManager.getInstance()
+                .api.createRentCarOrder(carId, pointID)
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: JsonObject) {
+                ProgressDialog.hideLoadingView(context)
+            }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "订单创建失败，请重试")
             }
 
         }

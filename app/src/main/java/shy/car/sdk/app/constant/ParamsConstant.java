@@ -56,4 +56,5 @@ public class ParamsConstant {
     public static final String AccountHolder = "account_holder";
     public static final String AccountNumber = "account_number";
     public static final String Default = "default";
+    public static final String CarID = "car_id";
 }

@@ -15,7 +15,7 @@ import shy.car.sdk.travel.rent.data.CarInfo
  * 找车取车
  */
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
-     var carInfo=CarInfo()
+    var carInfo = CarInfo()
 
 
     interface CallBack {
@@ -27,7 +27,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.ringCar(carInfo.carId)
+                .api.ringCar(carInfo.carId, status = 1.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

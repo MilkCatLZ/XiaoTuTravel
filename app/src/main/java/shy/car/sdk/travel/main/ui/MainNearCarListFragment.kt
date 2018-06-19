@@ -27,6 +27,7 @@ class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
 
     interface CancelListener {
         fun onCancelClick()
+        fun onNearPointClick(nearPoint: NearCarPoint)
     }
 
     var listener: CancelListener? = null
@@ -75,6 +76,11 @@ class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
         super.onCreate(savedInstanceState)
         activity?.let {
             nearCarListPresenter = NearCarPresenter(it, object : NearCarPresenter.CallBack {
+                override fun onNearClick(nearPoint: NearCarPoint) {
+                    listener?.onNearPointClick(nearPoint)
+                    eventBusDefault.post(nearPoint)
+                }
+
                 override fun onError(e: Throwable) {
                     if (binding.recyclerViewNearCarList.adapter == null)
                         binding.recyclerViewNearCarList.setAdapter(nearCarListPresenter.adapter)

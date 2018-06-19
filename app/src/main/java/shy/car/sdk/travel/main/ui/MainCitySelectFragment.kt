@@ -117,6 +117,14 @@ class MainCitySelectFragment : XTBaseFragment() {
             locationPresenter = LocationPresenter(it, object : LocationPresenter.CallBack {
                 override fun getCitySuccess(list: List<CurrentLocation>) {
                     //添加数据
+                    app.cityList = list
+                    if (app.location.cityCode.isEmpty()) {
+                        app.cityList.map {
+                            if (app.location.cityName == it.cityName) {
+                                app.location.cityCode = it.cityCode
+                            }
+                        }
+                    }
                     addCityInfo(list)
                 }
             })

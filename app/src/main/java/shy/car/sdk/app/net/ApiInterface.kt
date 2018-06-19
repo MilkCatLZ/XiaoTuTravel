@@ -4,8 +4,6 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.Response
-import okhttp3.ResponseBody
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.bank.data.BankCard
@@ -218,7 +216,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("cars/{carID}")
-    fun ringCar(@Path("carID") carId: String, @Query(ParamsConstant.OrderId) oid: String? = null, @Query(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
+    fun ringCar(@Path("carID") carId: String, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
 
     /**
      * 获取充值可用列表
@@ -245,5 +243,13 @@ interface ApiInterface {
     @FormUrlEncoded
     @POST("users/bank_cards")
     fun addBankCard(@Query(ParamsConstant.UID) uid: String, @Field(ParamsConstant.BankID) bankID: String, @Field(ParamsConstant.Bank) bank: String, @Field(ParamsConstant.AccountHolder) accountHolder: String, @Field(ParamsConstant.AccountNumber) accountNumber: String, @Field(ParamsConstant.Phone) phone: String, @Field(ParamsConstant.Default) default: String = "1"): Observable<JsonObject>
+
+    /**
+     * 创建租车订单
+     * type=1 为租车
+     */
+    @FormUrlEncoded
+    @POST("users/orders")
+    fun createRentCarOrder(@Field(ParamsConstant.CarID) carID: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Type) type: String = "1"): Observable<JsonObject>
 
 }

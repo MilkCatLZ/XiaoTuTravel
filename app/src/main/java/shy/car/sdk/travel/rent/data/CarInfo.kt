@@ -13,19 +13,18 @@ import shy.car.sdk.BR
  */
 class CarInfo : BaseObservable() {
 
-
     /**
      * car_id : 1
-     * car_model : 奇瑞EQ1
-     * car_model_img : http://static.car.com/car/2018/05/10/Aosajfo12dd.jpg
-     * plate_number : 桂A88888
+     * car_model : EQ1
+     * car_img : http://47.106.88.148/upload/car/
+     * plate_number : 桂A51457
      * color : 白色
-     * surplus_mileage : 135
-     * address : 广西南宁市西乡塘区相思湖西路
-     * lng : 108.248593
-     * lat : 22.921449
-     * cost : {"minute":0.2,"kilometre":0.88,"low_price":"最低消费8元"}
-     * discounts : [{"id":24,"txt":"24小时整日租","price":"88"},{"id":"夜","txt":"20:00-次日8:00","price":"88"}]
+     * surplus_mileage : 0
+     * address :
+     * lng : 108.27958
+     * lat : 22.841126
+     * cost : {"minute":0,"kilometre":0,"low_price":"最低消费0元"}
+     * discounts : {"duration":[{"id":"id","time":"24小时整日租","price":0},{"id":"夜","time":"20:00-次日8:00","price":88}]}
      */
 
     @SerializedName("car_id")
@@ -42,12 +41,12 @@ class CarInfo : BaseObservable() {
             field = carModel
             notifyChange(BR.carModel)
         }
-    @SerializedName("car_model_img")
+    @SerializedName("car_img")
     @get:Bindable
-    var carModelImg: String = ""
-        set(carModelImg) {
-            field = carModelImg
-            notifyChange(BR.carModelImg)
+    var carImg: String = ""
+        set(carImg) {
+            field = carImg
+            notifyChange(BR.carImg)
         }
     @SerializedName("plate_number")
     @get:Bindable
@@ -65,7 +64,7 @@ class CarInfo : BaseObservable() {
         }
     @SerializedName("surplus_mileage")
     @get:Bindable
-    var surplusMileage: Double = 0.toDouble()
+    var surplusMileage: String = ""
         set(surplusMileage) {
             field = surplusMileage
             notifyChange(BR.surplusMileage)
@@ -93,17 +92,24 @@ class CarInfo : BaseObservable() {
         }
     @SerializedName("cost")
     @get:Bindable
-    var cost: Cost? = null
+    var cost: CostBean? = null
         set(cost) {
             field = cost
             notifyChange(BR.cost)
         }
     @SerializedName("discounts")
     @get:Bindable
-    var discounts: List<Discounts>? = null
+    var discounts: DiscountsBean? = null
         set(discounts) {
             field = discounts
             notifyChange(BR.discounts)
+        }
+    @SerializedName("network_id")
+    @get:Bindable
+    var networkID: String = ""
+        set(value) {
+            field = value
+            notifyChange(BR.networkID)
         }
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
@@ -132,23 +138,23 @@ class CarInfo : BaseObservable() {
         }
     }
 
-    class Cost : Observable {
+    open class CostBean : Observable {
         /**
-         * minute : 0.2
-         * kilometre : 0.88
-         * low_price : 最低消费8元
+         * minute : 0
+         * kilometre : 0
+         * low_price : 最低消费0元
          */
 
         @SerializedName("minute")
         @get:Bindable
-        var minute: Double = 0.toDouble()
+        var minute: String = ""
             set(minute) {
                 field = minute
                 notifyChange(BR.minute)
             }
         @SerializedName("kilometre")
         @get:Bindable
-        var kilometre: Double = 0.toDouble()
+        var kilometre: String = ""
             set(kilometre) {
                 field = kilometre
                 notifyChange(BR.kilometre)
@@ -188,34 +194,13 @@ class CarInfo : BaseObservable() {
         }
     }
 
-
-    class Discounts : Observable {
-        /**
-         * id : 24
-         * txt : 24小时整日租
-         * price : 88
-         */
-
-        @SerializedName("id")
+    open class DiscountsBean : Observable {
+        @SerializedName("duration")
         @get:Bindable
-        var id: String = ""
-            set(id) {
-                field = id
-                notifyChange(BR.id)
-            }
-        @SerializedName("txt")
-        @get:Bindable
-        var txt: String = ""
-            set(txt) {
-                field = txt
-                notifyChange(BR.txt)
-            }
-        @SerializedName("price")
-        @get:Bindable
-        var price: String = ""
-            set(price) {
-                field = price
-                notifyChange(BR.price)
+        var duration: List<DurationBean>? = null
+            set(duration) {
+                field = duration
+                notifyChange(BR.duration)
             }
         @Transient
         private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
@@ -243,6 +228,62 @@ class CarInfo : BaseObservable() {
                 propertyChangeRegistry!!.remove(callback)
             }
         }
+
+        open class DurationBean : Observable {
+            /**
+             * id : id
+             * time : 24小时整日租
+             * price : 0
+             */
+
+            @SerializedName("id")
+            @get:Bindable
+            var id: String = ""
+                set(id) {
+                    field = id
+                    notifyChange(BR.id)
+                }
+            @SerializedName("time")
+            @get:Bindable
+            var time: String = ""
+                set(time) {
+                    field = time
+                    notifyChange(BR.time)
+                }
+            @SerializedName("price")
+            @get:Bindable
+            var price: Double = 0.toDouble()
+                set(price) {
+                    field = price
+                    notifyChange(BR.price)
+                }
+            @Transient
+            private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
+
+            @Synchronized
+            private fun notifyChange(propertyId: Int) {
+                if (propertyChangeRegistry == null) {
+                    propertyChangeRegistry = PropertyChangeRegistry()
+                }
+                propertyChangeRegistry!!.notifyChange(this, propertyId)
+            }
+
+            @Synchronized
+            override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+                if (propertyChangeRegistry == null) {
+                    propertyChangeRegistry = PropertyChangeRegistry()
+                }
+                propertyChangeRegistry!!.add(callback)
+
+            }
+
+            @Synchronized
+            override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+                if (propertyChangeRegistry != null) {
+                    propertyChangeRegistry!!.remove(callback)
+                }
+            }
+        }
     }
 
     /**
@@ -251,5 +292,4 @@ class CarInfo : BaseObservable() {
     fun costText(): String {
         return "￥${cost?.minute}/分钟+￥${cost?.kilometre}/公里"
     }
-
 }

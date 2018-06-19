@@ -4,12 +4,14 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.amap.api.services.core.PoiItem
 import com.android.databinding.library.baseAdapters.BR
+import com.base.location.BuildConfig
 import com.base.location.Location
 import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
-class CurrentLocation : BaseObservable(), IndexableEntity {
+class CurrentLocation : BaseObservable(),
+        IndexableEntity {
 
     @SerializedName("name")
     @get:Bindable
@@ -44,11 +46,33 @@ class CurrentLocation : BaseObservable(), IndexableEntity {
             field = value
             notifyPropertyChanged(BR.lat)
         }
+        get():Double {
+            return if (BuildConfig.DEBUG) {
+                if (field == 0.0) {
+                    22.921449
+                }else{
+                    field
+                }
+            } else {
+                field
+            }
+        }
     @get:Bindable
     var lng: Double = 0.0
         set(value) {
             field = value
             notifyPropertyChanged(BR.lng)
+        }
+        get():Double {
+            return if (BuildConfig.DEBUG) {
+                if (field == 0.0) {
+                    108.248593
+                }else{
+                    field
+                }
+            } else {
+                field
+            }
         }
 
     @get:Bindable
@@ -82,7 +106,7 @@ class CurrentLocation : BaseObservable(), IndexableEntity {
         lng = location.longitude
         address = location.address
         district = location.district
-        cityCode = location.cityCode
+//        cityCode = location.cityCode
     }
 
     fun copy(location: PoiItem) {

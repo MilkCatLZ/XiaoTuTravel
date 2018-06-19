@@ -13,18 +13,15 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.BitmapDescriptor
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.*
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
+import com.base.location.Location
+import com.base.util.DialogManager
 import com.base.util.ToastManager
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_car_rent.*
 import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
@@ -43,14 +40,12 @@ import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
-import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -117,30 +112,30 @@ class CarRentFragment : XTBaseFragment() {
     lateinit var carListViewPager: ViewPager
     private fun initData() {
         //通知刷新列表
-        var disposable: Disposable? = null
-        Observable.interval(1, 0, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(object : Observer<Long> {
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
-
-                    override fun onNext(t: Long) {
-                        if (app.location.cityCode.isNotEmpty()) {
-                            eventBusDefault.postSticky(RefreshCarPointList())
-                            disposable?.dispose()
-                        }
-                    }
-
-                    override fun onError(e: Throwable) {
-
-                    }
-                })
+//        var disposable: Disposable? = null
+//        Observable.interval(1, 0, TimeUnit.SECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .subscribe(object : Observer<Long> {
+//                    override fun onComplete() {
+//
+//                    }
+//
+//                    override fun onSubscribe(d: Disposable) {
+//                        disposable = d
+//                    }
+//
+//                    override fun onNext(t: Long) {
+//                        if (app.location.cityCode.isNotEmpty()) {
+//                            eventBusDefault.postSticky(RefreshCarPointList())
+//                            disposable?.dispose()
+//                        }
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//
+//                    }
+//                })
 
 
         carListViewPager = binding.root.findViewById(R.id.viewPager_car_list)
@@ -155,8 +150,8 @@ class CarRentFragment : XTBaseFragment() {
 
             override fun onPageSelected(position: Int) {
                 var carInfo = carRentPresenter.carListAdapter.items[position]
-                val adapter = DataBindingAdapter<CarInfo.Discounts>(R.layout.item_car_discount, BR.discount, null)
-                adapter.setItems(carInfo.discounts, 1)
+                val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
+                adapter.setItems(carInfo.discounts?.duration, 1)
                 recyclerView_car_discount.adapter = adapter
             }
         })
@@ -197,12 +192,13 @@ class CarRentFragment : XTBaseFragment() {
     private fun initMap() {
 
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
-        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
+        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
         binding.map.map.setOnMarkerClickListener(
                 {
                     var carPoint = findCarPoint(it.position)
                     carRentPresenter.getUsableCarList(carPoint)
+                    it.showInfoWindow()
                     true
                 }
         )
@@ -224,7 +220,8 @@ class CarRentFragment : XTBaseFragment() {
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
                             app.changeCurrentLocation(location)
-                            moveCameraAndShowLocation(app.location)
+                            getCityCode(location)
+                            moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
                             addUserLocationMarker()
                             locationRefreshListener?.onLocationChange()
                             it.onNext(location)
@@ -238,8 +235,18 @@ class CarRentFragment : XTBaseFragment() {
 
     }
 
-    private fun moveCameraAndShowLocation(location: CurrentLocation) {
-        binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.lat, location.lng)))
+    private fun getCityCode(location: Location) {
+        if (app.cityList.isNotEmpty())
+            app.cityList.map {
+                if (app.location.cityName == it.cityName) {
+                    app.location.cityCode = it.cityCode
+                }
+            }
+
+    }
+
+    private fun moveCameraAndShowLocation(latLng: LatLng) {
+        binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
 
     }
 
@@ -305,9 +312,7 @@ class CarRentFragment : XTBaseFragment() {
     private fun checkPromiseMoneyPay() {
         //已交保证金
         if (User.instance.isDeposit()) {
-            ARouter.getInstance()
-                    .build(RouteMap.RentCarDetail)
-                    .navigation()
+            showConfirmDialog()
         } else {
             //提示未交保证金
             val dialog = ARouter.getInstance()
@@ -327,6 +332,20 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
+    private fun showConfirmDialog() {
+        activity?.let {
+            DialogManager.with(it, childFragmentManager)
+                    .title("提示")
+                    .message("确定租用该车辆？\n 车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}" +
+                            " 车型：")
+                    .leftButtonText("取消")
+                    .rightButtonText("确定")
+                    .onRightClick({ dialog, witch ->
+                        carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.networkID!!)
+                    })
+        }
+    }
+
     fun changeZoom() {
         binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
     }
@@ -336,11 +355,13 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun addCarPointToMap(list: List<NearCarPoint>) {
         binding.map.map.clear()
+        markerList.clear()
         list.map {
             addMarkersToMap(it)
         }
     }
 
+    var markerList = ArrayList<Marker>()
     /**
      * 在地图上添加marker
      */
@@ -352,14 +373,18 @@ class CarRentFragment : XTBaseFragment() {
                 .snippet("附近可用车${point.usableCarsNum}辆")
                 .position(LatLng(point.lat, point.lng))
                 .draggable(false))
-        marker.isClickable=true
+        marker.isClickable = true
         marker.showInfoWindow()
+        markerList.add(marker)
     }
 
     fun onNearCarClick() {
         nearCarListener?.onNearCarClick()
     }
 
+    /**
+     * 登录成功事件监听
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(success: LoginSuccess) {
         if (isRentClick) {
@@ -370,24 +395,48 @@ class CarRentFragment : XTBaseFragment() {
 
     private var carPointList = ArrayList<NearCarPoint>()
 
+    /**
+     * 附近网点刷新事件监听
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
-            carRentPresenter.getUsableCarList(list[0])
+            if (carPointList.isEmpty()) {
+                carRentPresenter.getUsableCarList(list[0])
+            }
             this.carPointList.clear()
             this.carPointList.addAll(list)
             addCarPointToMap(list)
-        }else if(BuildConfig.DEBUG){
-            var l=ArrayList<NearCarPoint>()
-            for(i in 0..5){
+
+
+        } else if (BuildConfig.DEBUG) {
+            var l = ArrayList<NearCarPoint>()
+            for (i in 0..5) {
 
             }
         }
     }
 
+    /**
+     * 定位成功 监听
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(change: LocationChange) {
-        moveCameraAndShowLocation(app.location)
+        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
         eventBusDefault.post(RefreshCarPointList())
+    }
+
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onNearCarPointChange(nearCar: NearCarPoint) {
+        markerList.map {
+            if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
+                it.showInfoWindow()
+                moveCameraAndShowLocation(LatLng(it.position.latitude, it.position.longitude))
+                carRentPresenter.getUsableCarList(nearCar)
+            }
+        }
     }
 }

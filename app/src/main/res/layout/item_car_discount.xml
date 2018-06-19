@@ -6,7 +6,7 @@
 
         <variable
             name="discount"
-            type="shy.car.sdk.travel.rent.data.CarInfo.Discounts" />
+            type="shy.car.sdk.travel.rent.data.CarInfo.DiscountsBean.DurationBean" />
     </data>
 
 
@@ -34,12 +34,12 @@
             android:text="@{@string/str_yuan+discount.price}"
             android:textColor="@color/text_primary_333333"
             android:textSize="11sp"
-            tools:text="￥0.2/分钟+￥0.88/公里" />
+            tools:text="￥98" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{discount.txt}"
+            android:text="@{discount.time}"
             android:textColor="@color/text_primary_333333"
             tools:text="20:00-次日8:00"
             android:textSize="11sp" />

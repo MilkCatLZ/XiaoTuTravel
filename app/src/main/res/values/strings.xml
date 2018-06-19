@@ -42,4 +42,5 @@
     <string name="str_select_pay">请选择支付方式</string>
     <string name="str_bank_card">银行卡</string>
     <string name="str_bank_card_add">添加银行卡</string>
+    <string name="str_car_usable">辆车可用</string>
 </resources>
