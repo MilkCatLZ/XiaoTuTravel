@@ -36,8 +36,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     lateinit var binding: FragmentFindAndRentCarBinding
 
-    private var mStartPoint = LatLonPoint(22.823181, 108.300745)//起点，108.300745,22.823181
-    private var mEndPoint = LatLonPoint(22.873487, 108.275277)//终点，108.275277,22.873487
+    private var mStartPoint = LatLonPoint(0.0, 0.0)//起点，108.300745,22.823181
+    private var mEndPoint = LatLonPoint(0.0, 0.0)//终点，108.275277,22.873487
 
     lateinit var presenter: FindAndRentCarPresenter
 
@@ -70,6 +70,11 @@ class FindAndRentCarFragment : XTBaseFragment(),
             initValue(value)
             setupMap()
 
+        }
+    var orderID: String = ""
+        set(value) {
+            field = value
+            presenter.orderID=orderID
         }
 
     private fun setupMap() {
@@ -198,6 +203,10 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     fun ringCar() {
         presenter.carRing()
+    }
+
+    fun unLockCar() {
+        presenter.unLockCar()
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {

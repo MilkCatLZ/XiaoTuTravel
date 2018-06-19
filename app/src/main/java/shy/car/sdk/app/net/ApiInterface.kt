@@ -219,7 +219,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("cars/{carID}")
-    fun ringCar(@Path("carID") carId: String, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
+    fun carAction(@Path("carID") carId: String, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
 
     /**
      * 获取充值可用列表

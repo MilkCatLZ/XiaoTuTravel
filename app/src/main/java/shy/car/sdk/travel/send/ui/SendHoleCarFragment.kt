@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.ToastManager
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
@@ -29,6 +30,14 @@ import java.util.*
  */
 class SendHoleCarFragment : XTBaseFragment(),
         SendHoleCarPresenter.CallBack {
+    override fun onSubmitSuccess() {
+        ToastManager.showShortToast(activity, "发布成功")
+        finish()
+    }
+
+    override fun onSubmitError() {
+
+    }
 
     lateinit var binding: FragmentSendHoldCarBinding
     lateinit var presenter: SendHoleCarPresenter

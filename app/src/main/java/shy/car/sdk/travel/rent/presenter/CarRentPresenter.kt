@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -66,7 +67,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     interface CallBack {
         fun onGetCarError(e: Throwable)
         fun onGetCarSuccess(t: List<CarInfo>)
-        fun onCreateRentOrderSuccess()
+        fun onCreateRentOrderSuccess(oid: String)
 
     }
 
@@ -157,7 +158,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
-                callBack.onCreateRentOrderSuccess()
+                callBack.onCreateRentOrderSuccess(t.get(ParamsConstant.OrderId).asString)
             }
 
             override fun onError(e: Throwable) {

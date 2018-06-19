@@ -16,6 +16,7 @@ import shy.car.sdk.travel.rent.data.CarInfo
  */
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     var carInfo = CarInfo()
+    var orderID: String = ""
 
 
     interface CallBack {
@@ -27,7 +28,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.ringCar(carInfo.carId, status = 1.toString())
+                .api.carAction(carInfo.carId, status = 1.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
@@ -39,6 +40,38 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
             override fun onNext(t: JsonObject) {
                 ToastManager.showLongToast(context, "车辆已鸣笛，请尽快找到车辆")
+                ProgressDialog.hideLoadingView(context)
+            }
+
+            override fun onError(e: Throwable) {
+                ErrorManager.managerError(context, e, "操作失败，请重试")
+                ProgressDialog.hideLoadingView(context)
+                callBack.onRingError(e)
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    fun unLockCar() {
+
+        ProgressDialog.showLoadingView(context)
+        disposable?.dispose()
+        val observable = ApiManager.getInstance()
+                .api.carAction(carInfo.carId, orderID, status = 3.toString())
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: JsonObject) {
+                ToastManager.showLongToast(context, "车辆已解锁，请尽快上车")
                 ProgressDialog.hideLoadingView(context)
             }
 

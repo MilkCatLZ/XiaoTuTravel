@@ -68,7 +68,7 @@ class CarRentFragment : XTBaseFragment() {
     private var carPointList = ArrayList<NearCarPoint>()
 
     private val callBack = object : CarRentPresenter.CallBack {
-        override fun onCreateRentOrderSuccess() {
+        override fun onCreateRentOrderSuccess(oid:String) {
             ARouter.getInstance()
                     .build(RouteMap.FindAndRentCar)
                     .withObject(Object1, currentSelectedCarInfo.get())

@@ -111,7 +111,7 @@ class CarInfo : BaseObservable() {
             field = discounts
             notifyChange(BR.discounts)
         }
-    @SerializedName("net_work")
+    @SerializedName("network")
     @get:Bindable
     var netWork: NearCarPoint? = null
         set(netWork) {
