@@ -142,4 +142,8 @@ public class Alipay {
         Thread payThread = new Thread(payRunnable);
         payThread.start();
     }
+
+    public void pay(final Activity activity,final PayModel payModel,@Nullable OnPayCallBack onPayCallBack){
+
+    }
 }

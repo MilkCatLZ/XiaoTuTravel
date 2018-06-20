@@ -28,34 +28,6 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
     var pageSize = 50
     var pageIndex = 1
 
-    init {
-//        val list = ArrayList<CarSelectInfo>()
-//        for (i in 0..9) {
-//            var car = CarSelectInfo()
-//            when (i % 3) {
-//                0 -> {
-//                    car.carName = "小兔e1"
-//                    car.id = i.toString()
-//                    car.promiseMoneyPrice = 999.0
-//                }
-//                1 -> {
-//                    car.carName = "小兔e2"
-//                    car.id = i.toString()
-//                    car.promiseMoneyPrice = 1999.0
-//                }
-//                2 -> {
-//                    car.carName = "小兔e3"
-//                    car.id = i.toString()
-//                    car.promiseMoneyPrice = 2999.0
-//                }
-//            }
-//
-//            list.add(car)
-//        }
-//
-//        adapter.setItems(list, 1)
-    }
-
     fun hasMore(): Boolean {
         return adapter.adapterItemCount >= pageIndex * pageSize
     }
@@ -70,34 +42,36 @@ class CarSelectPresenter(context: Context, var callBack: CallBack) : BasePresent
         getCarList()
     }
 
-    private lateinit var lat: String
-
-    private lateinit var lng: String
     fun getCarList() {
 
-        this.lat = lat
-        this.lng = lng
+
         disposable?.dispose()
-        ApiManager.getInstance()
+        val observable = ApiManager.getInstance()
                 .api.getCarList()
-                .subscribe(object : Observer<ArrayList<CarSelectInfo>> {
-                    override fun onComplete() {
 
-                    }
 
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
+        val observer = object : Observer<ArrayList<CarSelectInfo>> {
+            override fun onComplete() {
 
-                    override fun onNext(t: ArrayList<CarSelectInfo>) {
-                        adapter.setItems(t, 1)
-                        callBack.getListSuccess(t)
-                    }
+            }
 
-                    override fun onError(e: Throwable) {
-                        callBack.onError(e)
-                    }
-                })
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: ArrayList<CarSelectInfo>) {
+                adapter.setItems(t, 1)
+                callBack.getListSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+                e.printStackTrace()
+                callBack.onError(e)
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun getTotal(): Int {

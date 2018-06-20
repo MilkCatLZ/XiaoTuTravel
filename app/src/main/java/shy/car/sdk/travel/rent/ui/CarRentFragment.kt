@@ -351,7 +351,7 @@ class CarRentFragment : XTBaseFragment() {
         if (User.instance.isDeposit()) {
             showConfirmDialog()
         } else {
-            //提示未交保证金
+
 
             if (BuildConfig.DEBUG) {
                 if (currentSelectedCarInfo.get() != null)
@@ -359,12 +359,13 @@ class CarRentFragment : XTBaseFragment() {
                 else {
                     ToastManager.showShortToast(activity, "当前没有可用车辆")
                 }
-            } else {
-                val dialog = ARouter.getInstance()
-                        .build(RouteMap.Dialog_Money_Verify)
-                        .navigation() as XTBaseDialogFragment
-                dialog.show(fragmentManager, "dialog_money_verify")
             }
+            //提示未交保证金
+            val dialog = ARouter.getInstance()
+                    .build(RouteMap.Dialog_Money_Verify)
+                    .navigation() as XTBaseDialogFragment
+            dialog.show(fragmentManager, "dialog_money_verify")
+
         }
     }
 

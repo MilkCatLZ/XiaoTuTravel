@@ -210,7 +210,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("users/deposits")
-    fun createDeposits(@Field(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String? = null, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String): Observable<JsonObject>
+    fun createDeposits(@Query(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String? = null, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String?): Observable<JsonObject>
 
     /**
      * 押金列表

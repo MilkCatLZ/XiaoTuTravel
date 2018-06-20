@@ -35,7 +35,12 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     override fun onGetPromiseMoneySuccess(t: Double) {
 
         if (t == 0.0) {
-            btnText.set("支付保证金${LNTextUtil.getPriceText(t)}元")
+            if (presenter.carSelect.get() != null)
+                btnText.set("支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!!)}元")
+            else{
+                btnText.set("支付保证金0.0元")
+            }
+
         } else if (presenter.carSelect.get()?.promiseMoneyPrice!! > t) {
             btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!! - t)}元")
         }
@@ -69,14 +74,15 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         register(this)
+        presenter.getPromiseMoney()
     }
 
     var dialog: PayMethodSelectDialog? = null
     fun onSelectPayClick() {
 //        if (dialog == null) {
-            //2:充值的可用支付方式
-            dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 2).withObject(Object1, presenter.payMethod).navigation() as PayMethodSelectDialog
-            dialog?.listener = this
+        //2:充值的可用支付方式
+        dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 2).withObject(Object1, presenter.payMethod).navigation() as PayMethodSelectDialog
+        dialog?.listener = this
 //        }
         dialog?.show(childFragmentManager, "dialog_pay_method_select")
     }
@@ -90,6 +96,8 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     @Subscribe
     fun onCarReceive(carSelectInfo: CarSelectInfo) {
         presenter.carSelect.set(carSelectInfo)
+        onGetPromiseMoneySuccess(presenter.amount)
+
     }
 
     fun gotoPromiseMoneyDetail() {

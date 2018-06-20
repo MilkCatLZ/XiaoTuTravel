@@ -27,11 +27,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/main_back"
             android:orientation="vertical">
 
@@ -95,6 +95,8 @@
 
                 <TextView
                     style="@style/style_money_verify_hint"
+                    android:hint="请选择车辆类型"
+                    android:gravity="right"
                     android:text="@{presenter.carSelect.carName}" />
 
                 <ImageView

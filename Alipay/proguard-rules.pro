@@ -16,7 +16,7 @@
 #   public *;
 #}
 #支付宝
--libraryjars libs/alipaySdk-20170922.jar
+-libraryjars libs/alipaySdk-20180601.jar
 
 -keep class com.alipay.android.app.IAlixPay{*;}
 -keep class com.alipay.android.app.IAlixPay$Stub{*;}
