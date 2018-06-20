@@ -3,13 +3,16 @@ package shy.car.sdk.travel.send.presenter
 import android.content.Context
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import android.widget.Toast
 import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingPagerAdapter
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
+import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
@@ -18,6 +21,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
+import shy.car.sdk.travel.send.data.CarUserTime
 
 /**
  * 发货-整车发货 填写
@@ -40,19 +44,40 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun getCarListSuccess(list: ArrayList<CarInfo>)
         fun onSubmitSuccess()
         fun onSubmitError()
+        fun getCarUseTimeSuccess(t2: List<CarUserTime>)
     }
 
 
     var adapter = DataBindingPagerAdapter<CarInfo>(context, R.layout.item_send_hole_car_select, BR.car, null)
 
+    fun getData() {
+        ProgressDialog.showLoadingView(context)
+        val observable1 = ApiManager.getInstance()
+                .api.getCarTypeList()
 
-    init {
-        var list = ArrayList<CarInfo>()
-        for (i in 1..8) {
-            list.add(CarInfo())
-        }
+        val observable2 = ApiManager.getInstance()
+                .api.getCarUseTime()
 
-        adapter.setItems(list, 1)
+        Observable.zip(observable1, observable2, BiFunction<List<CarInfo>, List<CarUserTime>, String> { t1, t2 ->
+            Observable.just(1)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        adapter.setItems(t1, 1)
+                        carID = t1[0].id.toString()
+                        callBack.getCarUseTimeSuccess(t2)
+                    }, {
+
+                    })
+            ""
+        })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    ProgressDialog.hideLoadingView(context)
+                }, {
+                    ProgressDialog.hideLoadingView(context)
+                    it.printStackTrace()
+                })
     }
 
     fun submit() {
@@ -60,7 +85,8 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
             ProgressDialog.showLoadingView(context)
             disposable?.dispose()
             val observable = ApiManager.getInstance()
-                    .api.postDeliveryOrder(app.location.cityCode, carID,
+                    .api.postDeliveryOrder(app.location.cityCode,
+                    carID,
                     startTime,
                     endTime,
                     startLocation.get()?.address!!,

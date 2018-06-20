@@ -18,6 +18,8 @@ import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.location.data.CurrentLocation
+import shy.car.sdk.travel.send.data.CarInfo
+import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.presenter.SendCitySmallPackagePresenter
 
 
@@ -25,7 +27,20 @@ import shy.car.sdk.travel.send.presenter.SendCitySmallPackagePresenter
  * create by LZ at 2018/05/25
  * 整车发货填写
  */
-class SendCitySmallPackageFragment : XTBaseFragment(), SendCitySmallPackagePresenter.CallBack {
+class SendCitySmallPackageFragment : XTBaseFragment(),
+        SendCitySmallPackagePresenter.CallBack {
+
+    override fun onSubmitSuccess() {
+        finish()
+    }
+
+    override fun onSubmitError() {
+
+    }
+
+    override fun getCarUseTimeSuccess(t2: List<CarUserTime>) {
+        timeSelectDialogFragment.list = t2
+    }
 
     lateinit var binding: FragmentSendCitySmallPackageBinding
     lateinit var presenter: shy.car.sdk.travel.send.presenter.SendCitySmallPackagePresenter
@@ -49,10 +64,11 @@ class SendCitySmallPackageFragment : XTBaseFragment(), SendCitySmallPackagePrese
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.getData()
     }
 
     fun onConfirmClick() {
-
+        presenter.submit()
     }
 
     fun onSelectStartLocationclick() {
@@ -79,6 +95,14 @@ class SendCitySmallPackageFragment : XTBaseFragment(), SendCitySmallPackagePrese
             @SuppressLint("SetTextI18n")
             override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
                 binding.txtUseTime.text = "${date.name}     ${time.name}"
+                if (time.name.contains("-")) {
+                    var arr = time.name.split("-")
+                    presenter.startTime = arr[0].trim()
+                    presenter.endTime = arr[1].trim()
+                } else {
+                    presenter.startTime = date.name + " 00:00:00"
+                    presenter.endTime = "0"
+                }
             }
 
         }
@@ -95,7 +119,7 @@ class SendCitySmallPackageFragment : XTBaseFragment(), SendCitySmallPackagePrese
 
         }
         goodsDialog.isCancelable
-        goodsDialog.show(childFragmentManager,"dialog_select_goods_type")
+        goodsDialog.show(childFragmentManager, "dialog_select_goods_type")
     }
 
 

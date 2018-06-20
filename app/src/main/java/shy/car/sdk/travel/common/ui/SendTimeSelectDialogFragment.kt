@@ -12,14 +12,17 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogSendTimeSelectBinding
 import shy.car.sdk.travel.common.data.CommonWheelItem
 import shy.car.sdk.travel.common.presenter.SendTimeSelectPresenter
+import shy.car.sdk.travel.send.data.CarUserTime
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
  * 选择用车时间
  */
 @Route(path = RouteMap.SendTimeSelect)
-class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelectPresenter.CallBack {
+class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
+        SendTimeSelectPresenter.CallBack {
 
     interface OnItemSelectedListener {
         fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem)
@@ -41,6 +44,7 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { presenter = SendTimeSelectPresenter(it, this) }
+        presenter.setTimeLists(list)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,6 +75,11 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(), SendTimeSelect
     fun onConfirm() {
         listener?.onTimeSelect(presenter.dateList[binding.wheelSendHoleCarDate.currentItem], presenter.timeList[binding.wheelSendHoleCarTime.currentItem])
         dismiss()
+    }
+
+    var list: List<CarUserTime> = ArrayList<CarUserTime>()
+    fun setTimeLists(t2: List<CarUserTime>) {
+        list = t2
     }
 
 }

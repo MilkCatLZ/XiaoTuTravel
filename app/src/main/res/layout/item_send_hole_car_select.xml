@@ -20,22 +20,25 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-            <TextView
-                style="@style/style_ww.text_14_333"
-                android:layout_marginTop="13dp"
-                android:text="桂A555D" />
+        <TextView
+            style="@style/style_ww.text_14_333"
+            android:layout_marginTop="13dp"
+            android:text="@{car.name}"
+            tools:text="桂A555D" />
 
-            <TextView
-                style="@style/style_ww.text_12_999"
-                android:layout_marginTop="5dp"
-                android:text="载重500kg/长宽高:4*16.15立m³/载货体积5.3方"
-                android:textSize="10sp" />
+        <TextView
+            style="@style/style_ww.text_12_999"
+            android:layout_marginTop="5dp"
+            android:text="@{car.info()}"
+            android:textSize="10sp"
+            tools:text="载重500kg/长宽高:4*16.15立m³/载货体积5.3方" />
 
-            <ImageView
-                android:id="@+id/img_car"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:src="@drawable/img_car" />
+        <ImageView
+            android:id="@+id/img_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:imageURL="@{car.img}"
+            android:src="@drawable/img_car" />
     </LinearLayout>
 </layout>

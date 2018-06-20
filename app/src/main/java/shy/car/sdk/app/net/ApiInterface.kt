@@ -21,6 +21,7 @@ import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderDetail
+import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
@@ -293,10 +294,10 @@ interface ApiInterface {
     remark	string	是	备注
      */
     @FormUrlEncoded
-    @POST("users/orders")
+    @POST("users/freights")
     fun postDeliveryOrder(
             @Field(ParamsConstant.City) cityID: String,
-            @Field(ParamsConstant.ModelID) modelID: String,
+            @Field(ParamsConstant.CarID) carID: String? = null,
             @Field(ParamsConstant.UseCarStart) use_car_at_strart: String,
             @Field(ParamsConstant.UseCarEnd) use_car_at_end: String,
             @Field(ParamsConstant.FromAddress) from_address: String,
@@ -309,12 +310,17 @@ interface ApiInterface {
             @Field(ParamsConstant.FreightType) freight_type: String? = null,
             @Field(ParamsConstant.FreightOther) freight_other: String,
             @Field(ParamsConstant.Freight) freight: String,
-            @Field(ParamsConstant.Weight) weight: String,
-            @Field(ParamsConstant.Volume) volume: String,
+            @Field(ParamsConstant.Weight) weight: String? = null,
+            @Field(ParamsConstant.Volume) volume: String? = null,
             @Field(ParamsConstant.Remark) remark: String? = null
     ): Observable<JsonObject>
 
     @DELETE("users/orders/{order_id}")
     fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String): Observable<Response<Void>>
 
+    @GET("freight/car")
+    fun getCarTypeList(): Observable<List<shy.car.sdk.travel.send.data.CarInfo>>
+
+    @GET("freight/time")
+    fun getCarUseTime(): Observable<List<CarUserTime>>
 }

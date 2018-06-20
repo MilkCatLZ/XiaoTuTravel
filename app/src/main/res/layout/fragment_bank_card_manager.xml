@@ -48,7 +48,6 @@
                         android:layout_marginStart="15dp"
                         android:background="@color/main_back"
                         android:bindAdapter="@{presenter.adapter}"
-                        app:layoutManager="com.base.widget.FullLinearLayoutManager"
                         tools:listitem="@layout/item_bank_card" />
 
                     <LinearLayout

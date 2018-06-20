@@ -192,6 +192,7 @@
                         android:background="@android:color/transparent"
                         android:ellipsize="end"
                         android:hint="输入重量"
+                        android:text="@{presenter.weight}"
                         android:maxLines="1"
                         android:textColorHint="@color/text_third_primary_999999"
                         />
@@ -227,6 +228,7 @@
                         android:ellipsize="end"
                         android:hint="输入金额"
                         android:inputType="numberDecimal"
+                        android:text="@{presenter.price}"
                         android:maxLines="1"
                         android:textColorHint="@color/text_third_primary_999999"
                         />
@@ -260,6 +262,7 @@
                         android:background="@android:color/transparent"
                         android:ellipsize="end"
                         android:hint="装卸/付款方式等"
+                        android:text="@{presenter.remark}"
                         android:maxLines="1"
                         android:textColorHint="@color/text_third_primary_999999"
 

@@ -3,6 +3,7 @@ package shy.car.sdk.travel.send.ui
 import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.send.data.CarInfo
+import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.presenter.SendHoleCarPresenter
 import java.util.*
 
@@ -30,6 +32,10 @@ import java.util.*
  */
 class SendHoleCarFragment : XTBaseFragment(),
         SendHoleCarPresenter.CallBack {
+    override fun getCarUseTimeSuccess(t2: List<CarUserTime>) {
+        timeSelectDialogFragment.setTimeLists(t2)
+    }
+
     override fun onSubmitSuccess() {
         ToastManager.showShortToast(activity, "发布成功")
         finish()
@@ -67,12 +73,26 @@ class SendHoleCarFragment : XTBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initPager()
+        presenter.getData()
     }
 
     private fun initPager() {
         binding.viewPagerSendHoldCar.adapter = presenter.adapter
         binding.viewPagerSendHoldCar.setPageTransformer(true, TransFormer())
         binding.viewPagerSendHoldCar.offscreenPageLimit = 5
+        binding.viewPagerSendHoldCar.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                presenter.carID = presenter.adapter.items[position].id.toString()
+            }
+        })
     }
 
     fun onConfirmClick() {
@@ -103,12 +123,13 @@ class SendHoleCarFragment : XTBaseFragment(),
             @SuppressLint("SetTextI18n")
             override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
                 binding.txtUseTime.text = "${date.name}     ${time.name}"
-                if ("全天" == time.name) {
+                if (time.name.contains("-")) {
+                    var arr = time.name.split("-")
+                    presenter.startTime = arr[0].trim()
+                    presenter.endTime = arr[1].trim()
+                } else {
                     presenter.startTime = date.name + " 00:00:00"
                     presenter.endTime = "0"
-                } else {
-                    presenter.startTime = date.name + " 18:00:00"
-                    presenter.startTime = date.name + " 23:59:59"
                 }
             }
 

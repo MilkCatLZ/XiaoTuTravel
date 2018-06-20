@@ -1,5 +1,4 @@
-package shy.car.sdk.travel.bank.data
-
+package shy.car.sdk.travel.send.data
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
@@ -10,59 +9,28 @@ import com.google.gson.annotations.SerializedName
 
 import shy.car.sdk.BR
 
-
-class BankCard : BaseObservable(), Observable {
+class CarUserTime : BaseObservable(),
+        Observable {
 
 
     /**
-     * id : 1
-     * name : 中国银行
-     * logo : 银行logo地址
-     * description : 尾号8888储蓄卡
-     * default : 1
+     * start : 0
+     * end : 0
      */
 
-    @SerializedName("id")
+    @SerializedName("start")
     @get:Bindable
-    var id: String? = null
-        set(id) {
-            field = id
-            notifyChange(BR.id)
+    var start: String? = null
+        set(start) {
+            field = start
+            notifyChange(BR.start)
         }
-    @SerializedName("name")
+    @SerializedName("end")
     @get:Bindable
-    var name: String? = null
-        set(name) {
-            field = name
-            notifyChange(BR.name)
-        }
-    @SerializedName("logo")
-    @get:Bindable
-    var logo: String? = null
-        set(logo) {
-            field = logo
-            notifyChange(BR.logo)
-        }
-    @SerializedName("desc")
-    @get:Bindable
-    var description: String? = null
-        set(description) {
-            field = description
-            notifyChange(BR.description)
-        }
-    @SerializedName("default")
-    @get:Bindable
-    var defaultX: Int = 0
-        set(defaultX) {
-            field = defaultX
-            notifyChange(BR.defaultX)
-        }
-    @SerializedName("type")
-    @get:Bindable
-    var type: String=""
-        set(value) {
-            field = value
-            notifyChange(BR.type)
+    var end: String? = null
+        set(end) {
+            field = end
+            notifyChange(BR.end)
         }
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
