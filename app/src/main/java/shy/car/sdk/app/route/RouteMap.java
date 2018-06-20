@@ -52,10 +52,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-    
+
     @NotNull
     public static final String UserDetail = "/user/detail";
-    
+
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -96,14 +96,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-    
+
     /**
      * 租车详情
-     * params:  withString("orderID",orderID)
+     * params:  withString(ParamsConstant.String1,orderID)
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-    
+
     /**
      * 支付方式选择
      * {@link * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog}
@@ -221,21 +221,22 @@ public class RouteMap {
     /**
      * 添加银行卡
      * {@link BankCard}
-     *
      */
     @NotNull
     public static final String AddBankCard = "/bank/add";
-    
+
     /**
      * {@link PromiseMoneyPaySuccessActivity}
      */
     @NotNull
     public static final String PaySuccess = "/pay/success";
-    
+
     /**
      * {@link UnLockCarActivity}
      */
     @NotNull
     public static final String UnLockCar = "/car/unlock";
-    
+
+    @NotNull
+    public static final String PayOrder = "pay/order";
 }

@@ -34,7 +34,7 @@ class OrderMineFragment : XTBaseUltimateRecyclerViewFragment() {
                     checkHasMore()
                 }
 
-                override fun getListSuccess(list: ArrayList<OrderMineList>) {
+                override fun getListSuccess(list: List<OrderMineList>) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
                 }
@@ -59,7 +59,7 @@ class OrderMineFragment : XTBaseUltimateRecyclerViewFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onRefresh()
     }
 
 
@@ -93,6 +93,7 @@ class OrderMineFragment : XTBaseUltimateRecyclerViewFragment() {
 
     fun checkChange(i: Int) {
         checkedTab.set(i)
+        presenter.type = i
         onRefresh()
     }
 

@@ -119,9 +119,21 @@ interface ApiInterface {
      * 获取发货列表
      *
      */
-    @GET("xt/orderMineList")
-    fun getOrdreMineList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<OrderMineList>>
+    @GET("orders")
+    fun getOrderMineList(
+            @Query(ParamsConstant.Type) type: String,
+            @Query(ParamsConstant.Offset) offset: Int,
+            @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<OrderMineList>>
+    /**
+     * 获取租车订单列表
+     *
+     */
+    @GET("orders/car")
+    fun getRentOrderList(
+            @Query(ParamsConstant.Type) type: String,
+            @Query(ParamsConstant.Status) status: String,
+            @Query(ParamsConstant.Offset) offset: Int,
+            @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<OrderMineList>>
 
     /**
      * 检查更新
@@ -135,8 +147,9 @@ interface ApiInterface {
      *
      */
     @GET("xt/message")
-    fun getMessageList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                       @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<MessageList>>
+    fun getMessageList(
+            @Query(ParamsConstant.PageIndex) pageIndex: Int,
+            @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<MessageList>>
 
     /**
      * 附近车辆列表

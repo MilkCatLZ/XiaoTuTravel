@@ -16,6 +16,8 @@
         <variable
             name="fragment"
             type="shy.car.sdk.travel.order.ui.OrderMineFragment"/>
+
+        <import type="shy.car.sdk.travel.order.data.OrderMineList"/>
     </data>
 
     <LinearLayout
@@ -50,8 +52,8 @@
                         android:id="@+id/radio_order_mine_all"
 
                         style="@style/style_wm.order_mine"
-                        android:checked="@{fragment.checkedTab==0}"
-                        android:onClick="@{()->fragment.checkChange(0)}"
+                        android:checked="@{fragment.checkedTab== OrderMineList.getALL()}"
+                        android:onClick="@{()->fragment.checkChange(OrderMineList.getALL())}"
                         android:text="全部订单"/>
                 </LinearLayout>
 
@@ -62,8 +64,8 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_rent"
                         style="@style/style_wm.order_mine"
-                        android:checked="@{fragment.checkedTab==1}"
-                        android:onClick="@{()->fragment.checkChange(1)}"
+                        android:checked="@{fragment.checkedTab== OrderMineList.getRENT()}"
+                        android:onClick="@{()->fragment.checkChange(OrderMineList.getRENT())}"
                         android:text="租车"/>
                 </LinearLayout>
 
@@ -74,8 +76,8 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_take"
                         style="@style/style_wm.order_mine"
-                        android:checked="@{fragment.checkedTab==2}"
-                        android:onClick="@{()->fragment.checkChange(2)}"
+                        android:checked="@{fragment.checkedTab==OrderMineList.getTAKE()}"
+                        android:onClick="@{()->fragment.checkChange(OrderMineList.getTAKE())}"
                         android:text="接单"/>
                 </LinearLayout>
 
@@ -86,8 +88,8 @@
                     <RadioButton
                         android:id="@+id/radio_order_mine_send"
                         style="@style/style_wm.order_mine"
-                        android:checked="@{fragment.checkedTab==3}"
-                        android:onClick="@{()->fragment.checkChange(3)}"
+                        android:checked="@{fragment.checkedTab==OrderMineList.getSEND()}"
+                        android:onClick="@{()->fragment.checkChange(OrderMineList.getSEND())}"
                         android:text="发货"/>
                 </LinearLayout>
             </RadioGroup>

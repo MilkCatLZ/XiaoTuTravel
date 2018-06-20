@@ -1,5 +1,6 @@
 package shy.car.sdk.travel.rent.ui
 
+import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
@@ -32,7 +33,9 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
@@ -41,6 +44,7 @@ import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.LocationChange
+import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -68,7 +72,31 @@ class CarRentFragment : XTBaseFragment() {
     private var carPointList = ArrayList<NearCarPoint>()
 
     private val callBack = object : CarRentPresenter.CallBack {
-        override fun onCreateRentOrderSuccess(oid:String) {
+        override fun onGetUnPayOrderSuccess(orderMineList: OrderMineList) {
+            activity?.let {
+                DialogManager.with(it, childFragmentManager)
+                        .title("提示")
+                        .message("你有未支付的订单")
+                        .leftButtonText("取消")
+                        .rightButtonText("去支付")
+                        .onRightClick({ t1, t2 ->
+                            ARouter.getInstance()
+                                    .build(RouteMap.PayOrder)
+                                    .withString(String1, orderMineList.id)
+                                    .navigation()
+                        })
+                        .show()
+            }
+        }
+
+        override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList) {
+            ARouter.getInstance()
+                    .build(RouteMap.FindAndRentCar)
+                    .withString(ParamsConstant.String1, orderMineList.id)
+                    .navigation()
+        }
+
+        override fun onCreateRentOrderSuccess(oid: String) {
             ARouter.getInstance()
                     .build(RouteMap.FindAndRentCar)
                     .withObject(Object1, currentSelectedCarInfo.get())

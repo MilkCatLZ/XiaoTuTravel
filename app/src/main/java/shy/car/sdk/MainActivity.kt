@@ -181,6 +181,8 @@ class MainActivity : NearCarOpenListener,
 
     fun onAvatarClick() {
         drawer.openDrawer(Gravity.START)
+        if (User.instance.login)
+            User.instance.getUserDetail(this)
     }
 
     /**

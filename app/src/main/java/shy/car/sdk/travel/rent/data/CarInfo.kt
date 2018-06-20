@@ -118,13 +118,6 @@ class CarInfo : BaseObservable() {
             field = netWork
             notifyChange(BR.netWork)
         }
-    @SerializedName("network_id")
-    @get:Bindable
-    var networkID: String = ""
-        set(value) {
-            field = value
-            notifyChange(BR.networkID)
-        }
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
