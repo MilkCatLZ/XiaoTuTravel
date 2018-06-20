@@ -1,9 +1,11 @@
 package shy.car.sdk.app.net
 
+import com.alibaba.android.arouter.facade.annotation.Param
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Response
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.bank.data.BankCard
@@ -54,11 +56,12 @@ interface ApiInterface {
     fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.GrantType) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<JsonObject>
 
     /**
-     * 登录
+     * 登出
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */
     @DELETE("oauth/access_token")
-    fun logout(@Query("") params: String? = null): Observable<JsonObject>
+//    @HTTP(method = "DELETE", path = "oauth/access_token", hasBody = true)
+    fun logout(): Observable<Response<Void>>
 
     /**
      * 获取用户详情
@@ -124,6 +127,7 @@ interface ApiInterface {
             @Query(ParamsConstant.Type) type: String,
             @Query(ParamsConstant.Offset) offset: Int,
             @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<OrderMineList>>
+
     /**
      * 获取租车订单列表
      *
@@ -310,5 +314,7 @@ interface ApiInterface {
             @Field(ParamsConstant.Remark) remark: String? = null
     ): Observable<JsonObject>
 
+    @DELETE("users/orders/{order_id}")
+    fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String): Observable<Response<Void>>
 
 }

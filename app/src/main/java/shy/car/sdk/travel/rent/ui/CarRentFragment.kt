@@ -100,6 +100,7 @@ class CarRentFragment : XTBaseFragment() {
             ARouter.getInstance()
                     .build(RouteMap.FindAndRentCar)
                     .withObject(Object1, currentSelectedCarInfo.get())
+                    .withString(String1, oid)
                     .navigation()
         }
 

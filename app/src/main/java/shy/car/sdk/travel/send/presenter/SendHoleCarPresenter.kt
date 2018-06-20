@@ -60,7 +60,22 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
             ProgressDialog.showLoadingView(context)
             disposable?.dispose()
             val observable = ApiManager.getInstance()
-                    .api.postDeliveryOrder(app.location.cityCode, carID, startTime, endTime, startLocation.get()?.address!!, startLocation.get()?.lng.toString(), startLocation.get()?.lat.toString(), endLocation.get()?.address!!, endLocation.get()?.lng.toString(), endLocation.get()?.lat.toString(), "2", goodsType.get()?.goodsType.toString(), goodsType.get()?.goodsTypeName!!, price.get()!!, weight.get()!!, volume.get()!!, remark.get()!!)
+                    .api.postDeliveryOrder(app.location.cityCode, carID,
+                    startTime,
+                    endTime,
+                    startLocation.get()?.address!!,
+                    startLocation.get()?.lng.toString(),
+                    startLocation.get()?.lat.toString(),
+                    endLocation.get()?.address!!,
+                    endLocation.get()?.lng.toString(),
+                    endLocation.get()?.lat.toString(),
+                    "2",
+                    goodsType.get()?.goodsType.toString(),
+                    goodsType.get()?.goodsTypeName!!,
+                    price.get()!!,
+                    weight.get()!!,
+                    volume.get()!!,
+                    remark.get())
             val observer = object : Observer<JsonObject> {
                 override fun onComplete() {
 

@@ -1,5 +1,6 @@
 package com.base.network.retrofit
 
+import com.base.util.Log
 import com.google.gson.JsonSyntaxException
 import okhttp3.*
 
@@ -17,9 +18,9 @@ abstract class BaseInterceptor : Interceptor {
 
             //公共参数
 
-            request = if ("GET" == method) {
+            request = if ("GET" == method || "DELETE" == method) {
                 getMethodRequest(request)
-            } else if ("POST" == method || "PUT" == method || "DELETE" == method) {
+            } else if ("POST" == method || "PUT" == method) {
                 postMethodRequest(request)
             } else {
                 request
@@ -29,7 +30,14 @@ abstract class BaseInterceptor : Interceptor {
             e.printStackTrace()
         }
 
-        return chain.proceed(request)
+        var response = chain.proceed(request)
+        if (response.code() == 204) {
+            try {
+                Log.d(" response.body()", response.body().toString())
+            } catch (e: Exception) {
+            }
+        }
+        return response
     }
 
     /**

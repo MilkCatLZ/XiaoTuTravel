@@ -21,6 +21,7 @@ import okhttp3.HttpUrl
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import retrofit2.Response
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.LoginOutOfDateException
@@ -201,31 +202,35 @@ class Application : BaseApplication() {
         logout()
     }
 
+    var disposable: Disposable? = null
     fun logout() {
-        ApiManager.getInstance()
+//        User.logout(this@Application)
+        val observable = ApiManager.getInstance()
                 .api.logout()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<JsonObject> {
-                    override fun onComplete() {
 
-                    }
+        var observer = object : Observer<Response<Void>> {
+            override fun onComplete() {
 
-                    override fun onSubscribe(d: Disposable) {
+            }
 
-                    }
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
 
-                    override fun onNext(t: JsonObject) {
-                        User.logout(this@Application)
-                    }
+            override fun onNext(t: Response<Void>) {
+                User.logout(this@Application)
+            }
 
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                        User.logout(this@Application)
-                    }
+            override fun onError(e: Throwable) {
+                e.printStackTrace()
+                disposable?.dispose()
+                User.logout(this@Application)
+            }
 
-                })
+        }
 
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
 }

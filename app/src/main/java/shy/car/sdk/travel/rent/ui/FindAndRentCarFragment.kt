@@ -29,6 +29,14 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
  */
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
+    override fun onCancelSuccess() {
+        finish()
+    }
+
+    override fun onCancelError(e: Throwable) {
+
+    }
+
     override fun onRingError(e: Throwable) {
 
     }
@@ -207,6 +215,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     fun unLockCar() {
         presenter.unLockCar()
+    }
+    fun cancelOrder() {
+        presenter.cancelOrder()
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {

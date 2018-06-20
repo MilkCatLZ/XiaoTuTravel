@@ -317,24 +317,10 @@
                         />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="49dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/back_button_main_green_corner"
-                    android:gravity="center"
-                    android:onClick="@{()->fragment.onConfirmClick()}"
-                    android:text="确认发布  "
-                    android:textColor="@color/_foreground_material_light"
-                    android:textSize="16sp" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginTop="20dp"
                     android:paddingBottom="25dp"
                     android:paddingStart="18dp">
 
@@ -342,7 +328,10 @@
                         style="@style/style_ww.text_12_999"
                         android:button="@null"
                         android:checked="@={presenter.agree}"
+                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/check_rule"
+                        android:textColor="@drawable/color_agree_check_999_main_red"
+                        android:gravity="center"
                         android:text="确认表示同意" />
 
                     <TextView
@@ -352,6 +341,21 @@
                         android:textColor="@color/main_color_red" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+
+                    android:background="@drawable/back_button_main_green_corner"
+                    android:gravity="center"
+                    android:onClick="@{()->fragment.onConfirmClick()}"
+                    android:text="确认发布  "
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="16sp" />
+
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </LinearLayout>

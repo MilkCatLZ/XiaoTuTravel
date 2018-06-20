@@ -5,7 +5,10 @@ import com.base.base.ProgressDialog
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -21,6 +24,8 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
     interface CallBack {
         fun onRingError(e: Throwable)
+        fun onCancelSuccess()
+        fun onCancelError(e: Throwable)
 
     }
 
@@ -85,5 +90,46 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
+    }
+
+    fun cancelOrder() {
+        ProgressDialog.showLoadingView(context)
+        disposable?.dispose()
+        val observable = ApiManager.getInstance()
+                .api.cancelRentOrder(orderID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    ProgressDialog.hideLoadingView(context)
+                    callBack.onCancelSuccess()
+                }, {
+                    ProgressDialog.hideLoadingView(context)
+                    callBack.onCancelError(it)
+                    it.printStackTrace()
+                })
+//        val observer = object : Observer<Void> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//                disposable = d
+//            }
+//
+//            override fun onNext(t: Void) {
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.onCancelSuccess()
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.onCancelError(e)
+//                ErrorManager.managerError(context,e,"订单取消失败，请重试")
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
     }
 }
