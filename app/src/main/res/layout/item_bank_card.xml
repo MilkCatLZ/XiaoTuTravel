@@ -15,7 +15,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-
         android:orientation="vertical">
 
         <LinearLayout
@@ -26,7 +25,7 @@
             android:onClick="@{click}"
             android:orientation="horizontal"
             android:paddingStart="24dp"
-            android:paddingTop="24dp"
+            android:paddingTop="18dp"
             android:tag="@{bank}">
 
             <ImageView
@@ -51,7 +50,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="11dp"
                     android:text="储蓄卡"
                     android:textColor="@color/_foreground_material_light"
                     android:textSize="15sp" />
@@ -59,7 +58,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="2dp"
                     android:text="@{bank.description}"
                     android:textColor="@color/_foreground_material_light"
                     android:textSize="15sp" />

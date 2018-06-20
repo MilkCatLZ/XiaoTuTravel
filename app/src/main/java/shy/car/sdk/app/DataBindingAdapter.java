@@ -27,7 +27,7 @@ public class DataBindingAdapter extends BindingAdapter {
     @android.databinding.BindingAdapter("android:imageURL")
     public static void setUrlImage(@NonNull ImageView imageView, String url) {
         try {
-            if (!url.contains(BuildConfig.Host)) {
+            if (!url.contains(BuildConfig.Host) && !url.contains("storage")) {
                 url = BuildConfig.Host + url;
             }
             if (ImageUtil.hasImage(url)) {
@@ -51,7 +51,7 @@ public class DataBindingAdapter extends BindingAdapter {
     @android.databinding.BindingAdapter("android:appAvatarURL")
     public static void setRoundImage(@NonNull ImageView imageView, @Nullable String url) {
         try {
-            if (!url.contains(BuildConfig.Host)) {
+            if (!url.contains(BuildConfig.Host) && !url.contains("storage")) {
                 url = BuildConfig.Host + url;
             }
             if (ImageUtil.hasImage(url)) {

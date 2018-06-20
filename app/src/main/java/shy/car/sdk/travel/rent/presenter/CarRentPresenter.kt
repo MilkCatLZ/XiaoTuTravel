@@ -207,13 +207,15 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onNext(t: List<OrderMineList>) {
+                ProgressDialog.hideLoadingView(context)
                 if (t.isNotEmpty()) {
                     callBack.onGetUnPayOrderSuccess(t[0])
                 }
             }
 
             override fun onError(e: Throwable) {
-
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context,e,"获取订单失败")
             }
 
         }
@@ -240,13 +242,15 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onNext(t: List<OrderMineList>) {
+                ProgressDialog.hideLoadingView(context)
                 if (t.isNotEmpty()) {
                    callBack.onGetUnProgressOrderSuccess(t[0])
                 }
             }
 
             override fun onError(e: Throwable) {
-
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context,e,"获取订单失败")
             }
 
         }

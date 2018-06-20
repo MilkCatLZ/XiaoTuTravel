@@ -123,7 +123,7 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
     }
 
     var name = ObservableField<String>("过期猫粮")
-    var idNumber = ObservableField<String>("450106198809201012")
+    var idNumber = ObservableField<String>("4501061988092010")
 
     var frontImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
     var backImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
