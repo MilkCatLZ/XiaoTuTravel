@@ -19,9 +19,6 @@ import shy.car.sdk.travel.rent.data.CarInfo
 class FindAndRentCarActivity : XTBaseActivity() {
 
 
-    @Autowired(name = Object1)
-    @JvmField
-    var carInfo = CarInfo()
     @Autowired(name = String1)
     @JvmField
     var orderID: String = ""
@@ -33,7 +30,6 @@ class FindAndRentCarActivity : XTBaseActivity() {
                 .inject(this)
 
         var fragment = supportFragmentManager.findFragmentById(R.id.fragment_find_and_rent) as FindAndRentCarFragment
-        fragment.carInfo = carInfo
         fragment.orderID = orderID
 
     }

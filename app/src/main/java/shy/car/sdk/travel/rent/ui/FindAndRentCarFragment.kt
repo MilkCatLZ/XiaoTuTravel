@@ -21,6 +21,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.rent.data.CarInfo
+import shy.car.sdk.travel.rent.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
@@ -29,6 +30,16 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
  */
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
+    override fun onGetDetailError(e: Throwable) {
+
+
+    }
+
+    override fun onGetDetailSuccess(t: RentOrderDetail) {
+        setupMap(t)
+        binding.detail = t
+    }
+
     override fun onCancelSuccess() {
         finish()
     }
@@ -59,7 +70,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
         binding.fragment = this
-
         binding.mapView.onCreate(savedInstanceState)
         return binding.root
 
@@ -69,34 +79,23 @@ class FindAndRentCarFragment : XTBaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
         initMap()
+        presenter.getOrderDetail()
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
-    var carInfo = CarInfo()
-        set(value) {
-            field = value
-            initValue(value)
-            setupMap()
 
-        }
     var orderID: String = ""
         set(value) {
             field = value
-            presenter.orderID=orderID
+            presenter.orderID = orderID
         }
 
-    private fun setupMap() {
+    private fun setupMap(orderDetail: RentOrderDetail) {
 
         mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
-        mEndPoint = LatLonPoint(carInfo.lat, carInfo.lng)
-
+        mEndPoint = LatLonPoint(orderDetail.car?.lat!!, orderDetail.car?.lng!!)
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
         getRoute()
-    }
-
-    private fun initValue(value: CarInfo) {
-        presenter.carInfo = carInfo
-        binding.car = value
     }
 
     private fun getRoute() {
@@ -185,7 +184,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
         //初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.interval(15000) //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         binding.mapView.map.myLocationStyle = myLocationStyle//设置定位蓝点的Style
-//aMap.getUiSettings().setMyLocationButtonEnabled(true);设置默认定位按钮是否显示，非必需设置。
+
         binding.mapView.map.isMyLocationEnabled = true
     }
 
@@ -216,6 +215,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     fun unLockCar() {
         presenter.unLockCar()
     }
+
     fun cancelOrder() {
         presenter.cancelOrder()
     }

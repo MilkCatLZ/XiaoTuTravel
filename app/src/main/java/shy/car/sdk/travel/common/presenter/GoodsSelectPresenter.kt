@@ -38,7 +38,7 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
 
         for (i in 0..10) {
             var goodsType = GoodsType()
-            goodsType.goodsTypeName = "类型$i"
+            goodsType.goodsTypeName = "类型${i+1}"
             goodsType.goodsType = i
             list.add(goodsType)
         }

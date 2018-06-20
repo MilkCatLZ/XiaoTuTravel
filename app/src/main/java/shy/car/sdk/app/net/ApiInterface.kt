@@ -226,8 +226,8 @@ interface ApiInterface {
     /**
      * 获取租车订单详情
      */
-    @GET("users/deposits/logs")
-    fun getRentOrderDetail(@Query(ParamsConstant.OrderId) order_id: String): Observable<RentOrderDetail>
+    @GET("users/orders/{order_id}")
+    fun getRentOrderDetail(@Path(ParamsConstant.OrderId) order_id: String, @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<RentOrderDetail>
 
 
     /**

@@ -13,7 +13,7 @@ class GoodsType : BaseObservable() {
             notifyPropertyChanged(BR.goodsTypeName)
         }
 
-    var goodsType: Int = 0
+    var goodsType: Int = 1
         set(value) {
             field = value
             notifyPropertyChanged(BR.goodsType)

@@ -17,8 +17,8 @@
             type="shy.car.sdk.travel.rent.ui.FindAndRentCarFragment"/>
 
         <variable
-            name="car"
-            type="shy.car.sdk.travel.rent.data.CarInfo"/>
+            name="detail"
+            type="shy.car.sdk.travel.rent.data.RentOrderDetail"/>
     </data>
 
     <RelativeLayout
@@ -203,7 +203,7 @@
                             android:id="@+id/txt_car_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{car.plateNumber+@string/str_line+car.carModel+@string/str_line+car.color}"
+                            android:text="@{detail.car.plateNumber+@string/str_line+detail.car.carModelName+@string/str_line+detail.car.color}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="@dimen/text_primary_14dp"
                             tools:text="桂DJF565 | EQ1 | 白色" />
@@ -211,7 +211,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibleOrGone="@{StringUtils.isNotEmpty(car.battery)}"
+                            android:visibleOrGone="@{StringUtils.isNotEmpty(detail.car.battery)}"
                             android:layout_marginTop="5dp">
 
                             <TextView
@@ -256,7 +256,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:gravity="center"
-                                android:text='@{""+car.surplusMileage+@string/str_km}'
+                                android:text='@{""+detail.car.surplusMileage+@string/str_km}'
                                 android:textColor="@color/main_color_red"
                                 android:textSize="@dimen/text_second_primary_12dp" />
                         </LinearLayout>
