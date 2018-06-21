@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.take.ui
+package shy.car.sdk.travel.order.ui
 
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -13,8 +13,8 @@ import shy.car.sdk.travel.take.data.DeliveryOrderList
 /**
  * create by 过期猫粮 at 2018/05/21
  */
-@Route(path = RouteMap.OrderTakeDetail)
-open class OrderTakeDetailActivity : XTBaseActivity() {
+@Route(path = RouteMap.OrderDetail)
+open class OrderDetailActivity : XTBaseActivity() {
 
 
     @Autowired(name = Object1)
@@ -23,13 +23,13 @@ open class OrderTakeDetailActivity : XTBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_take_detail)
+        setContentView(R.layout.activity_order_detail)
         ARouter.getInstance()
                 .inject(this)
         var fragment = ARouter.getInstance()
                 .build(RouteMap.OrderTakeDetailFragment)
                 .withObject(Object1, takeOrderList)
-                .navigation() as OrderTakeDetailFragment
+                .navigation() as OrderDetailFragment
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_order_take_detail, fragment, "fragment_order_take_detail")
                 .commitAllowingStateLoss()

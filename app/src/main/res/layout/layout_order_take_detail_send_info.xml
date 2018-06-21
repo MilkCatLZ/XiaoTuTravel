@@ -6,7 +6,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.take.data.TakeOrderDetail" />
+            type="shy.car.sdk.travel.order.data.DeliveryOrderDetail" />
 
         <import type="shy.car.sdk.travel.take.data.OrderState" />
     </data>
@@ -34,7 +34,9 @@
             <TextView
                 style="@style/style_order_take_detail"
                 android:layout_marginStart="10dp"
-                android:text="6月1日（明天） 全天" />
+                android:text="@{detail.useCarAt}"
+                tools:text="6月1日（明天） 全天"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -52,7 +54,9 @@
             <TextView
                 style="@style/style_order_take_detail"
                 android:layout_marginStart="10dp"
-                android:text="南宁东站" />
+                android:text="@{detail.fromAddress}"
+                tools:text="南宁东站"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +74,8 @@
             <TextView
                 style="@style/style_order_take_detail"
                 android:layout_marginStart="10dp"
-                android:text="西乡塘区" />
+                android:text="@{detail.toAddress}"
+                tools:text="西乡塘区" />
         </LinearLayout>
 
 

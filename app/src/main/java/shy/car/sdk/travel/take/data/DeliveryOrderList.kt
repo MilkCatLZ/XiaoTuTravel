@@ -4,7 +4,6 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
-import com.android.databinding.library.baseAdapters.BR
 import com.google.gson.annotations.SerializedName
 
 open class DeliveryOrderList : BaseObservable() {
@@ -21,7 +20,7 @@ open class DeliveryOrderList : BaseObservable() {
 
     @SerializedName("id")
     @get:Bindable
-    var id: String? = null
+    var id: String = ""
         set(id) {
             field = id
             notifyChange(shy.car.sdk.BR.id)

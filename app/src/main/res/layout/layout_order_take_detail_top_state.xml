@@ -6,7 +6,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.take.data.TakeOrderDetail"/>
+            type="shy.car.sdk.travel.order.data.DeliveryOrderDetail"/>
 
         <import type="shy.car.sdk.travel.take.data.OrderState"/>
     </data>
@@ -184,25 +184,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="南宁江南区"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{detail.fromAddress}"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp"/>
+                android:textSize="@dimen/text_second_primary_12dp"
+                tools:text="南宁江南区"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="南宁江南区"
+                android:layout_marginStart="30dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{detail.toAddress}"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp"/>
+                android:textSize="@dimen/text_second_primary_12dp"
+                tools:text="南宁江南区"/>
 
         </LinearLayout>
     </LinearLayout>

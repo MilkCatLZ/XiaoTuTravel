@@ -128,7 +128,7 @@
                     <TextView
                         style="@style/style_order_take_detail"
                         android:layout_marginStart="10dp"
-                        android:text="@{car.goodsInfo}"
+                        android:text="@{order.goodsInfo}"
                         tools:text="3.9米-6.9米 冷藏6.1顿生鲜" />
                 </LinearLayout>
 

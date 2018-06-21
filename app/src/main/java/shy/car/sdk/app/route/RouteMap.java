@@ -19,7 +19,7 @@ import shy.car.sdk.travel.send.data.OrderSendList;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
 import shy.car.sdk.travel.take.data.DeliveryOrderList;
-import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
+import shy.car.sdk.travel.order.ui.OrderDetailActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
 
@@ -133,22 +133,16 @@ public class RouteMap {
     @NotNull
     public static final String UserVerify = "/user/verify_user";
     /**
-     * 接单详情
-     * {@link OrderTakeDetailActivity}
+     * 货运订单详情
+     * {@link OrderDetailActivity}
      * withObject(Object1,{@link DeliveryOrderList})
      */
     @NotNull
-    public static final String OrderTakeDetail = "/take/take_order_detail";
-    /**
-     * 发货详情
-     * {@link shy.car.sdk.travel.send.ui.OrderSendDetailActivity}
-     * withObject(Object,{@link OrderSendList})
-     */
-    @NotNull
-    public static final String OrderSendDetail = "/send/send_order_detail";
+    public static final String OrderDetail = "/take/take_order_detail";
+   
     /**
      * 接单详情fragment
-     * {@link shy.car.sdk.travel.take.ui.OrderTakeDetailFragment}
+     * {@link shy.car.sdk.travel.order.ui.OrderDetailFragment}
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";

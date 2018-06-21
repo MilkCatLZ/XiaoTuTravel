@@ -1,18 +1,18 @@
-package shy.car.sdk.travel.take.presenter
+package shy.car.sdk.travel.order.presenter
 
 import android.content.Context
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.DeliveryOrderList
+import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 
-class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
 
     interface CallBack {
-        fun onGetDetailSuccess(t: TakeOrderDetail)
+        fun onGetDetailSuccess(t: DeliveryOrderDetail)
         abstract fun onError(e: Throwable)
 
     }
@@ -21,8 +21,8 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
 
 
     fun getOrderDetail() {
-        var observable = ApiManager.getInstance().api.getTakeOrderDetail(orderList.id)
-        val obsever = object : Observer<TakeOrderDetail> {
+        val observable = ApiManager.getInstance().api.getTakeOrderDetail(orderList.id)
+        val observer = object : Observer<DeliveryOrderDetail> {
             override fun onComplete() {
 
             }
@@ -31,7 +31,7 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
                 disposable = d
             }
 
-            override fun onNext(t: TakeOrderDetail) {
+            override fun onNext(t: DeliveryOrderDetail) {
                 callBack.onGetDetailSuccess(t)
             }
 
@@ -40,7 +40,7 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
             }
 
         }
-        ApiManager.getInstance().toSubscribe(observable, obsever)
+        ApiManager.getInstance().toSubscribe(observable, observer)
     }
 
     fun postTakeOrder() {

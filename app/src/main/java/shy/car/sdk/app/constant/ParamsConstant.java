@@ -73,4 +73,5 @@ public class ParamsConstant {
     public static final String FromLng = "from_lng";
     public static final String FromAddress = "from_address";
     public static final String OrderStatus = "order_status";
+    public static final String FreightID = "freight_id";
 }

@@ -33,7 +33,7 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
 
     fun goDetail() {
         ARouter.getInstance()
-                .build(RouteMap.OrderTakeDetail)
+                .build(RouteMap.OrderDetail)
                 .withObject(Object1, takeOrderList)
                 .navigation(app)
         dismissAllowingStateLoss()

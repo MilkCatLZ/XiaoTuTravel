@@ -106,7 +106,7 @@
             android:name=".travel.pay.ui.PromiseMoneyDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".travel.take.ui.OrderTakeDetailActivity"
+            android:name=".travel.order.ui.OrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".travel.user.ui.UserVerifyActivity"

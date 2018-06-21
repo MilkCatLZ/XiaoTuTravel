@@ -12,7 +12,9 @@ import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
+import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
@@ -20,11 +22,8 @@ import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
-import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.send.data.CarUserTime
-import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
-import shy.car.sdk.travel.take.data.TakeOrderDetail
 import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.user.data.UserDetailCache
 
@@ -100,15 +99,8 @@ interface ApiInterface {
      * 获取单个接单详情
      *
      */
-    @GET("xt/takeOrderDetail")
-    fun getTakeOrderDetail(@Query(ParamsConstant.OrderId) oid: String): Observable<TakeOrderDetail>
-
-    /**
-     * 获取单个接单详情
-     *
-     */
-    @GET("xt/sendOrderDetail")
-    fun getSendOrderDetail(@Query(ParamsConstant.OrderId) oid: String): Observable<OrderSendDetail>
+    @GET("users/freights/{freight_id}")
+    fun getTakeOrderDetail(@Path(ParamsConstant.FreightID) oid: String): Observable<DeliveryOrderDetail>
 
     /**
      * 获取发货列表

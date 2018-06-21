@@ -83,7 +83,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     private fun gotoDetailIsLogin() {
         if (User.instance.identityAuth==2) {
             ARouter.getInstance()
-                    .build(RouteMap.OrderTakeDetail)
+                    .build(RouteMap.OrderDetail)
                     .withObject(Object1, takeOrderList)
                     .navigation()
         } else {
@@ -98,7 +98,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
     private fun checkUerVerify() {
         if (User.instance.isIdentityAuth()) {
             ARouter.getInstance()
-                    .build(RouteMap.OrderTakeDetail)
+                    .build(RouteMap.OrderDetail)
                     .withObject(Object1, takeOrderList)
                     .navigation()
         } else {

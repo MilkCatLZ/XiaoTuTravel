@@ -44,6 +44,8 @@
     <string name="str_bank_card_add">添加银行卡</string>
     <string name="str_car_usable">辆车可用</string>
     <string name="str_km">km</string>
+    <string name="str_kg">kg</string>
+    <string name="str_sq_meter">m³</string>
     <string name="str_pay_success">缴纳结果</string>
     <string name="str_rent_car_photo">租车拍照</string>
     <string name="str_order_pay">支付订单</string>

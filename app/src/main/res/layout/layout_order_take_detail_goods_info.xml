@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.take.data.TakeOrderDetail" />
+            type="shy.car.sdk.travel.order.data.DeliveryOrderDetail"/>
 
-        <import type="shy.car.sdk.travel.take.data.OrderState" />
+        <import type="shy.car.sdk.travel.take.data.OrderState"/>
     </data>
 
     <LinearLayout
@@ -23,15 +23,15 @@
             android:gravity="center_vertical"
             android:paddingStart="13dp">
 
-            <View style="@style/style_indicator_vertical" />
+            <View style="@style/style_indicator_vertical"/>
 
             <TextView
                 style="@style/style_ww.text_14_333"
                 android:layout_marginStart="10dp"
-                android:text="货物信息" />
+                android:text="货物信息"/>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,13 +48,15 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="货物类型：" />
+                    android:text="货物类型："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="空罐头" />
+                    android:text="@{detail.freightType}"
+                    tools:text="空罐头"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -64,13 +66,15 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="货物重量：" />
+                    android:text="货物重量："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="555.55kg" />
+                    android:text="@{detail.weight+@string/str_kg}"
+                    tools:text="555.55kg"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -80,13 +84,14 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="运费金额：" />
+                    android:text="运费金额："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="999.99元" />
+                    android:text="@{detail.freight}"
+                    tools:text="999.99元"/>
             </LinearLayout>
 
             <LinearLayout
@@ -96,17 +101,18 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="备注信息：" />
+                    android:text="备注信息："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="轻拿轻放，易碎物品" />
+                    android:text="@{detail.remark}"
+                    tools:text="轻拿轻放，易碎物品"/>
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -124,13 +130,14 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="订单编号：" />
+                    android:text="订单编号："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="269565646" />
+                    android:text="@{detail.freightId}"
+                    tools:text="126565123"/>
             </LinearLayout>
 
             <LinearLayout
@@ -140,13 +147,15 @@
 
                 <TextView
                     style="@style/style_ww.text_13_666"
-                    android:text="下单时间：" />
+                    android:text="下单时间："/>
 
                 <TextView
                     style="@style/style_ww.text_13_666"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="2018-9-9 15:30:29" />
+                    android:text="@{detail.createdAt}"
+                    tools:text="2018-9-9 15:30:29"
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

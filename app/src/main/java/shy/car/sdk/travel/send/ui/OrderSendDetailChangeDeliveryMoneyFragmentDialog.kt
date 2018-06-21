@@ -11,7 +11,6 @@ import com.base.util.StringUtils
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.databinding.DialogOrderSendDetailChangeDeliveryMoneyBinding
-import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.presenter.MoneyChangePresenter
 
 /**

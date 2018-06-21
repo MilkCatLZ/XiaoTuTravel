@@ -6,7 +6,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.take.data.TakeOrderDetail" />
+            type="shy.car.sdk.travel.order.data.DeliveryOrderDetail" />
 
         <import type="shy.car.sdk.travel.take.data.OrderState" />
     </data>
@@ -45,6 +45,7 @@
             <ImageView
                 android:layout_width="52dp"
                 android:layout_height="52dp"
+                android:imageURL="@{detail.user.logo}"
                 android:src="@drawable/icon_head" />
 
             <LinearLayout
@@ -63,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="王羲之"
+                        android:text="@{detail.user.name}"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="15sp"
                         tools:text="王羲之" />
@@ -82,7 +83,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-1.5dp"
                         android:layout_weight="1"
-                        android:text="钻石会员"
+                        android:text="@{detail.user.rankText}"
+                        tools:text="钻石会员"
                         android:textColor="@color/text_second_primary_666666"
                         android:textSize="@dimen/text_second_primary_12dp" />
 
@@ -93,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:tag="@{detail}"
                 android:orientation="vertical">
 
 
