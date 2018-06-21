@@ -82,8 +82,8 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
             }
 
             override fun onNext(t: List<OrderMineList>) {
-                callBack.getListSuccess(t)
                 adapter.setItems(t, pageIndex)
+                callBack.getListSuccess(t)
             }
 
             override fun onError(e: Throwable) {
