@@ -12,6 +12,7 @@ import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.base.base.ProgressDialog
 import com.base.util.ImageUtil
 import com.base.util.ToastManager
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -158,6 +159,7 @@ class UserVerifyFragment : XTBaseFragment(),
         if (resultCode == RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
+                ProgressDialog.showLoadingView(activity!!)
                 Observable.create<String> {
                     val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0])), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
@@ -165,6 +167,7 @@ class UserVerifyFragment : XTBaseFragment(),
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe({
+                            ProgressDialog.hideLoadingView(activity!!)
                             when {
                                 idFront -> {
                                     presenter.frontImagePath.set(it)
@@ -177,6 +180,7 @@ class UserVerifyFragment : XTBaseFragment(),
                                 }
                             }
                         }, {
+                            ProgressDialog.hideLoadingView(activity!!)
                             it.printStackTrace()
                         })
 

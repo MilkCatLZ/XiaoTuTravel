@@ -19,7 +19,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeBinding
 import shy.car.sdk.travel.interfaces.onLoginDismiss
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.take.dialog.UserVerifyHintDialogFragment
 import shy.car.sdk.travel.take.presenter.OrderTakePresenter
 import shy.car.sdk.travel.user.data.User
@@ -36,7 +36,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
 
     var isGotoDetailClick = false
     lateinit var binding: FragmentOrderTakeBinding
-    var takeOrderList: TakeOrderList? = null
+    var takeOrderList: DeliveryOrderList? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
@@ -46,7 +46,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
                     checkHasMore()
                 }
 
-                override fun onItemClick(takeOrderList: TakeOrderList) {
+                override fun onItemClick(takeOrderList: DeliveryOrderList) {
                     this@OrderTakeFragment.takeOrderList = takeOrderList
                     if (User.instance.login) {
                         gotoDetailIsLogin()
@@ -55,7 +55,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
                     }
                 }
 
-                override fun getListSuccess(list: List<TakeOrderList>) {
+                override fun getListSuccess(list: List<DeliveryOrderList>) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
                 }

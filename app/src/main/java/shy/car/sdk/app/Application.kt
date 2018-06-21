@@ -219,6 +219,8 @@ class Application : BaseApplication() {
 
             override fun onNext(t: Response<Void>) {
                 User.logout(this@Application)
+                ApiManager.getInstance()
+                        .clearCache()
             }
 
             override fun onError(e: Throwable) {

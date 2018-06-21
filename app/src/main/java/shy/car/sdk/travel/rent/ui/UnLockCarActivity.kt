@@ -10,6 +10,7 @@ import android.os.Environment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.base.ProgressDialog
 import com.base.util.ImageUtil
 import com.base.util.ToastManager
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -87,10 +88,11 @@ class UnLockCarActivity : XTBaseActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        ProgressDialog.showLoadingView(this)
         if (resultCode == Activity.RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
-
+                ProgressDialog.showLoadingView(this)
                 Observable.create<String> {
                     val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0])), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
@@ -98,6 +100,7 @@ class UnLockCarActivity : XTBaseActivity(),
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe({
+                            ProgressDialog.hideLoadingView(this)
                             when {
                                 isLeft -> {
                                     presenter.leftImage.set(it)
@@ -107,6 +110,7 @@ class UnLockCarActivity : XTBaseActivity(),
                                 }
                             }
                         }, {
+                            ProgressDialog.hideLoadingView(this)
                             it.printStackTrace()
                         })
 

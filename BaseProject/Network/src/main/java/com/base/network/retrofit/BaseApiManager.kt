@@ -16,7 +16,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 /**
  * 管理类
  */
-open class BaseApiManager<T>(baseUrl: String, interceptor: BaseInterceptor? = null, var listener: BaseRetrofitInterface? = null, c: Class<T>) {
+open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseInterceptor? = null, var listener: BaseRetrofitInterface? = null, var c: Class<T>) {
     var api: T
     var builder = OkHttpClient.Builder()
     var client: OkHttpClient
@@ -25,6 +25,29 @@ open class BaseApiManager<T>(baseUrl: String, interceptor: BaseInterceptor? = nu
 
     init {
         //初始化拦截器
+        if (interceptor != null) {
+            builder.addInterceptor(interceptor)
+        }
+        builder.addInterceptor(HttpLoggingInterceptor())
+        if (cookieJar != null) {
+            builder.cookieJar(cookieJar)
+        }
+        client = builder.build()
+
+
+        //初始化retrofit
+        retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(client)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        //生成api
+        api = retrofit.create(c)
+    }
+
+    open fun clearCache() {
+        builder = OkHttpClient.Builder()
         if (interceptor != null) {
             builder.addInterceptor(interceptor)
         }

@@ -3,13 +3,13 @@ package shy.car.sdk.app.net
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
-import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
+import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.OrderMineList
@@ -25,7 +25,7 @@ import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.TakeOrderDetail
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.user.data.UserDetailCache
 
 
@@ -90,12 +90,11 @@ interface ApiInterface {
      * 获取接单列表
      * type	integer	否	类型：1同城小包2整车物流
      */
-    @GET("users/freights")
+    @GET("orders/freight")
     fun getOrderList(
-            @Query(ParamsConstant.FreightType) freight_type: String = "1",
             @Query(ParamsConstant.Type) type: String? = null,
             @Query(ParamsConstant.Offset) offset: Int,
-            @Query(ParamsConstant.Limit) limit: Int): Observable<List<TakeOrderList>>
+            @Query(ParamsConstant.Limit) limit: Int): Observable<List<DeliveryOrderList>>
 
     /**
      * 获取单个接单详情
@@ -297,7 +296,7 @@ interface ApiInterface {
     @POST("users/freights")
     fun postDeliveryOrder(
             @Field(ParamsConstant.City) cityID: String,
-            @Field(ParamsConstant.CarID) carID: String? = null,
+            @Field(ParamsConstant.ModelID) carID: String? = null,
             @Field(ParamsConstant.UseCarStart) use_car_at_strart: String,
             @Field(ParamsConstant.UseCarEnd) use_car_at_end: String,
             @Field(ParamsConstant.FromAddress) from_address: String,
@@ -316,7 +315,7 @@ interface ApiInterface {
     ): Observable<JsonObject>
 
     @DELETE("users/orders/{order_id}")
-    fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String): Observable<Response<Void>>
+    fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String, @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<Response<Void>>
 
     @GET("freight/car")
     fun getCarTypeList(): Observable<List<shy.car.sdk.travel.send.data.CarInfo>>
@@ -333,5 +332,8 @@ interface ApiInterface {
     @Multipart
     @POST("users/orders/{oid}/photos")
     fun takeCarUploadPic(@Path("oid") order_id: String, @Part(ParamsConstant.OrderId) oid: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+
+    @GET("freight/type")
+    fun getFreightTypeList():Observable<List<GoodsType>>
 
 }

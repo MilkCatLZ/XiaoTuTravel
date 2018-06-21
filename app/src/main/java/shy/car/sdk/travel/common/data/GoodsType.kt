@@ -2,10 +2,12 @@ package shy.car.sdk.travel.common.data
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
 
 class GoodsType : BaseObservable() {
 
+    @SerializedName("name")
     @get:Bindable
     var goodsTypeName: String = ""
         set(value) {
@@ -13,7 +15,8 @@ class GoodsType : BaseObservable() {
             notifyPropertyChanged(BR.goodsTypeName)
         }
 
-    var goodsType: Int = 1
+    @SerializedName("id")
+    var goodsType: String = ""
         set(value) {
             field = value
             notifyPropertyChanged(BR.goodsType)

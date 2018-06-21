@@ -1,15 +1,12 @@
 package shy.car.sdk.travel.take.presenter
 
 import android.content.Context
-import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import shy.car.sdk.BR
-import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.take.data.TakeOrderDetail
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 
 class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -20,7 +17,7 @@ class OrderTakeDetailPresenter(context: Context, var callBack: CallBack) : BaseP
 
     }
 
-    lateinit var orderList: TakeOrderList
+    lateinit var orderList: DeliveryOrderList
 
 
     fun getOrderDetail() {

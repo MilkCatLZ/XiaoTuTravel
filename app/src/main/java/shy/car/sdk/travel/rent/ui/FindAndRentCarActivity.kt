@@ -9,6 +9,7 @@ import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.rent.data.CarInfo
 
 /**
@@ -19,9 +20,10 @@ import shy.car.sdk.travel.rent.data.CarInfo
 class FindAndRentCarActivity : XTBaseActivity() {
 
 
-    @Autowired(name = String1)
+    @Autowired(name = Object1)
     @JvmField
-    var orderID: String = ""
+    var order: OrderMineList? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,7 @@ class FindAndRentCarActivity : XTBaseActivity() {
                 .inject(this)
 
         var fragment = supportFragmentManager.findFragmentById(R.id.fragment_find_and_rent) as FindAndRentCarFragment
-        fragment.orderID = orderID
+        fragment.order = order
 
     }
 }

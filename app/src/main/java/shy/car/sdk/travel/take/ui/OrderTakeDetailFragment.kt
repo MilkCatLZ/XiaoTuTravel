@@ -16,7 +16,7 @@ import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderTakeDetailBinding
 import shy.car.sdk.travel.take.data.TakeOrderDetail
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.take.presenter.OrderTakeDetailPresenter
 
 /**
@@ -39,7 +39,7 @@ class OrderTakeDetailFragment : XTBaseFragment(), OrderTakeDetailPresenter.CallB
 
     @Autowired
     @JvmField
-    var takeOrderList: TakeOrderList = TakeOrderList()
+    var takeOrderList: DeliveryOrderList = DeliveryOrderList()
 
     lateinit var binding: FragmentOrderTakeDetailBinding
 

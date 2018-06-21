@@ -65,20 +65,6 @@ class OrderMineList : BaseObservable() {
             field = typeName
             notifyChange(BR.typeName)
         }
-    @SerializedName("plate_number")
-    @get:Bindable
-    var plateNumber: String? = null
-        set(plateNumber) {
-            field = plateNumber
-            notifyChange(BR.plateNumber)
-        }
-    @SerializedName("model_name")
-    @get:Bindable
-    var modelName: String? = null
-        set(modelName) {
-            field = modelName
-            notifyChange(BR.modelName)
-        }
     @SerializedName("from_address")
     @get:Bindable
     var fromAddress: String? = null
@@ -114,9 +100,16 @@ class OrderMineList : BaseObservable() {
             field = createdAt
             notifyChange(BR.createdAt)
         }
+    @SerializedName("car")
+    @get:Bindable
+    var car: Car? = null
+        set(car) {
+            field = car
+            notifyChange(BR.car)
+        }
 
     fun carInfo(): String {
-        return "$plateNumber | $modelName"
+        return "${car?.plateNumber} | ${car?.modelName}"
     }
 
     @Transient
@@ -143,6 +136,109 @@ class OrderMineList : BaseObservable() {
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
         if (propertyChangeRegistry != null) {
             propertyChangeRegistry!!.remove(callback)
+        }
+    }
+
+
+    open class Car : BaseObservable() {
+        /**
+         * id : 2
+         * plate_number : 桂E88888
+         * model_name : A4
+         * lng : 118.320004
+         * lat : 22.82402
+         * electricity : 22%
+         * surplus_mileage : 55.0km
+         */
+
+        @SerializedName("id")
+        @get:Bindable
+        var id: String? = null
+            set(id) {
+                field = id
+                notifyChange(BR.id)
+            }
+        @SerializedName("plate_number")
+        @get:Bindable
+        var plateNumber: String? = null
+            set(plateNumber) {
+                field = plateNumber
+                notifyChange(BR.plateNumber)
+            }
+        @SerializedName("model_name")
+        @get:Bindable
+        var modelName: String? = null
+            set(modelName) {
+                field = modelName
+                notifyChange(BR.modelName)
+            }
+        @SerializedName("lng")
+        @get:Bindable
+        var lng: Double = 0.toDouble()
+            set(lng) {
+                field = lng
+                notifyChange(BR.lng)
+            }
+        @SerializedName("lat")
+        @get:Bindable
+        var lat: Double = 0.toDouble()
+            set(lat) {
+                field = lat
+                notifyChange(BR.lat)
+            }
+        @SerializedName("electricity")
+        @get:Bindable
+        var electricity: String? = null
+            set(electricity) {
+                field = electricity
+                notifyChange(BR.electricity)
+            }
+        @SerializedName("surplus_mileage")
+        @get:Bindable
+        var surplusMileage: String? = null
+            set(surplusMileage) {
+                field = surplusMileage
+                notifyChange(BR.surplusMileage)
+            }
+        @SerializedName("color")
+        @get:Bindable
+        var color: String? = null
+            set(color) {
+                field = color
+                notifyChange(BR.color)
+            }
+        @SerializedName("img")
+        @get:Bindable
+        var img: String? = null
+            set(color) {
+                field = img
+                notifyChange(BR.img)
+            }
+        @Transient
+        private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
+
+        @Synchronized
+        private fun notifyChange(propertyId: Int) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.notifyChange(this, propertyId)
+        }
+
+        @Synchronized
+        override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.add(callback)
+
+        }
+
+        @Synchronized
+        override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry != null) {
+                propertyChangeRegistry!!.remove(callback)
+            }
         }
     }
 }

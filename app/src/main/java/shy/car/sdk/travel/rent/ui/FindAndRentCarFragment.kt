@@ -23,6 +23,7 @@ import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
+import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
@@ -32,14 +33,30 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
  */
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
+
+    var mDriveRouteResult: DriveRouteResult? = null
+
+    var order: OrderMineList? = null
+        set(value) {
+            field = value
+            presenter.detail = order!!
+            if (binding != null) {
+                binding.detail = value
+            }
+        }
+
+
+    lateinit var binding: FragmentFindAndRentCarBinding
+
+    private var mStartPoint = LatLonPoint(0.0, 0.0)//起点，108.300745,22.823181
+    private var mEndPoint = LatLonPoint(0.0, 0.0)//终点，108.275277,22.873487
+
+    lateinit var presenter: FindAndRentCarPresenter
+
+
     override fun onGetDetailError(e: Throwable) {
 
 
-    }
-
-    override fun onGetDetailSuccess(t: RentOrderDetail) {
-        setupMap(t)
-        binding.detail = t
     }
 
     override fun onCancelSuccess() {
@@ -54,13 +71,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     }
 
-
-    lateinit var binding: FragmentFindAndRentCarBinding
-
-    private var mStartPoint = LatLonPoint(0.0, 0.0)//起点，108.300745,22.823181
-    private var mEndPoint = LatLonPoint(0.0, 0.0)//终点，108.275277,22.873487
-
-    lateinit var presenter: FindAndRentCarPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,15 +92,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
         binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
         initMap()
     }
-
-    var mDriveRouteResult: DriveRouteResult? = null
-
-    var orderID: String = ""
-        set(value) {
-            field = value
-            presenter.orderID = orderID
-            presenter.getOrderDetail()
-        }
 
     private fun setupMap(orderDetail: RentOrderDetail) {
 
@@ -217,7 +218,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     fun unLockCar() {
         ARouter.getInstance()
                 .build(RouteMap.UnLockCar)
-                .withString(String1, orderID)
+                .withString(String1, order?.id)
                 .navigation()
     }
 

@@ -18,7 +18,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.order.data.RentOrderDetail"/>
+            type="shy.car.sdk.travel.order.data.OrderMineList"/>
     </data>
 
     <RelativeLayout
@@ -188,7 +188,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:imageURL="@{detail.car.carModelImg}"
+                            android:imageURL="@{detail.car.img}"
                             android:src="@drawable/img_car"/>
                     </LinearLayout>
 
@@ -204,7 +204,7 @@
                             android:id="@+id/txt_car_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{detail.car.plateNumber+@string/str_line+detail.car.carModelName+@string/str_line+detail.car.carColor}"
+                            android:text="@{detail.car.plateNumber+@string/str_line+detail.car.modelName+@string/str_line+detail.car.color}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="@dimen/text_primary_14dp"
                             tools:text="桂DJF565 | EQ1 | 白色" />
@@ -212,7 +212,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibleOrGone="@{StringUtils.isNotEmpty(detail.car.battery)}"
+                            android:visibleOrGone="@{StringUtils.isNotEmpty(detail.car.electricity)}"
                             android:layout_marginTop="5dp">
 
                             <TextView
@@ -231,7 +231,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:gravity="center"
-                                android:text="@{detail.car.battery}"
+                                android:text="@{detail.car.electricity}"
                                 android:textColor="@color/main_color_red"
                                 android:textSize="@dimen/text_second_primary_12dp" />
                         </LinearLayout>

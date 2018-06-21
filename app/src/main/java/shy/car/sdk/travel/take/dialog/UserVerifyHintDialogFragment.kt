@@ -11,7 +11,7 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogUserVerifyHintBinding
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 
 /**
  * create by LZ at 2018/05/23
@@ -19,7 +19,7 @@ import shy.car.sdk.travel.take.data.TakeOrderList
  */
 class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
     lateinit var binding: DialogUserVerifyHintBinding
-    var takeOrderList: TakeOrderList? = null
+    var takeOrderList: DeliveryOrderList? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_user_verify_hint, null, false)

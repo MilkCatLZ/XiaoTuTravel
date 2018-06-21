@@ -92,20 +92,12 @@ class CarRentFragment : XTBaseFragment() {
         override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList) {
             ARouter.getInstance()
                     .build(RouteMap.FindAndRentCar)
-                    .withString(ParamsConstant.String1, orderMineList.id)
-                    .navigation()
-        }
-
-        override fun onCreateRentOrderSuccess(oid: String) {
-            ARouter.getInstance()
-                    .build(RouteMap.FindAndRentCar)
-                    .withObject(Object1, currentSelectedCarInfo.get())
-                    .withString(String1, oid)
+                    .withObject(Object1, orderMineList)
                     .navigation()
         }
 
         override fun onGetCarError(e: Throwable) {
-
+            ToastManager.showShortToast(context, "附近没有可用车辆哦，请选择其他网点")
         }
 
         override fun onGetCarSuccess(t: List<CarInfo>) {
@@ -149,33 +141,6 @@ class CarRentFragment : XTBaseFragment() {
 
     lateinit var carListViewPager: ViewPager
     private fun initData() {
-        //通知刷新列表
-//        var disposable: Disposable? = null
-//        Observable.interval(1, 0, TimeUnit.SECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(Schedulers.io())
-//                .subscribe(object : Observer<Long> {
-//                    override fun onComplete() {
-//
-//                    }
-//
-//                    override fun onSubscribe(d: Disposable) {
-//                        disposable = d
-//                    }
-//
-//                    override fun onNext(t: Long) {
-//                        if (app.location.cityCode.isNotEmpty()) {
-//                            eventBusDefault.postSticky(RefreshCarPointList())
-//                            disposable?.dispose()
-//                        }
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//
-//                    }
-//                })
-
-
         carListViewPager = binding.root.findViewById(R.id.viewPager_car_list)
         carListViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {

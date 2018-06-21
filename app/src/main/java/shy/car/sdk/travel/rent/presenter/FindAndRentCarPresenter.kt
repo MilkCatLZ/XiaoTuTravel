@@ -11,6 +11,7 @@ import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.order.data.RentOrderDetail
 
@@ -19,23 +20,20 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
  */
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
-    var orderID: String = ""
-    var detail: RentOrderDetail? = null
+    lateinit var detail: OrderMineList
 
     interface CallBack {
         fun onRingError(e: Throwable)
         fun onCancelSuccess()
         fun onCancelError(e: Throwable)
         fun onGetDetailError(e: Throwable)
-        fun onGetDetailSuccess(t: RentOrderDetail)
-
     }
 
     fun carRing() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.carAction(detail?.car?.id!!, status = 1.toString())
+                .api.carAction(detail.car?.id!!, status = 1.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
@@ -97,13 +95,15 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
     fun cancelOrder() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.cancelRentOrder(orderID)
+        ApiManager.getInstance()
+                .api.cancelRentOrder(detail.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelSuccess()
+                    ApiManager.getInstance()
+                            .clearCache()
                 }, {
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelError(it)
@@ -111,33 +111,33 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                 })
     }
 
-    fun getOrderDetail() {
-        ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(orderID)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                disposable = d
-            }
-
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                detail = t
-                callBack.onGetDetailSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.onGetDetailError(e)
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
+//    fun getOrderDetail() {
+//        ProgressDialog.showLoadingView(context)
+//        disposable?.dispose()
+//        val observable = ApiManager.getInstance()
+//                .api.getRentOrderDetail(detail.id)
+//        val observer = object : Observer<RentOrderDetail> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//                disposable = d
+//            }
+//
+//            override fun onNext(t: RentOrderDetail) {
+//                ProgressDialog.hideLoadingView(context)
+//                detail = t
+//                callBack.onGetDetailSuccess(t)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.onGetDetailError(e)
+//            }
+//
+//        }
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 }

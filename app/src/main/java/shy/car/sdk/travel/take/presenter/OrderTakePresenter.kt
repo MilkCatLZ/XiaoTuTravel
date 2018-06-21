@@ -8,33 +8,21 @@ import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 
 class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getListSuccess(list: List<TakeOrderList>)
-        fun onItemClick(takeOrderList: TakeOrderList)
+        fun getListSuccess(list: List<DeliveryOrderList>)
+        fun onItemClick(takeOrderList: DeliveryOrderList)
         fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<TakeOrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {
-        callBack.onItemClick(it.tag as TakeOrderList)
+    var adapter: DataBindingItemClickAdapter<DeliveryOrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {
+        callBack.onItemClick(it.tag as DeliveryOrderList)
     })
     var pageSize = 10
     var pageIndex = 1
-
-    init {
-//        val list = ArrayList<TakeOrderList>()
-//        for (i in 1..9) {
-//            var orderTakeList = TakeOrderList()
-//            orderTakeList.id = i.toString()
-//            orderTakeList.status = i % 4
-//            list.add(orderTakeList)
-//        }
-//
-//        adapter.setItems(list, 1)
-    }
 
     fun hasMore(): Boolean {
         return adapter.adapterItemCount >= pageIndex * pageSize
@@ -52,8 +40,9 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
 
     private fun getOrderList() {
         val observable = ApiManager.getInstance()
-                .api.getOrderList(offset = (pageIndex - 1) * pageSize, limit = pageSize)
-        val observer = object : Observer<List<TakeOrderList>> {
+                //固定1：接单
+                .api.getOrderList("1", offset = (pageIndex - 1) * pageSize, limit = pageSize)
+        val observer = object : Observer<List<DeliveryOrderList>> {
             override fun onComplete() {
 
             }
@@ -62,7 +51,8 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
                 disposable = d
             }
 
-            override fun onNext(t: List<TakeOrderList>) {
+            override fun onNext(t: List<DeliveryOrderList>) {
+                adapter.setItems(t, pageSize)
                 callBack.getListSuccess(t)
             }
 

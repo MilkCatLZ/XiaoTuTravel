@@ -37,7 +37,7 @@
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"
-            tools:listItem="@layout/item_car_select" />
+            tools:listitem="@layout/item_pay_method" />
 
 
     </LinearLayout>

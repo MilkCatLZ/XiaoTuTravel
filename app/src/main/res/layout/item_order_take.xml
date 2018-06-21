@@ -11,7 +11,7 @@
 
         <variable
             name="order"
-            type="shy.car.sdk.travel.take.data.TakeOrderList" />
+            type="shy.car.sdk.travel.take.data.DeliveryOrderList" />
 
         <variable
             name="click"
@@ -51,6 +51,7 @@
                 <ImageView
                     android:layout_width="52dp"
                     android:layout_height="52dp"
+                    android:imageURL="@{order.user.avatar}"
                     android:src="@drawable/icon_head" />
 
                 <LinearLayout
@@ -70,7 +71,7 @@
                             android:layout_height="21dp"
                             android:layout_marginTop="3dp"
                             android:layout_weight="1"
-                            android:text="王羲之"
+                            android:text="@{order.user.name}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="15sp"
                             tools:text="王羲之" />
@@ -93,7 +94,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="钻石会员"
+                            android:text="@{order.user.rankText}"
                             android:textColor="@color/text_second_primary_666666"
                             android:textSize="@dimen/text_second_primary_12dp" />
 
@@ -127,7 +128,8 @@
                     <TextView
                         style="@style/style_order_take_detail"
                         android:layout_marginStart="10dp"
-                        android:text="3.9米-6.9米 冷藏6.1顿生鲜" />
+                        android:text="@{car.goodsInfo}"
+                        tools:text="3.9米-6.9米 冷藏6.1顿生鲜" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -145,7 +147,8 @@
                     <TextView
                         style="@style/style_order_take_detail"
                         android:layout_marginStart="10dp"
-                        android:text="南宁东站" />
+                        android:text="南宁东站"
+                        tools:text="@{order.fromAddress}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -158,12 +161,14 @@
                         style="@style/style_order_take_detail"
                         android:drawablePadding="12dp"
                         android:drawableStart="@drawable/icon_end"
+
                         android:text="到达地点" />
 
                     <TextView
                         style="@style/style_order_take_detail"
                         android:layout_marginStart="10dp"
-                        android:text="西乡塘区" />
+                        android:text="@{order.toAddress}"
+                        tools:text="西乡塘区" />
                 </LinearLayout>
 
 

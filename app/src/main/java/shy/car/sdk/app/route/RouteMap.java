@@ -8,6 +8,7 @@ import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
+import shy.car.sdk.travel.order.data.OrderMineList;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
@@ -17,7 +18,7 @@ import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.data.OrderSendList;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
-import shy.car.sdk.travel.take.data.TakeOrderList;
+import shy.car.sdk.travel.take.data.DeliveryOrderList;
 import shy.car.sdk.travel.take.ui.OrderTakeDetailActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
@@ -134,7 +135,7 @@ public class RouteMap {
     /**
      * 接单详情
      * {@link OrderTakeDetailActivity}
-     * withObject(Object1,{@link TakeOrderList})
+     * withObject(Object1,{@link DeliveryOrderList})
      */
     @NotNull
     public static final String OrderTakeDetail = "/take/take_order_detail";
@@ -191,7 +192,7 @@ public class RouteMap {
     /**
      * 找车取车
      * {@link FindAndRentCarActivity}
-     * withString(String1,orderid)
+     * withString(Object1,{@link OrderMineList})
      */
     @NotNull
     public static final String FindAndRentCar = "/rent/find_and_rent";

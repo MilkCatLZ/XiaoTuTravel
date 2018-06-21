@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.common.presenter
 
 import android.content.Context
+import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import android.view.View
 import com.base.databinding.DataBindingAdapter
@@ -17,7 +18,7 @@ import shy.car.sdk.travel.common.data.GoodsType
  */
 class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
-    var checkID = ObservableInt(0)
+    var checkID = ObservableField<String>("")
     var checkedGoodsType: GoodsType? = null
 
 
@@ -33,19 +34,6 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun onGetListSuccess()
     }
 
-    fun getList() {
-        val list = ArrayList<GoodsType>()
-
-        for (i in 0..10) {
-            var goodsType = GoodsType()
-            goodsType.goodsTypeName = "类型${i+1}"
-            goodsType.goodsType = i
-            list.add(goodsType)
-        }
-        checkedGoodsType = list[0]
-        adapter.setItems(list, 1)
-    }
-
     fun getCheckedGoodsType(typeString: String): GoodsType {
 
         return if (checkedGoodsType != null) {
@@ -56,5 +44,11 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
             type
 
         }
+    }
+
+    fun initData(list: List<GoodsType>?) {
+        adapter.setItems(list, 1)
+        checkedGoodsType = list!![0]
+        checkID.set(checkedGoodsType?.goodsType)
     }
 }

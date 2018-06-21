@@ -12,6 +12,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.BR
 import shy.car.sdk.R
@@ -45,6 +46,7 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun onSubmitSuccess()
         fun onSubmitError()
         fun getCarUseTimeSuccess(t2: List<CarUserTime>)
+        fun getFreightTypeSuccess(t3: List<GoodsType>)
     }
 
 
@@ -57,14 +59,17 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
 
         val observable2 = ApiManager.getInstance()
                 .api.getCarUseTime()
+        val observable3 = ApiManager.getInstance()
+                .api.getFreightTypeList()
 
-        Observable.zip(observable1, observable2, BiFunction<List<CarInfo>, List<CarUserTime>, String> { t1, t2 ->
+        Observable.zip(observable1, observable2, observable3, Function3<List<CarInfo>, List<CarUserTime>,List<GoodsType>, String> { t1, t2,t3 ->
             Observable.just(1)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         adapter.setItems(t1, 1)
                         carID = t1[0].id.toString()
                         callBack.getCarUseTimeSuccess(t2)
+                        callBack.getFreightTypeSuccess(t3)
                     }, {
 
                     })

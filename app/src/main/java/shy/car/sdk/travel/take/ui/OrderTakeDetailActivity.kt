@@ -8,7 +8,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.travel.take.data.TakeOrderList
+import shy.car.sdk.travel.take.data.DeliveryOrderList
 
 /**
  * create by 过期猫粮 at 2018/05/21
@@ -19,7 +19,7 @@ open class OrderTakeDetailActivity : XTBaseActivity() {
 
     @Autowired(name = Object1)
     @JvmField
-    var takeOrderList: TakeOrderList? = null
+    var takeOrderList: DeliveryOrderList? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -22,7 +22,8 @@ import shy.car.sdk.travel.common.presenter.GoodsSelectPresenter
  * 选择货物类型
  */
 @Route(path = RouteMap.GoodsTypeSelect)
-class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(), GoodsSelectPresenter.CallBack {
+class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
+        GoodsSelectPresenter.CallBack {
 
     override fun onGetListSuccess() {
 
@@ -42,7 +43,10 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(), GoodsSelectPr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activity?.let { presenter = GoodsSelectPresenter(it, this) }
+        activity?.let {
+            presenter = GoodsSelectPresenter(it, this)
+            presenter.initData(list)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -58,9 +62,7 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(), GoodsSelectPr
         binding.edtGoodsType.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 if (p0 != null && StringUtils.isNotEmpty(p0.toString())) {
-                    presenter.checkID.set(-1)
-                } else {
-                    presenter.checkID.set(0)
+                    presenter.checkID.set("0")
                 }
             }
 
@@ -82,15 +84,15 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(), GoodsSelectPr
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        presenter.getList()
-    }
-
-
     fun onConfirm() {
         listener?.onTimeSelect(presenter.getCheckedGoodsType(binding.edtGoodsType.toString()))
         dismiss()
+    }
+
+    var list: List<GoodsType>? = null
+
+    fun setLists(t3: List<GoodsType>) {
+        list = t3
     }
 
 }

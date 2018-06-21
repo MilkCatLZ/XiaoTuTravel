@@ -20,6 +20,14 @@ import retrofit2.HttpException;
  * ErrorManager.managerError(context, ex, 默认提示语);
  */
 public class ErrorManager {
+    public void showError(Context context, String defaultMessage) {
+        if (StringUtils.isEmpty(error_message)) {
+            ToastManager.showShortToast(context, defaultMessage);
+        } else {
+            ToastManager.showShortToast(context, error_message);
+        }
+    }
+
     public class OrderCache {
         String id;
         int type;

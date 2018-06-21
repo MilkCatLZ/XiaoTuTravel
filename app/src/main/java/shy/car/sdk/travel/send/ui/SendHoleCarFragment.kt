@@ -32,6 +32,10 @@ import java.util.*
  */
 class SendHoleCarFragment : XTBaseFragment(),
         SendHoleCarPresenter.CallBack {
+    override fun getFreightTypeSuccess(t3: List<GoodsType>) {
+        goodsDialog.setLists(t3)
+    }
+
     override fun getCarUseTimeSuccess(t2: List<CarUserTime>) {
         timeSelectDialogFragment.setTimeLists(t2)
     }
@@ -117,7 +121,7 @@ class SendHoleCarFragment : XTBaseFragment(),
     }
 
     var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
-
+    val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
     fun openTimeSelect() {
         timeSelectDialogFragment.listener = object : SendTimeSelectDialogFragment.OnItemSelectedListener {
             @SuppressLint("SetTextI18n")
@@ -139,7 +143,8 @@ class SendHoleCarFragment : XTBaseFragment(),
     }
 
     fun onSelectGoodsTypeClick() {
-        val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
+
+
         goodsDialog.listener = object : GoodsTypeSelectDialogFragment.OnItemSelectedListener {
             override fun onTimeSelect(goodsType: GoodsType) {
                 presenter.goodsType.set(goodsType)
