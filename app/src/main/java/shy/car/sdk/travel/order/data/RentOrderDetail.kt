@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.rent.data
+package shy.car.sdk.travel.order.data
 
 import android.databinding.BaseObservable
 import android.databinding.Bindable
@@ -153,6 +153,13 @@ class RentOrderDetail : BaseObservable() {
          * discounts : [{"id":24,"txt":"24小时整日租","price":"140"},{"id":"夜","txt":"20:00-次日8:00","price":"88"}]
          */
 
+        @SerializedName("id")
+        @get:Bindable
+        var id: String = "1"
+            set(id) {
+                field = id
+                notifyChange(BR.id)
+            }
         @SerializedName("car_model_img")
         @get:Bindable
         var carModelImg: String? = null
@@ -208,6 +215,20 @@ class RentOrderDetail : BaseObservable() {
             set(discounts) {
                 field = discounts
                 notifyChange(BR.discounts)
+            }
+        @SerializedName("battery")
+        @get:Bindable
+        var battery: String = ""
+            set(battery) {
+                field = battery
+                notifyChange(BR.battery)
+            }
+        @SerializedName("surplus_mileage")
+        @get:Bindable
+        var surplusMileage: String = ""
+            set(surplusMileage) {
+                field = surplusMileage
+                notifyChange(BR.surplusMileage)
             }
         @Transient
         private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()

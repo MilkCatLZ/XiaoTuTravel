@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="order"
-            type="shy.car.sdk.travel.order.data.OrderMineList"/>
+            type="shy.car.sdk.travel.order.data.OrderMineList" />
 
         <variable
             name="click"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
     </data>
 
     <com.dd.ShadowLayout
@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@color/main_back"
-        app:sl_cornerRadius="2dp"
         android:onClick="@{click}"
         android:tag="@{order}"
+        app:sl_cornerRadius="2dp"
         app:sl_dx="0dp"
         app:sl_dy="0dp"
         app:sl_shadowColor="#08c9cfd1"
@@ -51,18 +51,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="小兔租车"
+                    android:text="@{order.typeName}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:text="行驶中"
+                    android:text="@{order.statusName}"
                     android:textColor="@color/main_color_green"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp" />
 
                 <ImageView
 
@@ -70,34 +70,34 @@
                     android:layout_height="wrap_content"
                     android:rotation="180"
                     android:src="@drawable/login_return"
-                    android:tint="@color/text_primary_333333"/>
+                    android:tint="@color/text_primary_333333" />
             </LinearLayout>
 
             <TextView
                 style="@style/style_order_mine_text"
                 android:layout_marginTop="3dp"
                 android:drawableStart="@drawable/icon_good"
-                android:text="桂AKK123 /EQ3"/>
+                android:text="@{order.carInfo()}" />
 
             <TextView
                 style="@style/style_order_mine_text"
                 android:layout_marginTop="2dp"
                 android:drawableStart="@drawable/icon_time"
-                android:text="03月15日 12:00"/>
+                android:text="@{order.createdAt}" />
 
             <TextView
                 style="@style/style_order_mine_text"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="2dp"
                 android:drawableStart="@drawable/icon_start"
-                android:text="广西大学 正门农院路"/>
+                android:text="@{order.fromAddress}" />
 
             <TextView
                 style="@style/style_order_mine_text"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="2dp"
                 android:drawableStart="@drawable/icon_end"
-                android:text="南宁中关村实验基地"/>
+                android:text="@{order.toAddress}" />
 
         </LinearLayout>
     </com.dd.ShadowLayout>

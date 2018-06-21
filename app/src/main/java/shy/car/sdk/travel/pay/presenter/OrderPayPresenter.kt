@@ -1,4 +1,4 @@
-package shy.car.sdk.travel.rent.presenter
+package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
 import com.base.base.ProgressDialog
@@ -9,14 +9,14 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
 
-class RentCarOrderDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun getDetailSuccess(t: RentOrderDetail)
-        fun onError(e: Throwable)
+        fun onGetDetailSuccess(t: RentOrderDetail)
+        fun onGetDetailError(e: Throwable)
     }
 
-    fun getRentOrderDetail(orderID:String) {
+    fun getOrderDetail(orderID: String) {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
@@ -32,17 +32,16 @@ class RentCarOrderDetailPresenter(context: Context, var callBack: CallBack) : Ba
 
             override fun onNext(t: RentOrderDetail) {
                 ProgressDialog.hideLoadingView(context)
-                callBack.getDetailSuccess(t)
+                callBack.onGetDetailSuccess(t)
             }
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取订单失败")
-                callBack.onError(e)
+                ErrorManager.managerError(context, e, "获取详情失败")
+                callBack.onGetDetailError(e)
             }
 
         }
-
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
     }

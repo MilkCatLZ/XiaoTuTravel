@@ -9,7 +9,7 @@ import com.base.util.Phone
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentRentCarOrderDetailBinding
-import shy.car.sdk.travel.rent.data.RentOrderDetail
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.RentCarOrderDetailPresenter
 
 /**

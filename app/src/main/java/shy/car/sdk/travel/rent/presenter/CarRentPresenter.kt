@@ -172,8 +172,15 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
                 when (error?.error_code) {
                 //422101有未取消的预约订单
-                    422101,422102 -> {
-//                        getUnProgressOrder()
+
+                    422101 -> {
+                        ARouter.getInstance()
+                                .build(RouteMap.FindAndRentCar)
+                                .withString(String1, error.order.id)
+                                .navigation()
+                    }
+                    422102 -> {
+
                     }
                     else -> {
                         ErrorManager.managerError(context, e, "生成订单失败")

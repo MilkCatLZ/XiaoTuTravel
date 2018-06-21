@@ -20,8 +20,7 @@ import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
-import shy.car.sdk.travel.rent.data.CarInfo
-import shy.car.sdk.travel.rent.data.RentOrderDetail
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
@@ -79,7 +78,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
         initMap()
-        presenter.getOrderDetail()
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
@@ -88,6 +86,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
         set(value) {
             field = value
             presenter.orderID = orderID
+            presenter.getOrderDetail()
         }
 
     private fun setupMap(orderDetail: RentOrderDetail) {

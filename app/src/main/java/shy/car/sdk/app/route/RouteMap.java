@@ -9,6 +9,7 @@ import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
+import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
@@ -238,6 +239,9 @@ public class RouteMap {
     @NotNull
     public static final String UnLockCar = "/car/unlock";
 
+    /**
+     * {@link OrderPayActivity}
+     */
     @NotNull
-    public static final String PayOrder = "pay/order";
+    public static final String OrderPay = "pay/order";
 }

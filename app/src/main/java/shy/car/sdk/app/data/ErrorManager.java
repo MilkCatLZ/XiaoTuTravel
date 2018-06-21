@@ -20,7 +20,26 @@ import retrofit2.HttpException;
  * ErrorManager.managerError(context, ex, 默认提示语);
  */
 public class ErrorManager {
+    public class OrderCache {
+        String id;
+        int type;
 
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
 
     /**
      * type : ShangYou\Sms\Exception
@@ -36,6 +55,15 @@ public class ErrorManager {
     private String file;
     private String line;
     private int httpCode;
+    private OrderCache order;
+
+    public OrderCache getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderCache order) {
+        this.order = order;
+    }
 
     /**
      * 逻辑为：
@@ -72,8 +100,8 @@ public class ErrorManager {
         if (ex instanceof HttpException) {
             HttpException httpException = (HttpException) ex;
             try {
-                String body=httpException.response().errorBody().string();
-                
+                String body = httpException.response().errorBody().string();
+
                 String result = JsonManager.getJsonString(body, "error");
                 if (StringUtils.isEmpty(result)) {
                     result = body;

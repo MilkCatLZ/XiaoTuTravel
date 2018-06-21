@@ -81,7 +81,7 @@ class CarRentFragment : XTBaseFragment() {
                         .rightButtonText("去支付")
                         .onRightClick({ t1, t2 ->
                             ARouter.getInstance()
-                                    .build(RouteMap.PayOrder)
+                                    .build(RouteMap.OrderPay)
                                     .withString(String1, orderMineList.id)
                                     .navigation()
                         })

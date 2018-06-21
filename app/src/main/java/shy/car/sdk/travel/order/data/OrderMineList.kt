@@ -31,7 +31,7 @@ class OrderMineList : BaseObservable() {
         var SEND = 3
     }
 
-    @SerializedName("id")
+    @SerializedName("order_id")
     @get:Bindable
     var id: String = "0"
         set(value) {
@@ -114,6 +114,11 @@ class OrderMineList : BaseObservable() {
             field = createdAt
             notifyChange(BR.createdAt)
         }
+
+    fun carInfo(): String {
+        return "$plateNumber | $modelName"
+    }
+
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 

@@ -24,10 +24,32 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
     var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {
         val order = it.tag as OrderMineList
-        ARouter.getInstance()
-                .build(RouteMap.RentCarDetail)
-                .withString(String1, order.id)
-                .navigation()
+        if (order.type == 1) {
+            when(order.status){
+                //1:预约单
+                1->{
+                    ARouter.getInstance()
+                            .build(RouteMap.FindAndRentCar)
+                            .withString(String1, order.id)
+                            .navigation()
+                }
+                //待支付
+                2->{
+                    ARouter.getInstance()
+                            .build(RouteMap.OrderPay)
+                            .withString(String1, order.id)
+                            .navigation()
+                }
+                else->{
+
+                }
+            }
+        } else {
+            ARouter.getInstance()
+                    .build(RouteMap.RentCarDetail)
+                    .withString(String1, order.id)
+                    .navigation()
+        }
     })
     var pageSize = 10
     var pageIndex = 1
@@ -61,6 +83,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
             override fun onNext(t: List<OrderMineList>) {
                 callBack.getListSuccess(t)
+                adapter.setItems(t, pageIndex)
             }
 
             override fun onError(e: Throwable) {

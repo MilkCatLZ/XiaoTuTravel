@@ -18,7 +18,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.rent.data.RentOrderDetail"/>
+            type="shy.car.sdk.travel.order.data.RentOrderDetail"/>
     </data>
 
     <LinearLayout

@@ -1,6 +1,5 @@
 package shy.car.sdk.app.net
 
-import com.alibaba.android.arouter.facade.annotation.Param
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -20,7 +19,7 @@ import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
-import shy.car.sdk.travel.rent.data.RentOrderDetail
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendDetail
 import shy.car.sdk.travel.send.data.OrderSendList
@@ -237,7 +236,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("cars/{carID}")
-    fun carAction(@Path("carID") carId: String, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
+    fun carAction(@Path("carID") carId: String, @Query(ParamsConstant.CarID) carid: String = carId, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
 
     /**
      * 获取充值可用列表
