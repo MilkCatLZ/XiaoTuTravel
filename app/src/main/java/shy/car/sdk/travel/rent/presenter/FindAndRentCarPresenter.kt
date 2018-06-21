@@ -62,37 +62,37 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                 .toSubscribe(observable, observer)
     }
 
-    fun unLockCar() {
-
-        ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.carAction(carId = detail?.car?.id!!, oid = orderID, status = 2.toString())//status = 2 解锁车辆
-        val observer = object : Observer<JsonObject> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                disposable = d
-            }
-
-            override fun onNext(t: JsonObject) {
-                ToastManager.showLongToast(context, "车辆已解锁，请尽快上车")
-                ProgressDialog.hideLoadingView(context)
-            }
-
-            override fun onError(e: Throwable) {
-                ErrorManager.managerError(context, e, "操作失败，请重试")
-                ProgressDialog.hideLoadingView(context)
-                callBack.onRingError(e)
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
+//    fun unLockCar() {
+//
+//        ProgressDialog.showLoadingView(context)
+//        disposable?.dispose()
+//        val observable = ApiManager.getInstance()
+//                .api.carAction(carId = detail?.car?.id!!, oid = orderID, status = 2.toString())//status = 2 解锁车辆
+//        val observer = object : Observer<JsonObject> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//                disposable = d
+//            }
+//
+//            override fun onNext(t: JsonObject) {
+//                ToastManager.showLongToast(context, "车辆已解锁，请尽快上车")
+//                ProgressDialog.hideLoadingView(context)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ErrorManager.managerError(context, e, "操作失败，请重试")
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.onRingError(e)
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 
     fun cancelOrder() {
         ProgressDialog.showLoadingView(context)

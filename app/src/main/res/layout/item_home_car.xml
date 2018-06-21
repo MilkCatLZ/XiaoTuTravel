@@ -75,7 +75,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginStart="5dp"
                         android:gravity="center"
-                        android:text="70%"
+                        android:text="@{car.battery}"
                         android:textColor="@color/main_color_red"
                         android:textSize="@dimen/text_second_primary_12dp" />
                 </LinearLayout>

@@ -23,7 +23,7 @@ class OrderMineFragment : XTBaseUltimateRecyclerViewFragment() {
     lateinit var binding: FragmentOrderMineBinding
     lateinit var presenter: OrderMinePresenter
 
-    val checkedTab = ObservableInt(0)
+    val checkedTab = ObservableInt(1)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

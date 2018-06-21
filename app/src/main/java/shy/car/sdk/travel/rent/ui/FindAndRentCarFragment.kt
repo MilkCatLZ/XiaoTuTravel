@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MyLocationStyle
@@ -19,6 +20,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
@@ -212,7 +215,10 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     fun unLockCar() {
-        presenter.unLockCar()
+        ARouter.getInstance()
+                .build(RouteMap.UnLockCar)
+                .withString(String1, orderID)
+                .navigation()
     }
 
     fun cancelOrder() {

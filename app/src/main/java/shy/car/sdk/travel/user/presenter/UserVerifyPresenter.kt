@@ -36,31 +36,35 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
         if (checkInput()) {
             ProgressDialog.showLoadingView(context)
 
+
+
+
             val partImages = createImageParams()
             ApiManager.getInstance()
                     .toSubscribe(ApiManager.getInstance()
-                            .api.uploadUserVerify(convertToRequestBody(name.get()), convertToRequestBody(idNumber.get()), partImages.parts()), object : Observer<JsonObject> {
-                        override fun onComplete() {
+                            .api.uploadUserVerify(convertToRequestBody(name.get()), convertToRequestBody(idNumber.get()), partImages.parts()),
+                            object : Observer<JsonObject> {
+                                override fun onComplete() {
 
-                        }
+                                }
 
-                        override fun onSubscribe(d: Disposable) {
+                                override fun onSubscribe(d: Disposable) {
 
-                        }
+                                }
 
-                        override fun onNext(t: JsonObject) {
-                            ProgressDialog.hideLoadingView(context)
-                            listener?.onUploadSuccess()
-                        }
+                                override fun onNext(t: JsonObject) {
+                                    ProgressDialog.hideLoadingView(context)
+                                    listener?.onUploadSuccess()
+                                }
 
-                        override fun onError(e: Throwable) {
-                            e.printStackTrace()
-                            ProgressDialog.hideLoadingView(context)
-                            ErrorManager.managerError(context, e, "提交失败，请重试")
-                            listener?.onUploadError(e)
-                        }
+                                override fun onError(e: Throwable) {
+                                    e.printStackTrace()
+                                    ProgressDialog.hideLoadingView(context)
+                                    ErrorManager.managerError(context, e, "提交失败，请重试")
+                                    listener?.onUploadError(e)
+                                }
 
-                    })
+                            })
         }
     }
 
@@ -122,11 +126,11 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
 
     }
 
-    var name = ObservableField<String>("过期猫粮")
-    var idNumber = ObservableField<String>("4501061988092010")
+    var name = ObservableField<String>("")
+    var idNumber = ObservableField<String>("")
 
-    var frontImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
-    var backImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
-    var driveImagePath = ObservableField<String>("/storage/emulated/0/Tencent/QQ_Images/-3e85ffab227c6946.png")
+    var frontImagePath = ObservableField<String>("")
+    var backImagePath = ObservableField<String>("")
+    var driveImagePath = ObservableField<String>("")
 
 }

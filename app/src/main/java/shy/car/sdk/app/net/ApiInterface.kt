@@ -3,6 +3,7 @@ package shy.car.sdk.app.net
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
+import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -132,7 +133,7 @@ interface ApiInterface {
      * 获取租车订单列表
      *
      */
-    @GET("orders/car")
+    @GET("orders")
     fun getRentOrderList(
             @Query(ParamsConstant.Type) type: String,
             @Query(ParamsConstant.Status) status: String,
@@ -322,4 +323,15 @@ interface ApiInterface {
 
     @GET("freight/time")
     fun getCarUseTime(): Observable<List<CarUserTime>>
+
+    @PATCH("/users/orders/{order_id}")
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Query(ParamsConstant.OrderStatus) body: RequestBody): Observable<JsonObject>
+
+    /**
+     * 提交身份认证
+     */
+    @Multipart
+    @POST("users/orders/{oid}/photos")
+    fun takeCarUploadPic(@Path("oid") order_id: String, @Part(ParamsConstant.OrderId) oid: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+
 }

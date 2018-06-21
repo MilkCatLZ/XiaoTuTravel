@@ -53,7 +53,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     })
     var pageSize = 10
     var pageIndex = 1
-    var type = OrderMineList.ALL
+    var type = OrderMineList.RENT
 
     fun hasMore(): Boolean {
         return adapter.adapterItemCount >= pageIndex * pageSize

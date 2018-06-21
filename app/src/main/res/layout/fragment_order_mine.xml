@@ -44,18 +44,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_city">
 
-                <LinearLayout
-                    style="@style/style_user_center_bottom_content"
-                    android:layout_height="match_parent">
+                <!--<LinearLayout-->
+                    <!--style="@style/style_user_center_bottom_content"-->
+                    <!--android:layout_height="match_parent">-->
 
-                    <RadioButton
-                        android:id="@+id/radio_order_mine_all"
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_order_mine_all"-->
 
-                        style="@style/style_wm.order_mine"
-                        android:checked="@{fragment.checkedTab== OrderMineList.getALL()}"
-                        android:onClick="@{()->fragment.checkChange(OrderMineList.getALL())}"
-                        android:text="全部订单"/>
-                </LinearLayout>
+                        <!--style="@style/style_wm.order_mine"-->
+                        <!--android:checked="@{fragment.checkedTab== OrderMineList.getALL()}"-->
+                        <!--android:onClick="@{()->fragment.checkChange(OrderMineList.getALL())}"-->
+                        <!--android:text="全部订单"/>-->
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     style="@style/style_user_center_bottom_content"

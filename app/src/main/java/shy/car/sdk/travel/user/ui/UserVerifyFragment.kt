@@ -5,16 +5,22 @@ import android.app.Activity.RESULT_OK
 import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.base.util.ImageUtil
 import com.base.util.ToastManager
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.wq.photo.widget.PickConfig
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
@@ -78,7 +84,7 @@ class UserVerifyFragment : XTBaseFragment(),
 
 
     fun onIDPicFrontClick() {
-        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+        if (User.instance.identityAuth == UserState.UserIdentityAuth.NoIdentity) {
             idFront = true
             idBack = false
             drive = false
@@ -87,7 +93,7 @@ class UserVerifyFragment : XTBaseFragment(),
     }
 
     fun onIDPicBackClick() {
-        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+        if (User.instance.identityAuth == UserState.UserIdentityAuth.NoIdentity) {
             idFront = false
             idBack = true
             drive = false
@@ -96,7 +102,7 @@ class UserVerifyFragment : XTBaseFragment(),
     }
 
     fun onDriveVerifyImgClick() {
-        if (User.instance.identityAuth==UserState.UserIdentityAuth.NoIdentity) {
+        if (User.instance.identityAuth == UserState.UserIdentityAuth.NoIdentity) {
             idFront = false
             idBack = false
             drive = true
@@ -152,17 +158,29 @@ class UserVerifyFragment : XTBaseFragment(),
         if (resultCode == RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
-                when {
-                    idFront -> {
-                        presenter.frontImagePath.set(imgs[0])
-                    }
-                    idBack -> {
-                        presenter.backImagePath.set(imgs[0])
-                    }
-                    drive -> {
-                        presenter.driveImagePath.set(imgs[0])
-                    }
+                Observable.create<String> {
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0])), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    it.onNext(path)
                 }
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe({
+                            when {
+                                idFront -> {
+                                    presenter.frontImagePath.set(it)
+                                }
+                                idBack -> {
+                                    presenter.backImagePath.set(it)
+                                }
+                                drive -> {
+                                    presenter.driveImagePath.set(it)
+                                }
+                            }
+                        }, {
+                            it.printStackTrace()
+                        })
+
+
             }
         }
     }
