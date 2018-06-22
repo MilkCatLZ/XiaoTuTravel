@@ -13,7 +13,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.app.util.PageManager
 import shy.car.sdk.databinding.FragmentSendHoldCarBinding
 import shy.car.sdk.travel.common.data.CommonWheelItem
 import shy.car.sdk.travel.common.data.GoodsType
@@ -32,10 +34,6 @@ import java.util.*
  */
 class SendHoleCarFragment : XTBaseFragment(),
         SendHoleCarPresenter.CallBack {
-
-    override fun getCarUseTimeSuccess(t2: List<CarUserTime>) {
-        timeSelectDialogFragment.setTimeLists(t2)
-    }
 
     override fun onSubmitSuccess() {
         ToastManager.showShortToast(activity, "发布成功")
@@ -117,26 +115,58 @@ class SendHoleCarFragment : XTBaseFragment(),
         isEnd = true
     }
 
-    var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
+    //    var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
     val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
-    fun openTimeSelect() {
-        timeSelectDialogFragment.listener = object : SendTimeSelectDialogFragment.OnItemSelectedListener {
-            @SuppressLint("SetTextI18n")
-            override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
-                binding.txtUseTime.text = "${date.name}     ${time.name}"
-                if (time.name.contains("-")) {
-                    var arr = time.name.split("-")
-                    presenter.startTime = arr[0].trim()
-                    presenter.endTime = arr[1].trim()
-                } else {
-                    presenter.startTime = date.name + " 00:00:00"
-                    presenter.endTime = "0"
-                }
-            }
 
+    fun openTimeSelect() {
+        activity?.let {
+            PageManager.delayStartFragmentDialog<List<CarUserTime>>(it, ApiManager.getInstance().api.getCarUseTime(), object : PageManager.BeforeNavigateListener<List<CarUserTime>> {
+                override fun beforeNavigate(dialog: Any, t: List<CarUserTime>) {
+                    if (dialog is SendTimeSelectDialogFragment) {
+                        dialog.listener =
+                                object : SendTimeSelectDialogFragment.OnItemSelectedListener {
+                                    @SuppressLint("SetTextI18n")
+                                    override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
+                                        binding.txtUseTime.text = "${date.name}     ${time.name}"
+                                        if (time.name.contains("-")) {
+                                            var arr = time.name.split("-")
+                                            presenter.startTime = arr[0].trim()
+                                            presenter.endTime = arr[1].trim()
+                                        } else {
+                                            presenter.startTime = date.name + " 00:00:00"
+                                            presenter.endTime = "0"
+                                        }
+                                    }
+
+                                }
+                        dialog.setList(t)
+                        dialog.isCancelable = false
+                    }
+                }
+
+            }, RouteMap.SendTimeSelect, childFragmentManager.beginTransaction(), "dialog_time_select")
         }
-        timeSelectDialogFragment.isCancelable = false
-        timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
+
+//
+//
+//        timeSelectDialogFragment.listener =
+//                object : SendTimeSelectDialogFragment.OnItemSelectedListener {
+//                    @SuppressLint("SetTextI18n")
+//                    override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
+//                        binding.txtUseTime.text = "${date.name}     ${time.name}"
+//                        if (time.name.contains("-")) {
+//                            var arr = time.name.split("-")
+//                            presenter.startTime = arr[0].trim()
+//                            presenter.endTime = arr[1].trim()
+//                        } else {
+//                            presenter.startTime = date.name + " 00:00:00"
+//                            presenter.endTime = "0"
+//                        }
+//                    }
+//
+//                }
+//        timeSelectDialogFragment.isCancelable = false
+//        timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
     }
 
     fun onSelectGoodsTypeClick() {
@@ -164,4 +194,7 @@ class SendHoleCarFragment : XTBaseFragment(),
         isEnd = false
 
     }
+
 }
+
+

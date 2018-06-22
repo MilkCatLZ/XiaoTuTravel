@@ -116,6 +116,8 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 .flatMap {
                     ApiManager.getInstance()
                             .api.getRentOrderList("1", "1", 0, 1)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
                 }
                 .subscribe(object : Observer<List<OrderMineList>> {
                     override fun onComplete() {
@@ -155,7 +157,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 getUnPayOrder()
             }
             else -> {
-                error?.showError(context,"创建订单失败")
+                error?.showError(context, "创建订单失败")
             }
         }
     }

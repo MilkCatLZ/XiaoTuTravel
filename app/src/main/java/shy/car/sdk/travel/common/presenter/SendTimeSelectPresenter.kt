@@ -18,7 +18,7 @@ import java.util.*
 class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
-        fun onGetListSuccess(list: ArrayList<CommonWheelItem>)
+
     }
 
     var dateList = ArrayList<CommonWheelItem>()
@@ -34,7 +34,6 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
                 .subscribe(object : Observer<Int> {
                     override fun onComplete() {
                         adapterDate.list.addAll(dateList)
-                        callBack.onGetListSuccess(dateList)
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -42,7 +41,7 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
                     }
 
                     override fun onNext(t: Int) {
-                        calendar.add(Calendar.DAY_OF_MONTH, t)
+                        calendar.add(Calendar.DAY_OF_MONTH, 1)
                         val name = format.format(calendar.time)
                         val item = CommonWheelItem()
                         item.name = name
@@ -57,35 +56,35 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
     }
 
 
-    fun getTimeList() {
-        val observable = ApiManager.getInstance()
-                .api.getCarUseTime()
+//    fun getTimeList() {
+//        val observable = ApiManager.getInstance()
+//                .api.getCarUseTime()
+//
+//        val observer = object : Observer<List<CarUserTime>> {
+//            override fun onComplete() {
+//                callBack.onGetListSuccess()
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//
+//            }
+//
+//            override fun onNext(t: List<CarUserTime>) {
+//                setTimeLists(t)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 
-        val observer = object : Observer<List<CarUserTime>> {
-            override fun onComplete() {
 
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: List<CarUserTime>) {
-                setTimeLists(t)
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
-
-
-    private fun setTimeLists(t2: List<CarUserTime>) {
+    fun setTimeLists(t2: List<CarUserTime>) {
         t2.map {
             var item = CommonWheelItem()
             if ("0" == it.start) {
@@ -97,5 +96,8 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
         }
         adapterTime.list.addAll(timeList)
+
+//        callBack.onGetListSuccess()
+
     }
 }

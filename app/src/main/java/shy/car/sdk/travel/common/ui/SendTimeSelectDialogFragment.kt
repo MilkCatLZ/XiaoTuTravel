@@ -29,12 +29,6 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
     }
 
     var listener: OnItemSelectedListener? = null
-    override fun onGetListSuccess(list: ArrayList<CommonWheelItem>) {
-        binding.wheelSendHoleCarDate.adapter = presenter.adapterDate
-        binding.wheelSendHoleCarTime.adapter = presenter.adapterTime
-
-    }
-
 
     lateinit var presenter: SendTimeSelectPresenter
 
@@ -42,20 +36,24 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = SendTimeSelectPresenter(it, this) }
+        activity?.let {
+            presenter = SendTimeSelectPresenter(it, this)
+            presenter.setTimeLists(lists)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_send_time_select, null, false)
         binding.fragment = this
+        initWheelView()
+        presenter.getDateList()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initWheelView()
-        presenter.getDateList()
-        presenter.getTimeList()
+        binding.wheelSendHoleCarDate.adapter = presenter.adapterDate
+        binding.wheelSendHoleCarTime.adapter = presenter.adapterTime
     }
 
     private fun initWheelView() {
@@ -76,9 +74,9 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
         dismiss()
     }
 
-    var list: List<CarUserTime> = ArrayList<CarUserTime>()
-    fun setTimeLists(t2: List<CarUserTime>) {
-        list = t2
+    var lists: List<CarUserTime> = ArrayList<CarUserTime>()
+    fun setList(t: List<CarUserTime>) {
+        lists = t
     }
 
 }

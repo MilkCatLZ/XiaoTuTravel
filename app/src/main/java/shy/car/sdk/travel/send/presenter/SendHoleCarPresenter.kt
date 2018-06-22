@@ -45,7 +45,6 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun getCarListSuccess(list: ArrayList<CarInfo>)
         fun onSubmitSuccess()
         fun onSubmitError()
-        fun getCarUseTimeSuccess(t2: List<CarUserTime>)
     }
 
 

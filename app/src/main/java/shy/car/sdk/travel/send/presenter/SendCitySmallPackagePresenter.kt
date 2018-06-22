@@ -40,7 +40,6 @@ class SendCitySmallPackagePresenter(context: Context, var callBack: CallBack) : 
     interface CallBack {
         fun onSubmitSuccess()
         fun onSubmitError()
-        fun getCarUseTimeSuccess(t2: List<CarUserTime>)
     }
 
 
