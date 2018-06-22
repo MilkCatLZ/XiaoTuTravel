@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
+import com.base.util.Phone
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
@@ -27,10 +28,21 @@ class OrderSendPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     var adapter: DataBindingItemClickAdapter<OrderSendList> = DataBindingItemClickAdapter(R.layout.item_order_send, BR.order, BR.click, View.OnClickListener {
         val order = it.tag as OrderSendList
-        ARouter.getInstance()
-                .build(RouteMap.OrderDetail)
-                .withString(String1, order.freightId)
-                .navigation()
+        when (it.id) {
+            R.id.img_call -> {
+                order.user?.phone?.let {
+                    Phone.call(context, it)
+                }
+            }
+            else -> {
+
+                ARouter.getInstance()
+                        .build(RouteMap.OrderDetail)
+                        .withString(String1, order.freightId)
+                        .navigation()
+            }
+        }
+
     })
     var pageSize = 10
     var pageIndex = 1

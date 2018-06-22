@@ -43,6 +43,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
             presenter.detail = order!!
             if (binding != null) {
                 binding.detail = value
+                setupMap(value)
             }
         }
 
@@ -97,10 +98,10 @@ class FindAndRentCarFragment : XTBaseFragment(),
         initMap()
     }
 
-    private fun setupMap(orderDetail: RentOrderDetail) {
+    private fun setupMap(order: OrderMineList?) {
 
         mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
-        mEndPoint = LatLonPoint(orderDetail.car?.lat!!, orderDetail.car?.lng!!)
+        mEndPoint = LatLonPoint(order?.car?.lat!!, order?.car?.lng!!)
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
         getRoute()
     }

@@ -75,9 +75,11 @@
 
 
                         <ImageView
+                            android:id="@+id/img_call"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
+                            android:onClick="@{click}"
                             android:src="@drawable/icon_tell"/>
                     </LinearLayout>
 

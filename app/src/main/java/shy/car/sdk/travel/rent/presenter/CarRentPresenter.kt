@@ -3,6 +3,7 @@ package shy.car.sdk.travel.rent.presenter
 import android.content.Context
 import android.databinding.ObservableField
 import android.view.View
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
@@ -17,6 +18,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
@@ -151,12 +153,18 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
 
         when (error?.error_code) {
-        //422101有未取消的预约订单
-            422101 -> {
+        //存在未租车订单
+            400101 -> {
                 getUnProgressOrder()
             }
-            422102 -> {
+        //存在未支付订单
+            400102 -> {
                 getUnPayOrder()
+            }
+            400105 -> {
+                ARouter.getInstance()
+                        .build(RouteMap.UserVerify)
+                        .navigation()
             }
             else -> {
                 error?.showError(context, "创建订单失败")

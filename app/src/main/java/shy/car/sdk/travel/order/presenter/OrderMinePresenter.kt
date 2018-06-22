@@ -85,7 +85,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
     private fun getOrderList() {
         val observable = ApiManager.getInstance()
-                .api.getOrderMineList(type.toString(), (pageIndex - 1) * pageSize, pageSize)
+                .api.getOrderMineList(type = type.toString(), offset = (pageIndex - 1) * pageSize, limit = pageSize)
         val observer = object : Observer<List<OrderMineList>> {
             override fun onComplete() {
 

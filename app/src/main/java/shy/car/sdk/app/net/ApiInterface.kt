@@ -118,9 +118,10 @@ interface ApiInterface {
      */
     @GET("orders")
     fun getOrderMineList(
+            @Query(ParamsConstant.Status) status: String="0",
             @Query(ParamsConstant.Type) type: String,
             @Query(ParamsConstant.Offset) offset: Int,
-            @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<OrderMineList>>
+            @Query(ParamsConstant.Limit) limit: Int): Observable<List<OrderMineList>>
 
     /**
      * 获取租车订单列表
@@ -319,7 +320,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("/users/orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Query(ParamsConstant.OrderStatus) body: RequestBody): Observable<JsonObject>
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) body: RequestBody): Observable<JsonObject>
 
     /**
      * 提交身份认证
@@ -341,6 +342,6 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("users/freights/{freight_id}")
-    fun deliveryFinish(id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
+    fun deliveryFinish(@Path("freight_id")id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
 
 }

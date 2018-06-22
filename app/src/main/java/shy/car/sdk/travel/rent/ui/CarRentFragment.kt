@@ -1,6 +1,5 @@
 package shy.car.sdk.travel.rent.ui
 
-import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.graphics.Color
@@ -34,7 +33,6 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
@@ -132,7 +130,7 @@ class CarRentFragment : XTBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
-        refreshLocation()
+//        refreshLocation()
         //通知 shy.car.sdk.travel.main.ui.MainNearCarListFragment中 刷新列表
         register(this)
 
@@ -381,7 +379,7 @@ class CarRentFragment : XTBaseFragment() {
 
         var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
-                .snippet(point.name)
+                .title(point.name)
                 .snippet("附近可用车${point.usableCarsNum}辆")
                 .position(LatLng(point.lat, point.lng))
                 .draggable(false))
@@ -398,10 +396,8 @@ class CarRentFragment : XTBaseFragment() {
             val latLng = LatLng(it.lat, it.lng)
             polygonOptions.add(latLng)
         }
-
-// 添加 多边形的每个顶点（顺序添加）
-
-        polygonOptions.strokeWidth(10f) // 多边形的边框
+        // 添加 多边形的每个顶点（顺序添加）
+        polygonOptions.strokeWidth(1f) // 多边形的边框
                 .strokeColor(Color.argb(0, 0, 0, 0)) // 边框颜色
                 .fillColor(Color.argb(70, 0, 179, 138))   // 多边形的填充色
         binding.map.map.addPolygon(polygonOptions)
@@ -411,6 +407,19 @@ class CarRentFragment : XTBaseFragment() {
         nearCarListener?.onNearCarClick()
     }
 
+    fun gotoVerify() {
+        if (User.instance.login) {
+            if (!User.instance.isIdentityAuth()) {
+                ARouter.getInstance()
+                        .build(RouteMap.UserVerify)
+                        .navigation()
+            } else if (!User.instance.isDeposit()) {
+                ARouter.getInstance()
+                        .build(RouteMap.MoneyVerify)
+                        .navigation()
+            }
+        }
+    }
 
     /**
      * 登录成功事件监听
@@ -430,8 +439,9 @@ class CarRentFragment : XTBaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
-            if (carPointList.isEmpty()) {
+            if (carPointList.isNotEmpty()) {
                 carRentPresenter.getUsableCarList(list[0])
+                moveCameraAndShowLocation(LatLng(list[0].lat, list[0].lng))
             }
             this.carPointList.clear()
             this.carPointList.addAll(list)
@@ -453,7 +463,6 @@ class CarRentFragment : XTBaseFragment() {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(change: LocationChange) {
-        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
         eventBusDefault.post(RefreshCarPointList())
     }
 

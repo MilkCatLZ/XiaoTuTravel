@@ -36,7 +36,11 @@ import shy.car.sdk.travel.rent.presenter.UnLockCarPresenter
 class UnLockCarActivity : XTBaseActivity(),
         UnLockCarPresenter.CallBack {
     override fun onUnLockSuccess() {
-
+        ToastManager.showShortToast(this, "车辆已解锁，并开始计时")
+        ARouter.getInstance()
+                .build(RouteMap.Driving)
+                .withString(String1, oid)
+                .navigation()
     }
 
     override fun onUnLockError() {
@@ -88,7 +92,6 @@ class UnLockCarActivity : XTBaseActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        ProgressDialog.showLoadingView(this)
         if (resultCode == Activity.RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {

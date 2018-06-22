@@ -135,6 +135,13 @@ open class DeliveryOrderDetail : BaseObservable() {
             field = finishAt
             notifyChange(BR.finishAt)
         }
+    @SerializedName("type")
+    @get:Bindable
+    var type: Int = 0
+        set(type) {
+            field = type
+            notifyChange(BR.type)
+        }
     @SerializedName("user")
     @get:Bindable
     var user: UserBean? = null
