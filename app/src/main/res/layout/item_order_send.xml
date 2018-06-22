@@ -6,8 +6,7 @@
     <data>
 
         <import
-            alias="util"
-            type="com.base.util.StringUtils"/>
+            type="shy.car.sdk.app.LNTextUtil"/>
 
         <variable
             name="order"
@@ -69,7 +68,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="王羲之"
+                            android:text="@{order.user.name}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="15sp"
                             tools:text="王羲之"/>
@@ -93,7 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginTop="-1.5dp"
-                            android:text="钻石会员"
+                            android:text="@{order.user.rankText}"
+                            tools:text="白金会员"
                             android:textColor="@color/text_second_primary_666666"
                             android:textSize="@dimen/text_second_primary_12dp"/>
 
@@ -108,7 +108,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="213.90"
+                        android:text="@{LNTextUtil.getPriceText(order.freight)}"
+                        tools:text="213.90"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="15sp"/>
 
@@ -149,7 +150,9 @@
                         <TextView
                             style="@style/style_order_take_detail"
                             android:layout_marginStart="10dp"
-                            android:text="3.9米-6.9米 冷藏6.1顿生鲜"/>
+                            android:text="@{order.goodsInfo}"
+                            tools:text="3.9米-6.9米 冷藏6.1顿生鲜"
+                            />
                     </LinearLayout>
 
                     <LinearLayout
@@ -167,7 +170,8 @@
                         <TextView
                             style="@style/style_order_take_detail"
                             android:layout_marginStart="10dp"
-                            android:text="南宁东站"/>
+                            android:text="@{order.fromAddress}"
+                            tools:text="南宁东站"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -185,7 +189,8 @@
                         <TextView
                             style="@style/style_order_take_detail"
                             android:layout_marginStart="10dp"
-                            android:text="西乡塘区"/>
+                            android:text="@{order.toAddress}"
+                            tools:text="西乡塘区"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -195,9 +200,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="13dp"
                     android:gravity="center"
-                    android:text="进行中"
+                    android:text="@{order.statusName}"
                     android:textColor="@color/main_color_red"
-                    android:textSize="13dp"/>
+                    android:textSize="13sp"/>
             </LinearLayout>
 
         </LinearLayout>

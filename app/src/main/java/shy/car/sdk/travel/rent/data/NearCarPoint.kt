@@ -96,4 +96,11 @@ class NearCarPoint : BaseObservable(),
             field = distance
             notifyPropertyChanged(shy.car.sdk.BR.distance)
         }
+    @SerializedName("range")
+    @get:Bindable
+    var range: List<NetWorkPoint>? = null
+        set(range) {
+            field = range
+            notifyPropertyChanged(shy.car.sdk.BR.range)
+        }
 }

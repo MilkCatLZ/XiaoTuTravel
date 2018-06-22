@@ -106,9 +106,11 @@ interface ApiInterface {
      * 获取发货列表
      *
      */
-    @GET("xt/orderSendList")
-    fun getOrderSendList(@Query(ParamsConstant.PageIndex) pageIndex: Int,
-                         @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<OrderSendList>>
+    @GET("orders/freight")
+    fun getOrderSendList(
+            @Query(ParamsConstant.Type) type: String = "2",
+            @Query(ParamsConstant.Offset) offset: Int,
+            @Query(ParamsConstant.Limit) limit: Int): Observable<List<OrderSendList>>
 
     /**
      * 获取发货列表

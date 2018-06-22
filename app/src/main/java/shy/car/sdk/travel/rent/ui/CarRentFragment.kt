@@ -3,6 +3,7 @@ package shy.car.sdk.travel.rent.ui
 import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v4.view.ViewPager
@@ -389,9 +390,27 @@ class CarRentFragment : XTBaseFragment() {
         markerList.add(marker)
     }
 
+
+    private fun drawPointAngel(network: NearCarPoint) {
+        // 定义多边形的5个点点坐标
+        var polygonOptions = PolygonOptions()
+        network.range?.map {
+            val latLng = LatLng(it.lat, it.lng)
+            polygonOptions.add(latLng)
+        }
+
+// 添加 多边形的每个顶点（顺序添加）
+
+        polygonOptions.strokeWidth(10f) // 多边形的边框
+                .strokeColor(Color.argb(0, 0, 0, 0)) // 边框颜色
+                .fillColor(Color.argb(70, 0, 179, 138))   // 多边形的填充色
+        binding.map.map.addPolygon(polygonOptions)
+    }
+
     fun onNearCarClick() {
         nearCarListener?.onNearCarClick()
     }
+
 
     /**
      * 登录成功事件监听
@@ -417,8 +436,9 @@ class CarRentFragment : XTBaseFragment() {
             this.carPointList.clear()
             this.carPointList.addAll(list)
             addCarPointToMap(list)
-
-
+            list.map {
+                drawPointAngel(it)
+            }
         } else if (BuildConfig.DEBUG) {
             var l = ArrayList<NearCarPoint>()
             for (i in 0..5) {
@@ -426,6 +446,7 @@ class CarRentFragment : XTBaseFragment() {
             }
         }
     }
+
 
     /**
      * 定位成功 监听

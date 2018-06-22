@@ -23,7 +23,7 @@ import shy.car.sdk.travel.rent.presenter.NearCarPresenter
  * create by LZ at 2018/05/28
  * 租车-附近车辆列表
  */
-class MainNearCarListFragment : XTBaseUltimateRecyclerViewFragment() {
+class MainNearNetWorkFragment : XTBaseUltimateRecyclerViewFragment() {
 
     interface CancelListener {
         fun onCancelClick()

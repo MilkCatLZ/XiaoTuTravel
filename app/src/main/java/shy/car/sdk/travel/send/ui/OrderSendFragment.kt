@@ -37,7 +37,7 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
             checkHasMore()
         }
 
-        override fun getListSuccess(list: ArrayList<OrderSendList>) {
+        override fun getListSuccess(list: List<OrderSendList>) {
             refreshOrLoadMoreComplete()
             checkHasMore()
         }
@@ -68,6 +68,7 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
+        onRefresh()
     }
 
     override fun refresh() {

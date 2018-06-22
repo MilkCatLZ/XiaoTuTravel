@@ -30,7 +30,7 @@ import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
-import shy.car.sdk.travel.main.ui.MainNearCarListFragment
+import shy.car.sdk.travel.main.ui.MainNearNetWorkFragment
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.user.data.User
@@ -45,7 +45,7 @@ class MainActivity : NearCarOpenListener,
         MapLocationRefreshListener,
         MainCitySelectFragment.CitySelectListener,
         XTBaseActivity(),
-        MainNearCarListFragment.CancelListener {
+        MainNearNetWorkFragment.CancelListener {
 
 
     override fun onCitySelected(location: CurrentLocation) {
@@ -90,7 +90,7 @@ class MainActivity : NearCarOpenListener,
 //    private val orderSendFragment = ARouter.getInstance().build(RouteMap.OrderSend).navigation() as Fragment
     private val deliveryFragment = DeliveryFragment()
     var citySelectFragment = MainCitySelectFragment()
-    var nearCarListFragment = MainNearCarListFragment()
+    var nearCarListFragment = MainNearNetWorkFragment()
 
     var city = ObservableField<CurrentLocation>()
 
