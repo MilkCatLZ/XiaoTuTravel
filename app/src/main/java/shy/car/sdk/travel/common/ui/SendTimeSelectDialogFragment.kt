@@ -13,7 +13,6 @@ import shy.car.sdk.databinding.DialogSendTimeSelectBinding
 import shy.car.sdk.travel.common.data.CommonWheelItem
 import shy.car.sdk.travel.common.presenter.SendTimeSelectPresenter
 import shy.car.sdk.travel.send.data.CarUserTime
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -44,7 +43,6 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { presenter = SendTimeSelectPresenter(it, this) }
-        presenter.setTimeLists(list)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,7 +54,8 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWheelView()
-        presenter.getList()
+        presenter.getDateList()
+        presenter.getTimeList()
     }
 
     private fun initWheelView() {

@@ -18,7 +18,7 @@ open class DeliveryOrderList : BaseObservable() {
      * user : {"name":"张三","phone":"171159758414","avatar":"/upload/avatar/5b0242652550a.png","rank_text":"白银"}
      */
 
-    @SerializedName("id")
+    @SerializedName("freight_id")
     @get:Bindable
     var id: String = ""
         set(id) {

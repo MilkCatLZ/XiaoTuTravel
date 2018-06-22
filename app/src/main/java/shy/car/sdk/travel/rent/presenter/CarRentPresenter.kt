@@ -113,13 +113,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 .api.createRentCarOrder(carId, pointID)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe({
-                    disposable = it
-                })
-                .doOnError({
-                    createError(it)
-                    disposable?.dispose()
-                })
                 .flatMap {
                     ApiManager.getInstance()
                             .api.getRentOrderList("1", "1", 0, 1)
@@ -142,15 +135,16 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
                     override fun onError(e: Throwable) {
                         ProgressDialog.hideLoadingView(context)
-                        ErrorManager.managerError(context, e, "获取订单失败")
+                        var error = ErrorManager.managerError(context, e, null)
+                        createError(error)
                     }
 
                 })
     }
 
-    private fun createError(it: Throwable) {
+    private fun createError(error: ErrorManager?) {
         ProgressDialog.hideLoadingView(context)
-        val error = ErrorManager.managerError(context, it, null)
+
 
         when (error?.error_code) {
         //422101有未取消的预约订单

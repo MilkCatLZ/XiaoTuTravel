@@ -7,9 +7,10 @@ import com.google.gson.annotations.SerializedName
 
 open class OrderState {
     companion object {
+        const val Close = 0
         const val StateWaitTake = 1
-        const val StateWaitPay = 2
-        const val StateSending = 3
-        const val StateFinish = 4
+        const val StateWaitPay = 10
+        const val StateSending = 20
+        const val StateFinish = 30
     }
 }

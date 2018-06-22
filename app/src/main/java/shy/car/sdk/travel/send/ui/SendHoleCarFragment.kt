@@ -32,9 +32,6 @@ import java.util.*
  */
 class SendHoleCarFragment : XTBaseFragment(),
         SendHoleCarPresenter.CallBack {
-    override fun getFreightTypeSuccess(t3: List<GoodsType>) {
-        goodsDialog.setLists(t3)
-    }
 
     override fun getCarUseTimeSuccess(t2: List<CarUserTime>) {
         timeSelectDialogFragment.setTimeLists(t2)

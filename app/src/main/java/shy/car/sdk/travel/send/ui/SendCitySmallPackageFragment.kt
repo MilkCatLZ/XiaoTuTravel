@@ -110,15 +110,15 @@ class SendCitySmallPackageFragment : XTBaseFragment(),
         timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
     }
 
+    val goodsDialog: GoodsTypeSelectDialogFragment = GoodsTypeSelectDialogFragment()
     fun onSelectGoodsTypeClick() {
-        val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
         goodsDialog.listener = object : GoodsTypeSelectDialogFragment.OnItemSelectedListener {
             override fun onTimeSelect(goodsType: GoodsType) {
                 presenter.goodsType.set(goodsType)
             }
 
         }
-        goodsDialog.isCancelable
+        goodsDialog.isCancelable = false
         goodsDialog.show(childFragmentManager, "dialog_select_goods_type")
     }
 

@@ -46,7 +46,6 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun onSubmitSuccess()
         fun onSubmitError()
         fun getCarUseTimeSuccess(t2: List<CarUserTime>)
-        fun getFreightTypeSuccess(t3: List<GoodsType>)
     }
 
 
@@ -54,35 +53,34 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
 
     fun getData() {
         ProgressDialog.showLoadingView(context)
-        val observable1 = ApiManager.getInstance()
+        val observable = ApiManager.getInstance()
                 .api.getCarTypeList()
 
-        val observable2 = ApiManager.getInstance()
-                .api.getCarUseTime()
-        val observable3 = ApiManager.getInstance()
-                .api.getFreightTypeList()
+        val observer = object : Observer<List<shy.car.sdk.travel.send.data.CarInfo>> {
+            override fun onComplete() {
 
-        Observable.zip(observable1, observable2, observable3, Function3<List<CarInfo>, List<CarUserTime>,List<GoodsType>, String> { t1, t2,t3 ->
-            Observable.just(1)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        adapter.setItems(t1, 1)
-                        carID = t1[0].id.toString()
-                        callBack.getCarUseTimeSuccess(t2)
-                        callBack.getFreightTypeSuccess(t3)
-                    }, {
+            }
 
-                    })
-            ""
-        })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe({
-                    ProgressDialog.hideLoadingView(context)
-                }, {
-                    ProgressDialog.hideLoadingView(context)
-                    it.printStackTrace()
-                })
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: List<CarInfo>) {
+                ProgressDialog.hideLoadingView(context)
+                adapter.setItems(t, 1)
+                carID = t[0].id.toString()
+            }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                e.printStackTrace()
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
     }
 
     fun submit() {

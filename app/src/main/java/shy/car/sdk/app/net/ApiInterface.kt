@@ -100,7 +100,7 @@ interface ApiInterface {
      *
      */
     @GET("users/freights/{freight_id}")
-    fun getTakeOrderDetail(@Path(ParamsConstant.FreightID) oid: String): Observable<DeliveryOrderDetail>
+    fun getOrderDetail(@Path(ParamsConstant.FreightID) fid: String): Observable<DeliveryOrderDetail>
 
     /**
      * 获取发货列表
@@ -326,6 +326,9 @@ interface ApiInterface {
     fun takeCarUploadPic(@Path("oid") order_id: String, @Part(ParamsConstant.OrderId) oid: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("freight/type")
-    fun getFreightTypeList():Observable<List<GoodsType>>
+    fun getFreightTypeList(): Observable<List<GoodsType>>
+
+    @PATCH("users/freights/{freight_id}")
+    fun takeDeliveryOrder(@Path("freight_id") freight_id: String, @Query("freight_status") status: String = "1"): Observable<JsonObject>
 
 }

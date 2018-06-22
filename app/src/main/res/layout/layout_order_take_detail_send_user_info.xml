@@ -9,6 +9,11 @@
             type="shy.car.sdk.travel.order.data.DeliveryOrderDetail" />
 
         <import type="shy.car.sdk.travel.take.data.OrderState" />
+
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.order.ui.OrderDetailFragment" />
     </data>
 
     <LinearLayout
@@ -95,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:tag="@{detail}"
+                android:onClick="@{()->fragment.callUser()}"
                 android:orientation="vertical">
 
 

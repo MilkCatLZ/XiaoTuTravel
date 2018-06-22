@@ -52,7 +52,7 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
             }
 
             override fun onNext(t: List<DeliveryOrderList>) {
-                adapter.setItems(t, pageSize)
+                adapter.setItems(t, pageIndex)
                 callBack.getListSuccess(t)
             }
 

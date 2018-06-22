@@ -47,33 +47,33 @@ class SendCitySmallPackagePresenter(context: Context, var callBack: CallBack) : 
     var adapter = DataBindingPagerAdapter<CarInfo>(context, R.layout.item_send_hole_car_select, BR.car, null)
 
     fun getData() {
-        ProgressDialog.showLoadingView(context)
-
-
-        val observable2 = ApiManager.getInstance()
-                .api.getCarUseTime()
-        val observer = object : Observer<List<CarUserTime>> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: List<CarUserTime>) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.getCarUseTimeSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                e.printStackTrace()
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable2, observer)
+//        ProgressDialog.showLoadingView(context)
+//
+//
+//        val observable2 = ApiManager.getInstance()
+//                .api.getCarUseTime()
+//        val observer = object : Observer<List<CarUserTime>> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//
+//            }
+//
+//            override fun onNext(t: List<CarUserTime>) {
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.getCarUseTimeSuccess(t)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ProgressDialog.hideLoadingView(context)
+//                e.printStackTrace()
+//            }
+//
+//        }
+//        ApiManager.getInstance()
+//                .toSubscribe(observable2, observer)
     }
 
     fun submit() {

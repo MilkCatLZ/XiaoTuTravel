@@ -6,8 +6,11 @@ import android.databinding.ObservableInt
 import android.view.View
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
+import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.common.data.GoodsType
 
@@ -46,9 +49,32 @@ class GoodsSelectPresenter(context: Context, var callBack: CallBack) : BasePrese
         }
     }
 
-    fun initData(list: List<GoodsType>?) {
-        adapter.setItems(list, 1)
-        checkedGoodsType = list!![0]
-        checkID.set(checkedGoodsType?.goodsType)
+
+    fun getGoodsType() {
+        val observable = ApiManager.getInstance()
+                .api.getFreightTypeList()
+
+        val observer = object : Observer<List<GoodsType>> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: List<GoodsType>) {
+                adapter.setItems(t, 1)
+                checkedGoodsType = t[0]
+                checkID.set(checkedGoodsType?.goodsType)
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        }
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 }

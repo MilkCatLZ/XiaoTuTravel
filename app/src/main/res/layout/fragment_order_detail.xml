@@ -19,6 +19,12 @@
         <variable
             name="presenter"
             type="shy.car.sdk.travel.order.presenter.OrderDetailPresenter" />
+
+        <import type="shy.car.sdk.travel.take.data.OrderState" />
+
+        <variable
+            name="btnText"
+            type="String"/>
     </data>
 
     <LinearLayout
@@ -73,20 +79,23 @@
 
                 <include
                     layout="@layout/layout_order_take_detail_send_user_info"
+                    app:fragment="@{fragment}"
                     app:detail="@{detail}" />
 
 
                 <TextView
+                    android:id="@+id/txt_button"
                     android:layout_width="match_parent"
                     android:layout_height="49dp"
                     android:layout_marginBottom="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
+                    android:visibleOrGone="@{fragment.btnVisible}"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/back_button_main_green_corner"
                     android:gravity="center"
                     android:onClick="@{()->fragment.onButtonClick()}"
-                    android:text="确认接单"
+                    android:text="@{btnText}"
                     android:textColor="@color/_foreground_material_light"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -45,7 +45,7 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
 
         activity?.let {
             presenter = GoodsSelectPresenter(it, this)
-            presenter.initData(list)
+
         }
     }
 
@@ -56,6 +56,11 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
         initRecyleView()
         initEdit()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getGoodsType()
     }
 
     private fun initEdit() {
@@ -89,10 +94,5 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
         dismiss()
     }
 
-    var list: List<GoodsType>? = null
-
-    fun setLists(t3: List<GoodsType>) {
-        list = t3
-    }
 
 }

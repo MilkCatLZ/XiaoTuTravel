@@ -11,6 +11,7 @@ import com.base.util.StringUtils
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.databinding.DialogOrderSendDetailChangeDeliveryMoneyBinding
+import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import shy.car.sdk.travel.send.presenter.MoneyChangePresenter
 
 /**
@@ -31,7 +32,7 @@ class OrderSendDetailChangeDeliveryMoneyFragmentDialog : XTBaseDialogFragment() 
     var money = ObservableField<String>()
     lateinit var presenter: MoneyChangePresenter
 
-    var detail: OrderSendDetail = OrderSendDetail()
+    var detail: DeliveryOrderDetail = DeliveryOrderDetail()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

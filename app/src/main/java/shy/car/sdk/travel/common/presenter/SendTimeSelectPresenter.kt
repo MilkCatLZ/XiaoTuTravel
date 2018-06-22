@@ -4,6 +4,7 @@ import android.content.Context
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.send.adapter.WheelAdapter
 import shy.car.sdk.travel.common.data.CommonWheelItem
@@ -25,7 +26,7 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
     var adapterDate = WheelAdapter()
     var adapterTime = WheelAdapter()
 
-    fun getList() {
+    fun getDateList() {
 
         var calendar = Calendar.getInstance()
         var format = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
@@ -55,7 +56,36 @@ class SendTimeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
     }
 
-    fun setTimeLists(t2: List<CarUserTime>) {
+
+    fun getTimeList() {
+        val observable = ApiManager.getInstance()
+                .api.getCarUseTime()
+
+        val observer = object : Observer<List<CarUserTime>> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: List<CarUserTime>) {
+                setTimeLists(t)
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+
+    private fun setTimeLists(t2: List<CarUserTime>) {
         t2.map {
             var item = CommonWheelItem()
             if ("0" == it.start) {
