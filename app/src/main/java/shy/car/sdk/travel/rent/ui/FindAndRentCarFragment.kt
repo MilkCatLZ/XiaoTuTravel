@@ -13,6 +13,7 @@ import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.base.overlay.DrivingRouteOverlay
+import com.base.util.ToastManager
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -60,6 +61,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     override fun onCancelSuccess() {
+        activity?.let {
+            ToastManager.showShortToast(it, "订单已取消")
+        }
         finish()
     }
 

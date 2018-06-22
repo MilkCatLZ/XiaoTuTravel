@@ -49,4 +49,8 @@
     <string name="str_pay_success">缴纳结果</string>
     <string name="str_rent_car_photo">租车拍照</string>
     <string name="str_order_pay">支付订单</string>
+    <string name="str_wait_take">待接单</string>
+    <string name="str_taked">已接单</string>
+    <string name="str_already_pay">已支付</string>
+    <string name="str_wait_pay">待支付</string>
 </resources>

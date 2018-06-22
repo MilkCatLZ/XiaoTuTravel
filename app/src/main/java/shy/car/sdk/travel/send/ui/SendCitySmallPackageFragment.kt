@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.ToastManager
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.PageManager
@@ -33,6 +35,11 @@ class SendCitySmallPackageFragment : XTBaseFragment(),
         SendCitySmallPackagePresenter.CallBack {
 
     override fun onSubmitSuccess() {
+
+        activity?.let {
+            ToastManager.showShortToast(it, "发布成功")
+        }
+        RefreshOrderList.refreshOrderList()
         finish()
     }
 

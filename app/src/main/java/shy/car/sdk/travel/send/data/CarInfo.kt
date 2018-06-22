@@ -10,7 +10,7 @@ import shy.car.sdk.BR
 class CarInfo : BaseObservable() {
 
     /**
-     * id : 16
+     * freightId : 16
      * name : QQ
      * img : http://www.api.com/upload/car/upload/car/5b231e8ab54e8.png
      * weight : 10

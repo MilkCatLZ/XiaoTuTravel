@@ -315,6 +315,7 @@ interface ApiInterface {
     @GET("freight/time")
     fun getCarUseTime(): Observable<List<CarUserTime>>
 
+    @FormUrlEncoded
     @PATCH("/users/orders/{order_id}")
     fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Query(ParamsConstant.OrderStatus) body: RequestBody): Observable<JsonObject>
 
@@ -328,7 +329,16 @@ interface ApiInterface {
     @GET("freight/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
 
+    @FormUrlEncoded
     @PATCH("users/freights/{freight_id}")
-    fun takeDeliveryOrder(@Path("freight_id") freight_id: String, @Query("freight_status") status: String = "1"): Observable<JsonObject>
+    fun takeDeliveryOrder(@Path("freight_id") freight_id: String, @Field("freight_status") status: String = "1"): Observable<JsonObject>
+
+
+    @DELETE("users/freights/{freight_id}")
+    fun cancelOrder(@Path("freight_id") freight_id: String): Observable<JsonObject>
+
+    @FormUrlEncoded
+    @PATCH("users/freights/{freight_id}")
+    fun deliveryFinish(id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
 
 }

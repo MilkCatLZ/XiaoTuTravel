@@ -24,7 +24,7 @@
 
         <variable
             name="btnText"
-            type="String"/>
+            type="String" />
     </data>
 
     <LinearLayout
@@ -32,9 +32,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/layout_title"
-            app:title="@{@string/str_take_hole_car}" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/layout_title"
+                app:title="@{@string/str_take_hole_car}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:text="取消订单"
+                android:onClick="@{()->fragment.cancelOrder()}"
+                android:visibleOrGone="@{fragment.canCancel}" />
+        </RelativeLayout>
 
         <View style="@style/style_shadow" />
 
@@ -79,8 +94,8 @@
 
                 <include
                     layout="@layout/layout_order_take_detail_send_user_info"
-                    app:fragment="@{fragment}"
-                    app:detail="@{detail}" />
+                    app:detail="@{detail}"
+                    app:fragment="@{fragment}" />
 
 
                 <TextView
@@ -90,14 +105,14 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
-                    android:visibleOrGone="@{fragment.btnVisible}"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/back_button_main_green_corner"
                     android:gravity="center"
                     android:onClick="@{()->fragment.onButtonClick()}"
                     android:text="@{btnText}"
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibleOrGone="@{fragment.btnVisible}" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

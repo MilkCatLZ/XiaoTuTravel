@@ -12,7 +12,7 @@ class BankType : BaseObservable(),
 
 
     /**
-     * id : 2
+     * freightId : 2
      * name : 中国工商银行
      * logo : 银行logo地址
      */

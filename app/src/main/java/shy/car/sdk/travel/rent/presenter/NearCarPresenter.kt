@@ -83,7 +83,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 if (BuildConfig.DEBUG) {
                     var gson = Gson()
                     var s = "{\n" +
-                            "    \"id\": 1,\n" +
+                            "    \"freightId\": 1,\n" +
                             "    \"name\": \"南宁万达时代广场\",\n" +
                             "    \"address\": \"西乡塘鲁班路10号\",\n" +
                             "    \"lng\": 108.248593,\n" +

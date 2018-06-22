@@ -24,7 +24,7 @@ class CarInfo : BaseObservable() {
      * lng : 108.27958
      * lat : 22.841126
      * cost : {"minute":0,"kilometre":0,"low_price":"最低消费0元"}
-     * discounts : {"duration":[{"id":"id","time":"24小时整日租","price":0},{"id":"夜","time":"20:00-次日8:00","price":88}]}
+     * discounts : {"duration":[{"freightId":"freightId","time":"24小时整日租","price":0},{"freightId":"夜","time":"20:00-次日8:00","price":88}]}
      */
 
     @SerializedName("car_id")
@@ -238,7 +238,7 @@ class CarInfo : BaseObservable() {
 
         open class DurationBean : Observable {
             /**
-             * id : id
+             * freightId : freightId
              * time : 24小时整日租
              * price : 0
              */

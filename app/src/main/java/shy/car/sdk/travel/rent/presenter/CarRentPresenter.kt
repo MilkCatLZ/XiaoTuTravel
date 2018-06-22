@@ -7,6 +7,7 @@ import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.DataBindingPagerAdapter
+import com.base.util.ToastManager
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -131,6 +132,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                     override fun onNext(t: List<OrderMineList>) {
                         ProgressDialog.hideLoadingView(context)
                         if (t.isNotEmpty()) {
+                            ToastManager.showShortToast(context, "订单创建成功")
                             callBack.onGetUnProgressOrderSuccess(t[0])
                         }
                     }
@@ -166,7 +168,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getRentOrderList("1", "3", 0, 1)
+                .api.getRentOrderList("1", "1", 0, 1)
         val observer = object : Observer<List<OrderMineList>> {
             override fun onComplete() {
 

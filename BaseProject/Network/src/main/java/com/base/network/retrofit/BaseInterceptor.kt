@@ -18,8 +18,8 @@ abstract class BaseInterceptor : Interceptor {
 
             //公共参数
 
-            request = if ("GET" == method || "DELETE" == method) {
-                 getMethodRequest(request)
+            request = if ("GET" == method || "DELETE" == method || "PATCH" == method) {
+                getMethodRequest(request)
             } else if ("POST" == method || "PUT" == method) {
                 postMethodRequest(request)
             } else {

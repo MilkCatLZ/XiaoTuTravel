@@ -77,7 +77,7 @@
                 android:text="货运"/>
 
             <!--<RadioButton-->
-                <!--android:id="@+id/radio_car_rent"-->
+                <!--android:freightId="@+freightId/radio_car_rent"-->
                 <!--style="@style/style_mm.gcw1.home_page_title"-->
                 <!--android:onClick="@{()->ac.changeToDelivery()}"-->
                 <!--android:text="租车"/>-->
@@ -85,7 +85,7 @@
 
 
             <!--<RadioButton-->
-                <!--android:id="@+id/radio_order_send"-->
+                <!--android:freightId="@+freightId/radio_order_send"-->
                 <!--style="@style/style_mm.gcw1.home_page_title"-->
                 <!--android:onClick="@{()->ac.changeToOrderSendFragment()}"-->
                 <!--android:text="发货"/>-->

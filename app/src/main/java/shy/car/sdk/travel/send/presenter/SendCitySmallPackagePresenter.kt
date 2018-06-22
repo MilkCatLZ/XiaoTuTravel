@@ -90,11 +90,12 @@ class SendCitySmallPackagePresenter(context: Context, var callBack: CallBack) : 
                     endLocation.get()?.address!!,
                     endLocation.get()?.lng.toString(),
                     endLocation.get()?.lat.toString(),
-                    "1",
+                    "1",//type=1同城小包
                     goodsType.get()?.goodsType.toString(),
                     goodsType.get()?.goodsTypeName!!,
-                    price.get()!!
-                    , remark = remark.get()
+                    price.get()!!,
+                    weight = weight.get()!!,
+                    remark = remark.get()
             )
             val observer = object : Observer<JsonObject> {
                 override fun onComplete() {

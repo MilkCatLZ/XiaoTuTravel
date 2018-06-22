@@ -142,7 +142,7 @@ class OrderMineList : BaseObservable() {
 
     open class Car : BaseObservable() {
         /**
-         * id : 2
+         * freightId : 2
          * plate_number : 桂E88888
          * model_name : A4
          * lng : 118.320004
@@ -151,12 +151,12 @@ class OrderMineList : BaseObservable() {
          * surplus_mileage : 55.0km
          */
 
-        @SerializedName("id")
+        @SerializedName("freight_id")
         @get:Bindable
-        var id: String? = null
-            set(id) {
-                field = id
-                notifyChange(BR.id)
+        var freightId: String? = null
+            set(freightId) {
+                field = freightId
+                notifyChange(BR.freightId)
             }
         @SerializedName("plate_number")
         @get:Bindable

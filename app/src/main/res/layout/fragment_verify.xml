@@ -131,7 +131,7 @@
                         <!--<LinearLayout style="@style/style_verify_content">-->
 
                             <!--<TextView-->
-                                <!--android:id="@+id/edt_verify_4"-->
+                                <!--android:freightId="@+freightId/edt_verify_4"-->
                                 <!--style="@style/style_verify_edt"-->
                                 <!--android:enabled="@{fragment.currentVerifyNum>=4}"-->
                                 <!--tools:text="1" />-->
@@ -139,7 +139,7 @@
                         <!--<LinearLayout style="@style/style_verify_content">-->
 
                             <!--<TextView-->
-                                <!--android:id="@+id/edt_verify_5"-->
+                                <!--android:freightId="@+freightId/edt_verify_5"-->
                                 <!--style="@style/style_verify_edt"-->
                                 <!--android:enabled="@{fragment.currentVerifyNum>=5}"-->
                                 <!--tools:text="1" />-->

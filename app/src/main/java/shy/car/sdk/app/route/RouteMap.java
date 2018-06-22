@@ -135,24 +135,18 @@ public class RouteMap {
     /**
      * 货运订单详情
      * {@link OrderDetailActivity}
-     * withObject(Object1,{@link DeliveryOrderList})
+     * withObject(String1,oid)
      */
     @NotNull
     public static final String OrderDetail = "/take/take_order_detail";
-   
+
     /**
      * 接单详情fragment
      * {@link shy.car.sdk.travel.order.ui.OrderDetailFragment}
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
-    /**
-     * 发货详情fragment
-     * {@link shy.car.sdk.travel.send.ui.OrderSendDetailFragment}
-     * withObject(Object1,{@link OrderSendList})
-     */
-    @NotNull
-    public static final String OrderSendDetailFragment = "/send/send_order_detail_fragment";
+
     /**
      * 整车发货 填写发货信息
      * {@link SendHoleCarActivity}
@@ -236,7 +230,15 @@ public class RouteMap {
 
     /**
      * {@link OrderPayActivity}
+     * withObject(Object1,DeliveryOrderDetail)
      */
     @NotNull
-    public static final String OrderPay = "pay/order";
+    public static final String OrderPay = "/pay/order";
+
+    /**
+     * {@link OrderPayActivity}
+     * 行程中
+     */
+    @NotNull
+    public static final String Driving = "/rent/driving";
 }

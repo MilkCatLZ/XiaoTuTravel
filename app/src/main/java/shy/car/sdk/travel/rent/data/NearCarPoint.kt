@@ -41,7 +41,7 @@ class NearCarPoint : BaseObservable(),
         }
 
     /**
-     * id : 10025
+     * freightId : 10025
      * name : 委屈委屈委屈
      * address : 2
      * lng : 108.320004

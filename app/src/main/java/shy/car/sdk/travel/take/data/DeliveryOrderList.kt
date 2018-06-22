@@ -20,10 +20,10 @@ open class DeliveryOrderList : BaseObservable() {
 
     @SerializedName("freight_id")
     @get:Bindable
-    var id: String = ""
+    var freightId: String = ""
         set(id) {
             field = id
-            notifyChange(shy.car.sdk.BR.id)
+            notifyChange(shy.car.sdk.BR.freightId)
         }
     @SerializedName("freight")
     @get:Bindable

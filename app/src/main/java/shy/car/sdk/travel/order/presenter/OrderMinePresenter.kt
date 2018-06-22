@@ -7,12 +7,14 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.rent.data.RentOrderState
 
 class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -26,29 +28,40 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
     var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click, {
         val order = it.tag as OrderMineList
         if (order.type == 1) {
-            when(order.status){
-                //1:预约单
-                1->{
+            when (order.status) {
+            //1:预约单
+                RentOrderState.Create -> {
                     ARouter.getInstance()
                             .build(RouteMap.FindAndRentCar)
                             .withObject(Object1, order)
                             .navigation()
                 }
-                //待支付
-                2->{
+            //待支付
+                RentOrderState.Return -> {
                     ARouter.getInstance()
                             .build(RouteMap.OrderPay)
                             .withString(String1, order.id)
                             .navigation()
                 }
-                else->{
-
+            //已取车
+                RentOrderState.Taked -> {
+                    ARouter.getInstance()
+                            .build(RouteMap.Driving)
+                            .withString(String1, order.id)
+                            .navigation()
+                }
+                else -> {
+                    ARouter.getInstance()
+                            .build(RouteMap.RentCarDetail)
+                            .withObject(Object1, order)
+                            .navigation()
                 }
             }
         } else {
+            //货运订单
             ARouter.getInstance()
-                    .build(RouteMap.RentCarDetail)
-                    .withString(String1, order.id)
+                    .build(RouteMap.OrderDetail)
+                    .withString(ParamsConstant.String1, order.id)
                     .navigation()
         }
     })

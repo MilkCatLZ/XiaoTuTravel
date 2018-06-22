@@ -64,7 +64,7 @@ open class XTBaseFragment : BaseFragment<Application>() {
                     val t = v
                     val title = v.text
                     if (!TextUtils.isEmpty(title) && actionbarTitle == title && v.id == View.NO_ID) {
-                        //Toolbar does not assign id to views with layout params SYSTEM, hence getId() == View.NO_ID
+                        //Toolbar does not assign freightId to views with layout params SYSTEM, hence getFreightId() == View.NO_ID
                         //in same manner subtitle TextView can be obtained.
                         return v
                     }

@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogUserVerifyHintBinding
 import shy.car.sdk.travel.take.data.DeliveryOrderList
@@ -34,7 +35,7 @@ class UserVerifyHintDialogFragment : XTBaseDialogFragment() {
     fun goDetail() {
         ARouter.getInstance()
                 .build(RouteMap.OrderDetail)
-                .withObject(Object1, takeOrderList)
+                .withString(String1, takeOrderList?.freightId)
                 .navigation(app)
         dismissAllowingStateLoss()
     }

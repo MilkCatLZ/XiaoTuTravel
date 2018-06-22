@@ -22,7 +22,7 @@ class RentOrderDetail : BaseObservable() {
      * duration : 1:57
      * status : 5
      * status_name : 已完成
-     * car : {"car_model_img":"upload/car/5ae416ed1efe4.png","plate_number":"桂A88888","car_model_name":"A6","car_color":"黑色","cost":{"minute_price":1,"km_price":5,"minimum":10},"discounts":[{"id":24,"txt":"24小时整日租","price":"140"},{"id":"夜","txt":"20:00-次日8:00","price":"88"}]}
+     * car : {"car_model_img":"upload/car/5ae416ed1efe4.png","plate_number":"桂A88888","car_model_name":"A6","car_color":"黑色","cost":{"minute_price":1,"km_price":5,"minimum":10},"discounts":[{"freightId":24,"txt":"24小时整日租","price":"140"},{"freightId":"夜","txt":"20:00-次日8:00","price":"88"}]}
      */
 
     @SerializedName("user_id")

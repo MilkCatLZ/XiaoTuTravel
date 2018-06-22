@@ -49,7 +49,7 @@
                     <!--android:layout_height="match_parent">-->
 
                     <!--<RadioButton-->
-                        <!--android:id="@+id/radio_order_mine_all"-->
+                        <!--android:freightId="@+freightId/radio_order_mine_all"-->
 
                         <!--style="@style/style_wm.order_mine"-->
                         <!--android:checked="@{fragment.checkedTab== OrderMineList.getALL()}"-->

@@ -17,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.common.data.GoodsType
@@ -97,7 +98,7 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
                     endLocation.get()?.address!!,
                     endLocation.get()?.lng.toString(),
                     endLocation.get()?.lat.toString(),
-                    "2",
+                    "2",//type=2整车发货
                     goodsType.get()?.goodsType.toString(),
                     goodsType.get()?.goodsTypeName!!,
                     price.get()!!,
@@ -116,6 +117,7 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
                 override fun onNext(t: JsonObject) {
                     ProgressDialog.hideLoadingView(context)
                     callBack.onSubmitSuccess()
+                    RefreshOrderList.refreshOrderList()
                 }
 
                 override fun onError(e: Throwable) {
