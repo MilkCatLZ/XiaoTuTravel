@@ -14,6 +14,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.databinding.FragmentRemainDetailBinding
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.remain.presenter.RemainDetailPresenter
+import shy.car.sdk.travel.user.data.User
 
 /**
  * create by LZ at 2018/06/13
@@ -50,6 +51,7 @@ class RemainDetailFragment : XTBaseUltimateRecyclerViewFragment(),
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_remain_detail, null, false)
         binding.fragment = this
         binding.presenter = presenter
+        binding.user = User.instance
         return binding.root
     }
 

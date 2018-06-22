@@ -17,6 +17,7 @@ import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
 import shy.car.sdk.travel.pay.presenter.PayPresenter
+import shy.car.sdk.travel.user.data.User
 
 /**
  * create by lz at 2018/06/17
@@ -51,6 +52,7 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pay, null, false)
         binding.fragment = this
         binding.presenter = presenter
+        binding.user = User.instance
         return binding.root
     }
 

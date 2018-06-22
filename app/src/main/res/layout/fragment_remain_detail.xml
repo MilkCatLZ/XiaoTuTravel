@@ -16,6 +16,10 @@
         <variable
             name="presenter"
             type="shy.car.sdk.travel.remain.presenter.RemainDetailPresenter"/>
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User"/>
     </data>
 
     <RelativeLayout
@@ -54,7 +58,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="余额"
+                        android:text="@{user.balance}"
                         android:textColor="@color/_foreground_material_light"
                         android:textSize="@dimen/text_primary_14dp" />
 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import
+            alias="util"
+            type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.remain.ui.TiXianActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_title" />
+
+        <View style="@style/style_shadow" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/_foreground_material_light"
+            android:paddingStart="35dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                style="@style/style_ww.text_14_333"
+                android:text="银行卡" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="35dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/style_ww.text_14_333"
+                    android:text="中国银行" />
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:layout_marginTop="5dp"
+                    android:text="尾号4005储蓄卡" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+    </LinearLayout>
+</layout>
