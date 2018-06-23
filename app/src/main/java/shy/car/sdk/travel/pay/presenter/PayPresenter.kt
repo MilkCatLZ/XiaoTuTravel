@@ -18,7 +18,6 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
-import shy.car.sdk.travel.user.data.User
 
 class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -41,7 +40,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         holder.binding.setVariable(BR.presenter, this@PayPresenter)
     })
 
-    fun getPayAmoutList() {
+    fun getPayAmountList() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance().api.getPayAmountList()
@@ -87,16 +86,19 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
             ToastManager.showShortToast(context, "请选择支付方式")
             return
         }
-        ProgressDialog.showLoadingView(context)
+        if (selectedPayAmount.get() == null && amount.get() == 0.0){
+            ToastManager.showShortToast(context, "请选择充值金额")
+            return
+        }
+            ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        var price = ""
-        price = if (amount.get() > 0.0) {
+        var price: String = if (amount.get() > 0.0) {
             amount.get().toString()
         } else {
             selectedPayAmount.get()?.realPrice.toString()
         }
 
-        val observable = ApiManager.getInstance().api.createDeposits(User.instance.phone, payMethodID = payMethod.get()?.id.toString(), amount = price)
+        val observable = ApiManager.getInstance().api.createRecharge(price, payMethod.get()?.id.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

@@ -64,6 +64,13 @@ class BankCard : BaseObservable(), Observable {
             field = value
             notifyChange(BR.type)
         }
+    @SerializedName("card")
+    @get:Bindable
+    var card: String=""
+        set(value) {
+            field = value
+            notifyChange(BR.card)
+        }
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 

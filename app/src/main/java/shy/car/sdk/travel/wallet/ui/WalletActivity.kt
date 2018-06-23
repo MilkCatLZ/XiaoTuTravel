@@ -67,7 +67,7 @@ class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
      * 提现
      */
     fun onTixianClick() {
-
+        ARouter.getInstance().build(RouteMap.TiXian).navigation()
     }
 
     /**

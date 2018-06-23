@@ -4,11 +4,13 @@ package shy.car.sdk.app.route;
 import org.jetbrains.annotations.NotNull;
 
 import shy.car.sdk.travel.bank.data.BankCard;
+import shy.car.sdk.travel.bank.ui.BankCardManagerActivity;
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.order.data.OrderMineList;
+import shy.car.sdk.travel.order.ui.OrderDetailActivity;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
@@ -16,11 +18,8 @@ import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
 import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
-import shy.car.sdk.travel.send.data.OrderSendList;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
-import shy.car.sdk.travel.take.data.DeliveryOrderList;
-import shy.car.sdk.travel.order.ui.OrderDetailActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
 
@@ -205,8 +204,8 @@ public class RouteMap {
     public static final String Pay = "/pay/charge";
     /**
      * 银行卡
-     * {@link BankCard}
-     * withBoolean(ParamsConstant.Boolean1)
+     * {@link BankCardManagerActivity}
+     * withBoolean(ParamsConstant.Boolean1) true:选择模式；false:查看模式
      */
     @NotNull
     public static final String BankCard = "/bank/BankCard";
@@ -249,4 +248,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String TiXian = "/remain/tixian";
+
+    /**
+     * {@link TiXianActivity}
+     * 提现
+     */
+    @NotNull
+    public static final String TiXianSuccess = "/remain/tixian_success";
 }

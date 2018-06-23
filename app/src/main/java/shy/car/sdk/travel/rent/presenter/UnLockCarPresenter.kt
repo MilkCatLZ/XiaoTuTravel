@@ -68,7 +68,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
             ProgressDialog.showLoadingView(context)
             val observableUpload = ApiManager.getInstance()
-                    .api.takeCarUploadPic(detail?.orderId!!, convertToRequestBody(detail?.orderId!!), createImageParams().parts())
+                    .api.takeCarUploadPic(detail?.orderId!!,detail?.orderId!!, createImageParams().parts())
 
             val observableUnLock = ApiManager.getInstance()
                     //固定传3

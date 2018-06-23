@@ -118,7 +118,7 @@ interface ApiInterface {
      */
     @GET("orders")
     fun getOrderMineList(
-            @Query(ParamsConstant.Status) status: String="0",
+            @Query(ParamsConstant.Status) status: String = "0",
             @Query(ParamsConstant.Type) type: String,
             @Query(ParamsConstant.Offset) offset: Int,
             @Query(ParamsConstant.Limit) limit: Int): Observable<List<OrderMineList>>
@@ -132,7 +132,7 @@ interface ApiInterface {
             @Query(ParamsConstant.Type) type: String,
             @Query(ParamsConstant.Status) status: String,
             @Query(ParamsConstant.Offset) offset: Int,
-            @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<OrderMineList>>
+            @Query(ParamsConstant.Limit) limit: Int): Observable<List<OrderMineList>>
 
     /**
      * 检查更新
@@ -205,11 +205,18 @@ interface ApiInterface {
     fun getPromiseMoney(): Observable<JsonObject>
 
     /**
-     * 创建充值订单
+     * 支付押金
      */
     @FormUrlEncoded
     @POST("users/deposits")
     fun createDeposits(@Query(ParamsConstant.UID) uid: String, @Field(ParamsConstant.CarModelID) carid: String? = null, @Field(ParamsConstant.PaymentID) payMethodID: String, @Field(ParamsConstant.Amount) amount: String?): Observable<JsonObject>
+
+    /**
+     * 充值
+     */
+    @FormUrlEncoded
+    @PATCH("balance/recharge")
+    fun createRecharge(@Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.PaymentID) payMethodID: String): Observable<JsonObject>
 
     /**
      * 押金列表
@@ -236,7 +243,7 @@ interface ApiInterface {
     /**
      * 获取充值可用列表
      */
-    @GET("users/deposits/logs")
+    @GET("balance/package")
     fun getPayAmountList(): Observable<List<PayAmount>>
 
     /**
@@ -326,8 +333,8 @@ interface ApiInterface {
      * 提交身份认证
      */
     @Multipart
-    @POST("users/orders/{oid}/photos")
-    fun takeCarUploadPic(@Path("oid") order_id: String, @Part(ParamsConstant.OrderId) oid: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    @POST("orders/{oid}/photos")
+    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("freight/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
@@ -342,6 +349,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("users/freights/{freight_id}")
-    fun deliveryFinish(@Path("freight_id")id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
+    fun deliveryFinish(@Path("freight_id") id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
+
+    @FormUrlEncoded
+    @PATCH("balance")
+    fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String, @Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.Status) satus: String = "1"): Observable<JsonObject>
 
 }

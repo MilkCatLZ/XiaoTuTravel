@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
-            type="shy.car.sdk.app.LNTextUtil" />
+            type="shy.car.sdk.app.LNTextUtil"/>
 
         <variable
             name="ac"
-            type="shy.car.sdk.travel.remain.ui.TiXianActivity" />
+            type="shy.car.sdk.travel.remain.ui.TiXianActivity"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.remain.presenter.TiXianPresenter"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_back"
-        android:orientation="vertical">
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/main_back"
+                  android:orientation="vertical">
 
-        <include layout="@layout/layout_title" />
+        <include layout="@layout/layout_title"/>
 
-        <View style="@style/style_shadow" />
+        <View style="@style/style_shadow"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginTop="10dp"
             android:background="@color/_foreground_material_light"
+            android:onClick="@{()->ac.selectBankCard()}"
             android:paddingStart="35dp"
             android:paddingTop="15dp">
 
             <TextView
                 style="@style/style_ww.text_14_333"
-                android:text="银行卡" />
+                android:text="银行卡"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,16 +47,107 @@
 
                 <TextView
                     style="@style/style_ww.text_14_333"
-                    android:text="中国银行" />
+                    android:text="@{presenter.selectedBankCard==null?@string/str_select_bank_card:presenter.selectedBankCard.name}"/>
 
                 <TextView
                     style="@style/style_ww.text_12_999"
                     android:layout_marginTop="5dp"
-                    android:text="尾号4005储蓄卡" />
+                    android:text="@{presenter.selectedBankCard.description}"/>
 
             </LinearLayout>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
+
+
+        <TextView
+            style="@style/style_ww.text_14_333"
+            android:layout_width="match_parent"
+            android:background="@color/_foreground_material_light"
+            android:paddingBottom="58dp"
+            android:paddingEnd="0dp"
+            android:paddingStart="35dp"
+            android:paddingTop="40dp"
+            android:text="提现金额"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/_foreground_material_light"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal"
+                android:paddingEnd="0dp"
+                android:paddingStart="35dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="24sp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="@={presenter.amount}"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="24sp"/>
+            </LinearLayout>
+
+            <View
+                style="@style/line_horizontal"
+                android:layout_marginStart="33dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingStart="35dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:text="@{presenter.remainText}"
+                    tools:text="可提现金额 ￥998"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:onClick="@{()->ac.tixianAll()}"
+                    android:text="全部提现"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="@dimen/text_second_primary_12dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/back_button_main_green_clickable_corner_2dp"
+            android:gravity="center"
+            android:text="立即提现"
+            android:onClick="@{()->ac.tixianClick()}"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp"/>
     </LinearLayout>
 </layout>

@@ -14,6 +14,7 @@ import shy.car.sdk.databinding.ActivityBankCardManagerBinding
 /**
  * create by 过期猫粮 at 2018/06/18
  * 管理/选择银行
+ * 选择结果通过EventBus抛出
  */
 @Route(path = RouteMap.BankCard)
 class BankCardManagerActivity : XTBaseActivity() {
@@ -25,11 +26,10 @@ class BankCardManagerActivity : XTBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityBankCardManagerBinding>(this, R.layout.activity_bank_card_manager)
-        var fragment = supportFragmentManager.findFragmentById(R.id.fragment_bank_card_manager) as BankCarManagerFragment
-
         ARouter.getInstance()
                 .inject(this)
-        fragment.selectMode = selectMode
+        var fragment = supportFragmentManager.findFragmentById(R.id.fragment_bank_card_manager) as BankCarManagerFragment
+        fragment.setSelectMode(selectMode)
     }
 
 

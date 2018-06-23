@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.StringUtils
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
@@ -43,7 +44,11 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
         }
         amountText.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
-                presenter.amount.set(amountText.get()?.toDouble()!!)
+                if (StringUtils.isNotEmpty(amountText.get()))
+                    presenter.amount.set(amountText.get()?.toDouble()!!)
+                else{
+                    presenter.amount.set(0.0)
+                }
             }
         })
     }
@@ -58,7 +63,7 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getPayAmoutList()
+        presenter.getPayAmountList()
     }
 
     fun selectPayMethod() {
