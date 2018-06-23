@@ -10,6 +10,7 @@ import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
+import shy.car.sdk.travel.coupon.data.Coupon
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
@@ -251,6 +252,12 @@ interface ApiInterface {
      */
     @GET("users/bank_cards")
     fun getBankCardList(@Query(ParamsConstant.UID) uid: String): Observable<List<BankCard>>
+
+    /**
+     * 获取优惠券列表
+     */
+    @GET("coupons")
+    fun getCouponList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<Coupon>>
 
     /**
      * 获取支持银行列表
