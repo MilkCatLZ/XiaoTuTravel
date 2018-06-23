@@ -43,13 +43,6 @@ class BankCard : BaseObservable(), Observable {
             field = logo
             notifyChange(BR.logo)
         }
-    @SerializedName("desc")
-    @get:Bindable
-    var description: String? = null
-        set(description) {
-            field = description
-            notifyChange(BR.description)
-        }
     @SerializedName("default")
     @get:Bindable
     var defaultX: Int = 0

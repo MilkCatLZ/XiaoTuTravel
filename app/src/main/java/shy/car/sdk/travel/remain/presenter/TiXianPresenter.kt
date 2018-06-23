@@ -31,7 +31,7 @@ class TiXianPresenter(context: Context, var callBack: CallBack) : BasePresenter(
     }
 
     fun tixian() {
-        if (checkInput()) return
+        if (!checkInput()) return
         ProgressDialog.showLoadingView(context)
         val observable = ApiManager.getInstance().api.tixian(selectedBankCard.get()?.id!!, amount.get()!!)
         val observer = object : Observer<JsonObject> {

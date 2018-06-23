@@ -59,7 +59,7 @@ class BankCardManagerPresenter(context: Context, var callBack: CallBack) : BaseP
                     for (i in 0..5) {
                         var bank = BankCard()
                         bank.name = "中国银行$i"
-                        bank.description = "6222 02** **** ****53$i"
+                        bank.card = "6222 02** **** ****53$i"
                         bank.id = i.toString()
                         adapter.addItem(bank)
                     }

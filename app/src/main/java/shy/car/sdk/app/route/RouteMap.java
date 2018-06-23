@@ -252,6 +252,8 @@ public class RouteMap {
     /**
      * {@link TiXianActivity}
      * 提现
+     * withString(String1,method) 提现方式
+     * withString(String2,remain) 提现金额
      */
     @NotNull
     public static final String TiXianSuccess = "/remain/tixian_success";

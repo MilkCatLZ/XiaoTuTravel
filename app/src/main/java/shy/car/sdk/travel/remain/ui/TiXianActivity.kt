@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
-import shy.car.sdk.app.constant.ParamsConstant.Boolean1
+import shy.car.sdk.app.constant.ParamsConstant.*
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityTixianBinding
 import shy.car.sdk.travel.bank.data.BankCard
@@ -20,7 +20,8 @@ import shy.car.sdk.travel.user.data.User
 @Route(path = RouteMap.TiXian)
 class TiXianActivity : XTBaseActivity(), TiXianPresenter.CallBack {
     override fun onTiXianSuccess(t: JsonObject) {
-        ARouter.getInstance().build(RouteMap.TiXianSuccess).navigation()
+        ARouter.getInstance().build(RouteMap.TiXianSuccess).withString(String1, presenter.selectedBankCard.get()?.type).withString(String2, presenter.amount.get()).navigation()
+
         finish()
     }
 
@@ -40,7 +41,7 @@ class TiXianActivity : XTBaseActivity(), TiXianPresenter.CallBack {
     }
 
     fun tixianAll() {
-        presenter.remainText.set(User.instance.balance.toString())
+        presenter.amount.set(User.instance.balance.toString())
     }
 
     fun selectBankCard() {

@@ -353,6 +353,6 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("balance")
-    fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String, @Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.Status) satus: String = "1"): Observable<JsonObject>
+    fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String, @Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.Action) action: String = "1"): Observable<JsonObject>
 
 }
