@@ -6,23 +6,33 @@ import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
 import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
+import shy.car.sdk.app.LNTextUtil
 
 class RentOrderDetail : BaseObservable() {
 
+
     /**
-     * user_id : 2
-     * order_id : 222
-     * duration_fee : 256.8
-     * mileage_fee : 22
-     * money : 247.68
-     * realpay_money : 3333
-     * coupon_price : 244
-     * mileage : 44
-     * return_at : 04-18 00:00 ~ 05-03 17:46
-     * duration : 1:57
-     * status : 5
-     * status_name : 已完成
-     * car : {"car_model_img":"upload/car/5ae416ed1efe4.png","plate_number":"桂A88888","car_model_name":"A6","car_color":"黑色","cost":{"minute_price":1,"km_price":5,"minimum":10},"discounts":[{"freightId":24,"txt":"24小时整日租","price":"140"},{"freightId":"夜","txt":"20:00-次日8:00","price":"88"}]}
+     * user_id : 8
+     * order_id : 1527039003
+     * duration_fee : 0
+     * mileage_fee : 0
+     * money : 0
+     * realpay_money : 0
+     * coupon_price : 0
+     * mileage : 0
+     * use_car_time : 05-23 09:33 ~ 01-01 08:00
+     * duration : 0:0
+     * status : 3
+     * status_name : 已取车
+     * from_network : 广西壮族自治区南宁市江南区金凯街道迎凯路
+     * to_network : 广西壮族自治区南宁市江南区金凯街道迎凯路
+     * pay_method : 微信支付
+     * created_at : 05-23 09:30
+     * obtain_at : 05-23 09:33
+     * return_at : 07-01 08:00
+     * finish_at : 06-01 08:00
+     * comment_id : 1
+     * car : {"model_img":"http://www.api.com/upload/car/upload/car/5ae416fcdc2da.png","plate_number":"桂E88888","model_name":"A4","color":"白色","cost":{"minute_price":1.5,"km_price":8,"minimum":8},"discounts":[{"id":24,"txt":"24小时整日租","price":500}]}
      */
 
     @SerializedName("user_id")
@@ -76,17 +86,17 @@ class RentOrderDetail : BaseObservable() {
         }
     @SerializedName("mileage")
     @get:Bindable
-    var mileage: Int = 0
+    var mileage: Double = 0.toDouble()
         set(mileage) {
             field = mileage
             notifyChange(BR.mileage)
         }
-    @SerializedName("return_at")
+    @SerializedName("use_car_time")
     @get:Bindable
-    var returnAt: String? = null
-        set(returnAt) {
-            field = returnAt
-            notifyChange(BR.returnAt)
+    var useCarTime: String? = null
+        set(useCarTime) {
+            field = useCarTime
+            notifyChange(BR.useCarTime)
         }
     @SerializedName("duration")
     @get:Bindable
@@ -108,6 +118,62 @@ class RentOrderDetail : BaseObservable() {
         set(statusName) {
             field = statusName
             notifyChange(BR.statusName)
+        }
+    @SerializedName("from_network")
+    @get:Bindable
+    var fromNetwork: String? = null
+        set(fromNetwork) {
+            field = fromNetwork
+            notifyChange(BR.fromNetwork)
+        }
+    @SerializedName("to_network")
+    @get:Bindable
+    var toNetwork: String? = null
+        set(toNetwork) {
+            field = toNetwork
+            notifyChange(BR.toNetwork)
+        }
+    @SerializedName("pay_method")
+    @get:Bindable
+    var payMethod: String? = null
+        set(payMethod) {
+            field = payMethod
+            notifyChange(BR.payMethod)
+        }
+    @SerializedName("created_at")
+    @get:Bindable
+    var createdAt: String? = null
+        set(createdAt) {
+            field = createdAt
+            notifyChange(BR.createdAt)
+        }
+    @SerializedName("obtain_at")
+    @get:Bindable
+    var obtainAt: String? = null
+        set(obtainAt) {
+            field = obtainAt
+            notifyChange(BR.obtainAt)
+        }
+    @SerializedName("return_at")
+    @get:Bindable
+    var returnAt: String? = null
+        set(returnAt) {
+            field = returnAt
+            notifyChange(BR.returnAt)
+        }
+    @SerializedName("finish_at")
+    @get:Bindable
+    var finishAt: String? = null
+        set(finishAt) {
+            field = finishAt
+            notifyChange(BR.finishAt)
+        }
+    @SerializedName("comment_id")
+    @get:Bindable
+    var commentId: String? = null
+        set(commentId) {
+            field = commentId
+            notifyChange(BR.commentId)
         }
     @SerializedName("car")
     @get:Bindable
@@ -143,43 +209,37 @@ class RentOrderDetail : BaseObservable() {
         }
     }
 
+    fun carInfo(): String {
+        return "${car?.plateNumber} | ${car?.modelName} | ${car?.color}"
+    }
+
+    fun costInfo(): String {
+        return "计费标准： ￥${car?.cost?.minutePrice}/分钟+￥${car?.cost?.kmPrice}/公里；最低消费：${LNTextUtil.getPriceText(car?.cost?.minimum!!)}元"
+    }
+
     open class CarBean : Observable {
         /**
-         * car_model_img : upload/car/5ae416ed1efe4.png
-         * plate_number : 桂A88888
-         * car_model_name : A6
-         * car_color : 黑色
-         * cost : {"minute_price":1,"km_price":5,"minimum":10}
-         * discounts : [{"id":24,"txt":"24小时整日租","price":"140"},{"id":"夜","txt":"20:00-次日8:00","price":"88"}]
+         * model_img : http://www.api.com/upload/car/upload/car/5ae416fcdc2da.png
+         * plate_number : 桂E88888
+         * model_name : A4
+         * color : 白色
+         * cost : {"minute_price":1.5,"km_price":8,"minimum":8}
+         * discounts : [{"id":24,"txt":"24小时整日租","price":500}]
          */
 
-        @SerializedName("id")
+        @SerializedName("car_id")
         @get:Bindable
-        var id: String = "1"
-            set(id) {
-                field = id
-                notifyChange(BR.id)
+        var carID: String? = null
+            set(carID) {
+                field = carID
+                notifyChange(BR.carID)
             }
-        @SerializedName("car_model_img")
+        @SerializedName("model_img")
         @get:Bindable
-        var carModelImg: String? = null
-            set(carModelImg) {
-                field = carModelImg
-                notifyChange(BR.carModelImg)
-            }
-        @SerializedName("lat")
-        @get:Bindable
-        var lat: Double = 0.0
-            set(lat) {
-                field = lat
-                notifyChange(BR.lat)
-            }
-        @SerializedName("lng")
-        @get:Bindable
-        var lng: Double = 0.0
-            set(lng) {
-                field = lng
-                notifyChange(BR.lng)
+        var modelImg: String? = null
+            set(modelImg) {
+                field = modelImg
+                notifyChange(BR.modelImg)
             }
         @SerializedName("plate_number")
         @get:Bindable
@@ -188,19 +248,19 @@ class RentOrderDetail : BaseObservable() {
                 field = plateNumber
                 notifyChange(BR.plateNumber)
             }
-        @SerializedName("car_model_name")
+        @SerializedName("model_name")
         @get:Bindable
-        var carModelName: String? = null
-            set(carModelName) {
-                field = carModelName
-                notifyChange(BR.carModelName)
+        var modelName: String? = null
+            set(modelName) {
+                field = modelName
+                notifyChange(BR.modelName)
             }
-        @SerializedName("car_color")
+        @SerializedName("color")
         @get:Bindable
-        var carColor: String? = null
-            set(carColor) {
-                field = carColor
-                notifyChange(BR.carColor)
+        var color: String? = null
+            set(color) {
+                field = color
+                notifyChange(BR.color)
             }
         @SerializedName("cost")
         @get:Bindable
@@ -215,20 +275,6 @@ class RentOrderDetail : BaseObservable() {
             set(discounts) {
                 field = discounts
                 notifyChange(BR.discounts)
-            }
-        @SerializedName("battery")
-        @get:Bindable
-        var battery: String = ""
-            set(battery) {
-                field = battery
-                notifyChange(BR.battery)
-            }
-        @SerializedName("surplus_mileage")
-        @get:Bindable
-        var surplusMileage: String = ""
-            set(surplusMileage) {
-                field = surplusMileage
-                notifyChange(BR.surplusMileage)
             }
         @Transient
         private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
@@ -259,9 +305,9 @@ class RentOrderDetail : BaseObservable() {
 
         open class CostBean : Observable {
             /**
-             * minute_price : 1
-             * km_price : 5
-             * minimum : 10
+             * minute_price : 1.5
+             * km_price : 8
+             * minimum : 8
              */
 
             @SerializedName("minute_price")
@@ -313,11 +359,12 @@ class RentOrderDetail : BaseObservable() {
             }
         }
 
+
         open class DiscountsBean : Observable {
             /**
              * id : 24
              * txt : 24小时整日租
-             * price : 140
+             * price : 500
              */
 
             @SerializedName("id")

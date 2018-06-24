@@ -233,9 +233,8 @@ interface ApiInterface {
 
 
     /**
-     * 获取租车订单详情
-     * status=1时，不用传orderid
-     * 	status:状态（1寻车鸣笛、2开门、3锁车），固定传值为2
+     * 操作车辆
+     * 	status:状态（1寻车鸣笛、2开门、3锁车）
      */
     @FormUrlEncoded
     @POST("cars/{carID}")
