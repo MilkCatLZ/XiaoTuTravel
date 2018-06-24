@@ -16,6 +16,7 @@ import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.remain.ui.TiXianActivity;
+import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
 import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
@@ -236,8 +237,9 @@ public class RouteMap {
     public static final String OrderPay = "/pay/order";
 
     /**
-     * {@link OrderPayActivity}
+     * {@link DrivingActivity}
      * 行程中
+     * withString(String1,oid)
      */
     @NotNull
     public static final String Driving = "/rent/driving";

@@ -67,14 +67,15 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
         if (checkSelect()) {
 
             ProgressDialog.showLoadingView(context)
-            val observableUpload = ApiManager.getInstance()
-                    .api.takeCarUploadPic(detail?.orderId!!,detail?.orderId!!, createImageParams().parts())
 
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
-                    .api.orderUnLockCarAndStart(detail?.orderId!!, body = convertToRequestBody("3"))
+                    .api.orderUnLockCarAndStart(detail?.orderId!!)
 
-            observableUpload.observeOn(AndroidSchedulers.mainThread())
+            val observableUpload = ApiManager.getInstance()
+                    .api.takeCarUploadPic(detail?.orderId!!,detail?.orderId!!, createImageParams().parts())
+
+            observableUnLock.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
                     .doOnSubscribe({
                         disposable = it
@@ -84,8 +85,10 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                         disposable?.dispose()
                     })
                     .flatMap({
-                        observableUnLock
+                        observableUpload
                     })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
                     .subscribe(object : Observer<JsonObject> {
                         override fun onComplete() {
 

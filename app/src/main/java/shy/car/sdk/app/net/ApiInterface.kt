@@ -333,8 +333,8 @@ interface ApiInterface {
     fun getCarUseTime(): Observable<List<CarUserTime>>
 
     @FormUrlEncoded
-    @PATCH("/users/orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) body: RequestBody): Observable<JsonObject>
+    @PATCH("users/orders/{order_id}")
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) status: String="3"): Observable<JsonObject>
 
     /**
      * 提交身份认证
