@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
@@ -8,9 +9,11 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
 
 /**
@@ -58,37 +61,47 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                 .toSubscribe(observable, observer)
     }
 
-//    fun unLockCar() {
-//
-//        ProgressDialog.showLoadingView(context)
-//        disposable?.dispose()
-//        val observable = ApiManager.getInstance()
-//                .api.carAction(carId = detail?.car?.freightId!!, oid = orderID, status = 2.toString())//status = 2 解锁车辆
-//        val observer = object : Observer<JsonObject> {
-//            override fun onComplete() {
-//
-//            }
-//
-//            override fun onSubscribe(d: Disposable) {
-//                disposable = d
-//            }
-//
-//            override fun onNext(t: JsonObject) {
-//                ToastManager.showLongToast(context, "车辆已解锁，请尽快上车")
-//                ProgressDialog.hideLoadingView(context)
-//            }
-//
-//            override fun onError(e: Throwable) {
-//                ErrorManager.managerError(context, e, "操作失败，请重试")
-//                ProgressDialog.hideLoadingView(context)
-//                callBack.onRingError(e)
-//            }
-//
-//        }
-//
-//        ApiManager.getInstance()
-//                .toSubscribe(observable, observer)
-//    }
+    fun unLockCar() {
+
+        ProgressDialog.showLoadingView(context)
+        disposable?.dispose()
+        val observableUnLock = ApiManager.getInstance()
+                //固定传3
+                .api.orderUnLockCarAndStart(detail.id)
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: JsonObject) {
+                ToastManager.showLongToast(context, "车辆已解锁，请尽快上车")
+                ProgressDialog.hideLoadingView(context)
+            }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                val err = ErrorManager.managerError(context, e, "操作失败，请重试")
+                if (err?.error_code == 400404) {
+                    ARouter.getInstance()
+                            .build(RouteMap.UnLockCar)
+                            .withString(ParamsConstant.String1, detail.id)
+                            .navigation()
+
+                }else{
+                    err?.showError(context,"解锁失败+")
+                }
+                callBack.onRingError(e)
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observableUnLock, observer)
+    }
 
     fun cancelOrder() {
         ProgressDialog.showLoadingView(context)
@@ -107,6 +120,10 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                     callBack.onCancelError(it)
                     it.printStackTrace()
                 })
+    }
+
+    fun unlock() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 //    fun getOrderDetail() {

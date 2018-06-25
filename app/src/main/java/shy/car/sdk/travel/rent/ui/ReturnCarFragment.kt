@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.Polygon
 import com.amap.api.maps.model.PolygonOptions
 import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
-import com.base.util.AMapUtil
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -25,7 +23,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentReturnCarBinding
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -117,6 +114,7 @@ class ReturnCarFragment : XTBaseFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_return_car, null, false)
+        binding.fragment = this
         binding.presenter = presenter
         binding.map.onCreate(savedInstanceState)
         return binding.root
@@ -139,9 +137,7 @@ class ReturnCarFragment : XTBaseFragment(),
     }
 
     fun lockAndReturn() {
-
-
-        presenter.retrunCar()
+        presenter.returnCar()
     }
 
     override fun onDestroy() {
@@ -169,8 +165,13 @@ class ReturnCarFragment : XTBaseFragment(),
     }
 
     fun setOid(order: String) {
-
         presenter.oid = order
+    }
+
+    fun gotoReturnArea() {
+        ARouter.getInstance()
+                .build(RouteMap.ReturnArea)
+                .navigation()
     }
 
 }

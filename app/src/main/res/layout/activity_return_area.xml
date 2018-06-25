@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.rent.ui.ReturnAreaActivity"/>
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/main_back"
+                  android:orientation="vertical">
+
+
+        <include
+            android:id="@+id/title"
+            layout="@layout/layout_title"
+            app:title="@{@string/str_return_area}"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.amap.api.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <com.dd.ShadowLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/_foreground_material_light"
+                app:sl_shadowColor="#dcdcdc"
+                app:sl_shadowRadius="5dp"
+                tools:background="@color/_foreground_material_light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="@drawable/back_white_coner_4dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/icon_orient"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            style="@style/style_ww.text_14_333"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="@{ac.network.address}"
+                            tools:text="小兔出行科技停车网点"
+                            />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            tools:text="小兔出行科技停车网点"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:drawablePadding="5dp"
+                        android:drawableTop="@drawable/icon_path"
+                        android:text="导航"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="@dimen/text_second_primary_12dp"/>
+                </LinearLayout>
+            </com.dd.ShadowLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

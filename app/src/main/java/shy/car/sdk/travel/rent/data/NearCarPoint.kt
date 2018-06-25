@@ -8,7 +8,7 @@ import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
 /**
- * 车辆信息
+ * 附近网点
  */
 class NearCarPoint : BaseObservable(),
         IndexableEntity {

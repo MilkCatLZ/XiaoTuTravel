@@ -389,6 +389,9 @@ class CarRentFragment : XTBaseFragment() {
     }
 
 
+    /**
+     * 在地图上画区域
+     */
     private fun drawPointAngel(network: NearCarPoint) {
         // 定义多边形的5个点点坐标
         var polygonOptions = PolygonOptions()
@@ -437,7 +440,7 @@ class CarRentFragment : XTBaseFragment() {
      * 附近网点刷新事件监听
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoginSuccess(list: List<NearCarPoint>) {
+    fun onNetWorkListRefreshSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
 //            if (carPointList.isNotEmpty()) {
                 carRentPresenter.getUsableCarList(list[0])

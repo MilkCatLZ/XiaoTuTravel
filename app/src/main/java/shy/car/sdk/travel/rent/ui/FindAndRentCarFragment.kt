@@ -25,7 +25,6 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
@@ -156,7 +155,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
                     override fun onNext(result: DriveRouteResult) {
                         binding.mapView.map.clear()// 清理地图上的所有覆盖物
 
-
                         activity?.let {
 
                             if (result.paths != null) {
@@ -177,10 +175,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
                             }
                         }
-
                     }
-
-
                 })
 
 
@@ -225,6 +220,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
                 .build(RouteMap.UnLockCar)
                 .withString(String1, order?.id)
                 .navigation()
+
+//        presenter.unLockCar()
     }
 
     fun cancelOrder() {
