@@ -48,11 +48,7 @@ class CurrentLocation : BaseObservable(),
         }
         get():Double {
             return if (BuildConfig.DEBUG) {
-                if (field == 0.0) {
-                    22.921449
-                }else{
-                    field
-                }
+                22.827936
             } else {
                 field
             }
@@ -65,11 +61,7 @@ class CurrentLocation : BaseObservable(),
         }
         get():Double {
             return if (BuildConfig.DEBUG) {
-                if (field == 0.0) {
-                    108.248593
-                }else{
-                    field
-                }
+                108.321527
             } else {
                 field
             }
@@ -113,7 +105,7 @@ class CurrentLocation : BaseObservable(),
         cityName = location.cityName
         lat = location.latLonPoint.latitude
         lng = location.latLonPoint.longitude
-        address =location.provinceName+location.cityName+location.businessArea+ location.snippet
+        address = location.provinceName + location.cityName + location.businessArea + location.snippet
         district = location.adName
         cityCode = location.cityCode
     }

@@ -15,6 +15,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import mall.lianni.alipay.Alipay
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -67,6 +68,7 @@ class Application : BaseApplication() {
         EventBus.getDefault()
                 .register(this)
 
+        Alipay.Init(this)
     }
 
     private fun initUserCache() {

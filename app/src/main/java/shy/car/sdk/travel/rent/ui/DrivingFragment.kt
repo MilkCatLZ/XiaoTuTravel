@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.route.RouteMap.ReturnCar
 import shy.car.sdk.databinding.FragmentDrivingBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.DrivingPresenter
@@ -15,7 +18,8 @@ import shy.car.sdk.travel.rent.presenter.DrivingPresenter
  * create by 过期猫粮 at 2018/06/24
  * 行程中
  */
-class DrivingFragment : XTBaseFragment(), DrivingPresenter.CallBack {
+class DrivingFragment : XTBaseFragment(),
+        DrivingPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
 
     }
@@ -65,17 +69,29 @@ class DrivingFragment : XTBaseFragment(), DrivingPresenter.CallBack {
     }
 
     /**
-     * 上报故障
+     * 鸣笛
      */
     fun ringCar() {
         presenter.carRing()
     }
+
+    /**
+     * 还车
+     */
+    fun gotoReturn() {
+        ARouter.getInstance()
+                .build(ReturnCar)
+                .withString(String1, presenter.detail.get()?.orderId)
+                .navigation()
+    }
+
     /**
      * 开启车门
      */
     fun openDoor() {
         presenter.openDoor()
     }
+
     /**
      * 开启车门
      */

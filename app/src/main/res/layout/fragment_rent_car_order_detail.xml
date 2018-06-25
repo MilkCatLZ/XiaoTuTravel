@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,7 +19,7 @@
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.order.data.RentOrderDetail"/>
+            type="shy.car.sdk.travel.order.data.RentOrderDetail" />
     </data>
 
     <LinearLayout
@@ -54,15 +55,16 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_marginTop="30dp"
+                        android:imageURL="@{detail.car.modelImg}"
                         android:src="@drawable/img_car" />
 
 
                     <TextView
                         style="@style/style_ww.text_14_333"
                         android:layout_marginTop="15dp"
-                        android:text="桂D555BF | EQ2 白色" />
+                        android:text="@{detail.carInfo()}"
+                        tools:text="桂D555BF | EQ2 白色" />
 
 
                     <LinearLayout
@@ -82,9 +84,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="01:48"
+                                android:text="@{detail.duration}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="01:48" />
 
 
                             <TextView
@@ -107,9 +110,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="55km"
+                                android:text="@{util.getPriceText(detail.mileage)}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="55km" />
 
 
                             <TextView
@@ -132,9 +136,10 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="￥55元"
+                                android:text="@{util.getPriceText(detail.money)}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                tools:text="￥55元" />
 
 
                             <TextView
@@ -178,9 +183,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已完成"
+                            android:text="@{detail.statusName}"
                             android:textColor="@color/main_color_green"
-                            android:textSize="@dimen/text_primary_14dp" />
+                            android:textSize="@dimen/text_primary_14dp"
+                            tools:text="已完成" />
 
                     </LinearLayout>
 
@@ -190,9 +196,10 @@
                         android:drawablePadding="10dp"
                         android:drawableStart="@drawable/icon_money"
                         android:gravity="center"
-                        android:text="￥0.2/分钟+￥0.88/公里"
+                        android:text="@{detail.costInfo()}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp" />
+                        android:textSize="11sp"
+                        tools:text="￥0.2/分钟+￥0.88/公里" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,51 +211,63 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="0dp"
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView_car_discount"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_night"
-                            android:text="￥88"
-                            android:textColor="@color/text_primary_333333"
-                            android:textSize="11sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="20:00-次日8:00"
-                            android:textColor="@color/text_primary_333333"
-                            android:textSize="11sp" />
-
+                            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                            tools:listitem="@layout/item_car_discount_detail" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp">
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp">-->
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/icon_24"
-                            android:text="￥88"
-                            android:textColor="@color/text_primary_333333"
-                            android:textSize="11sp" />
+                    <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawablePadding="10dp"-->
+                    <!--android:drawableStart="@drawable/icon_night"-->
+                    <!--android:text="￥88"-->
+                    <!--android:textColor="@color/text_primary_333333"-->
+                    <!--android:textSize="11sp" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="24小时整日租"
-                            android:textColor="@color/text_primary_333333"
-                            android:textSize="11sp" />
+                    <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="20:00-次日8:00"-->
+                    <!--android:textColor="@color/text_primary_333333"-->
+                    <!--android:textSize="11sp" />-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="3dp">-->
+
+                    <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:drawablePadding="10dp"-->
+                    <!--android:drawableStart="@drawable/icon_24"-->
+                    <!--android:text="￥88"-->
+                    <!--android:textColor="@color/text_primary_333333"-->
+                    <!--android:textSize="11sp" />-->
+
+                    <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="24小时整日租"-->
+                    <!--android:textColor="@color/text_primary_333333"-->
+                    <!--android:textSize="11sp" />-->
+
+                    <!--</LinearLayout>-->
 
                     <View
                         style="@style/line_horizontal"
@@ -300,7 +319,10 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="桂A535SF | EQ2" />
+                            android:text="@{detail.carInfo()}"
+                            tools:text="桂A535SF | EQ2"
+
+                            />
 
                     </LinearLayout>
 
@@ -312,7 +334,9 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="微信支付" />
+                            tools:text="@{detail.payMethod}"
+                            android:text="微信支付"
+                            />
 
                     </LinearLayout>
 
@@ -324,7 +348,9 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="04-10 15:00" />
+                            tools:text="04-10 15:00"
+                            android:text="@{detail.finishAt}"
+                            />
 
                     </LinearLayout>
 
@@ -336,7 +362,9 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="04-10 15:00" />
+                            tools:text="@{detail.createdAt}"
+                            android:text="04-10 15:00"
+                            />
 
                     </LinearLayout>
 
@@ -348,7 +376,9 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="04-10 15:00" />
+                            android:text="@{detail.returnAt}"
+                            tools:text="04-10 15:00"
+                            />
 
                     </LinearLayout>
 
@@ -360,7 +390,9 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="20180505" />
+                            tools:text="20180505"
+                            android:text="@{detail.orderId}"
+                            />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -428,7 +460,9 @@
                             <TextView
                                 style="@style/style_ww.text_12_999"
                                 android:layout_marginTop="3dp"
-                                android:text="南宁市鲁班路83号小兔科技" />
+                                tools:text="南宁市鲁班路83号小兔科技"
+                                android:text="@{detail.fromNetwork}"
+                                />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -459,7 +493,9 @@
                             <TextView
                                 style="@style/style_ww.text_12_999"
                                 android:layout_marginTop="3dp"
-                                android:text="南宁市鲁班路83号小兔科技" />
+                                android:text="@{detail.toNetwork}"
+                                tools:text="南宁市鲁班路83号小兔科技"
+                                />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -507,10 +543,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:textColor="@color/text_second_primary_666666"
-                    android:text="客服热线：400-056-5317"
-                    android:onClick="@{()->fragment.call()}"
                     android:gravity="center"
+                    android:onClick="@{()->fragment.call()}"
+                    android:text="客服热线：400-056-5317"
+                    android:textColor="@color/text_second_primary_666666"
                     android:textSize="@dimen/text_second_primary_12dp" />
             </LinearLayout>
         </ScrollView>

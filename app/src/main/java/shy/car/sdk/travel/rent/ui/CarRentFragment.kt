@@ -439,10 +439,10 @@ class CarRentFragment : XTBaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
-            if (carPointList.isNotEmpty()) {
+//            if (carPointList.isNotEmpty()) {
                 carRentPresenter.getUsableCarList(list[0])
                 moveCameraAndShowLocation(LatLng(list[0].lat, list[0].lng))
-            }
+//            }
             this.carPointList.clear()
             this.carPointList.addAll(list)
             addCarPointToMap(list)

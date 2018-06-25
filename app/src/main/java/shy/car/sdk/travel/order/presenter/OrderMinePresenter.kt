@@ -53,7 +53,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
                 else -> {
                     ARouter.getInstance()
                             .build(RouteMap.RentCarDetail)
-                            .withObject(Object1, order)
+                            .withString(String1, order.id)
                             .navigation()
                 }
             }
@@ -61,7 +61,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
             //货运订单
             ARouter.getInstance()
                     .build(RouteMap.OrderDetail)
-                    .withString(ParamsConstant.String1, order.id)
+                    .withString(String1, order.id)
                     .navigation()
         }
     })

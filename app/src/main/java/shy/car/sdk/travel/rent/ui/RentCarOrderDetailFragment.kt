@@ -23,6 +23,10 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
     lateinit var binding: FragmentRentCarOrderDetailBinding
     lateinit var presenter: RentCarOrderDetailPresenter
     var orderID = ""
+        set(value) {
+            field = value
+            presenter.getRentOrderDetail(value)
+        }
 
     override fun getDetailSuccess(t: RentOrderDetail) {
         binding.detail = t
@@ -45,7 +49,6 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getRentOrderDetail(orderID)
     }
 
 

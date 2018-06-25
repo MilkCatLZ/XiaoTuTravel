@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.gson.JsonObject
+import mall.lianni.alipay.Alipay
+import mall.lianni.alipay.PayResult
 import org.greenrobot.eventbus.Subscribe
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
@@ -28,6 +31,32 @@ import shy.car.sdk.travel.user.data.User
 class PromiseMoneyPayFragment : XTBaseFragment(),
         PayMethodSelectDialog.OnPayClick,
         PromiseMoneyPayPresenter.CallBack {
+    override fun onCreatePaySuccess(t: JsonObject) {
+        if (presenter.payMethod?.name?.contains("支付宝")!!) {
+            activity?.let {
+                Alipay.getInstance()
+                        .pay(it, t.get("order_str").asString, object : Alipay.OnPayCallBack {
+                            override fun onPaySuccess(payResult: PayResult?) {
+                                ARouter.getInstance().build(RouteMap.PaySuccess)
+                                finish()
+                            }
+
+                            override fun onPayFailed(payResult: PayResult?) {
+
+                            }
+
+                            override fun onPayConfirming(payResult: PayResult?) {
+
+                            }
+
+                            override fun onPayCancel(payResult: PayResult?) {
+
+                            }
+                        })
+            }
+        }
+    }
+
     override fun getPromiseMoneyError(e: Throwable) {
 
     }
@@ -37,7 +66,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         if (t == 0.0) {
             if (presenter.carSelect.get() != null)
                 btnText.set("支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!!)}元")
-            else{
+            else {
                 btnText.set("支付保证金0.0元")
             }
 

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="util"
+            type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.ReturnCarPresenter"/>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.rent.ui.ReturnCarFragment"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_return_car}" />
+
+        <View style="@style/style_shadow" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="25dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/icon_notice" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请注意阅读"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="@dimen/text_primary_14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="请确认您已到达还车区域，车辆已停放在停车位，如果未在停车区域，请查看还车区域或者下拉刷新"
+                    android:textColor="@color/text_second_primary_666666"
+                    android:textSize="@dimen/text_second_primary_12dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_marginTop="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/icon_start" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车辆当前位置"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{presenter.location==null?@string/str_locating:presenter.location.address}"
+                    tools:text="南宁市西乡塘区鲁班路83号"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/icon_end" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="车辆停放位置"
+                    android:textColor="@color/text_third_primary_999999"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@{presenter.locationCheckText}"
+                    tools:text="未到小兔出行科技停放点"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            tools:src="@drawable/img_not_site" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_button_main_green_clickable"
+            android:gravity="center"
+            android:onClick="@{()->fragment.lockAndReturn()}"
+            android:text="锁门还车"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="25dp"
+            android:paddingStart="18dp">
+
+            <CheckBox
+                style="@style/style_ww.text_12_999"
+                android:button="@null"
+                android:checked="@={presenter.agree}"
+                android:drawablePadding="10dp"
+                android:drawableStart="@drawable/check_rule"
+                android:textColor="@drawable/color_agree_check_999_main_red"
+                android:gravity="center"
+                android:text="确认表示同意" />
+
+            <TextView
+                style="@style/style_ww.text_12_999"
+                android:layout_marginStart="5dp"
+                android:text="《小兔出行还车协议》"
+                android:textColor="@color/main_color_red" />
+
+        </LinearLayout>
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="0dp"
+            android:layout_height="0dp" />
+    </LinearLayout>
+</layout>

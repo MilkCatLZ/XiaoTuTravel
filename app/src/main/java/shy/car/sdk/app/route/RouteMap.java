@@ -18,6 +18,7 @@ import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
+import shy.car.sdk.travel.rent.ui.ReturnCarActivity;
 import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
@@ -218,6 +219,7 @@ public class RouteMap {
     public static final String AddBankCard = "/bank/add";
 
     /**
+     * 支付保证金成功
      * {@link PromiseMoneyPaySuccessActivity}
      */
     @NotNull
@@ -250,6 +252,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String TiXian = "/remain/tixian";
+
+    /**
+     * {@link ReturnCarActivity}
+     * 还车
+     * withString(String1,oid)
+     */
+    @NotNull
+    public static final String ReturnCar = "/rent/return";
 
     /**
      * {@link TiXianActivity}

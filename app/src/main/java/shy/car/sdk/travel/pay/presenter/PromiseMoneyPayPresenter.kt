@@ -8,6 +8,7 @@ import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import mall.lianni.alipay.Alipay
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -26,8 +27,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
     interface CallBack {
         fun onGetPromiseMoneySuccess(t: Double)
         fun getPromiseMoneyError(e: Throwable)
-
-
+        fun onCreatePaySuccess(t: JsonObject)
     }
 
 
@@ -98,7 +98,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
 
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
-
+               callBack.onCreatePaySuccess(t)
             }
 
             override fun onError(e: Throwable) {
