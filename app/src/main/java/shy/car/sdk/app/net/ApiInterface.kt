@@ -333,7 +333,7 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) status: String="3"): Observable<JsonObject>
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) status: String = "3"): Observable<JsonObject>
 
     /**
      * 提交身份认证
@@ -360,5 +360,9 @@ interface ApiInterface {
     @FormUrlEncoded
     @PATCH("balance")
     fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String, @Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.Action) action: String = "1"): Observable<JsonObject>
+
+    @FormUrlEncoded
+    @PATCH("orders/{order_id}")
+    fun returnCar(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Lat) lat: String, @Field(ParamsConstant.Lng) lng: String, @Field(ParamsConstant.OrderStatus) orderStatus: String = "4"): Observable<JsonObject>
 
 }

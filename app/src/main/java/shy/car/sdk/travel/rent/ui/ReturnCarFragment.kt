@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.Polygon
@@ -15,6 +16,8 @@ import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
 import com.base.util.AMapUtil
+import com.base.util.ToastManager
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +25,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentReturnCarBinding
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.ReturnCarPresenter
@@ -32,6 +37,13 @@ import shy.car.sdk.travel.rent.presenter.ReturnCarPresenter
  */
 class ReturnCarFragment : XTBaseFragment(),
         ReturnCarPresenter.CallBack {
+    override fun returnSuccess(t: JsonObject) {
+        activity?.let {
+            ToastManager.showShortToast(it, "还车成功")
+        }
+        finish()
+    }
+
     override fun onError(e: Throwable) {
 
     }
@@ -43,6 +55,7 @@ class ReturnCarFragment : XTBaseFragment(),
         Observable.create<NearCarPoint> { emiter ->
             lateinit var near: NearCarPoint
             var isInNetWork = false
+            binding.map.map.clear()
             t.map {
                 val pOption = PolygonOptions()
                 it.range?.map {
@@ -78,6 +91,7 @@ class ReturnCarFragment : XTBaseFragment(),
                     override fun onNext(t: NearCarPoint) {
                         presenter.locationCheckText.set(t.address)
                         presenter.isInNetWork = true
+                        presenter.nearCarPoint = t
                         binding.imgLocation.setImageResource(R.drawable.img_site)
                         binding.txtAddress.setTextColor(resources.getColor(R.color.text_primary_333333))
                     }
@@ -126,6 +140,8 @@ class ReturnCarFragment : XTBaseFragment(),
 
     fun lockAndReturn() {
 
+
+        presenter.retrunCar()
     }
 
     override fun onDestroy() {
@@ -152,10 +168,9 @@ class ReturnCarFragment : XTBaseFragment(),
         binding.map.onSaveInstanceState(outState)
     }
 
-    private lateinit var oid: String
-
     fun setOid(order: String) {
-        this.oid = order
+
+        presenter.oid = order
     }
 
 }

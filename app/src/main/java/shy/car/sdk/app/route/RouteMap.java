@@ -19,6 +19,7 @@ import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
 import shy.car.sdk.travel.rent.ui.ReturnCarActivity;
+import shy.car.sdk.travel.rent.ui.ReturnCarFragment;
 import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
@@ -260,6 +261,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnCar = "/rent/return";
+
+    /**
+     * {@link ReturnCarFragment}
+     * 还车
+     * withString(String1,oid)
+     */
+    @NotNull
+    public static final String ReturnCarUploadPhoto = "/rent/return_upload";
 
     /**
      * {@link TiXianActivity}
