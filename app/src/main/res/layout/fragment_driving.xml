@@ -212,6 +212,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:gravity="center"
+                                android:text="@{presenter.detail.car.electricity}"
                                 android:textColor="@color/main_color_red"
                                 android:textSize="@dimen/text_second_primary_12dp"/>
                         </LinearLayout>
@@ -236,6 +237,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:gravity="center"
+                                android:text="@{presenter.detail.car.surplusMileage}"
                                 android:textColor="@color/main_color_red"
                                 android:textSize="@dimen/text_second_primary_12dp"/>
                         </LinearLayout>

@@ -100,7 +100,7 @@ interface ApiInterface {
      * 获取单个接单详情
      *
      */
-    @GET("users/freights/{freight_id}")
+    @GET("orders/freights/{freight_id}")
     fun getOrderDetail(@Path(ParamsConstant.FreightID) fid: String): Observable<DeliveryOrderDetail>
 
     /**
@@ -228,7 +228,7 @@ interface ApiInterface {
     /**
      * 获取租车订单详情
      */
-    @GET("users/orders/{order_id}")
+    @GET("orders/{order_id}")
     fun getRentOrderDetail(@Path(ParamsConstant.OrderId) order_id: String, @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<RentOrderDetail>
 
 
@@ -277,7 +277,7 @@ interface ApiInterface {
      * type=1 为租车
      */
     @FormUrlEncoded
-    @POST("users/orders")
+    @POST("orders")
     fun createRentCarOrder(@Field(ParamsConstant.CarID) carID: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Type) type: String = "1"): Observable<JsonObject>
 
     /**
@@ -301,7 +301,7 @@ interface ApiInterface {
     remark	string	是	备注
      */
     @FormUrlEncoded
-    @POST("users/freights")
+    @POST("orders/freights")
     fun postDeliveryOrder(
             @Field(ParamsConstant.City) cityID: String,
             @Field(ParamsConstant.ModelID) carID: String? = null,
@@ -322,17 +322,17 @@ interface ApiInterface {
             @Field(ParamsConstant.Remark) remark: String? = null
     ): Observable<JsonObject>
 
-    @DELETE("users/orders/{order_id}")
+    @DELETE("orders/{order_id}")
     fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String, @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<Response<Void>>
 
-    @GET("freight/car")
+    @GET("orders/freights/car")
     fun getCarTypeList(): Observable<List<shy.car.sdk.travel.send.data.CarInfo>>
 
-    @GET("freight/time")
+    @GET("orders/freights/time")
     fun getCarUseTime(): Observable<List<CarUserTime>>
 
     @FormUrlEncoded
-    @PATCH("users/orders/{order_id}")
+    @PATCH("orders/{order_id}")
     fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) status: String="3"): Observable<JsonObject>
 
     /**
@@ -342,19 +342,19 @@ interface ApiInterface {
     @POST("orders/{oid}/photos")
     fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
-    @GET("freight/type")
+    @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
 
     @FormUrlEncoded
-    @PATCH("users/freights/{freight_id}")
+    @PATCH("orders/freights/{freight_id}")
     fun takeDeliveryOrder(@Path("freight_id") freight_id: String, @Field("freight_status") status: String = "1"): Observable<JsonObject>
 
 
-    @DELETE("users/freights/{freight_id}")
+    @DELETE("orders/freights/{freight_id}")
     fun cancelOrder(@Path("freight_id") freight_id: String): Observable<JsonObject>
 
     @FormUrlEncoded
-    @PATCH("users/freights/{freight_id}")
+    @PATCH("orders/freights/{freight_id}")
     fun deliveryFinish(@Path("freight_id") id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
 
     @FormUrlEncoded

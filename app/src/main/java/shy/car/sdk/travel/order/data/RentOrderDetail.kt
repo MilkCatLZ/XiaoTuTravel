@@ -182,6 +182,15 @@ class RentOrderDetail : BaseObservable() {
             field = car
             notifyChange(BR.car)
         }
+
+    @SerializedName("discounts")
+    @get:Bindable
+    var discounts: List<DiscountsBean>? = null
+        set(discounts) {
+            field = discounts
+            notifyChange(BR.discounts)
+        }
+
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
@@ -227,7 +236,7 @@ class RentOrderDetail : BaseObservable() {
          * discounts : [{"id":24,"txt":"24小时整日租","price":500}]
          */
 
-        @SerializedName("car_id")
+        @SerializedName("id")
         @get:Bindable
         var carID: String? = null
             set(carID) {
@@ -269,13 +278,21 @@ class RentOrderDetail : BaseObservable() {
                 field = cost
                 notifyChange(BR.cost)
             }
-        @SerializedName("discounts")
+        @SerializedName("electricity")
         @get:Bindable
-        var discounts: List<DiscountsBean>? = null
-            set(discounts) {
-                field = discounts
-                notifyChange(BR.discounts)
+        var electricity: String? = null
+            set(electricity) {
+                field = electricity
+                notifyChange(BR.electricity)
             }
+        @SerializedName("surplus_mileage")
+        @get:Bindable
+        var surplusMileage: String? = null
+            set(surplusMileage) {
+                field = surplusMileage
+                notifyChange(BR.surplusMileage)
+            }
+
         @Transient
         private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
@@ -358,61 +375,60 @@ class RentOrderDetail : BaseObservable() {
                 }
             }
         }
+    }
 
+    open class DiscountsBean : Observable {
+        /**
+         * id : 24
+         * txt : 24小时整日租
+         * price : 500
+         */
 
-        open class DiscountsBean : Observable {
-            /**
-             * id : 24
-             * txt : 24小时整日租
-             * price : 500
-             */
-
-            @SerializedName("id")
-            @get:Bindable
-            var id: String? = null
-                set(id) {
-                    field = id
-                    notifyChange(BR.id)
-                }
-            @SerializedName("txt")
-            @get:Bindable
-            var txt: String? = null
-                set(txt) {
-                    field = txt
-                    notifyChange(BR.txt)
-                }
-            @SerializedName("price")
-            @get:Bindable
-            var price: String? = null
-                set(price) {
-                    field = price
-                    notifyChange(BR.price)
-                }
-            @Transient
-            private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
-
-            @Synchronized
-            private fun notifyChange(propertyId: Int) {
-                if (propertyChangeRegistry == null) {
-                    propertyChangeRegistry = PropertyChangeRegistry()
-                }
-                propertyChangeRegistry!!.notifyChange(this, propertyId)
+        @SerializedName("id")
+        @get:Bindable
+        var id: String? = null
+            set(id) {
+                field = id
+                notifyChange(BR.id)
             }
-
-            @Synchronized
-            override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-                if (propertyChangeRegistry == null) {
-                    propertyChangeRegistry = PropertyChangeRegistry()
-                }
-                propertyChangeRegistry!!.add(callback)
-
+        @SerializedName("txt")
+        @get:Bindable
+        var txt: String? = null
+            set(txt) {
+                field = txt
+                notifyChange(BR.txt)
             }
+        @SerializedName("price")
+        @get:Bindable
+        var price: String? = null
+            set(price) {
+                field = price
+                notifyChange(BR.price)
+            }
+        @Transient
+        private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
-            @Synchronized
-            override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
-                if (propertyChangeRegistry != null) {
-                    propertyChangeRegistry!!.remove(callback)
-                }
+        @Synchronized
+        private fun notifyChange(propertyId: Int) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.notifyChange(this, propertyId)
+        }
+
+        @Synchronized
+        override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.add(callback)
+
+        }
+
+        @Synchronized
+        override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry != null) {
+                propertyChangeRegistry!!.remove(callback)
             }
         }
     }
