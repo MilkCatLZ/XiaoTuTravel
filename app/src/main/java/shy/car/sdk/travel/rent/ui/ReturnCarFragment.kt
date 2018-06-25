@@ -79,12 +79,14 @@ class ReturnCarFragment : XTBaseFragment(),
                         presenter.locationCheckText.set(t.address)
                         presenter.isInNetWork = true
                         binding.imgLocation.setImageResource(R.drawable.img_site)
+                        binding.txtAddress.setTextColor(resources.getColor(R.color.text_primary_333333))
                     }
 
                     override fun onError(e: Throwable) {
                         presenter.locationCheckText.set("未到小兔出行科技停放点")
                         presenter.isInNetWork = false
                         binding.imgLocation.setImageResource(R.drawable.img_not_site)
+                        binding.txtAddress.setTextColor(resources.getColor(R.color.main_color_red))
                     }
                 })
     }
