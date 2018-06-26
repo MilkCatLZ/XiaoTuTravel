@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,31 +36,38 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
-        presenter.detail.car?.color = t.car?.color
-        presenter.detail.car?.electricity = t.car?.electricity
-        presenter.detail.car?.img = t.car?.modelImg
-        presenter.detail.car?.surplusMileage = t.car?.surplusMileage
+//        presenter.detail.car?.color = t.car?.color
+//        presenter.detail.car?.electricity = t.car?.electricity
+//        presenter.detail.car?.img = t.car?.modelImg
+//        presenter.detail.car?.surplusMileage = t.car?.surplusMileage
+        binding.detail = t
     }
 
     override fun onUnLockSuccess() {
         ARouter.getInstance()
                 .build(RouteMap.Driving)
-                .withString(String1, order?.id)
+                .withString(String1, oid)
                 .navigation()
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
-
-    var order: OrderMineList? = null
+    val timeAndDistance=ObservableField<String>("")
+    var oid: String = ""
         set(value) {
             field = value
-            presenter.detail = order!!
-            if (binding != null) {
-                binding.detail = value
-                presenter.getOrderDetail()
-                setupMap(value)
-            }
+            presenter.oid = oid
+            presenter.getOrderDetail()
         }
+// var order: OrderMineList? = null
+//        set(value) {
+//            field = value
+//            presenter.detail = order!!
+//            if (binding != null) {
+//                binding.detail = value
+//                presenter.getOrderDetail()
+//                setupMap(value)
+//            }
+//        }
 
 
     lateinit var binding: FragmentFindAndRentCarBinding

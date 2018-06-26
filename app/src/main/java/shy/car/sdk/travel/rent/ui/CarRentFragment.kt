@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
@@ -26,6 +27,8 @@ import com.base.util.ToastManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_car_rent.*
+import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BR
@@ -34,7 +37,6 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshCarPointList
@@ -46,11 +48,12 @@ import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
+import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 
@@ -74,38 +77,31 @@ class CarRentFragment : XTBaseFragment() {
     var markerList = ArrayList<Marker>()
     private var carPointList = ArrayList<NearCarPoint>()
     val naviInfo = ObservableField<String>("")
+    val drivingMode = ObservableBoolean(false)
     private val callBack = object : CarRentPresenter.CallBack {
-        override fun onGetUnPayOrderSuccess(orderMineList: OrderMineList) {
-            activity?.let {
-                DialogManager.with(it, childFragmentManager)
-                        .title("提示")
-                        .message("你有未支付的订单")
-                        .leftButtonText("取消")
-                        .rightButtonText("去支付")
-                        .onRightClick({ t1, t2 ->
-                            ARouter.getInstance()
-                                    .build(RouteMap.OrderPay)
-                                    .withString(String1, orderMineList.id)
-                                    .navigation()
-                        })
-                        .show()
-            }
+        override fun getDetailSuccess(t: RentOrderDetail) {
+            binding.detail = t
         }
 
-        override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList) {
-            when (orderMineList.status) {
-                RentOrderState.Create -> {
-                    gotoFindAndRent(orderMineList)
-                }
-                RentOrderState.Taked -> {
-                    drivingMode()
-                }
-                RentOrderState.Return -> {
-                    gotoPayRentOrder(orderMineList)
-                }
+        override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?) {
+            if (orderMineList != null)
+                when (orderMineList.status) {
+                    RentOrderState.Create -> {
+                        gotoFindAndRent(orderMineList)
+                    }
+                    RentOrderState.Taked -> {
+                        drivingMode(orderMineList)
+                        drivingMode.set(true)
+                    }
+                    RentOrderState.Return -> {
+                        gotoPayRentOrder(orderMineList)
 
+                    }
+
+                }
+            else {
+                drivingMode.set(false)
             }
-
 
         }
 
@@ -117,6 +113,7 @@ class CarRentFragment : XTBaseFragment() {
             if (t.isNotEmpty()) {
                 currentSelectedCarInfo.set(t[0])
                 calDistanceAndTImeInfo()
+                setupCurrentCarInfo(currentSelectedCarInfo.get()!!)
             }
         }
     }
@@ -126,13 +123,13 @@ class CarRentFragment : XTBaseFragment() {
             ProgressDialog.showLoadingView(it)
         }
         activity?.let {
-            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 1, object : MapUtil.GetDetailListener {
+            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
                     activity?.let {
                         ProgressDialog.hideLoadingView(it)
                     }
                     if (allLength != null && allTime != null) {
-                        naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 驾车${allTime / 60}分钟")
+                        naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
                     }
                 }
 
@@ -149,8 +146,8 @@ class CarRentFragment : XTBaseFragment() {
     /**
      * 已经取车，正在行驶中
      */
-    private fun drivingMode() {
-
+    private fun drivingMode(orderMineList: OrderMineList) {
+        carRentPresenter.getRentOrderDetail(orderMineList.id)
     }
 
     private fun gotoFindAndRent(orderMineList: OrderMineList) {
@@ -160,10 +157,10 @@ class CarRentFragment : XTBaseFragment() {
                     .message("您有待取车的订单，是否现在取车？")
                     .leftButtonText("取消")
                     .rightButtonText("去取车")
-                    .onRightClick({ dialog, witch ->
+                    .onRightClick({ _, _ ->
                         ARouter.getInstance()
                                 .build(RouteMap.FindAndRentCar)
-                                .withObject(Object1, orderMineList)
+                                .withString(String1, orderMineList.id)
                                 .navigation()
                     })
                     .show()
@@ -222,13 +219,17 @@ class CarRentFragment : XTBaseFragment() {
 
             override fun onPageSelected(position: Int) {
                 var carInfo = carRentPresenter.carListAdapter.items[position]
-                val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
-                adapter.setItems(carInfo.discounts?.duration, 1)
-                recyclerView_car_discount.adapter = adapter
-                currentSelectedCarInfo.set(carInfo)
+                setupCurrentCarInfo(carInfo)
                 calDistanceAndTImeInfo()
             }
         })
+    }
+
+    private fun setupCurrentCarInfo(carInfo: CarInfo) {
+        val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
+        adapter.setItems(carInfo.discounts?.duration, 1)
+        recyclerView_car_discount.adapter = adapter
+        currentSelectedCarInfo.set(carInfo)
     }
 
     private fun setBinding() {
@@ -496,6 +497,13 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
+    fun gotoDriving(oid: String) {
+        ARouter.getInstance()
+                .build(RouteMap.Driving)
+                .withString(String1, oid)
+                .navigation()
+    }
+
     /**
      * 登录成功事件监听
      */
@@ -515,10 +523,8 @@ class CarRentFragment : XTBaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onNetWorkListRefreshSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
-//            if (carPointList.isNotEmpty()) {
             carRentPresenter.getUsableCarList(list[0])
             moveCameraAndShowLocation(LatLng(list[0].lat, list[0].lng))
-//            }
             this.carPointList.clear()
             this.carPointList.addAll(list)
             addCarPointToMap(list)

@@ -7,8 +7,6 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.R
-import shy.car.sdk.app.constant.ParamsConstant
-import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -33,7 +31,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
                 RentOrderState.Create -> {
                     ARouter.getInstance()
                             .build(RouteMap.FindAndRentCar)
-                            .withObject(Object1, order)
+                            .withString(String1, order.id)
                             .navigation()
                 }
             //待支付

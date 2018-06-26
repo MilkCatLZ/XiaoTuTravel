@@ -156,7 +156,6 @@ class ReturnAreaActivity : XTBaseActivity(),
     }
 
     fun getNaviDetail() {
-
         MapUtil.getDriveTimeAndDistance(this, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(network.get()?.lat!!, network.get()?.lng!!), 1, object : MapUtil.GetDetailListener {
             override fun calculateSuccess(allLength: Int?, allTime: Int?) {
                 if (allLength != null && allTime != null) {
@@ -165,8 +164,6 @@ class ReturnAreaActivity : XTBaseActivity(),
             }
 
         })
-
-
     }
 
     override fun onResume() {

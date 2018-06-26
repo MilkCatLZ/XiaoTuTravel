@@ -213,6 +213,7 @@
                     android:id="@+id/recyclerView_car_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_car_discount" />
 

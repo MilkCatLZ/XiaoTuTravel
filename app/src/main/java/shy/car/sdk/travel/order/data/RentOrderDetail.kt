@@ -293,6 +293,21 @@ class RentOrderDetail : BaseObservable() {
                 notifyChange(BR.surplusMileage)
             }
 
+        @SerializedName("lat")
+        @get:Bindable
+        var lat: Double? = null
+            set(lat) {
+                field = lat
+                notifyChange(BR.lat)
+            }
+        @SerializedName("lng")
+        @get:Bindable
+        var lng: Double? = null
+            set(lng) {
+                field = lng
+                notifyChange(BR.lng)
+            }
+
         @Transient
         private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 

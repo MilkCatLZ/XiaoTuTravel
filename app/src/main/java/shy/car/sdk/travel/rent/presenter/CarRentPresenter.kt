@@ -20,6 +20,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -69,12 +70,9 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         /**
          * 获取到预约未处理的订单
          */
-        fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList)
+        fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?)
 
-        /**
-         * 获取到未支付的订单
-         */
-        fun onGetUnPayOrderSuccess(orderMineList: OrderMineList)
+        fun getDetailSuccess(t: RentOrderDetail)
     }
 
     fun getUsableCarList(carPoint: NearCarPoint?) {
@@ -90,10 +88,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onNext(t: List<CarInfo>) {
-
-
                 carListAdapter.setItems(t, 1)
-
                 callBack.onGetCarSuccess(t)
             }
 
@@ -101,7 +96,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 ErrorManager.managerError(context, e, "获取车辆失败")
                 callBack.onGetCarError(e)
             }
-
         }
 
         ApiManager.getInstance()
@@ -221,8 +215,41 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 ProgressDialog.hideLoadingView(context)
                 if (t.isNotEmpty()) {
                     callBack.onGetUnProgressOrderSuccess(t[0])
+                }else{
+                    callBack.onGetUnProgressOrderSuccess(null)
                 }
             }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "获取订单失败")
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    fun getRentOrderDetail(id: String) {
+        ProgressDialog.showLoadingView(context)
+        disposable?.dispose()
+        val observable = ApiManager.getInstance()
+                .api.getRentOrderDetail(id)
+        val observer = object : Observer<RentOrderDetail> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: RentOrderDetail) {
+                ProgressDialog.hideLoadingView(context)
+                callBack.getDetailSuccess(t)
+            }
+
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)

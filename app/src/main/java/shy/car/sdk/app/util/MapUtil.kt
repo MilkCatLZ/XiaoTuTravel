@@ -25,6 +25,7 @@ class MapUtil {
 
         override fun onCalculateRouteSuccess(p0: AMapCalcRouteResult?) {
             callBack?.calculateSuccess(mAMapNavi?.naviPath?.allLength, mAMapNavi?.naviPath?.allTime)
+            callBack = null
         }
 
         override fun onCalculateRouteFailure(p0: Int) {
@@ -143,10 +144,17 @@ class MapUtil {
             endList.add(endPoint)
             this.type = type
             this.callBack = callBack
-
-            mAMapNavi = AMapNavi.getInstance(applicationContext)
-            //添加监听回调，用于处理算路成功
-            mAMapNavi?.addAMapNaviListener(this)
+            if (mAMapNavi == null) {
+                mAMapNavi = AMapNavi.getInstance(applicationContext)
+            } else {
+                //添加监听回调，用于处理算路成功
+                mAMapNavi?.addAMapNaviListener(this)
+                if (type == 1) {
+                    mAMapNavi?.calculateDriveRoute(startList, endList, null, PathPlanningStrategy.DRIVING_DEFAULT)
+                } else {
+                    mAMapNavi?.calculateWalkRoute(startList[0], endList[0])
+                }
+            }
 
 
         }

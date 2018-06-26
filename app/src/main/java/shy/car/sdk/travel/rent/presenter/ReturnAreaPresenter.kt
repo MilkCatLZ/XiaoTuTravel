@@ -3,7 +3,6 @@ package shy.car.sdk.travel.rent.presenter
 import android.content.Context
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -33,8 +32,6 @@ class ReturnAreaPresenter(context: Context, var callBack: CallBack) : BasePresen
             }
 
             override fun onNext(t: ArrayList<NearCarPoint>) {
-                EventBus.getDefault()
-                        .post(t)
                 callBack.getListSuccess(t)
             }
 

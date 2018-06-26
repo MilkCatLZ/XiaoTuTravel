@@ -9,16 +9,12 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
-import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.eventbus.RefreshOrderList
-import shy.car.sdk.app.eventbus.UnLockSuccess
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
 
 /**
@@ -26,7 +22,8 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
  */
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
-    lateinit var detail: OrderMineList
+    var oid: String = ""
+    lateinit var detail: RentOrderDetail
 
     interface CallBack {
         fun onRingError(e: Throwable)
@@ -41,7 +38,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.carAction(detail.car?.freightId!!, status = 1.toString())
+                .api.carAction(detail.car?.carID!!, status = 1.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
@@ -78,7 +75,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
         val observableUnLock = ApiManager.getInstance()
                 //固定传3
-                .api.orderUnLockCarAndStart(detail.id/*, image = null*/)
+                .api.orderUnLockCarAndStart(detail.orderId!!/*, image = null*/)
 
 
         observableShouldTakePhoto.subscribeOn(Schedulers.io())
@@ -87,7 +84,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                     if (it.get("whether").asInt == 1) {
                         ARouter.getInstance()
                                 .build(RouteMap.UnLockCar)
-                                .withString(String1, detail.id)
+                                .withString(String1, detail.orderId)
                                 .navigation()
                     }
                 })
@@ -133,7 +130,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         ApiManager.getInstance()
-                .api.cancelRentOrder(detail.id)
+                .api.cancelRentOrder(detail.orderId!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
@@ -154,7 +151,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(detail.id)
+                .api.getRentOrderDetail(oid)
         val observer = object : Observer<RentOrderDetail> {
             override fun onComplete() {
 
@@ -166,6 +163,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
             override fun onNext(t: RentOrderDetail) {
                 ProgressDialog.hideLoadingView(context)
+                detail = t
                 callBack.onGetDetailSuccess(t)
             }
 
