@@ -15,6 +15,8 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
+import com.amap.api.navi.model.NaviLatLng
+import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
@@ -24,13 +26,12 @@ import com.base.util.ToastManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_car_rent.*
-import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.Object1
@@ -38,6 +39,7 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
@@ -71,7 +73,7 @@ class CarRentFragment : XTBaseFragment() {
 
     var markerList = ArrayList<Marker>()
     private var carPointList = ArrayList<NearCarPoint>()
-
+    val naviInfo = ObservableField<String>("")
     private val callBack = object : CarRentPresenter.CallBack {
         override fun onGetUnPayOrderSuccess(orderMineList: OrderMineList) {
             activity?.let {
@@ -112,8 +114,29 @@ class CarRentFragment : XTBaseFragment() {
         }
 
         override fun onGetCarSuccess(t: List<CarInfo>) {
-            if (t.isNotEmpty())
+            if (t.isNotEmpty()) {
                 currentSelectedCarInfo.set(t[0])
+                calDistanceAndTImeInfo()
+            }
+        }
+    }
+
+    private fun calDistanceAndTImeInfo() {
+        activity?.let {
+            ProgressDialog.showLoadingView(it)
+        }
+        activity?.let {
+            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 1, object : MapUtil.GetDetailListener {
+                override fun calculateSuccess(allLength: Int?, allTime: Int?) {
+                    activity?.let {
+                        ProgressDialog.hideLoadingView(it)
+                    }
+                    if (allLength != null && allTime != null) {
+                        naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 驾车${allTime / 60}分钟")
+                    }
+                }
+
+            })
         }
     }
 
@@ -202,6 +225,8 @@ class CarRentFragment : XTBaseFragment() {
                 val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
                 adapter.setItems(carInfo.discounts?.duration, 1)
                 recyclerView_car_discount.adapter = adapter
+                currentSelectedCarInfo.set(carInfo)
+                calDistanceAndTImeInfo()
             }
         })
     }

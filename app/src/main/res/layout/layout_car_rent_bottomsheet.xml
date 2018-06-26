@@ -137,7 +137,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="距3.5km 步行3小时38分钟"
+                            tools:text="距3.5km 步行3小时38分钟"
+                            android:text="@{fragment.naviInfo}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="13sp" />
 
