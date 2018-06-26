@@ -90,7 +90,7 @@ interface ApiInterface {
      * 获取接单列表
      * type	integer	否	类型：1同城小包2整车物流
      */
-    @GET("orders/freight")
+    @GET("orders/freights")
     fun getOrderList(
             @Query(ParamsConstant.Type) type: String? = null,
             @Query(ParamsConstant.Offset) offset: Int,
@@ -107,7 +107,7 @@ interface ApiInterface {
      * 获取发货列表
      *
      */
-    @GET("orders/freight")
+    @GET("orders/freights")
     fun getOrderSendList(
             @Query(ParamsConstant.Type) type: String = "2",
             @Query(ParamsConstant.Offset) offset: Int,
@@ -340,7 +340,7 @@ interface ApiInterface {
      */
     @Multipart
     @POST("orders/{oid}/photos")
-    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String,@Field(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String,@Part(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>

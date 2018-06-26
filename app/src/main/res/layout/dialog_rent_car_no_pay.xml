@@ -3,6 +3,14 @@
 
     <data>
 
+
+        <variable
+            name="dialog"
+            type="shy.car.sdk.travel.rent.dialog.RentNoPayDialog"/>
+
+        <variable
+            name="order"
+            type="shy.car.sdk.travel.order.data.OrderMineList"/>
     </data>
 
 
@@ -33,7 +41,7 @@
                 android:layout_marginEnd="22dp"
                 android:layout_marginStart="22dp"
                 android:layout_marginTop="15dp"
-                android:text="您的xxxxxxxxxxxx账号有未支付的订单，请先完成支付"
+                android:text="您的账号有未支付的订单，请先完成支付"
                 android:textColor="@color/text_second_primary_666666"
                 android:textSize="@dimen/text_primary_14dp" />
 
@@ -51,6 +59,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="知道了"
+                    android:onClick="@{()->dialog.dismissAllowingStateLoss()}"
                     android:textColor="@color/text_third_primary_999999"
                     android:textSize="@dimen/text_title_16dp" />
 
@@ -62,6 +71,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="去支付"
+                    android:onClick="@{()->dialog.goPay()}"
                     android:textColor="@color/main_color_green"
                     android:textSize="@dimen/text_title_16dp" />
             </LinearLayout>

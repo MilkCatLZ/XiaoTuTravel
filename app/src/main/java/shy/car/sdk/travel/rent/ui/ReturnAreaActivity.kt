@@ -45,7 +45,8 @@ class ReturnAreaActivity : XTBaseActivity(),
     }
 
     override fun onCalculateRouteSuccess(p0: AMapCalcRouteResult?) {
-        naviInfo.set("全程${LNTextUtil.getPriceText(mAMapNavi.naviPath.allLength / 1000.0)}公里 驾车${mAMapNavi.naviPath.allTime/60}分钟")
+        ProgressDialog.hideLoadingView(this)
+        naviInfo.set("全程${LNTextUtil.getPriceText(mAMapNavi.naviPath.allLength / 1000.0)}公里 驾车${mAMapNavi.naviPath.allTime / 60}分钟")
 //        Log.d("onCalculateRouteFailure", "onCalculateRouteFailure${mAMapNavi.naviPath.allTime}")
 //        Log.d("onCalculateRouteFailure", "onCalculateRouteFailure${}")
     }
@@ -270,8 +271,8 @@ class ReturnAreaActivity : XTBaseActivity(),
             }
         })
         val fromAndTo = RouteSearch.FromAndTo(LatLonPoint(app.location.lat, app.location.lng), LatLonPoint(network.get()?.lat!!, network.get()?.lng!!))
-        val query = WalkRouteQuery(fromAndTo)
-        routeSearch.calculateWalkRouteAsyn(query)
+        val query = RouteSearch.DriveRouteQuery(fromAndTo, RouteSearch.DRIVING_SINGLE_SHORTEST, null, null, "")
+        routeSearch.calculateDriveRouteAsyn(query)
     }
 
     private fun findCarPoint(position: LatLng): NearCarPoint? {

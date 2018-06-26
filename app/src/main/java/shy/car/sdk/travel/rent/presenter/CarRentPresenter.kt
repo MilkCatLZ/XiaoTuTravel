@@ -153,13 +153,9 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
 
         when (error?.error_code) {
-        //存在未租车订单
-            400101 -> {
+        //存在未完成的订单
+            400101,400102 -> {
                 getUnProgressOrder()
-            }
-        //存在未支付订单
-            400102 -> {
-                getUnPayOrder()
             }
             400105 -> {
                 ARouter.getInstance()
@@ -172,42 +168,42 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         }
     }
 
-    private fun getUnPayOrder() {
-        ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderList("1", "1", 0, 1)
-        val observer = object : Observer<List<OrderMineList>> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: List<OrderMineList>) {
-                ProgressDialog.hideLoadingView(context)
-                if (t.isNotEmpty()) {
-                    callBack.onGetUnPayOrderSuccess(t[0])
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取订单失败")
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
+//    private fun getUnPayOrder() {
+//        ProgressDialog.showLoadingView(context)
+//        disposable?.dispose()
+//        val observable = ApiManager.getInstance()
+//                .api.getRentOrderList("1", "1", 0, 1)
+//        val observer = object : Observer<List<OrderMineList>> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//
+//            }
+//
+//            override fun onNext(t: List<OrderMineList>) {
+//                ProgressDialog.hideLoadingView(context)
+//                if (t.isNotEmpty()) {
+//                    callBack.onGetUnPayOrderSuccess(t[0])
+//                }
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ProgressDialog.hideLoadingView(context)
+//                ErrorManager.managerError(context, e, "获取订单失败")
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 
     /**
      * 获取已预约订单
      */
-    private fun getUnProgressOrder() {
+    fun getUnProgressOrder() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()

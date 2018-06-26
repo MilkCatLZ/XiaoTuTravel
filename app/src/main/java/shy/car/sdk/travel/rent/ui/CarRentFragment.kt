@@ -44,9 +44,11 @@ import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
+import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 
@@ -89,10 +91,20 @@ class CarRentFragment : XTBaseFragment() {
         }
 
         override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList) {
-            ARouter.getInstance()
-                    .build(RouteMap.FindAndRentCar)
-                    .withObject(Object1, orderMineList)
-                    .navigation()
+            when (orderMineList.status) {
+                RentOrderState.Create -> {
+                    gotoFindAndRent(orderMineList)
+                }
+                RentOrderState.Taked -> {
+                    drivingMode()
+                }
+                RentOrderState.Return -> {
+                    gotoPayRentOrder(orderMineList)
+                }
+
+            }
+
+
         }
 
         override fun onGetCarError(e: Throwable) {
@@ -103,6 +115,37 @@ class CarRentFragment : XTBaseFragment() {
             if (t.isNotEmpty())
                 currentSelectedCarInfo.set(t[0])
         }
+    }
+
+    private fun gotoPayRentOrder(orderMineList: OrderMineList) {
+        val dialog = RentNoPayDialog()
+        dialog.orderList = orderMineList
+        dialog.show(childFragmentManager, "dialog_order_no_pay")
+    }
+
+    /**
+     * 已经取车，正在行驶中
+     */
+    private fun drivingMode() {
+
+    }
+
+    private fun gotoFindAndRent(orderMineList: OrderMineList) {
+        activity?.let {
+            DialogManager.with(it, childFragmentManager)
+                    .title("提示")
+                    .message("您有待取车的订单，是否现在取车？")
+                    .leftButtonText("取消")
+                    .rightButtonText("去取车")
+                    .onRightClick({ dialog, witch ->
+                        ARouter.getInstance()
+                                .build(RouteMap.FindAndRentCar)
+                                .withObject(Object1, orderMineList)
+                                .navigation()
+                    })
+                    .show()
+        }
+
     }
 
     override fun getFragmentName(): CharSequence {
@@ -136,6 +179,10 @@ class CarRentFragment : XTBaseFragment() {
 
 
         initData()
+
+        if (User.instance.login) {
+            carRentPresenter.getUnProgressOrder()
+        }
     }
 
     lateinit var carListViewPager: ViewPager
@@ -432,6 +479,7 @@ class CarRentFragment : XTBaseFragment() {
         if (isRentClick) {
             isRentClick = false
             checkPromiseMoneyPay()
+            carRentPresenter.getUnProgressOrder()
         }
     }
 

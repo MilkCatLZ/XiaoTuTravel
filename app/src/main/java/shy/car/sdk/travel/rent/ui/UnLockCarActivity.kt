@@ -20,9 +20,12 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.eventbus.RefreshOrderList
+import shy.car.sdk.app.eventbus.UnLockSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityUnlockCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -41,6 +44,9 @@ class UnLockCarActivity : XTBaseActivity(),
                 .build(RouteMap.Driving)
                 .withString(String1, oid)
                 .navigation()
+        RefreshOrderList.refreshOrderList()
+        EventBus.getDefault()
+                .post(UnLockSuccess())
         finish()
     }
 
