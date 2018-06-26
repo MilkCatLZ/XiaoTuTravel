@@ -78,6 +78,7 @@
                             android:layout_marginTop="8dp"
                             android:ellipsize="end"
                             android:maxLines="1"
+                            android:text="@{ac.naviInfo}"
                             tools:text="小兔出行科技停车网点"
                             />
 
@@ -86,10 +87,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="15dp"
+                        android:layout_marginEnd="20dp"
                         android:drawablePadding="5dp"
                         android:drawableTop="@drawable/icon_path"
                         android:text="导航"
+                        android:onClick="@{()->ac.naviToNetWork()}"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="@dimen/text_second_primary_12dp"/>
                 </LinearLayout>

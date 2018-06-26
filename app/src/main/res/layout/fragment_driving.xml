@@ -343,6 +343,7 @@
                     android:drawableTop="@drawable/icon_car_area"
                     android:gravity="center"
                     android:text="还车区域"
+                    android:onClick="@{()->fragment.gotoReturnCarArea()}"
                     android:textColor="@color/text_second_primary_666666"
                     android:textSize="@dimen/text_primary_14dp"/>
 

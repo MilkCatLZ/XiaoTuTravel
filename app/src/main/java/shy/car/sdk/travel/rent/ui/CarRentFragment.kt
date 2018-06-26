@@ -443,8 +443,8 @@ class CarRentFragment : XTBaseFragment() {
     fun onNetWorkListRefreshSuccess(list: List<NearCarPoint>) {
         if (list.isNotEmpty()) {
 //            if (carPointList.isNotEmpty()) {
-                carRentPresenter.getUsableCarList(list[0])
-                moveCameraAndShowLocation(LatLng(list[0].lat, list[0].lng))
+            carRentPresenter.getUsableCarList(list[0])
+            moveCameraAndShowLocation(LatLng(list[0].lat, list[0].lng))
 //            }
             this.carPointList.clear()
             this.carPointList.addAll(list)

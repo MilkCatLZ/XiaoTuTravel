@@ -37,8 +37,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="80dp"
-                    android:layout_marginStart="80dp"
+                    android:layout_marginEnd="60dp"
+                    android:layout_marginStart="60dp"
                     android:layout_marginTop="10dp"
                     android:text="为保证您的权益以免因车损产生争议，请严格按照图例角度拍摄并保证清晰"
                     android:textColor="@color/main_color_red"

@@ -14,7 +14,7 @@ import shy.car.sdk.travel.rent.data.CarInfo
 
 /**
  * create by lz at 2018/06/05
- * 找车取车
+ * 还车
  */
 @Route(path = RouteMap.ReturnCar)
 class ReturnCarActivity : XTBaseActivity() {

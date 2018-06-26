@@ -96,7 +96,7 @@
                             style="@style/style_ww.text_14_333"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="小兔停车网点"/>
+                            android:text="@{detail.fromAddress}"/>
 
                         <TextView
                             style="@style/style_ww.text_12_999"
@@ -257,7 +257,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="5dp"
                                 android:gravity="center"
-                                android:text='@{""+detail.car.surplusMileage}'
+                                android:text='@{detail.car.surplusMileage}'
                                 android:textColor="@color/main_color_red"
                                 android:textSize="@dimen/text_second_primary_12dp" />
                         </LinearLayout>

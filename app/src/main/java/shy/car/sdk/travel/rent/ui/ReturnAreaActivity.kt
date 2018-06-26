@@ -6,21 +6,27 @@ import android.graphics.Color
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MarkerOptions
-import com.amap.api.maps.model.PolygonOptions
+import com.amap.api.maps.model.*
+import com.amap.api.navi.AMapNavi
+import com.amap.api.navi.AMapNaviListener
+import com.amap.api.navi.enums.PathPlanningStrategy.DRIVING_DEFAULT
+import com.amap.api.navi.model.*
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.amap.api.services.route.RouteSearch.WalkRouteQuery
+import com.autonavi.tbt.TrafficFacilityInfo
 import com.base.base.ProgressDialog
-import com.base.overlay.WalkRouteOverlay
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityReturnAreaBinding
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.ReturnAreaPresenter
+import com.amap.api.navi.model.NaviLatLng
+import com.base.overlay.DrivingRouteOverlay
+import com.base.util.Log
+import shy.car.sdk.app.LNTextUtil
+import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 
 
 /**
@@ -28,25 +34,154 @@ import shy.car.sdk.travel.rent.presenter.ReturnAreaPresenter
  * 还车区域
  */
 @Route(path = RouteMap.ReturnArea)
-class ReturnAreaActivity : XTBaseActivity(), ReturnAreaPresenter.CallBack {
+class ReturnAreaActivity : XTBaseActivity(),
+        ReturnAreaPresenter.CallBack,
+        AMapNaviListener {
+    override fun onNaviInfoUpdate(p0: NaviInfo?) {
+
+    }
+
+    override fun onCalculateRouteSuccess(p0: IntArray?) {
+    }
+
+    override fun onCalculateRouteSuccess(p0: AMapCalcRouteResult?) {
+        naviInfo.set("全程${LNTextUtil.getPriceText(mAMapNavi.naviPath.allLength / 1000.0)}公里 驾车${mAMapNavi.naviPath.allTime/60}分钟")
+//        Log.d("onCalculateRouteFailure", "onCalculateRouteFailure${mAMapNavi.naviPath.allTime}")
+//        Log.d("onCalculateRouteFailure", "onCalculateRouteFailure${}")
+    }
+
+    override fun onCalculateRouteFailure(p0: Int) {
+    }
+
+    override fun onCalculateRouteFailure(p0: AMapCalcRouteResult?) {
+        Log.d("onCalculateRouteFailure", "onCalculateRouteFailure")
+    }
+
+    override fun onServiceAreaUpdate(p0: Array<out AMapServiceAreaInfo>?) {
+    }
+
+    override fun onEndEmulatorNavi() {
+    }
+
+    override fun onArrivedWayPoint(p0: Int) {
+    }
+
+    override fun onArriveDestination() {
+
+    }
+
+    override fun onPlayRing(p0: Int) {
+
+    }
+
+    override fun onTrafficStatusUpdate() {
+    }
+
+    override fun onGpsOpenStatus(p0: Boolean) {
+    }
+
+    override fun updateAimlessModeCongestionInfo(p0: AimLessModeCongestionInfo?) {
+    }
+
+    override fun showCross(p0: AMapNaviCross?) {
+    }
+
+    override fun onGetNavigationText(p0: Int, p1: String?) {
+    }
+
+    override fun onGetNavigationText(p0: String?) {
+    }
+
+    override fun updateAimlessModeStatistics(p0: AimLessModeStat?) {
+    }
+
+    override fun hideCross() {
+    }
+
+    override fun onInitNaviFailure() {
+        Log.d("onInitNaviFailure", "onInitNaviFailure")
+    }
+
+    override fun onInitNaviSuccess() {
+        Log.d("onInitNaviSuccess", "onInitNaviSuccess")
+    }
+
+    override fun onReCalculateRouteForTrafficJam() {
+    }
+
+    override fun updateIntervalCameraInfo(p0: AMapNaviCameraInfo?, p1: AMapNaviCameraInfo?, p2: Int) {
+    }
+
+    override fun hideLaneInfo() {
+    }
+
+    override fun onNaviInfoUpdated(p0: AMapNaviInfo?) {
+    }
+
+    override fun showModeCross(p0: AMapModelCross?) {
+    }
+
+    override fun updateCameraInfo(p0: Array<out AMapNaviCameraInfo>?) {
+    }
+
+    override fun hideModeCross() {
+    }
+
+    override fun onLocationChange(p0: AMapNaviLocation?) {
+    }
+
+    override fun onReCalculateRouteForYaw() {
+    }
+
+    override fun onStartNavi(p0: Int) {
+    }
+
+    override fun notifyParallelRoad(p0: Int) {
+    }
+
+    override fun OnUpdateTrafficFacility(p0: AMapNaviTrafficFacilityInfo?) {
+    }
+
+    override fun OnUpdateTrafficFacility(p0: Array<out AMapNaviTrafficFacilityInfo>?) {
+    }
+
+    override fun OnUpdateTrafficFacility(p0: TrafficFacilityInfo?) {
+    }
+
+    override fun showLaneInfo(p0: Array<out AMapLaneInfo>?, p1: ByteArray?, p2: ByteArray?) {
+    }
+
+    override fun showLaneInfo(p0: AMapLaneInfo?) {
+    }
+
     override fun onError(e: Throwable) {
 
     }
 
+
+    lateinit var mAMapNavi: AMapNavi
     var netWorkList: ArrayList<NearCarPoint> = ArrayList<NearCarPoint>()
     var network = ObservableField<NearCarPoint>()
+    var naviInfo = ObservableField<String>("")
 
     override fun getListSuccess(t: ArrayList<NearCarPoint>) {
         netWorkList = t
-        t.map {
-            binding.mapView.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+        for (i in 0..(t.size - 1)) {
+            var it = t[i]
+            var marker = binding.mapView.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                     .anchor(0.5f, 1.0f)
                     .snippet(it.address)
                     .title(it.name)
                     .position(LatLng(it.lat, it.lng))
                     .draggable(false))
+            if (i == 0) {
+                marker.showInfoWindow()
+                network.set(it)
+                getNaviDetail()
+            }
             drawPointAngel(it)
         }
+
         moveCameraAndShowLocation(LatLng(t[0].lat, t[0].lng))
     }
 
@@ -63,31 +198,63 @@ class ReturnAreaActivity : XTBaseActivity(), ReturnAreaPresenter.CallBack {
         binding.ac = this
         presenter = ReturnAreaPresenter(this, this)
         binding.mapView.onCreate(savedInstanceState)
+        initMap()
+    }
 
-
-        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
+    private fun initMap() {
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+        binding.mapView.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
 
+
+        binding.mapView.map.setInfoWindowAdapter(NearInfoWindowAdapter(this))
         binding.mapView.map.setOnMarkerClickListener(
                 {
                     ProgressDialog.showLoadingView(this@ReturnAreaActivity)
-                    network.set(findCarPoint(it.position))
                     it.showInfoWindow()
-                    calculateTime()
+
+                    network.set(findCarPoint(it.position))
+                    getNaviDetail()
                     true
                 }
         )
 
+
+        val myLocationStyle = MyLocationStyle()
+        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
+        //初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
+        myLocationStyle.interval(3000) //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        binding.mapView.map.myLocationStyle = myLocationStyle//设置定位蓝点的Style
+        binding.mapView.map.isMyLocationEnabled = true// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
+
+        mAMapNavi = AMapNavi.getInstance(applicationContext)
+        //添加监听回调，用于处理算路成功
+        mAMapNavi.addAMapNaviListener(this)
         presenter.getNetWorkList()
     }
 
-    var mWalkRouteResult: WalkRouteResult? = null
+    fun naviToNetWork() {
+        calculateTime()
+    }
 
     private fun calculateTime() {
         var routeSearch = RouteSearch(this)
         routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
-            override fun onDriveRouteSearched(p0: DriveRouteResult?, p1: Int) {
-
+            override fun onDriveRouteSearched(result: DriveRouteResult, p1: Int) {
+                ProgressDialog.hideLoadingView(this@ReturnAreaActivity)
+                if (result.paths != null) {
+                    if (result.paths.size > 0) {
+                        var mDrivingRouteResult = result
+                        val drivePath = mDrivingRouteResult!!.paths[0] ?: return
+                        val drivingRouteOverlay = DrivingRouteOverlay(
+                                this@ReturnAreaActivity, binding.mapView.map, drivePath,
+                                mDrivingRouteResult!!.startPos,
+                                mDrivingRouteResult!!.targetPos, null)
+                        drivingRouteOverlay.setNodeIconVisibility(false)//设置节点marker是否显示
+                        drivingRouteOverlay.removeFromMap()
+                        drivingRouteOverlay.addToMap()
+                        drivingRouteOverlay.zoomToSpan()
+                    }
+                }
             }
 
             override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
@@ -99,24 +266,7 @@ class ReturnAreaActivity : XTBaseActivity(), ReturnAreaPresenter.CallBack {
             }
 
             override fun onWalkRouteSearched(result: WalkRouteResult, p1: Int) {
-                ProgressDialog.hideLoadingView(this@ReturnAreaActivity)
-                if (result.paths != null) {
-                    if (result.paths.size > 0) {
-                        mWalkRouteResult = result
-                        val drivePath = mWalkRouteResult!!.paths[0] ?: return
-                        val drivingRouteOverlay = WalkRouteOverlay(
-                                this@ReturnAreaActivity, binding.mapView.map, drivePath,
-                                mWalkRouteResult!!.startPos,
-                                mWalkRouteResult!!.targetPos)
-                        drivingRouteOverlay.setNodeIconVisibility(false)//设置节点marker是否显示
-                        drivingRouteOverlay.removeFromMap()
-                        drivingRouteOverlay.addToMap()
-                        drivingRouteOverlay.zoomToSpan()
-                    } else if (result.paths == null) {
 
-                    }
-
-                }
             }
         })
         val fromAndTo = RouteSearch.FromAndTo(LatLonPoint(app.location.lat, app.location.lng), LatLonPoint(network.get()?.lat!!, network.get()?.lng!!))
@@ -131,6 +281,18 @@ class ReturnAreaActivity : XTBaseActivity(), ReturnAreaPresenter.CallBack {
             }
         }
         return null
+    }
+
+    fun getNaviDetail() {
+
+
+        var startList = ArrayList<NaviLatLng>()
+        var endList = ArrayList<NaviLatLng>()
+
+        startList.add(NaviLatLng(app.location.lat, app.location.lng))
+        endList.add(NaviLatLng(network.get()?.lat!!, network.get()?.lng!!))
+
+        mAMapNavi.calculateDriveRoute(startList, endList, null, DRIVING_DEFAULT)
     }
 
     override fun onResume() {

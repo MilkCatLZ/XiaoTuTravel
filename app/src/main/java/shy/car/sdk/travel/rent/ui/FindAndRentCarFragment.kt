@@ -25,6 +25,7 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
@@ -33,6 +34,19 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
  */
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
+    override fun onGetDetailSuccess(t: RentOrderDetail) {
+        presenter.detail.car?.color = t.car?.color
+        presenter.detail.car?.electricity = t.car?.electricity
+        presenter.detail.car?.img = t.car?.modelImg
+        presenter.detail.car?.surplusMileage = t.car?.surplusMileage
+    }
+
+    override fun onUnLockSuccess() {
+        ARouter.getInstance()
+                .build(RouteMap.Driving)
+                .withString(String1, order?.id)
+                .navigation()
+    }
 
     var mDriveRouteResult: DriveRouteResult? = null
 
@@ -42,6 +56,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
             presenter.detail = order!!
             if (binding != null) {
                 binding.detail = value
+                presenter.getOrderDetail()
                 setupMap(value)
             }
         }
@@ -216,12 +231,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     fun unLockCar() {
-        ARouter.getInstance()
-                .build(RouteMap.UnLockCar)
-                .withString(String1, order?.id)
-                .navigation()
 
-//        presenter.unLockCar()
+
+        presenter.unLockCar()
     }
 
     fun cancelOrder() {

@@ -48,7 +48,7 @@ class CurrentLocation : BaseObservable(),
         }
         get():Double {
             return if (BuildConfig.DEBUG) {
-                22.827500
+                22.826500
             } else {
                 field
             }
@@ -61,7 +61,7 @@ class CurrentLocation : BaseObservable(),
         }
         get():Double {
             return if (BuildConfig.DEBUG) {
-                108.321210
+                108.320210
             } else {
                 field
             }

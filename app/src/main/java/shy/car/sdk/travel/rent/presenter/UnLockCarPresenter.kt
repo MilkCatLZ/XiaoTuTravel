@@ -70,10 +70,33 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
-                    .api.orderUnLockCarAndStart(detail?.orderId!!)
+                    .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
+//            val observer = object : Observer<JsonObject> {
+//                override fun onComplete() {
+//
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {
+//
+//                }
+//
+//                override fun onNext(t: JsonObject) {
+//                    ProgressDialog.hideLoadingView(context)
+//                    callBack.onUnLockSuccess()
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    ProgressDialog.hideLoadingView(context)
+//                    ErrorManager.managerError(context, e, "解锁失败")
+//                    callBack.onUnLockError()
+//                }
+//            }
+//
+//            ApiManager.getInstance()
+//                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
-                    .api.takeCarUploadPic(detail?.orderId!!,detail?.orderId!!, createImageParams().parts())
+                    .api.takeCarUploadPic(detail?.orderId!!, detail?.orderId!!, createImageParams().parts())
 
             observableUnLock.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -110,6 +133,8 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                         }
 
                     })
+
+
         }
 
     }

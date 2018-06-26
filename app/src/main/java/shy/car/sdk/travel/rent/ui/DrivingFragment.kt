@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.route.RouteMap.ReturnCar
 import shy.car.sdk.databinding.FragmentDrivingBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -97,5 +98,11 @@ class DrivingFragment : XTBaseFragment(),
      */
     fun lockDoor() {
         presenter.lockDoor()
+    }
+
+    fun gotoReturnCarArea(){
+        ARouter.getInstance()
+                .build(RouteMap.ReturnArea)
+                .navigation()
     }
 }

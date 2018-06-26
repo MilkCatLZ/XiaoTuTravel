@@ -332,8 +332,8 @@ interface ApiInterface {
     fun getCarUseTime(): Observable<List<CarUserTime>>
 
     @FormUrlEncoded
-    @PATCH("orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Query(ParamsConstant.OrderId) orderID: String = oid, @Field(ParamsConstant.OrderStatus) status: String = "3"): Observable<JsonObject>
+    @POST("orders/{order_id}")
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderId) o: String, @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
 
     /**
      * 提交身份认证
@@ -364,5 +364,11 @@ interface ApiInterface {
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
     fun returnCar(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Lat) lat: String, @Field(ParamsConstant.Lng) lng: String, @Field(ParamsConstant.OrderStatus) orderStatus: String = "4"): Observable<JsonObject>
+
+    /**
+     * 	status：1取车 2还车
+     */
+    @GET("orders/photos")
+    fun shoulTakePhoto(@Query(ParamsConstant.Type) status: String): Observable<JsonObject>
 
 }

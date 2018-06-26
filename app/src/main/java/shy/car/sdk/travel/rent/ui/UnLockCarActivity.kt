@@ -30,17 +30,18 @@ import shy.car.sdk.travel.rent.presenter.UnLockCarPresenter
 
 /**
  * create by 过期猫粮 at 2018/06/19
- *
+ * 拍照并取车计费
  */
 @Route(path = RouteMap.UnLockCar)
 class UnLockCarActivity : XTBaseActivity(),
         UnLockCarPresenter.CallBack {
     override fun onUnLockSuccess() {
-        ToastManager.showShortToast(this, "车辆已解锁，并开始计时")
+        ToastManager.showShortToast(this, "车辆已解锁，请及时上车")
         ARouter.getInstance()
                 .build(RouteMap.Driving)
                 .withString(String1, oid)
                 .navigation()
+        finish()
     }
 
     override fun onUnLockError() {
@@ -120,10 +121,6 @@ class UnLockCarActivity : XTBaseActivity(),
 
             }
         }
-    }
-
-    private fun openAlbum() {
-        checkPermission()
     }
 
     private fun checkPermission() {
