@@ -71,6 +71,8 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
                     .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
 //            val observer = object : Observer<JsonObject> {
 //                override fun onComplete() {
 //
@@ -96,7 +98,9 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 //                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
-                    .api.takeCarUploadPic(detail?.orderId!!, detail?.orderId!!, createImageParams().parts())
+                    .api.takeCarUploadPic(detail?.orderId!!, detail?.orderId!!,"1", createImageParams().parts())//type=1 取车拍照
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
 
             observableUnLock.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
@@ -107,11 +111,11 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                         ProgressDialog.hideLoadingView(context)
                         disposable?.dispose()
                     })
+                    .subscribeOn(Schedulers.io())
                     .flatMap({
                         observableUpload
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
                     .subscribe(object : Observer<JsonObject> {
                         override fun onComplete() {
 

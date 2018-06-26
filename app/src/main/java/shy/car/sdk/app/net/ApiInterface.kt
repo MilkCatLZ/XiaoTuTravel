@@ -332,15 +332,15 @@ interface ApiInterface {
     fun getCarUseTime(): Observable<List<CarUserTime>>
 
     @FormUrlEncoded
-    @POST("orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderId) o: String, @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
+    @PATCH("orders/{order_id}")
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String,  @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
 
     /**
      * 提交身份认证
      */
     @Multipart
     @POST("orders/{oid}/photos")
-    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String,@Field(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
