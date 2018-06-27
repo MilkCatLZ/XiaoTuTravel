@@ -21,6 +21,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 interface VerifyListener {
     fun onGetVerifySuccess(interval: Int)
     fun onGetVerifyError(e: Throwable)
+    fun verify(interval:Int,verify: String)
 }
 
 /**
@@ -83,8 +84,13 @@ class LoginPresenter(val listener: VerifyListener? = null, context: Context) : B
 
                         override fun onNext(t: JsonObject) {
                             if (StringUtils.isNotEmpty(t.toString())) {
-                                ToastManager.showLongToast(context, "验证码发送成功${t.toString()}")
-                                listener?.onGetVerifySuccess(t.get("interval").asInt)
+                                ToastManager.showLongToast(context, "验证码已发送到您的手机，请注意查看")
+
+                                if(BuildConfig.DEBUG){
+                                    listener?.verify(t.get("interval").asInt,t.get("captcha").toString())
+                                }else{
+                                    listener?.onGetVerifySuccess(t.get("interval").asInt)
+                                }
                             }
                         }
 

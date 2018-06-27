@@ -4,7 +4,6 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.amap.api.services.core.PoiItem
 import com.android.databinding.library.baseAdapters.BR
-import com.base.location.BuildConfig
 import com.base.location.Location
 import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
@@ -46,26 +45,26 @@ class CurrentLocation : BaseObservable(),
             field = value
             notifyPropertyChanged(BR.lat)
         }
-        get():Double {
-            return if (BuildConfig.DEBUG) {
-                22.841251
-            } else {
-                field
-            }
-        }
+//        get():Double {
+//            return if (BuildConfig.DEBUG) {
+//                22.841251
+//            } else {
+//                field
+//            }
+//        }
     @get:Bindable
     var lng: Double = 0.0
         set(value) {
             field = value
             notifyPropertyChanged(BR.lng)
         }
-        get():Double {
-            return if (BuildConfig.DEBUG) {
-                108.283127
-            } else {
-                field
-            }
-        }
+//        get():Double {
+//            return if (BuildConfig.DEBUG) {
+//                108.283127
+//            } else {
+//                field
+//            }
+//        }
 
     @get:Bindable
     var district: String = ""

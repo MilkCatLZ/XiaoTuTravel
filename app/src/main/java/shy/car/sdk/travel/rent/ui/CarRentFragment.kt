@@ -17,15 +17,20 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
-import com.base.base.ProgressDialog
+import com.amap.api.services.core.AMapException
+import com.amap.api.services.core.LatLonPoint
+import com.amap.api.services.route.*
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
+import com.base.overlay.WalkRouteOverlay
 import com.base.util.DialogManager
 import com.base.util.ToastManager
 import io.reactivex.Observable
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_car_rent.*
 import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
@@ -34,7 +39,6 @@ import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
-import shy.car.sdk.R.id.circle_indicator
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
@@ -126,14 +130,98 @@ class CarRentFragment : XTBaseFragment() {
                 currentSelectedCarInfo.set(t[0])
                 calDistanceAndTimeInfo()
                 setupCurrentCarInfo(currentSelectedCarInfo.get()!!)
+                findRoutToCar(t[0].lat, t[0].lng)
                 hasUsableCar.set(true)
             } else {
                 hasUsableCar.set(false)
                 currentSelectedCarInfo.set(null)
                 naviInfo.set("")
+                findRoutToCar(carRentPresenter.carPoint?.lat!!, carRentPresenter.carPoint?.lng!!)
             }
             circle_indicator.setViewPager(viewPager_car_list)
         }
+    }
+    var drivingRouteOverlay: WalkRouteOverlay? = null
+    private fun findRoutToCar(lat: Double, lng: Double) {
+
+        val routeSearch = RouteSearch(activity)
+
+        val query = RouteSearch.WalkRouteQuery(RouteSearch.FromAndTo(LatLonPoint(app.location.lat, app.location.lng), LatLonPoint(lat, lng)))
+
+
+
+        Observable.create<WalkRouteResult> {
+            routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
+                override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
+
+                }
+
+                override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
+
+                }
+
+                override fun onRideRouteSearched(p0: RideRouteResult?, p1: Int) {
+
+                }
+
+                override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
+                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+                        if (result != null) {
+                            it.onNext(result)
+                        }
+                    }
+                }
+
+            })
+            routeSearch.calculateWalkRouteAsyn(query)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<WalkRouteResult> {
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(result: WalkRouteResult) {
+//                        binding.map.map.clear()// 清理地图上的所有覆盖物
+
+                        activity?.let {
+
+                            if (result.paths != null) {
+                                if (result.paths.size > 0) {
+                                    var mDriveRouteResult = result
+                                    val drivePath = mDriveRouteResult.paths[0] ?: return
+                                    if (drivingRouteOverlay != null) {
+                                        drivingRouteOverlay?.removeFromMap()
+                                    }
+                                    drivingRouteOverlay = WalkRouteOverlay(
+                                            it, binding.map.map, drivePath,
+                                            mDriveRouteResult.startPos,
+                                            mDriveRouteResult.targetPos)
+                                    drivingRouteOverlay?.setNodeIconVisibility(false)//设置节点marker是否显示
+                                    drivingRouteOverlay?.setStartMarkerEnable(false)
+                                    drivingRouteOverlay?.setEndMarkerEnable(false)
+
+                                    drivingRouteOverlay?.addToMap()
+                                    drivingRouteOverlay?.zoomToSpan()
+
+                                } else if (result.paths == null) {
+                                }
+
+                            }
+                        }
+                    }
+                })
+
+
     }
 
     private fun calDistanceAndTimeInfo() {
@@ -164,21 +252,10 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     private fun gotoFindAndRent(orderMineList: OrderMineList) {
-        activity?.let {
-            DialogManager.with(it, childFragmentManager)
-                    .title("提示")
-                    .message("您有待取车的订单，是否现在取车？")
-                    .leftButtonText("取消")
-                    .rightButtonText("去取车")
-                    .onRightClick({ _, _ ->
-                        ARouter.getInstance()
-                                .build(RouteMap.FindAndRentCar)
-                                .withString(String1, orderMineList.id)
-                                .navigation()
-                    })
-                    .show()
-        }
-
+        ARouter.getInstance()
+                .build(RouteMap.FindAndRentCar)
+                .withString(String1, orderMineList.id)
+                .navigation()
     }
 
     override fun getFragmentName(): CharSequence {
@@ -235,6 +312,7 @@ class CarRentFragment : XTBaseFragment() {
                 var carInfo = carRentPresenter.carListAdapter.items[position]
                 setupCurrentCarInfo(carInfo)
                 calDistanceAndTimeInfo()
+                findRoutToCar(carInfo.lat, carInfo.lng)
             }
         })
     }

@@ -1,7 +1,6 @@
 package shy.car.sdk.travel.login.ui
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,6 +24,11 @@ class LoginDialogFragment : XTBaseDialogFragment() {
     lateinit var binding: FragmentLoginBinding
     lateinit var presenter: LoginPresenter
     private var verifyListener = object : VerifyListener {
+        override fun verify(interval:Int,verify: String) {
+            app.startVerifyDialogVerify(presenter.phone.get()!!, interval,verify = verify)
+            dismiss(true)
+        }
+
         override fun onGetVerifyError(e: Throwable) {
             dismiss(BuildConfig.DEBUG)
 //            if (BuildConfig.DEBUG) {
@@ -34,7 +38,8 @@ class LoginDialogFragment : XTBaseDialogFragment() {
 
         override fun onGetVerifySuccess(interval: Int) {
             dismiss(true)
-            app.startVerifyDialog(presenter.phone.get()!!, interval)
+            if (!BuildConfig.DEBUG)
+                app.startVerifyDialog(presenter.phone.get()!!, interval)
         }
 
 

@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant
@@ -67,6 +68,10 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
     @Autowired(name = ParamsConstant.String1)
     var phone: String = ""
 
+    @JvmField
+    @Autowired(name = ParamsConstant.String2)
+    var verify: String = ""
+
 
     @JvmField
     @Autowired(name = ParamsConstant.Int1)
@@ -96,7 +101,19 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         super.onCreate(savedInstanceState)
         ARouter.getInstance()
                 .inject(this)
-        activity?.let { presenter = VerifyPresenter(listener, it) }
+        activity?.let {
+            presenter = VerifyPresenter(listener, it)
+            if (BuildConfig.DEBUG) {
+                Observable.timer(4, TimeUnit.SECONDS)
+                        .subscribe({
+//                            presenter.verify.set(verify)
+                            binding.edtInput.setText(verify)
+                        }, {
+
+                        })
+
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

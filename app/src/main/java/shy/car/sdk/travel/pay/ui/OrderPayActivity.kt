@@ -11,7 +11,7 @@ import shy.car.sdk.app.route.RouteMap
 
 /**
  * create by lz at 2018/06/17
- *  充值
+ * 租车订单支付
  */
 @Route(path = RouteMap.OrderPay)
 class OrderPayActivity : XTBaseActivity() {

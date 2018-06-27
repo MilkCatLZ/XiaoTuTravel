@@ -32,6 +32,8 @@ public class RouteOverlay {
     private Context mContext;
     private Bitmap startBit, endBit, busBit, walkBit, driveBit;
     protected boolean nodeIconVisible = true;
+    private boolean startMarkerEnable = true;
+    private boolean endMarkerEnable = true;
     
     public RouteOverlay(Context context) {
         mContext = context;
@@ -131,15 +133,25 @@ public class RouteOverlay {
     }
     
     protected void addStartAndEndMarker() {
-        startMarker = mAMap.addMarker((new MarkerOptions())
-                                          .position(startPoint).icon(getStartBitmapDescriptor())
-                                          .title("\u8D77\u70B9"));
+        if (startMarkerEnable)
+            startMarker = mAMap.addMarker((new MarkerOptions())
+                                              .position(startPoint).icon(getStartBitmapDescriptor())
+                                              .title("\u8D77\u70B9"));
         // startMarker.showInfoWindow();
         
-        endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
-                                                         .icon(getEndBitmapDescriptor()).title("\u7EC8\u70B9"));
+        if (endMarkerEnable)
+            endMarker = mAMap.addMarker((new MarkerOptions()).position(endPoint)
+                                                             .icon(getEndBitmapDescriptor()).title("\u7EC8\u70B9"));
         // mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startPoint,
         // getShowRouteZoom()));
+    }
+    
+    public void setStartMarkerEnable(boolean enable) {
+        startMarkerEnable = enable;
+    }
+    
+    public void setEndMarkerEnable(boolean enable) {
+        endMarkerEnable = enable;
     }
     
     /**

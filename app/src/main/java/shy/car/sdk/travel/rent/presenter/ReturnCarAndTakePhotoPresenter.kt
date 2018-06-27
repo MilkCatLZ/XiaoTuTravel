@@ -13,10 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.data.ErrorManager
-import shy.car.sdk.app.data.RefreshRentCarState
-import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -34,7 +31,7 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
     val leftImage = ObservableField<String>()
     val rightImage = ObservableField<String>()
 
-    private var detail: RentOrderDetail? = null
+    var detail: RentOrderDetail? = null
     var netWorkID: String = ""
 
     fun getOrderDetail(orderID: String) {
@@ -108,10 +105,6 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
 
                         override fun onNext(t: JsonObject) {
                             ProgressDialog.hideLoadingView(context)
-                            EventBus.getDefault()
-                                    .post(RefreshOrderList())
-                            EventBus.getDefault()
-                                    .post(RefreshRentCarState(detail?.orderId!!))
                             callBack.onReturnSuccess()
                         }
 

@@ -11,11 +11,8 @@ import com.base.location.Location
 import com.base.util.SPCache
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
-import com.google.gson.JsonObject
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import mall.lianni.alipay.Alipay
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -159,6 +156,21 @@ class Application : BaseApplication() {
                     .greenChannel()
                     .withString(ParamsConstant.String1, phone)
                     .withInt(ParamsConstant.Int1, interval)
+                    .navigation() as VerifyDialogFragment
+            dialogFragment.dismissListener = listener
+            dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
+        } catch (e: Exception) {
+        }
+
+    }
+
+    fun startVerifyDialogVerify(phone: String, interval: Int = 60, listener: onLoginDismiss? = null,verify:String) {
+        try {
+            val dialogFragment = ARouter.getInstance().build(RouteMap.Verify)
+                    .greenChannel()
+                    .withString(ParamsConstant.String1, phone)
+                    .withInt(ParamsConstant.Int1, interval)
+                    .withString(ParamsConstant.String2, verify)
                     .navigation() as VerifyDialogFragment
             dialogFragment.dismissListener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_verify_dialog")
