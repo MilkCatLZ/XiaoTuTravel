@@ -19,12 +19,12 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import java.io.File
 
-class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     interface CallBack {
         fun onGetDetailSuccess(t: RentOrderDetail)
         fun onGetDetailError(e: Throwable)
-        fun onUnLockSuccess()
-        fun onUnLockError()
+        fun onReturnSuccess()
+        fun onReturnError()
 
     }
 
@@ -32,6 +32,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
     val rightImage = ObservableField<String>()
 
     private var detail: RentOrderDetail? = null
+    var netWorkID: String = ""
 
     fun getOrderDetail(orderID: String) {
         ProgressDialog.showLoadingView(context)
@@ -70,35 +71,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
-                    .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
+                    .api.returnCar(detail?.orderId!!, netWorkID, app.location.lat.toString(), app.location.lng.toString())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-//            val observer = object : Observer<JsonObject> {
-//                override fun onComplete() {
-//
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//
-//                }
-//
-//                override fun onNext(t: JsonObject) {
-//                    ProgressDialog.hideLoadingView(context)
-//                    callBack.onUnLockSuccess()
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    ProgressDialog.hideLoadingView(context)
-//                    ErrorManager.managerError(context, e, "解锁失败")
-//                    callBack.onUnLockError()
-//                }
-//            }
-//
-//            ApiManager.getInstance()
-//                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!,"1", createImageParams().parts())//type=1 取车拍照
+                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, "2", createImageParams().parts())//type=2 还车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 
@@ -127,13 +105,13 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
                         override fun onNext(t: JsonObject) {
                             ProgressDialog.hideLoadingView(context)
-                            callBack.onUnLockSuccess()
+                            callBack.onReturnSuccess()
                         }
 
                         override fun onError(e: Throwable) {
                             ProgressDialog.hideLoadingView(context)
-                            ErrorManager.managerError(context, e, "解锁失败")
-                            callBack.onUnLockError()
+                            ErrorManager.managerError(context, e, "还车失败")
+                            callBack.onReturnError()
                         }
 
                     })

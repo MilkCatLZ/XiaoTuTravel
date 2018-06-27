@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.rent.ui.ReturnCarAndTakePhotoActivity" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.ReturnCarAndTakePhotoPresenter"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_return_car_photo}" />
+
+        <View style="@style/style_shadow" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="60dp"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="10dp"
+                    android:text="为保证您的权益以免因车损产生争议，请严格按照图例角度拍摄并保证清晰"
+                    android:textColor="@color/main_color_red"
+                    android:textSize="@dimen/text_second_primary_12dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{()->ac.leftPhotoClick()}">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/pho_car_right" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/icon_camera" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                       android:imageURL="@{presenter.leftImage}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{()->ac.rightPhotoClick()}">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/pho_car_left" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/icon_camera" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:imageURL="@{presenter.rightImage}" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/back_button_main_green_clickable"
+                    android:gravity="center"
+                    android:onClick="@{()->ac.submitAndUnLock()}"
+                    android:text="确认还车"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_title_16dp" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</layout>

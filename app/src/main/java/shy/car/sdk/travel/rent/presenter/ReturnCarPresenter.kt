@@ -88,6 +88,7 @@ class ReturnCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                             ARouter.getInstance()
                                     .build(RouteMap.ReturnCarUploadPhoto)
                                     .withString(ParamsConstant.String1, oid)
+                                    .withString(ParamsConstant.String2, nearCarPoint?.id)
                                     .navigation()
                         }
                     })

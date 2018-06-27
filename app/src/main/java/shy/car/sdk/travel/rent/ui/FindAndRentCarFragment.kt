@@ -10,9 +10,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MyLocationStyle
+import com.amap.api.navi.model.NaviLatLng
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
+import com.base.base.ProgressDialog
 import com.base.overlay.DrivingRouteOverlay
 import com.base.util.ToastManager
 import io.reactivex.Observable
@@ -21,9 +23,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
+import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -41,6 +45,32 @@ class FindAndRentCarFragment : XTBaseFragment(),
 //        presenter.detail.car?.img = t.car?.modelImg
 //        presenter.detail.car?.surplusMileage = t.car?.surplusMileage
         binding.detail = t
+        //初始化地图
+        setupMap(t)
+        //获取导航数据
+        getRoute()
+
+        calTimeAndDistances()
+    }
+
+    private fun calTimeAndDistances() {
+
+        activity?.let {
+            ProgressDialog.showLoadingView(it)
+        }
+        activity?.let {
+            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(presenter.detail.car?.lat!!, presenter.detail.car?.lng!!), 2, object : MapUtil.GetDetailListener {
+                override fun calculateSuccess(allLength: Int?, allTime: Int?) {
+                    activity?.let {
+                        ProgressDialog.hideLoadingView(it)
+                    }
+                    if (allLength != null && allTime != null) {
+                        timeAndDistance.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
+                    }
+                }
+
+            })
+        }
     }
 
     override fun onUnLockSuccess() {
@@ -58,17 +88,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
             presenter.oid = oid
             presenter.getOrderDetail()
         }
-// var order: OrderMineList? = null
-//        set(value) {
-//            field = value
-//            presenter.detail = order!!
-//            if (binding != null) {
-//                binding.detail = value
-//                presenter.getOrderDetail()
-//                setupMap(value)
-//            }
-//        }
-
 
     lateinit var binding: FragmentFindAndRentCarBinding
 
@@ -120,12 +139,12 @@ class FindAndRentCarFragment : XTBaseFragment(),
         initMap()
     }
 
-    private fun setupMap(order: OrderMineList?) {
+    private fun setupMap(order: RentOrderDetail) {
 
         mStartPoint = LatLonPoint(app.location.lat, app.location.lng)
-        mEndPoint = LatLonPoint(order?.car?.lat!!, order?.car?.lng!!)
+        mEndPoint = LatLonPoint(order.car?.lat!!, order.car?.lng!!)
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
-        getRoute()
+
     }
 
     private fun getRoute() {

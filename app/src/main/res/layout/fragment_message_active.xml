@@ -35,7 +35,7 @@
             android:id="@+id/recyclerView_order_mine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             android:background="@color/main_back"
             android:bindAdapter="@{presenter.adapter}"
             android:paddingEnd="10dp"

@@ -23,10 +23,13 @@ class UserCenterFragment : XTBaseFragment() {
     }
 
     fun onUserPicClick() {
-        ARouter.getInstance()
-                .build(RouteMap.UserDetail)
-                .navigation()
-//        app.startLoginDialog(null, null)
+        if (User.instance.login)
+            ARouter.getInstance()
+                    .build(RouteMap.UserDetail)
+                    .navigation()
+        else {
+            app.startLoginDialog(null, null)
+        }
     }
 
 

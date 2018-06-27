@@ -50,6 +50,7 @@ import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
+import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
@@ -78,7 +79,12 @@ class CarRentFragment : XTBaseFragment() {
     private var carPointList = ArrayList<NearCarPoint>()
     val naviInfo = ObservableField<String>("")
     val drivingMode = ObservableBoolean(false)
+    val hasUsableCar = ObservableBoolean(false)
     private val callBack = object : CarRentPresenter.CallBack {
+        override fun onGetCarModelSuccess(t: List<CarCategory>) {
+
+        }
+
         override fun getDetailSuccess(t: RentOrderDetail) {
             binding.detail = t
         }
@@ -88,6 +94,7 @@ class CarRentFragment : XTBaseFragment() {
                 when (orderMineList.status) {
                     RentOrderState.Create -> {
                         gotoFindAndRent(orderMineList)
+                        drivingMode.set(false)
                     }
                     RentOrderState.Taked -> {
                         drivingMode(orderMineList)
@@ -95,7 +102,10 @@ class CarRentFragment : XTBaseFragment() {
                     }
                     RentOrderState.Return -> {
                         gotoPayRentOrder(orderMineList)
-
+                        drivingMode.set(false)
+                    }
+                    else -> {
+                        drivingMode.set(false)
                     }
 
                 }
@@ -112,13 +122,16 @@ class CarRentFragment : XTBaseFragment() {
         override fun onGetCarSuccess(t: List<CarInfo>) {
             if (t.isNotEmpty()) {
                 currentSelectedCarInfo.set(t[0])
-                calDistanceAndTImeInfo()
+                calDistanceAndTimeInfo()
                 setupCurrentCarInfo(currentSelectedCarInfo.get()!!)
+                hasUsableCar.set(true)
+            } else {
+                hasUsableCar.set(false)
             }
         }
     }
 
-    private fun calDistanceAndTImeInfo() {
+    private fun calDistanceAndTimeInfo() {
         activity?.let {
             ProgressDialog.showLoadingView(it)
         }
@@ -203,6 +216,7 @@ class CarRentFragment : XTBaseFragment() {
         if (User.instance.login) {
             carRentPresenter.getUnProgressOrder()
         }
+        carRentPresenter.getUsableCarModel()
     }
 
     lateinit var carListViewPager: ViewPager
@@ -220,7 +234,7 @@ class CarRentFragment : XTBaseFragment() {
             override fun onPageSelected(position: Int) {
                 var carInfo = carRentPresenter.carListAdapter.items[position]
                 setupCurrentCarInfo(carInfo)
-                calDistanceAndTImeInfo()
+                calDistanceAndTimeInfo()
             }
         })
     }
@@ -512,8 +526,8 @@ class CarRentFragment : XTBaseFragment() {
         if (isRentClick) {
             isRentClick = false
             checkPromiseMoneyPay()
-            carRentPresenter.getUnProgressOrder()
         }
+        carRentPresenter.getUnProgressOrder()
     }
 
 

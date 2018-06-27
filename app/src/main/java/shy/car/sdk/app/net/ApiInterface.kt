@@ -21,6 +21,7 @@ import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
+import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.CarUserTime
@@ -340,7 +341,7 @@ interface ApiInterface {
      */
     @Multipart
     @POST("orders/{oid}/photos")
-    fun takeCarUploadPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String,@Part(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun uploadCarPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
@@ -370,5 +371,8 @@ interface ApiInterface {
      */
     @GET("orders/photos")
     fun shoulTakePhoto(@Query(ParamsConstant.Type) status: String): Observable<JsonObject>
+
+    @GET("cars/model")
+    fun getUsableCarModelList(): Observable<List<CarCategory>>
 
 }

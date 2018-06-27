@@ -60,4 +60,5 @@
     <string name="str_return_car">还车</string>
     <string name="str_locating">正在获取您的位置...</string>
     <string name="str_return_area">还车区域</string>
+    <string name="str_return_car_photo">还车拍照</string>
 </resources>

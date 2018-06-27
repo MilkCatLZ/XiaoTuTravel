@@ -30,7 +30,7 @@
             android:checked="@{presenter.selectedCarCaterogyID==car.id}"
             android:onClick="@{click}"
             android:tag="@{car}"
-            android:text="@{car.carName}"/>
+            android:text="@{car.name}"/>
     </LinearLayout>
 
 

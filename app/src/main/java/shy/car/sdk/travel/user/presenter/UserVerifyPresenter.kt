@@ -11,10 +11,12 @@ import io.reactivex.disposables.Disposable
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.travel.user.data.RefreshUserInfo
 import java.io.File
 
 
@@ -27,6 +29,7 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
     interface SubmitListener {
         fun onUploadSuccess()
         fun onUploadError(e: Throwable)
+        fun alreadyUpLoad(e: Throwable)
     }
 
     var listener: SubmitListener? = null
@@ -60,8 +63,13 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
                                 override fun onError(e: Throwable) {
                                     e.printStackTrace()
                                     ProgressDialog.hideLoadingView(context)
-                                    ErrorManager.managerError(context, e, "提交失败，请重试")
-                                    listener?.onUploadError(e)
+                                    var err=ErrorManager.managerError(context, e, null)
+                                    if(err?.error_code==400302){
+                                        listener?.alreadyUpLoad(e)
+                                    }else {
+                                        err?.showError(context,"提交失败，请重试")
+                                        listener?.onUploadError(e)
+                                    }
                                 }
 
                             })

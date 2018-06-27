@@ -46,24 +46,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     var selectedCarCaterogyID = ObservableField<String>("")
 
-    init {
-        for (i in 1..7) {
-            var category = CarCategory()
-            category.id = i.toString()
-            when (i) {
-                0 -> {
-                    category.carName = "全部车型"
-                }
-                else -> {
-                    category.carName = "小兔$i"
-                }
-
-            }
-            category.id = i.toString()
-            carCategoryListAdapter.addItem(category)
-        }
-    }
-
     interface CallBack {
         fun onGetCarError(e: Throwable)
         fun onGetCarSuccess(t: List<CarInfo>)
@@ -73,6 +55,35 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?)
 
         fun getDetailSuccess(t: RentOrderDetail)
+        fun onGetCarModelSuccess(t: List<CarCategory>)
+    }
+
+    fun getUsableCarModel(){
+
+        val observable = ApiManager.getInstance()
+                .api.getUsableCarModelList()
+        val observer = object : Observer<List<CarCategory>> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: List<CarCategory>) {
+                carCategoryListAdapter.setItems(t, 1)
+                callBack.onGetCarModelSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
     }
 
     fun getUsableCarList(carPoint: NearCarPoint?) {

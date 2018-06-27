@@ -201,9 +201,13 @@ public class DialogManager extends DialogFragment {
     }
     
     public DialogManager show() {
-        show(manager, LNCUSTOM_DIALOG_DIALOG);
-        if (DialogManager.titleColor != 0 || DialogManager.messageColor != 0) {
-            setDialogTextColor();
+        try {
+            show(manager, LNCUSTOM_DIALOG_DIALOG);
+            if (DialogManager.titleColor != 0 || DialogManager.messageColor != 0) {
+                setDialogTextColor();
+            }
+        } catch (Exception e) {
+
         }
         return this;
     }

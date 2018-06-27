@@ -17,7 +17,7 @@ class CarCategory : BaseObservable() {
             notifyPropertyChanged(BR.id)
         }
     @get:Bindable
-    var carName: String = ""
+    var name: String = ""
         set(value) {
             field = value
             notifyPropertyChanged(BR.carName)

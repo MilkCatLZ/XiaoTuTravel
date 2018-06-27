@@ -39,6 +39,11 @@ import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
 class UserVerifyFragment : XTBaseFragment(),
         UserVerifyPresenter.SubmitListener,
         DialogInterface.OnDismissListener {
+    override fun alreadyUpLoad(e: Throwable) {
+        eventBusDefault.post(RefreshUserInfo())
+        finish()
+    }
+
     override fun onDismiss(dialog: DialogInterface?) {
         eventBusDefault.post(RefreshUserInfo())
         finish()

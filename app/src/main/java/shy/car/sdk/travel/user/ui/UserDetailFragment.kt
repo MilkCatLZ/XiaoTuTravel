@@ -10,6 +10,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentUserDetailBinding
+import shy.car.sdk.travel.user.data.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 
 
@@ -33,6 +34,11 @@ class UserDetailFragment : XTBaseFragment() {
         binding.fragment = this
         return binding.root
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        eventBusDefault.post(RefreshUserInfo())
     }
 
     fun goVipHomeClick() {

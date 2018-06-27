@@ -235,7 +235,7 @@ public class RouteMap {
     
     /**
      * {@link OrderPayActivity}
-     * withObject(Object1,DeliveryOrderDetail)
+     * withString(String1,oid)
      */
     @NotNull
     public static final String OrderPay = "/pay/order";
