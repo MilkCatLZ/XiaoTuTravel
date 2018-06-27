@@ -241,4 +241,11 @@ class Application : BaseApplication() {
                 .toSubscribe(observable, observer)
     }
 
+    fun goHome() {
+        for (i in (activityList.size) downTo 0) {
+            activityList[i].finish()
+            activityList.removeAt(i)
+        }
+    }
+
 }

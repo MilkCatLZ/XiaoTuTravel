@@ -40,6 +40,7 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
+import shy.car.sdk.app.data.RefreshRentCarState
 import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
@@ -578,6 +579,21 @@ class CarRentFragment : XTBaseFragment() {
                 moveCameraAndShowLocation(LatLng(it.position.latitude, it.position.longitude))
                 carRentPresenter.getUsableCarList(nearCar)
             }
+        }
+    }
+
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onReturnCarSuccess(returnCar: RefreshRentCarState) {
+        if (User.instance.login) {
+            app.goHome()
+            ARouter.getInstance()
+                    .build(RouteMap.RentCarDetail)
+                    .withString(String1, returnCar.oid)
+                    .navigation()
+            carRentPresenter.getUsableCarList(carRentPresenter.carPoint)
         }
     }
 }

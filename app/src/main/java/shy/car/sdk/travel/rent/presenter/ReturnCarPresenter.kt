@@ -12,8 +12,11 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.data.RefreshRentCarState
+import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
@@ -113,6 +116,8 @@ class ReturnCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
                         override fun onNext(t: JsonObject) {
                             ProgressDialog.hideLoadingView(context)
+                            EventBus.getDefault().post(RefreshOrderList())
+                            EventBus.getDefault().post(RefreshRentCarState(oid))
                             callBack.returnSuccess(t)
                         }
 
