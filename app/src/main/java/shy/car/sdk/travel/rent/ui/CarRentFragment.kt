@@ -452,7 +452,9 @@ class CarRentFragment : XTBaseFragment() {
         list.map {
             addMarkersToMap(it)
         }
+        addUserLocationMarker()
     }
+
 
     /**
      * 在地图上添加marker
@@ -464,6 +466,7 @@ class CarRentFragment : XTBaseFragment() {
                 .title(point.name)
                 .snippet("附近可用车${point.usableCarsNum}辆")
                 .position(LatLng(point.lat, point.lng))
+                .displayLevel(1)
                 .draggable(false))
         marker.isClickable = true
         marker.showInfoWindow()

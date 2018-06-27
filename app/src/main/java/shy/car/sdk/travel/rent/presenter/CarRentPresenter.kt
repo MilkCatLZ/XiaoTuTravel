@@ -8,7 +8,9 @@ import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.DataBindingPagerAdapter
+import com.base.util.StringUtils
 import com.base.util.ToastManager
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -40,6 +42,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     var carCategoryListAdapter: DataBindingItemClickAdapter<CarCategory> = DataBindingItemClickAdapter(R.layout.item_car_title, BR.car, BR.click, View.OnClickListener {
         val carCategory = it.tag as CarCategory
         selectedCarCaterogyID.set(carCategory.id)
+        getUsableCarList(carPoint)
     }, DataBindingAdapter.CallBack { holder, position ->
         holder.binding.setVariable(BR.presenter, this@CarRentPresenter)
     })
@@ -58,7 +61,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         fun onGetCarModelSuccess(t: List<CarCategory>)
     }
 
-    fun getUsableCarModel(){
+    fun getUsableCarModel() {
 
         val observable = ApiManager.getInstance()
                 .api.getUsableCarModelList()
@@ -73,6 +76,9 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
             override fun onNext(t: List<CarCategory>) {
                 carCategoryListAdapter.setItems(t, 1)
+                if (t.isNotEmpty()) {
+                    selectedCarCaterogyID.set(t[0].id)
+                }
                 callBack.onGetCarModelSuccess(t)
             }
 
@@ -86,9 +92,28 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     }
 
+    var carPoint: NearCarPoint? = null
     fun getUsableCarList(carPoint: NearCarPoint?) {
+        this.carPoint = carPoint
+        var watching = Observable.create<String> {
+            var isCarModelSelected = false
+            do {
+                isCarModelSelected = StringUtils.isNotEmpty(selectedCarCaterogyID.get())
+                Thread.sleep(200)
+            } while (!isCarModelSelected)
+            it.onNext(selectedCarCaterogyID.get()!!)
+            it.onComplete()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+
+
         val observable = ApiManager.getInstance()
-                .api.getUsableCarList(app.location.cityCode, carPoint?.id!!, carPoint.lat, carPoint.lng)
+                .api.getUsableCarList(app.location.cityCode, carPoint?.id!!, carPoint.lat, carPoint.lng, selectedCarCaterogyID.get()!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+
+
         val observer = object : Observer<List<CarInfo>> {
             override fun onComplete() {
 
@@ -109,8 +134,15 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
         }
 
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+        watching.flatMap {
+            observable
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer)
+
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
     }
 
     fun createRentCarOrder(carId: String, pointID: String) {
@@ -159,7 +191,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
         when (error?.error_code) {
         //存在未完成的订单
-            400101,400102 -> {
+            400101, 400102 -> {
                 getUnProgressOrder()
             }
             400105 -> {
@@ -226,7 +258,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 ProgressDialog.hideLoadingView(context)
                 if (t.isNotEmpty()) {
                     callBack.onGetUnProgressOrderSuccess(t[0])
-                }else{
+                } else {
                     callBack.onGetUnProgressOrderSuccess(null)
                 }
             }

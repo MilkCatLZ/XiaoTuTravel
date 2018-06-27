@@ -201,7 +201,7 @@ interface ApiInterface {
      * 附近可用车辆
      */
     @GET("cars")
-    fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double): Observable<List<CarInfo>>
+    fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double,@Query(ParamsConstant.ModelID) modelID:String): Observable<List<CarInfo>>
 
     @GET("users/deposits")
     fun getPromiseMoney(): Observable<JsonObject>

@@ -223,8 +223,8 @@ class MainActivity : NearCarOpenListener,
             isCitySelectVisible.get() -> {
                 isCitySelectVisible.set(false)
             }
-            binding.drawer.isDrawerOpen(Gravity.END) -> {
-                binding.drawer.closeDrawer(Gravity.END)
+            binding.drawer.isDrawerOpen(Gravity.START) -> {
+                binding.drawer.closeDrawer(Gravity.START)
             }
             else -> {
 
