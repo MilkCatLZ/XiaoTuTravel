@@ -57,7 +57,7 @@
             android:layout_marginTop="20dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
-            android:enabled="@{user.isIdentityAuth()}"
+            android:enabled="@{user.isIdentityAuth}"
             android:gravity="center"
             android:text="@{user.identityAuth==UserState.UserIdentityAuth.Identiting?@string/str_verifing:user.identityAuth==UserState.UserIdentityAuth.Identited?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"
@@ -121,7 +121,7 @@
                     style="@style/style_ww.text_12_999"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/enable_common"
-                    android:enabled="@{user.isIdentityAuth()}"
+                    android:enabled="@{user.isIdentityAuth}"
                     android:gravity="center_vertical"
                     android:text="@{user.identityAuth==UserState.UserIdentityAuth.Identiting?@string/str_verifing:user.identityAuth==UserState.UserIdentityAuth.Identited?@string/str_already_verify:@string/str_no_verify}"
                     android:textColor="@drawable/color_user_verify_text_color_detail" />
@@ -152,7 +152,7 @@
                     style="@style/style_ww.text_12_999"
                     android:drawablePadding="10dp"
                     android:drawableStart="@drawable/enable_common"
-                    android:enabled="@{user.isDeposit()}"
+                    android:enabled="@{user.isDeposit}"
                     android:gravity="center_vertical"
                     android:text="@{user.deposit==UserState.UserDeposit.Deposited?@string/str_user_deposit:@string/str_user_un_deposit}"
                     android:textColor="@drawable/color_user_verify_text_color_detail" />

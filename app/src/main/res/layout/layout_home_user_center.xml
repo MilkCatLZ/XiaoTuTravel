@@ -49,7 +49,7 @@
             android:layout_marginTop="15dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/icon_identy_selector"
-            android:enabled="@{user.isIdentityAuth()}"
+            android:enabled="@{user.isIdentityAuth}"
             android:gravity="center"
             android:text="@{user.identityAuth==UserIdentityAuth.Identiting?@string/str_verifing:user.identityAuth==UserIdentityAuth.Identited?@string/str_already_verify:@string/str_no_verify}"
             android:textColor="@drawable/color_user_verify_text_color"

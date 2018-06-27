@@ -114,6 +114,7 @@
 
                     <TextView
                         style="@style/style_setting_nav_title"
+                        android:drawableStart="@drawable/icon_wallet_payment"
                         android:text="支付方式"/>
 
 

@@ -117,9 +117,13 @@ open class UserBase : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.identityAuth)
+            notifyPropertyChanged(BR.isIdentityAuth)
+            notifyPropertyChanged(BR.isDeposit)
+
         }
 
-    fun isIdentityAuth(): Boolean {
+    @Bindable
+    fun getIsIdentityAuth(): Boolean {
         return identityAuth == UserState.UserIdentityAuth.Identited
     }
 
@@ -132,9 +136,12 @@ open class UserBase : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.deposit)
+            notifyPropertyChanged(BR.isIdentityAuth)
+            notifyPropertyChanged(BR.isDeposit)
         }
 
-    fun isDeposit(): Boolean {
+    @Bindable
+    fun getIsDeposit(): Boolean {
         return deposit == 1
     }
 

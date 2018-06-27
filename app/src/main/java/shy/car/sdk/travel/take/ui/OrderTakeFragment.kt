@@ -14,7 +14,6 @@ import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.constant.ParamsConstant
-import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.presenter.BasePresenter
@@ -98,7 +97,7 @@ class OrderTakeFragment : XTBaseUltimateRecyclerViewFragment() {
 
 
     private fun checkUerVerify() {
-        if (User.instance.isIdentityAuth()) {
+        if (User.instance.getIsIdentityAuth()) {
             ARouter.getInstance()
                     .build(RouteMap.OrderDetail)
                     .withString(ParamsConstant.String1, takeOrderList?.freightId)

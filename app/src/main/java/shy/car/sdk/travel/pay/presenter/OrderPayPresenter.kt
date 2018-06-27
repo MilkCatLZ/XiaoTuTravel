@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
+import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -8,6 +9,7 @@ import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.pay.data.PayMethod
 
 class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -15,6 +17,8 @@ class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresente
         fun onGetDetailSuccess(t: RentOrderDetail)
         fun onGetDetailError(e: Throwable)
     }
+
+    val payMethod=ObservableField<PayMethod>()
 
     fun getOrderDetail(orderID: String) {
         ProgressDialog.showLoadingView(context)

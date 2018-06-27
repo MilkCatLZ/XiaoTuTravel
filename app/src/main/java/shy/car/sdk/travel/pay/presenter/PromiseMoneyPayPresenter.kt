@@ -3,12 +3,10 @@ package shy.car.sdk.travel.pay.presenter
 import android.content.Context
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
-import com.base.util.JsonManager
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import mall.lianni.alipay.Alipay
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -86,7 +84,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.createDeposits(User.instance.phone, if (User.instance.isDeposit()) "" else carSelect.get()?.id!!, payMethod?.id.toString(), if (amount > 0.0) amount.toString() else null)
+                .api.createDeposits(User.instance.phone, if (User.instance.getIsDeposit()) "" else carSelect.get()?.id!!, payMethod?.id.toString(), if (amount > 0.0) amount.toString() else null)
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

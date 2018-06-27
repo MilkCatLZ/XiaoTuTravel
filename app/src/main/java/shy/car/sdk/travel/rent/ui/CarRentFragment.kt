@@ -480,7 +480,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun checkPromiseMoneyPay() {
         //已交保证金
-        if (User.instance.isDeposit()) {
+        if (User.instance.getIsDeposit()) {
             showConfirmDialog()
         } else {
 
@@ -582,11 +582,11 @@ class CarRentFragment : XTBaseFragment() {
 
     fun gotoVerify() {
         if (User.instance.login) {
-            if (!User.instance.isIdentityAuth()) {
+            if (!User.instance.getIsIdentityAuth()) {
                 ARouter.getInstance()
                         .build(RouteMap.UserVerify)
                         .navigation()
-            } else if (!User.instance.isDeposit()) {
+            } else if (!User.instance.getIsDeposit()) {
                 ARouter.getInstance()
                         .build(RouteMap.MoneyVerify)
                         .navigation()

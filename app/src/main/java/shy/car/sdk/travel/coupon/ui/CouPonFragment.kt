@@ -89,5 +89,9 @@ class CouPonFragment : XTBaseUltimateRecyclerViewFragment(),
         onRefresh()
     }
 
+    fun setSelectedMode(selectMode: Boolean) {
+
+    }
+
 
 }

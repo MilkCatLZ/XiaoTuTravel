@@ -47,7 +47,7 @@
                 android:orientation="horizontal"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
-                android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit()||!user.isIdentityAuth())}">
+                android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit||!user.isIdentityAuth)}">
 
                 <ImageView
                     android:layout_width="wrap_content"
