@@ -3,6 +3,7 @@ package shy.car.sdk.app
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
+import com.alipay.sdk.app.EnvUtils
 import com.base.app.BaseApplication
 import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
@@ -69,6 +70,9 @@ class Application : BaseApplication() {
                 .register(this)
 
         Alipay.Init(this)
+        if (BuildConfig.DEBUG) {
+            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
+        }
     }
 
     private fun initUserCache() {

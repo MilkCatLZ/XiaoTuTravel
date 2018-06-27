@@ -223,13 +223,16 @@ class MainActivity : NearCarOpenListener,
             isCitySelectVisible.get() -> {
                 isCitySelectVisible.set(false)
             }
+            binding.drawer.isDrawerOpen(Gravity.END) -> {
+                binding.drawer.closeDrawer(Gravity.END)
+            }
             else -> {
 
                 if (isBackPress) {
                     super.onBackPressed()
                 } else {
                     isBackPress = true;
-                    ToastManager.showShortToast(this@MainActivity, "再次点击返回退出");
+                    ToastManager.showShortToast(this@MainActivity, "再次点击返回退出")
                     Observable.timer(2, TimeUnit.SECONDS)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

@@ -133,14 +133,9 @@ class CarRentFragment : XTBaseFragment() {
 
     private fun calDistanceAndTimeInfo() {
         activity?.let {
-            ProgressDialog.showLoadingView(it)
-        }
-        activity?.let {
             MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
-                    activity?.let {
-                        ProgressDialog.hideLoadingView(it)
-                    }
+                    
                     if (allLength != null && allTime != null) {
                         naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
                     }
@@ -527,6 +522,7 @@ class CarRentFragment : XTBaseFragment() {
             isRentClick = false
             checkPromiseMoneyPay()
         }
+        eventBusDefault.post(RefreshCarPointList())
         carRentPresenter.getUnProgressOrder()
     }
 

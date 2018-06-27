@@ -27,9 +27,9 @@ class LoginDialogFragment : XTBaseDialogFragment() {
     private var verifyListener = object : VerifyListener {
         override fun onGetVerifyError(e: Throwable) {
             dismiss(BuildConfig.DEBUG)
-            if (BuildConfig.DEBUG) {
-                app.startVerifyDialog(presenter.phone.get()!!)
-            }
+//            if (BuildConfig.DEBUG) {
+//                app.startVerifyDialog(presenter.phone.get()!!)
+//            }
         }
 
         override fun onGetVerifySuccess(interval: Int) {
