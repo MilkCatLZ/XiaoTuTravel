@@ -73,6 +73,7 @@ class ReturnAreaActivity : XTBaseActivity(),
         binding.ac = this
         presenter = ReturnAreaPresenter(this, this)
         binding.mapView.onCreate(savedInstanceState)
+        binding.mapView.map.uiSettings.isZoomControlsEnabled = false
         initMap()
     }
 

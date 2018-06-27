@@ -8,10 +8,10 @@ import shy.car.sdk.app.route.RouteMap
 
 /**
  * create by 过期猫粮 at 2018/06/18
- * 管理/选择银行
- * 选择结果通过EventBus抛出
+ * 优惠券
+ *
  */
-@Route(path = RouteMap.BankCard)
+@Route(path = RouteMap.Coupon)
 class CouPonActivity : XTBaseActivity() {
 
 

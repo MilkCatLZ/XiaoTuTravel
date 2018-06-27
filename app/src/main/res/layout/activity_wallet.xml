@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -106,7 +106,8 @@
 
             <TextView
                 style="@style/style_wallet_nav_hint"
-                android:text="可提现599.00元"/>
+                android:text="@{ac.remainText}"
+                tools:text="可提现599.00元"/>
 
             <ImageView
                 style="@style/style_wallet_nav_arrow"
@@ -127,7 +128,8 @@
 
             <TextView
                 style="@style/style_wallet_nav_hint"
-                android:text="2涨"/>
+                tools:text="2张"
+                android:text="@{ac.bankCardText}"/>
 
             <ImageView
                 style="@style/style_wallet_nav_arrow"
@@ -148,7 +150,9 @@
 
             <TextView
                 style="@style/style_wallet_nav_hint"
-                android:text="5涨"/>
+                tools:text="5涨"
+                android:text="@{ac.couponText}"
+                />
 
             <ImageView
                 style="@style/style_wallet_nav_arrow"
@@ -167,9 +171,9 @@
                 android:drawableStart="@drawable/icon_wallet_apply"
                 android:text="保证金退还申请"/>
 
-            <TextView
-                style="@style/style_wallet_nav_hint"
-                android:text="可申请退还999.99元"/>
+            <!--<TextView-->
+                <!--style="@style/style_wallet_nav_hint"-->
+                <!--android:text="可申请退还999.99元"/>-->
 
             <ImageView
                 style="@style/style_wallet_nav_arrow"

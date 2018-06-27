@@ -140,7 +140,7 @@
             android:id="@+id/view_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:visibleOrGone="@{!fragment.drivingMode&amp;&amp;user.login}"
+            android:visibleOrGone="@{!fragment.drivingMode}"
             app:behavior_peekHeight="260dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="visible">
@@ -162,7 +162,7 @@
             android:id="@+id/view_bottom_sheet_driving"
             android:layout_width="match_parent"
             android:layout_height="245dp"
-            android:visibleOrGone="@{fragment.drivingMode&amp;&amp;user.login}"
+            android:visibleOrGone="@{fragment.drivingMode}"
             app:behavior_peekHeight="245dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="gone">

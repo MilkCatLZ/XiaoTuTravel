@@ -7,6 +7,7 @@ import shy.car.sdk.travel.bank.data.BankCard;
 import shy.car.sdk.travel.bank.ui.BankCardManagerActivity;
 import shy.car.sdk.travel.common.ui.GoodsTypeSelectDialogFragment;
 import shy.car.sdk.travel.common.ui.SendTimeSelectDialogFragment;
+import shy.car.sdk.travel.coupon.ui.CouPonActivity;
 import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.order.data.OrderMineList;
@@ -286,4 +287,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnArea = "/car/return_are";
+
+    /**
+     * {@link CouPonActivity}
+     * 优惠券
+     */
+    @NotNull
+    public static final String Coupon = "/coupon/list";
 }

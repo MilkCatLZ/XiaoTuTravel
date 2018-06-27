@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.wallet.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -12,6 +13,7 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityWalletBinding
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
+import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.wallet.presenter.WalletPresenter
 
 /**
@@ -19,17 +21,25 @@ import shy.car.sdk.travel.wallet.presenter.WalletPresenter
  * 钱包
  */
 @Route(path = RouteMap.Wallet)
-class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
+class WalletActivity : XTBaseActivity(),
+        WalletPresenter.CallBack {
 
     lateinit var binding: ActivityWalletBinding
 
     lateinit var presenter: WalletPresenter
+    val remainText = ObservableField<String>()
+    val bankCardText = ObservableField<String>()
+    val couponText = ObservableField<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         presenter = WalletPresenter(this, this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_wallet)
         binding.ac = this
+
+        remainText.set("可提现金额${User.instance.balance}元")
+        bankCardText.set("${User.instance.bankCardNum}张")
+        couponText.set("${User.instance.couponNum}张")
     }
 
     /**
@@ -67,7 +77,9 @@ class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
      * 提现
      */
     fun onTixianClick() {
-        ARouter.getInstance().build(RouteMap.TiXian).navigation()
+        ARouter.getInstance()
+                .build(RouteMap.TiXian)
+                .navigation()
     }
 
     /**
@@ -76,15 +88,16 @@ class WalletActivity : XTBaseActivity(), WalletPresenter.CallBack {
     fun onBankCarClick() {
         ARouter.getInstance()
                 .build(RouteMap.BankCard)
-                .withBoolean(ParamsConstant.Boolean1, false)
                 .navigation()
     }
 
     /**
-     * 银行卡
+     * 优惠券
      */
     fun onDiscountClick() {
-
+        ARouter.getInstance()
+                .build(RouteMap.Coupon)
+                .navigation()
     }
 
     /**

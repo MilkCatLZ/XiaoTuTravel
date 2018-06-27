@@ -129,6 +129,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_find_and_rent_car, null, false)
         binding.fragment = this
         binding.mapView.onCreate(savedInstanceState)
+        binding.mapView.map.uiSettings.isZoomControlsEnabled = false
         return binding.root
 
     }

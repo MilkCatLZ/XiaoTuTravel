@@ -74,8 +74,8 @@
                     android:layout_width="71dp"
                     android:layout_height="31dp"
                     android:background="@drawable/back_button_main_green_stroke_corner"
-                    android:text="点我完成"
                     android:onClick="@{()->fragment.gotoVerify()}"
+                    android:text="点我完成"
                     android:textColor="@color/main_color_green"
                     android:textSize="@dimen/text_second_primary_12dp" />
             </LinearLayout>
@@ -110,8 +110,9 @@
                     <me.relex.circleindicator.CircleIndicator
                         android:id="@+id/circle_indicator"
                         android:layout_width="match_parent"
-                        android:layout_height="20dp"
+                        android:layout_height="2dp"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="5dp"
                         app:ci_drawable="@drawable/indicator_selected"
                         app:ci_drawable_unselected="@drawable/indicator_unselected" />
 
@@ -137,10 +138,10 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:text="距3.5km 步行3小时38分钟"
                             android:text="@{fragment.naviInfo}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="距3.5km 步行3小时38分钟" />
 
                         <TextView
                             android:layout_width="match_parent"

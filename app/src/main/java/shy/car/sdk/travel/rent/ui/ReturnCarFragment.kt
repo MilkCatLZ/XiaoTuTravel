@@ -117,6 +117,7 @@ class ReturnCarFragment : XTBaseFragment(),
         binding.fragment = this
         binding.presenter = presenter
         binding.map.onCreate(savedInstanceState)
+        binding.map.map.uiSettings.isZoomControlsEnabled = false
         return binding.root
 
     }

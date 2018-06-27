@@ -34,6 +34,7 @@ import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.R.id.circle_indicator
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
@@ -127,7 +128,10 @@ class CarRentFragment : XTBaseFragment() {
                 hasUsableCar.set(true)
             } else {
                 hasUsableCar.set(false)
+                currentSelectedCarInfo.set(null)
+                naviInfo.set("")
             }
+            circle_indicator.setViewPager(viewPager_car_list)
         }
     }
 
@@ -135,7 +139,7 @@ class CarRentFragment : XTBaseFragment() {
         activity?.let {
             MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
-                    
+
                     if (allLength != null && allTime != null) {
                         naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
                     }
@@ -286,6 +290,8 @@ class CarRentFragment : XTBaseFragment() {
                     true
                 }
         )
+
+        binding.map.map.uiSettings.isZoomControlsEnabled = false
     }
 
     private fun findCarPoint(position: LatLng): NearCarPoint? {

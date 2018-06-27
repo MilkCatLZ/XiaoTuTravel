@@ -201,7 +201,7 @@ interface ApiInterface {
      * 附近可用车辆
      */
     @GET("cars")
-    fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double,@Query(ParamsConstant.ModelID) modelID:String): Observable<List<CarInfo>>
+    fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String, @Query(ParamsConstant.NetWorkID) netId: String, @Query(ParamsConstant.Lat) lat: Double, @Query(ParamsConstant.Lng) lng: Double, @Query(ParamsConstant.ModelID) modelID: String): Observable<List<CarInfo>>
 
     @GET("users/deposits")
     fun getPromiseMoney(): Observable<JsonObject>
@@ -257,7 +257,7 @@ interface ApiInterface {
      * 获取优惠券列表
      */
     @GET("coupons")
-    fun getCouponList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<Coupon>>
+    fun getCouponList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 10, @Query(ParamsConstant.Status) status: String? = null): Observable<List<Coupon>>
 
     /**
      * 获取支持银行列表
@@ -334,14 +334,14 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String,  @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
 
     /**
      * 提交身份认证
      */
     @Multipart
     @POST("orders/{oid}/photos")
-    fun uploadCarPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part(ParamsConstant.Type)type:String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun uploadCarPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part(ParamsConstant.Type) type: String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>

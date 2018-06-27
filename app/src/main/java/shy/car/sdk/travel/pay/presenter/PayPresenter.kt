@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.pay.data.PayAmount
@@ -24,6 +25,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     interface CallBack {
         fun onGetListSuccess(t: List<PayAmount>)
         fun onGetListError(e: Throwable)
+        fun onCreatePaySuccess(t: JsonObject)
 
     }
 
@@ -43,7 +45,8 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     fun getPayAmountList() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance().api.getPayAmountList()
+        val observable = ApiManager.getInstance()
+                .api.getPayAmountList()
         val observer = object : Observer<List<PayAmount>> {
             override fun onComplete() {
 
@@ -78,7 +81,8 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
 
         }
 
-        ApiManager.getInstance().toSubscribe(observable, observer)
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun pay() {
@@ -86,19 +90,22 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
             ToastManager.showShortToast(context, "请选择支付方式")
             return
         }
-        if (selectedPayAmount.get() == null && amount.get() == 0.0){
+        if (selectedPayAmount.get() == null && amount.get() == 0.0) {
             ToastManager.showShortToast(context, "请选择充值金额")
             return
         }
-            ProgressDialog.showLoadingView(context)
+        ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         var price: String = if (amount.get() > 0.0) {
-            amount.get().toString()
+            amount.get()
+                    .toString()
         } else {
-            selectedPayAmount.get()?.realPrice.toString()
+            selectedPayAmount.get()
+                    ?.realPrice.toString()
         }
 
-        val observable = ApiManager.getInstance().api.createRecharge(price, payMethod.get()?.id.toString())
+        val observable = ApiManager.getInstance()
+                .api.createRecharge(price, payMethod.get()?.id.toString())
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
@@ -109,15 +116,18 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
             }
 
             override fun onNext(t: JsonObject) {
-
+                ProgressDialog.hideLoadingView(context)
+                callBack.onCreatePaySuccess(t)
             }
 
             override fun onError(e: Throwable) {
-
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "支付失败")
             }
 
         }
 
-        ApiManager.getInstance().toSubscribe(observable, observer)
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 }
