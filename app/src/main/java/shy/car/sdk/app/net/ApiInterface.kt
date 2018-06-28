@@ -153,14 +153,16 @@ interface ApiInterface {
             @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<MessageList>>
 
     /**
-     * 附近车辆列表
+     * 附近网点列表
      */
     @GET("cities/{city_id}/networks")
     fun getNearList(@Path(ParamsConstant.CityID) cityIDs: String,
-                    @Query(ParamsConstant.Lat) lat: String,
-                    @Query(ParamsConstant.Lng) lng: String,
-                    @Query(ParamsConstant.Offset) offset: Int,
-                    @Query(ParamsConstant.Limit) pageSize: Int,
+                    @Query(ParamsConstant.Lat) lat: Double? = null,
+                    @Query(ParamsConstant.Lng) lng: Double? = null,
+                    @Query(ParamsConstant.Offset) offset: Int? = null,
+                    @Query(ParamsConstant.Limit) pageSize: Int? = null,
+                    @Query(ParamsConstant.CarModelID) car: String? = null,
+                    @Query(ParamsConstant.GetMode) mode: String = "1",
                     @Query(ParamsConstant.CityID) cityID: String = cityIDs
     ): Observable<ArrayList<NearCarPoint>>
 
@@ -374,5 +376,9 @@ interface ApiInterface {
 
     @GET("cars/model")
     fun getUsableCarModelList(): Observable<List<CarCategory>>
+
+    @FormUrlEncoded
+    @PATCH("orders/{order_id}")
+    fun payOrder(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.PaymentID) payment: String, @Field(ParamsConstant.CouponID) coupon: String? = null, @Field(ParamsConstant.OrderStatus) orderStatus: String = "5"): Observable<JsonObject>
 
 }

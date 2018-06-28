@@ -98,11 +98,12 @@
                         android:ellipsize="end"
                         android:hint="请输入其他充值金额（元）"
                         android:maxLines="1"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:paddingEnd="15dp"
                         android:paddingStart="15dp"
                         android:text="@={fragment.amountText}"
-                        android:textColor="@color/text_third_primary_999999"
+                        android:textColor="@color/text_primary_333333"
+                        android:textColorHint="@color/text_third_primary_999999"
                         android:textSize="@dimen/text_primary_14dp"/>
                 </LinearLayout>
 

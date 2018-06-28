@@ -15,6 +15,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
@@ -59,6 +60,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
         fun getDetailSuccess(t: RentOrderDetail)
         fun onGetCarModelSuccess(t: List<CarCategory>)
+        fun getNetWorkListSuccess(t: ArrayList<NearCarPoint>)
     }
 
     fun getUsableCarModel() {
@@ -299,6 +301,33 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 ErrorManager.managerError(context, e, "获取订单失败")
             }
 
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    fun getNetWorkList() {
+
+        disposable?.dispose()
+        val observable = ApiManager.getInstance()
+                .api.getNearList(app.location.cityCode, car = selectedCarCaterogyID.get())
+        val observer = object : Observer<ArrayList<NearCarPoint>> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
+
+            override fun onNext(t: ArrayList<NearCarPoint>) {
+                callBack.getNetWorkListSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
         }
 
         ApiManager.getInstance()

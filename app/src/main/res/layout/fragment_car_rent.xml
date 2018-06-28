@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="p"
-            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter"/>
+            type="shy.car.sdk.travel.rent.presenter.CarRentPresenter" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.rent.ui.CarRentFragment"/>
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
 
         <variable
             name="user"
-            type="shy.car.sdk.travel.user.data.User"/>
+            type="shy.car.sdk.travel.user.data.User" />
 
         <variable
             name="detail"
-            type="shy.car.sdk.travel.order.data.RentOrderDetail"/>
+            type="shy.car.sdk.travel.order.data.RentOrderDetail" />
     </data>
 
 
@@ -52,7 +52,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:bindAdapter="@{p.carCategoryListAdapter}"/>
+                    android:bindAdapter="@{p.carCategoryListAdapter}" />
 
                 <RelativeLayout
                     android:layout_width="20dp"
@@ -64,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_more_horiz_black_18dp"/>
+                        android:src="@drawable/ic_more_horiz_black_18dp" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -75,7 +75,7 @@
                 <com.amap.api.maps.MapView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                         android:layout_height="40dp"
                         android:layout_marginEnd="15dp"
                         android:onClick="@{()->fragment.onNearCarClick()}"
-                        android:src="@drawable/icon_site"/>
+                        android:src="@drawable/icon_site" />
 
 
                     <ImageView
@@ -99,7 +99,7 @@
                         android:layout_marginEnd="15dp"
                         android:layout_marginTop="10dp"
                         android:onClick="@{()->fragment.refreshLocation()}"
-                        android:src="@drawable/icon_locat"/>
+                        android:src="@drawable/icon_locat" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -114,13 +114,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:inputType="number"
-                        android:text="10"/>
+                        android:text="10" />
 
                     <Button
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:onClick="@{()->fragment.changeZoom()}"
-                        android:text="修改缩放级别"/>
+                        android:text="修改缩放级别" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -134,14 +134,14 @@
             android:alpha="0"
             android:background="#99000000"
             android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:focusableInTouchMode="false" />
 
         <LinearLayout
             android:id="@+id/view_bottom_sheet"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:visibleOrGone="@{!fragment.drivingMode}"
-            app:behavior_peekHeight="260dp"
+            android:layout_height="wrap_content"
+            android:visibleOrGone="@{!fragment.drivingMode&amp;&amp;fragment.hasUsableCar}"
+            app:behavior_peekHeight="@dimen/_260dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="visible">
 
@@ -149,7 +149,7 @@
                 layout="@layout/layout_car_rent_bottomsheet"
                 app:fragment="@{fragment}"
                 app:presenter="@{p}"
-                app:user="@{user}"/>
+                app:user="@{user}" />
 
             <!--<Button-->
             <!--android:layout_width="wrap_content"-->
@@ -161,7 +161,7 @@
         <LinearLayout
             android:id="@+id/view_bottom_sheet_driving"
             android:layout_width="match_parent"
-            android:layout_height="245dp"
+            android:layout_height="wrap_content"
             android:visibleOrGone="@{fragment.drivingMode}"
             app:behavior_peekHeight="245dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
@@ -170,7 +170,7 @@
             <include
                 layout="@layout/layout_car_rent_bottomsheet_driving"
                 app:detail="@{detail}"
-                app:fragment="@{fragment}"/>
+                app:fragment="@{fragment}" />
 
         </LinearLayout>
 

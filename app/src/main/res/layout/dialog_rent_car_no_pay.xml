@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="197dp"
+            android:layout_height="182dp"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:background="@drawable/back_dialog_corner_2dp"
@@ -38,9 +38,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="22dp"
-                android:layout_marginStart="22dp"
                 android:layout_marginTop="15dp"
+                android:gravity="center"
                 android:text="您的账号有未支付的订单，请先完成支付"
                 android:textColor="@color/text_second_primary_666666"
                 android:textSize="@dimen/text_primary_14dp" />

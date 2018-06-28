@@ -109,6 +109,7 @@ class ReturnAreaActivity : XTBaseActivity(),
         calculateRoute()
     }
 
+    var drivingRouteOverlay: DrivingRouteOverlay? = null
     private fun calculateRoute() {
         var routeSearch = RouteSearch(this)
         routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
@@ -118,14 +119,17 @@ class ReturnAreaActivity : XTBaseActivity(),
                     if (result.paths.size > 0) {
                         var mDrivingRouteResult = result
                         val drivePath = mDrivingRouteResult!!.paths[0] ?: return
-                        val drivingRouteOverlay = DrivingRouteOverlay(
+                        if (drivingRouteOverlay != null) {
+                            drivingRouteOverlay?.removeFromMap()
+                        }
+                        drivingRouteOverlay = DrivingRouteOverlay(
                                 this@ReturnAreaActivity, binding.mapView.map, drivePath,
                                 mDrivingRouteResult!!.startPos,
                                 mDrivingRouteResult!!.targetPos, null)
-                        drivingRouteOverlay.setNodeIconVisibility(false)//设置节点marker是否显示
-                        drivingRouteOverlay.removeFromMap()
-                        drivingRouteOverlay.addToMap()
-                        drivingRouteOverlay.zoomToSpan()
+                        drivingRouteOverlay?.setNodeIconVisibility(false)//设置节点marker是否显示
+                        drivingRouteOverlay?.removeFromMap()
+                        drivingRouteOverlay?.addToMap()
+                        drivingRouteOverlay?.zoomToSpan()
                     }
                 }
             }
@@ -159,6 +163,7 @@ class ReturnAreaActivity : XTBaseActivity(),
     fun getNaviDetail() {
         MapUtil.getDriveTimeAndDistance(this, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(network.get()?.lat!!, network.get()?.lng!!), 1, object : MapUtil.GetDetailListener {
             override fun calculateSuccess(allLength: Int?, allTime: Int?) {
+                ProgressDialog.hideLoadingView(this@ReturnAreaActivity)
                 if (allLength != null && allTime != null) {
                     naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 驾车${allTime / 60}分钟")
                 }

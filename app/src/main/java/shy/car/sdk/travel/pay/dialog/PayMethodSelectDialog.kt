@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import shy.car.sdk.R
+import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogPayMethodSelectBinding
@@ -48,9 +49,10 @@ class PayMethodSelectDialog : BottomSheetDialogFragment(),
     lateinit var binding: DialogPayMethodSelectBinding
     lateinit var presenter: PayMethodPresenter
 
-    @Autowired
+    //1充值2支付
+    @Autowired(name = Int1)
     @JvmField
-    var type = 0
+    var type = 1
 
     @Autowired(name = Object1)
     @JvmField

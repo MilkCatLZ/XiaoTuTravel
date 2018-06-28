@@ -11,6 +11,8 @@ import com.base.location.Location
 import com.base.util.SPCache
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
+import com.tencent.mm.opensdk.openapi.IWXAPI
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import mall.lianni.alipay.Alipay
@@ -42,19 +44,9 @@ class Application : BaseApplication() {
 
     var device_token: String = ""
     var location: CurrentLocation = CurrentLocation()
-
-//    /**
-//     * 高德地图定位回调
-//     */
-//    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-//
-//    }
-
+    lateinit var api: IWXAPI
     override fun onCreate() {
         super.onCreate()
-
-//        CrashHandler.getInstance()
-//                .init(this, null)
 
         initNetWork()
         initRouter()
@@ -66,14 +58,24 @@ class Application : BaseApplication() {
         EventBus.getDefault()
                 .register(this)
 
-        Alipay.Init(this)
+
+        initPay()
         if (BuildConfig.DEBUG) {
             EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
         }
     }
 
+
+    private fun initPay() {
+        Alipay.Init(this)
+        api = WXAPIFactory.createWXAPI(this, BuildConfig.WXAppID, true)
+    }
+
     private fun initUserCache() {
         User.initUserCache(this)
+        if (User.instance.login) {
+            User.instance.getUserDetail(this)
+        }
     }
 
     private fun initAmap() {
@@ -164,7 +166,7 @@ class Application : BaseApplication() {
 
     }
 
-    fun startVerifyDialogVerify(phone: String, interval: Int = 60, listener: onLoginDismiss? = null,verify:String) {
+    fun startVerifyDialogVerify(phone: String, interval: Int = 60, listener: onLoginDismiss? = null, verify: String) {
         try {
             val dialogFragment = ARouter.getInstance().build(RouteMap.Verify)
                     .greenChannel()
@@ -254,7 +256,7 @@ class Application : BaseApplication() {
     }
 
     fun goHome() {
-        for (i in (activityList.size) downTo 0) {
+        for (i in (activityList.size - 1) downTo 0) {
             activityList[i].finish()
             activityList.removeAt(i)
         }

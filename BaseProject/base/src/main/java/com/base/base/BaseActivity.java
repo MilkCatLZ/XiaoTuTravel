@@ -32,7 +32,7 @@ public abstract class BaseActivity<App extends BaseApplicationInterface> extends
     @NonNull
     protected String tag = '/' + getClass().getSimpleName();
     private BaseDelegate tcBaseDelegate = new BaseDelegate();
-    protected App app;
+    public App app;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -58,6 +58,7 @@ android {
         buildConfigField "String", APP_ID, RELEASE_APP_ID //appid
         //取消自动更新
         buildConfigField "String", CANCEL_ACTIVITY, CANCEL_ACTIVITY_ACTION
+        buildConfigField "String", WXAppID, RELEASE_WX_APPID
 
         manifestPlaceholders = [
                 //高德地图
@@ -108,6 +109,7 @@ android {
             buildConfigField "String", HOST, DEVELOP_HOST
             //AppId
             buildConfigField "String", APP_ID, DEBUG_APP_ID
+            buildConfigField "String", WXAppID, DEBUG_WX_APPID
             //token自动续期周期
             buildConfigField "Integer", TokenTimeOut, "2"//自动续期缩放，这里就是过期时间的1/2，比如30天，还剩15天就续期，测试用
             //开发版本测试后缀

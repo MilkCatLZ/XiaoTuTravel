@@ -21,7 +21,7 @@ class ReturnAreaPresenter(context: Context, var callBack: CallBack) : BasePresen
 
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getNearList(app.location.cityCode, app.location.lat.toString(), app.location.lng.toString(), 0, 10)
+                .api.getNearList(app.location.cityCode)
         val observer = object : Observer<ArrayList<NearCarPoint>> {
             override fun onComplete() {
 

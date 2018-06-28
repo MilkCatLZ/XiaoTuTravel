@@ -5,13 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
+import com.google.gson.JsonObject
+import com.tencent.mm.opensdk.modelpay.PayReq
 import shy.car.sdk.R
+import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderPayBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.pay.WXPayUtil
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
 import shy.car.sdk.travel.pay.presenter.OrderPayPresenter
@@ -22,6 +27,14 @@ import shy.car.sdk.travel.pay.presenter.OrderPayPresenter
  */
 class OrderPayFragment : XTBaseFragment(),
         OrderPayPresenter.CallBack {
+    override fun getPayStringSuccess(json: JsonObject) {
+        activity?.let {
+            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, json)) {
+
+            }
+        }
+    }
+
     override fun onGetDetailSuccess(t: RentOrderDetail) {
         binding.detail = t
     }
@@ -52,7 +65,10 @@ class OrderPayFragment : XTBaseFragment(),
     }
 
     fun selectPayMethod() {
-        val dialog = ARouter.getInstance().build(RouteMap.PaySelect).withObject(ParamsConstant.Object1, presenter.payMethod.get()).withInt(ParamsConstant.Int1, 1).navigation() as PayMethodSelectDialog
+        val dialog = ARouter.getInstance().build(RouteMap.PaySelect)
+                .withObject(ParamsConstant.Object1, presenter.payMethod.get())
+                .withInt(ParamsConstant.Int1, 2)//2:支付
+                .navigation() as PayMethodSelectDialog
         dialog.listener = object : PayMethodSelectDialog.OnPayClick {
             override fun onPaySelect(payMethod: PayMethod) {
                 presenter.payMethod.set(payMethod)
@@ -68,8 +84,8 @@ class OrderPayFragment : XTBaseFragment(),
                 .navigation()
     }
 
-    fun pay(){
-
+    fun pay() {
+        presenter.pay()
     }
 
 }

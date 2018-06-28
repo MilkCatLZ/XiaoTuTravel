@@ -1,18 +1,15 @@
 package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
-import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
-import com.google.gson.Gson
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.rent.data.NearCarPoint
 
 class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
@@ -23,25 +20,12 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
     }
 
     var adapter: DataBindingItemClickAdapter<NearCarPoint> = DataBindingItemClickAdapter(R.layout.item_near_car_list, BR.near, BR.click, {
-
         val nearPoint = it.tag as NearCarPoint
         callBack.onNearClick(nearPoint)
-
-//        ARouter.getInstance()
-//                .build(RouteMap.CarPointDetail)
-//                .navigation()
     })
     var pageSize = 50
     var pageIndex = 1
 
-    init {
-//        val list = ArrayList<NearCarPoint>()
-//        for (i in 1..9) {
-//            list.add(NearCarPoint())
-//        }
-//
-//        adapter.setItems(list, 1)
-    }
 
     fun hasMore(): Boolean {
         return adapter.adapterItemCount >= pageIndex * pageSize
@@ -49,19 +33,19 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     fun refresh() {
         pageIndex = 1
-        getNearList()
+        getNearNetWorkList()
     }
 
     fun nextPage() {
         pageIndex++
-        getNearList()
+        getNearNetWorkList()
     }
 
-    fun getNearList() {
+    fun getNearNetWorkList() {
 
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getNearList(app.location.cityCode, app.location.lat.toString(), app.location.lng.toString(), (pageIndex - 1) * pageSize, pageSize)
+                .api.getNearList(app.location.cityCode, app.location.lat, app.location.lng, (pageIndex - 1) * pageSize, pageSize)
         val observer = object : Observer<ArrayList<NearCarPoint>> {
             override fun onComplete() {
 
@@ -72,8 +56,6 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onNext(t: ArrayList<NearCarPoint>) {
-                EventBus.getDefault()
-                        .post(t)
                 adapter.setItems(t, 1)
                 callBack.getListSuccess(t)
             }

@@ -67,15 +67,6 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
-                if (BuildConfig.DEBUG) {
-                    for (i in 0..5) {
-                        val payAmount = PayAmount()
-                        payAmount.price = i + 10.0
-                        payAmount.realPrice = i + 9.9
-                        adapter.items.add(payAmount)
-                    }
-                    selectedPayAmount.set(adapter.items[0])
-                }
                 callBack.onGetListError(e)
             }
 

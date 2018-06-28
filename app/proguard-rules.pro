@@ -464,4 +464,14 @@
 
 #end----------高德地图
 
-
+#start -------微信支付
+-keep class com.tencent.mm.opensdk.** {
+*;
+}
+-keep class com.tencent.wxop.** {
+*;
+}
+-keep class com.tencent.mm.sdk.** {
+*;
+}
+#end

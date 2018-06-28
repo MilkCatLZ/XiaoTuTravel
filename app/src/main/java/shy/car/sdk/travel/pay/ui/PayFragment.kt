@@ -13,10 +13,12 @@ import com.google.gson.JsonObject
 import mall.lianni.alipay.Alipay
 import mall.lianni.alipay.PayResult
 import shy.car.sdk.R
+import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentPayBinding
+import shy.car.sdk.travel.pay.WXPayUtil
 import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
@@ -27,31 +29,15 @@ import shy.car.sdk.travel.user.data.User
  * create by lz at 2018/06/17
  *  充值
  */
-class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
+class PayFragment : XTBaseFragment(),
+        PayPresenter.CallBack {
     override fun onCreatePaySuccess(t: JsonObject) {
-        if (presenter.payMethod.get()?.name?.contains("支付宝")!!) {
             activity?.let {
-                Alipay.getInstance()
-                        .pay(it, t.get("order_str").asString, object : Alipay.OnPayCallBack {
-                            override fun onPaySuccess(payResult: PayResult?) {
-                                ARouter.getInstance().build(RouteMap.PaySuccess)
-                                finish()
-                            }
 
-                            override fun onPayFailed(payResult: PayResult?) {
+                if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, t)) {
 
-                            }
-
-                            override fun onPayConfirming(payResult: PayResult?) {
-
-                            }
-
-                            override fun onPayCancel(payResult: PayResult?) {
-
-                            }
-                        })
+                }
             }
-        }
     }
 
     override fun onGetListSuccess(t: List<PayAmount>) {
@@ -75,7 +61,7 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 if (StringUtils.isNotEmpty(amountText.get()))
                     presenter.amount.set(amountText.get()?.toDouble()!!)
-                else{
+                else {
                     presenter.amount.set(0.0)
                 }
             }
@@ -96,7 +82,10 @@ class PayFragment : XTBaseFragment(), PayPresenter.CallBack {
     }
 
     fun selectPayMethod() {
-        val dialog = ARouter.getInstance().build(RouteMap.PaySelect).withObject(ParamsConstant.Object1, presenter.payMethod.get()).withInt(ParamsConstant.Int1, 1).navigation() as PayMethodSelectDialog
+        val dialog = ARouter.getInstance().build(RouteMap.PaySelect)
+                .withObject(ParamsConstant.Object1, presenter.payMethod.get())
+                .withInt(ParamsConstant.Int1, 1)//1:充值
+                .navigation() as PayMethodSelectDialog
         dialog.listener = object : PayMethodSelectDialog.OnPayClick {
             override fun onPaySelect(payMethod: PayMethod) {
                 presenter.payMethod.set(payMethod)

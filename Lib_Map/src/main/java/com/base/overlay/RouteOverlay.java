@@ -164,13 +164,13 @@ public class RouteOverlay {
             if (mAMap == null) {
                 return;
             }
-            try {
-                LatLngBounds bounds = getLatLngBounds();
-                mAMap.animateCamera(CameraUpdateFactory
-                                        .newLatLngBounds(bounds, 100));
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
+//            try {
+//                LatLngBounds bounds = getLatLngBounds();
+//                mAMap.animateCamera(CameraUpdateFactory
+//                                        .newLatLngBounds(bounds, 100));
+//            } catch (Throwable e) {
+//                e.printStackTrace();
+//            }
         }
     }
     

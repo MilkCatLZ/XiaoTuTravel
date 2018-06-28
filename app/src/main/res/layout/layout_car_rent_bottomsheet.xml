@@ -24,7 +24,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:paddingEnd="8dp"
@@ -37,6 +37,7 @@
             android:layout_height="55dp"
             app:sl_shadowColor="#dcdcdc"
             app:sl_shadowRadius="5dp"
+            android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit||!user.isIdentityAuth)}"
             tools:background="@color/_foreground_material_light">
 
             <LinearLayout
@@ -46,8 +47,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit||!user.isIdentityAuth)}">
+                android:paddingStart="16dp">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -98,8 +98,7 @@
                 <RelativeLayout
                     android:id="@+id/layout_main_ad"
                     android:layout_width="match_parent"
-                    android:layout_height="106dp"
-                    android:background="@color/_foreground_material_light">
+                    android:layout_height="106dp">
 
                     <android.support.v4.view.ViewPager
                         android:id="@+id/viewPager_car_list"

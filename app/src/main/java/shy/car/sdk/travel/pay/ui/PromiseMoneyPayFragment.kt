@@ -13,11 +13,13 @@ import mall.lianni.alipay.PayResult
 import org.greenrobot.eventbus.Subscribe
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
+import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentMoneyVerifyPayBinding
+import shy.car.sdk.travel.pay.WXPayUtil
 import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
@@ -32,28 +34,8 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         PayMethodSelectDialog.OnPayClick,
         PromiseMoneyPayPresenter.CallBack {
     override fun onCreatePaySuccess(t: JsonObject) {
-        if (presenter.payMethod?.name?.contains("支付宝")!!) {
-            activity?.let {
-                Alipay.getInstance()
-                        .pay(it, t.get("order_str").asString, object : Alipay.OnPayCallBack {
-                            override fun onPaySuccess(payResult: PayResult?) {
-                                ARouter.getInstance().build(RouteMap.PaySuccess)
-                                finish()
-                            }
-
-                            override fun onPayFailed(payResult: PayResult?) {
-
-                            }
-
-                            override fun onPayConfirming(payResult: PayResult?) {
-
-                            }
-
-                            override fun onPayCancel(payResult: PayResult?) {
-
-                            }
-                        })
-            }
+        activity?.let {
+            WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod!!, t)
         }
     }
 
@@ -70,7 +52,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
                 btnText.set("支付保证金0.0元")
             }
 
-        } else if (presenter.carSelect.get()?.promiseMoneyPrice!! > t) {
+        } else if (presenter.carSelect.get() != null && presenter.carSelect.get()?.promiseMoneyPrice!! > t) {
             btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!! - t)}元")
         }
         promiseMoney.set(LNTextUtil.getPriceText(t))
@@ -89,7 +71,9 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = PromiseMoneyPayPresenter(it, this) }
+        activity?.let {
+            presenter = PromiseMoneyPayPresenter(it, this)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -110,7 +94,10 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     fun onSelectPayClick() {
 //        if (dialog == null) {
         //2:充值的可用支付方式
-        dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 2).withObject(Object1, presenter.payMethod).navigation() as PayMethodSelectDialog
+        dialog = ARouter.getInstance().build(RouteMap.PaySelect)
+                .withInt(Int1, 1)//1：充值
+                .withObject(Object1, presenter.payMethod)
+                .navigation() as PayMethodSelectDialog
         dialog?.listener = this
 //        }
         dialog?.show(childFragmentManager, "dialog_pay_method_select")

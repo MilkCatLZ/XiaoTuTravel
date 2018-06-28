@@ -146,12 +146,7 @@ class MainNearNetWorkFragment : XTBaseUltimateRecyclerViewFragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onRefreshCarListReceive(refresh: RefreshCarPointList) {
-        eventBusDefault.removeStickyEvent(refresh)
-        refreshNearCarList()
+        onRefresh()
     }
 
-    @Subscribe
-    fun onCarListReceive(list: List<NearCarPoint>) {
-        nearCarListPresenter.setItems(list)
-    }
 }
