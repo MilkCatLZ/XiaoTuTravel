@@ -20,7 +20,7 @@
             name="user"
             type="shy.car.sdk.travel.user.data.User" />
 
-        <import type="shy.car.sdk.travel.user.data.UserState.UserIdentityAuth"/>
+        <import type="shy.car.sdk.travel.user.data.UserState.UserIdentityAuth" />
     </data>
 
     <ScrollView
@@ -68,7 +68,8 @@
                             android:drawableStart="@drawable/icon_id_per"
                             android:enabled="@{user.identityAuth==UserIdentityAuth.NoIdentity}"
                             android:hint="请输入真是姓名"
-                            android:text="@={presenter.name}" />
+                            android:text="@={presenter.name}"
+                            android:textColor="@drawable/color_user_verify_detail" />
                     </LinearLayout>
 
                     <View style="@style/line_horizontal" />
@@ -82,9 +83,10 @@
                             android:id="@+id/edt_user_ids"
                             style="@style/style_ww.text_14_333.verify_user_edt"
                             android:drawableStart="@drawable/icon_id_card"
-                            android:hint="请输入身份证号"
                             android:enabled="@{user.identityAuth==UserIdentityAuth.NoIdentity}"
-                            android:text="@={presenter.idNumber}" />
+                            android:hint="请输入身份证号"
+                            android:text="@={presenter.idNumber}"
+                            android:textColor="@drawable/color_user_verify_detail" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -137,7 +139,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#66000000"
+                            android:background="#99000000"
                             android:gravity="center"
                             android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 
@@ -180,7 +182,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#66000000"
+                            android:background="#99000000"
                             android:gravity="center"
                             android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 
@@ -242,7 +244,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="#66000000"
+                            android:background="#99000000"
                             android:gravity="center"
                             android:visibleOrGone="@{user.identityAuth==UserIdentityAuth.Identiting}">
 

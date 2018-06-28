@@ -14,7 +14,7 @@ import com.wq.photo.widget.PickConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentUserInfoEditBinding
-import shy.car.sdk.travel.user.data.RefreshUserInfo
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.presenter.UserDetailPresenter
 import java.util.*
 

@@ -4,26 +4,26 @@
 
     <data>
 
-        <import type="shy.car.sdk.app.LNTextUtil"/>
+        <import type="shy.car.sdk.app.LNTextUtil" />
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.user.ui.UserInfoEditFragment"/>
+            type="shy.car.sdk.travel.user.ui.UserInfoEditFragment" />
 
         <variable
             name="user"
-            type="shy.car.sdk.travel.user.data.User"/>
+            type="shy.car.sdk.travel.user.data.User" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.user.presenter.UserDetailPresenter"/>
+            type="shy.car.sdk.travel.user.presenter.UserDetailPresenter" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/main_back"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,8 +31,7 @@
 
             <include
                 layout="@layout/layout_title"
-                app:title="@{@string/str_user_detail_edit}"
-                />
+                app:title="@{@string/str_user_detail_edit}" />
 
             <TextView
                 style="@style/style_ww.text_12_999"
@@ -40,12 +39,12 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
-                android:text="完成"/>
+                android:text="完成" />
         </RelativeLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="15dp"/>
+            android:layout_height="15dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +58,7 @@
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:appAvatarURL="@{user.avatar}"
-                android:background="@drawable/back_avatar_back"/>
+                android:background="@drawable/back_avatar_back" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,37 +66,35 @@
                 android:layout_marginStart="20dp"
                 android:text="修改头像"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_primary_14dp"/>
+                android:textSize="@dimen/text_primary_14dp" />
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="15dp"/>
+            android:layout_height="15dp" />
 
-        <LinearLayout
-            style="@style/style_user_info_edit_content">
+        <LinearLayout style="@style/style_user_info_edit_content">
 
             <TextView
                 style="@style/style_user_info_title"
-                android:text="昵称"/>
+                android:text="昵称" />
 
             <EditText
                 style="@style/style_user_info_edt"
                 android:ellipsize="end"
                 android:hint="起个独特的名字吧"
                 android:maxLines="1"
-                android:text="@={presenter.nickName}"/>
+                android:text="@={presenter.nickName}" />
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
-        <LinearLayout
-            style="@style/style_user_info_edit_content">
+        <LinearLayout style="@style/style_user_info_edit_content">
 
             <TextView
                 style="@style/style_user_info_title"
-                android:text="性别"/>
+                android:text="性别" />
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -106,65 +103,64 @@
 
                 <TextView
                     style="@style/style_user_info_edt"
-                    android:hint="请选择您的性别"/>
+                    android:hint="请选择您的性别" />
 
                 <Spinner
                     android:id="@+id/spinner_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:entries="@array/sex"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </RelativeLayout>
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
-        <LinearLayout
-            style="@style/style_user_info_edit_content">
+        <LinearLayout style="@style/style_user_info_edit_content">
 
             <TextView
                 style="@style/style_user_info_title"
-                android:text="生日"/>
+                android:text="生日" />
 
             <TextView
                 style="@style/style_user_info_edt"
                 android:hint="请选择您的生日"
-                android:text="@{presenter.birthDay}"
-                android:onClick="@{()->fragment.onBirthDayClick()}"/>
+                android:onClick="@{()->fragment.onBirthDayClick()}"
+                android:text="@{presenter.birthDay}" />
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
-        <LinearLayout
-            style="@style/style_user_info_edit_content">
+        <LinearLayout style="@style/style_user_info_edit_content">
 
             <TextView
                 style="@style/style_user_info_title"
-                android:text="城市"/>
+                android:text="城市" />
 
             <Spinner
                 android:id="@+id/spinner_city"
                 style="@style/style_user_info_edt"
+                android:layout_marginStart="5dp"
                 android:entries="@array/city_array"
-                android:hint="请选择您所在的城市"/>
+                android:hint="请选择您所在的城市"
+                android:textSize="@dimen/text_primary_14dp" />
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
-        <LinearLayout
-            style="@style/style_user_info_edit_content">
+        <LinearLayout style="@style/style_user_info_edit_content">
 
             <TextView
                 style="@style/style_user_info_title"
-                android:text="职业"/>
+                android:text="职业" />
 
             <Spinner
                 android:id="@+id/spinner_job"
                 style="@style/style_user_info_edt"
-                android:hint="添加您的职业"/>
+                android:hint="添加您的职业" />
 
         </LinearLayout>
     </LinearLayout>

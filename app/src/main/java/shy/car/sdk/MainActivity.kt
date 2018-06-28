@@ -33,6 +33,7 @@ import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearNetWorkFragment
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.ui.CarRentFragment
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 import java.util.concurrent.TimeUnit
 
@@ -181,8 +182,7 @@ class MainActivity : NearCarOpenListener,
 
     fun onAvatarClick() {
         drawer.openDrawer(Gravity.START)
-        if (User.instance.login)
-            User.instance.getUserDetail(this)
+        eventBusDefault.post(RefreshUserInfo())
     }
 
     /**

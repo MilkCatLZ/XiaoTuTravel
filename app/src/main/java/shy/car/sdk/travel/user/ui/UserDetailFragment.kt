@@ -10,7 +10,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentUserDetailBinding
-import shy.car.sdk.travel.user.data.RefreshUserInfo
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 
 
@@ -46,9 +46,10 @@ class UserDetailFragment : XTBaseFragment() {
     }
 
     fun goUserVerifyClick() {
-        ARouter.getInstance()
-                .build(RouteMap.UserVerify)
-                .navigation()
+        if (User.instance.getIsIdentityAuth())
+            ARouter.getInstance()
+                    .build(RouteMap.UserVerify)
+                    .navigation()
     }
 
     fun goMoneyVerifyClick() {

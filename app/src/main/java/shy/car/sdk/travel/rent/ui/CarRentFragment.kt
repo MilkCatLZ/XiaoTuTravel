@@ -6,13 +6,11 @@ import android.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
@@ -63,6 +61,8 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
+import shy.car.sdk.app.eventbus.RefreshUserInfo
+import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.travel.user.data.User
 
 
@@ -636,6 +636,7 @@ class CarRentFragment : XTBaseFragment() {
             carBottomSheet.peekHeight = resources.getDimensionPixelOffset(R.dimen._210dp)
         }
     }
+
     /**
      * 登录成功事件监听
      */
@@ -687,5 +688,13 @@ class CarRentFragment : XTBaseFragment() {
                     .navigation()
             carRentPresenter.getUsableCarList(carRentPresenter.carPoint)
         }
+    }
+
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onUserInfoRefresh(refresh: RefreshUserInfoSuccess) {
+        checkUserVerifyState()
     }
 }

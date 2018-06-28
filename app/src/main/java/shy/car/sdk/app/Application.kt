@@ -36,7 +36,7 @@ import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
-import shy.car.sdk.travel.user.data.RefreshUserInfo
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 
 class Application : BaseApplication() {

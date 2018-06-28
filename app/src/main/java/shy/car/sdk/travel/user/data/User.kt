@@ -11,7 +11,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
+import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.net.ApiManager
 
 
@@ -41,6 +43,10 @@ class User private constructor() : UserBase() {
         instance.rankText = detail.rankText
     }
 
+    /**
+     * 刷新用户信息
+     * 更新成功后，EventBus抛出{@link shy.car.sdk.app.eventbus.RefreshUserInfoSuccess}事件
+     */
     fun getUserDetail(context: Context, listener: OnGetUserDetailSuccess? = null) {
 
         var observable = ApiManager.getInstance()
@@ -60,6 +66,8 @@ class User private constructor() : UserBase() {
                 copy(result)
                 saveUserState(context)
                 listener?.onSuccess()
+                EventBus.getDefault()
+                        .post(RefreshUserInfoSuccess())
             }
 
             override fun onError(e: Throwable) {

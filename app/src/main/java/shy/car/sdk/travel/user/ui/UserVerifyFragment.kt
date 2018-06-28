@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
@@ -22,11 +21,10 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.databinding.FragmentVerifyUserBinding
-import shy.car.sdk.travel.user.data.RefreshUserInfo
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserState
 import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
@@ -85,6 +83,7 @@ class UserVerifyFragment : XTBaseFragment(),
         binding.fragment = this
         binding.presenter = presenter
         binding.user = User.instance
+        presenter.name.set(User.instance.name)
         return binding.root
     }
 

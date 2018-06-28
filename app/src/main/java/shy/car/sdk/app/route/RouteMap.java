@@ -16,6 +16,7 @@ import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
+import shy.car.sdk.travel.pay.ui.PromiseMoneyReturnActivity;
 import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
@@ -294,4 +295,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String Coupon = "/coupon/list";
+
+    /**
+     * {@link PromiseMoneyReturnActivity}
+     * 退还保证金
+     */
+    @NotNull
+    public static final String ReturnPromiseMoney = "/pay/return_promise_money";
 }
