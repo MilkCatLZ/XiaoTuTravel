@@ -71,7 +71,7 @@ class SendTimeSelectDialogFragment : BottomSheetDialogFragment(),
 
     fun onConfirm() {
         listener?.onTimeSelect(presenter.dateList[binding.wheelSendHoleCarDate.currentItem], presenter.timeList[binding.wheelSendHoleCarTime.currentItem])
-        dismiss()
+        dismissAllowingStateLoss()
     }
 
     var lists: List<CarUserTime> = ArrayList<CarUserTime>()

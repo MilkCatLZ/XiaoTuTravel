@@ -41,6 +41,7 @@ class WXEntryActivity : XTBaseActivity(),
 //            else -> {
 //            }
 //        }
+        Log.d("WXPAY------------------",req.openId)
     }
 
     override fun onNewIntent(intent: Intent) {

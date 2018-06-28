@@ -60,10 +60,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-    
+
     @NotNull
     public static final String UserDetail = "/user/detail";
-    
+
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -104,14 +104,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-    
+
     /**
      * 租车详情
      * params:  withString(ParamsConstant.String1,orderID)
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-    
+
     /**
      * 支付方式选择
      * {@link * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog}
@@ -145,14 +145,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String OrderDetail = "/take/take_order_detail";
-    
+
     /**
      * 接单详情fragment
      * {@link shy.car.sdk.travel.order.ui.OrderDetailFragment}
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
-    
+
     /**
      * 整车发货 填写发货信息
      * {@link SendHoleCarActivity}
@@ -221,27 +221,27 @@ public class RouteMap {
      */
     @NotNull
     public static final String AddBankCard = "/bank/add";
-    
+
     /**
      * 支付保证金成功
      * {@link PromiseMoneyPaySuccessActivity}
      */
     @NotNull
     public static final String PaySuccess = "/pay/success";
-    
+
     /**
      * {@link UnLockCarActivity}
      */
     @NotNull
     public static final String UnLockCar = "/car/unlock";
-    
+
     /**
      * {@link OrderPayActivity}
      * withString(String1,oid)
      */
     @NotNull
     public static final String OrderPay = "/pay/order";
-    
+
     /**
      * {@link DrivingActivity}
      * 行程中
@@ -249,14 +249,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String Driving = "/rent/driving";
-    
+
     /**
      * {@link TiXianActivity}
      * 提现
      */
     @NotNull
     public static final String TiXian = "/remain/tixian";
-    
+
     /**
      * {@link ReturnCarActivity}
      * 还车
@@ -264,7 +264,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnCar = "/rent/return";
-    
+
     /**
      * {@link ReturnCarFragment}
      * 还车并拍照
@@ -272,7 +272,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnCarUploadPhoto = "/rent/return_upload";
-    
+
     /**
      * {@link TiXianActivity}
      * 提现
@@ -281,7 +281,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String TiXianSuccess = "/remain/tixian_success";
-    
+
     /**
      * {@link ReturnAreaActivity}
      * 还车区域
@@ -302,4 +302,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnPromiseMoney = "/pay/return_promise_money";
+
+    /**
+     * {@link PromiseMoneyReturnActivity}
+     * 租车支付成功
+     */
+    @NotNull
+    public static final String RentCarPaySuccess = "/pay/rent_car_success";
 }

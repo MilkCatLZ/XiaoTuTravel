@@ -11,12 +11,14 @@ import com.google.gson.JsonObject
 import mall.lianni.alipay.Alipay
 import mall.lianni.alipay.PayResult
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentMoneyVerifyPayBinding
 import shy.car.sdk.travel.pay.WXPayUtil
@@ -124,5 +126,13 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
 
     fun pay() {
         presenter.createPay()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun paySuccess(success: PaySuccess) {
+        ARouter.getInstance()
+                .build(RouteMap.PaySuccess)
+                .navigation()
+        finish()
     }
 }

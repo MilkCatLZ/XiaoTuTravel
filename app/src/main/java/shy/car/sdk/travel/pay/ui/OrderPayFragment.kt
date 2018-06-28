@@ -7,12 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import com.tencent.mm.opensdk.modelpay.PayReq
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
+import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderPayBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -60,6 +66,11 @@ class OrderPayFragment : XTBaseFragment(),
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        register(this)
+    }
+
     fun setOid(oid: String) {
         presenter.getOrderDetail(oid)
     }
@@ -88,4 +99,16 @@ class OrderPayFragment : XTBaseFragment(),
         presenter.pay()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun paySuccess(success: PaySuccess) {
+        activity?.let {
+
+            ToastManager.showShortToast(it, "支付成功")
+        }
+        ARouter.getInstance()
+                .build(RouteMap.RentCarPaySuccess)
+                .withObject(Object1, binding.detail)
+                .navigation()
+        finish()
+    }
 }

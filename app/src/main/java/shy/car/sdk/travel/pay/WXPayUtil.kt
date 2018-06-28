@@ -21,10 +21,9 @@ class WXPayUtil {
             when {
                 payMethod.name.contains("支付宝") -> {
                     Alipay.getInstance()
-                            .pay(activity, results.get("order_str").asString, object : Alipay.OnPayCallBack {
+                            .pay(activity, results.get("pay_info").asString, object : Alipay.OnPayCallBack {
                                 override fun onPaySuccess(payResult: PayResult?) {
-                                    ARouter.getInstance()
-                                            .build(RouteMap.PaySuccess)
+
                                     EventBus.getDefault()
                                             .post(PaySuccess())
                                 }

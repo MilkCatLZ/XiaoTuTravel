@@ -4,6 +4,10 @@
     <data>
 
         <import type="shy.car.sdk.app.LNTextUtil"/>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity"/>
     </data>
 
     <LinearLayout
@@ -93,6 +97,7 @@
             android:background="@drawable/back_button_main_green_clickable"
             android:gravity="center"
             android:text="返回首页"
+            android:onClick="@{()->ac.goHome()}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="@dimen/text_title_16dp"/>
 
@@ -102,6 +107,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:text="查看明细"
+            android:onClick="@{()->ac.goPromiseMoneyDetail()}"
             android:textColor="@color/text_second_primary_666666"
             android:textSize="@dimen/text_primary_14dp"/>
 
@@ -109,6 +115,7 @@
             style="@style/style_ww.text_12_999"
             android:layout_marginBottom="15dp"
             android:text="客服热线：400-056-5317"
+            android:onClick="@{()->ac.call()}"
             />
 
     </LinearLayout>

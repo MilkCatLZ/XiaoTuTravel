@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.user.dialog.UserVerifyIDCardWithPersonDialog" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="本人身份证"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:onClick="@{()->fragment.dismissAllowingStateLoss()}"
+                android:paddingEnd="15dp"
+                android:text="取消"
+                android:textSize="@dimen/text_primary_14dp" />
+        </RelativeLayout>
+
+        <View style="@style/style_shadow" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:minHeight="220dp"
+            android:src="@drawable/icon_token_user_and_papers" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:text="请提交身份证人脸合照，确保文字清晰，无反光，无遮挡"
+            android:textColor="@color/text_second_primary_666666"
+            android:textSize="@dimen/text_primary_14dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/back_button_main_green_clickable"
+            android:gravity="center"
+            android:onClick="@{()->fragment.onConfirmClick()}"
+            android:text="确定"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp" />
+    </LinearLayout>
+</layout>

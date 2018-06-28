@@ -27,6 +27,9 @@ import shy.car.sdk.databinding.FragmentVerifyUserBinding
 import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserState
+import shy.car.sdk.travel.user.dialog.UserVerifyDriveCardDialog
+import shy.car.sdk.travel.user.dialog.UserVerifyIDCardHintDialog
+import shy.car.sdk.travel.user.dialog.UserVerifyIDCardWithPersonDialog
 import shy.car.sdk.travel.user.presenter.UserVerifyPresenter
 
 
@@ -93,7 +96,13 @@ class UserVerifyFragment : XTBaseFragment(),
             idFront = true
             idBack = false
             drive = false
-            openAlbum()
+            val dialog = UserVerifyIDCardHintDialog()
+            dialog.listener = object : UserVerifyIDCardHintDialog.OnConfirmClick {
+                override fun onClick() {
+                    openAlbum()
+                }
+            }
+            dialog.show(childFragmentManager, "dialog_hint_id_card")
         }
     }
 
@@ -102,7 +111,13 @@ class UserVerifyFragment : XTBaseFragment(),
             idFront = false
             idBack = true
             drive = false
-            openAlbum()
+            val dialog = UserVerifyIDCardWithPersonDialog()
+            dialog.listener = object : UserVerifyIDCardWithPersonDialog.OnConfirmClick {
+                override fun onClick() {
+                    openAlbum()
+                }
+            }
+            dialog.show(childFragmentManager, "dialog_hint_id_card_with_person")
         }
     }
 
@@ -111,7 +126,13 @@ class UserVerifyFragment : XTBaseFragment(),
             idFront = false
             idBack = false
             drive = true
-            openAlbum()
+            val dialog = UserVerifyDriveCardDialog()
+            dialog.listener = object : UserVerifyDriveCardDialog.OnConfirmClick {
+                override fun onClick() {
+                    openAlbum()
+                }
+            }
+            dialog.show(childFragmentManager, "dialog_hint_drive_card")
         }
     }
 

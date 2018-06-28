@@ -254,9 +254,11 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     private fun gotoPayRentOrder(orderMineList: OrderMineList) {
-        val dialog = RentNoPayDialog()
-        dialog.orderList = orderMineList
-        dialog.show(childFragmentManager, "dialog_order_no_pay")
+        if (userVisibleHint) {
+            val dialog = RentNoPayDialog()
+            dialog.orderList = orderMineList
+            dialog.show(childFragmentManager, "dialog_order_no_pay")
+        }
     }
 
     /**
@@ -507,10 +509,12 @@ class CarRentFragment : XTBaseFragment() {
                 }
             }
             //提示未交保证金
-            val dialog = ARouter.getInstance()
-                    .build(RouteMap.Dialog_Money_Verify)
-                    .navigation() as XTBaseDialogFragment
-            dialog.show(fragmentManager, "dialog_money_verify")
+            if (userVisibleHint) {
+                val dialog = ARouter.getInstance()
+                        .build(RouteMap.Dialog_Money_Verify)
+                        .navigation() as XTBaseDialogFragment
+                dialog.show(fragmentManager, "dialog_money_verify")
+            }
 
         }
     }
@@ -519,19 +523,21 @@ class CarRentFragment : XTBaseFragment() {
 
         if (currentSelectedCarInfo.get() != null) {
             activity?.let {
-                DialogManager.with(it, childFragmentManager)
-                        .title("提示")
-                        .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
-                        .leftButtonText("取消")
-                        .rightButtonText("确定")
-                        .onRightClick({ dialog, witch ->
-                            if (currentSelectedCarInfo.get()?.netWork == null) {
-                                currentSelectedCarInfo.get()
-                                        ?.netWork = carPointList[0]
-                            }
-                            carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
-                        })
-                        .show()
+                if (userVisibleHint) {
+                    DialogManager.with(it, childFragmentManager)
+                            .title("提示")
+                            .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
+                            .leftButtonText("取消")
+                            .rightButtonText("确定")
+                            .onRightClick({ dialog, witch ->
+                                if (currentSelectedCarInfo.get()?.netWork == null) {
+                                    currentSelectedCarInfo.get()
+                                            ?.netWork = carPointList[0]
+                                }
+                                carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
+                            })
+                            .show()
+                }
             }
         } else {
             ToastManager.showShortToast(activity, "当前没有可用车辆")
