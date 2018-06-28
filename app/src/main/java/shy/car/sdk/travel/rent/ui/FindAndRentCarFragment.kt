@@ -29,8 +29,8 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
-import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
 /**
@@ -55,9 +55,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     private fun calTimeAndDistances() {
 
-        activity?.let {
-            ProgressDialog.showLoadingView(it)
-        }
+//        activity?.let {
+//            ProgressDialog.showLoadingView(it)
+//        }
         activity?.let {
             MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(presenter.detail.car?.lat!!, presenter.detail.car?.lng!!), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
@@ -81,7 +81,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     var mDriveRouteResult: DriveRouteResult? = null
-    val timeAndDistance=ObservableField<String>("")
+    val timeAndDistance = ObservableField<String>("")
     var oid: String = ""
         set(value) {
             field = value
@@ -208,6 +208,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
                                             it, binding.mapView.map, drivePath,
                                             mDriveRouteResult!!.startPos,
                                             mDriveRouteResult!!.targetPos, null)
+                                    drivingRouteOverlay.setStartPointResource(-1)
+                                    drivingRouteOverlay.setEndPointResource(R.drawable.icon_defaul_locat)
                                     drivingRouteOverlay.setNodeIconVisibility(false)//设置节点marker是否显示
                                     drivingRouteOverlay.setIsColorfulline(true)//是否用颜色展示交通拥堵情况，默认true
                                     drivingRouteOverlay.removeFromMap()
@@ -228,7 +230,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
         val myLocationStyle = MyLocationStyle()
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW)
         //初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
-        myLocationStyle.interval(15000) //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
+        myLocationStyle.interval(5000) //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
         binding.mapView.map.myLocationStyle = myLocationStyle//设置定位蓝点的Style
 
         binding.mapView.map.isMyLocationEnabled = true
@@ -255,12 +257,12 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     fun ringCar() {
-        presenter.carRing()
+        var ring = RingCarDialogFragment()
+        ring.carid = presenter.detail.car?.carID!!
+        ring.show(childFragmentManager, "fragment_ring")
     }
 
     fun unLockCar() {
-
-
         presenter.unLockCar()
     }
 
@@ -269,6 +271,6 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {
-        binding.mapView.map.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+        binding.mapView.map.animateCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 }

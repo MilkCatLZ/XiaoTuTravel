@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <shy.car.sdk.app.widget.FabButton
+            android:id="@+id/determinate"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:color="#e77c88"
+            android:indeterminate="false"
+            android:max="100"
+            android:src="@drawable/icon_open_car"
+            android:visibility="visible"
+            app:fbb_autoStart="true"
+            app:fbb_endBitmap="@drawable/icon_lock_car"
+            app:fbb_progressColor="#e62e43"
+            app:fbb_progressWidthRatio="0.1"
+            app:fbb_showEndBitmap="true"
+            />
+
+        <TextView
+            android:id="@+id/txt_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="正在锁车，请稍后..."
+            android:textColor="@color/_foreground_material_light"/>
+    </LinearLayout>
+</RelativeLayout>

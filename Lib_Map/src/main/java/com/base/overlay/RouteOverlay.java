@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
@@ -84,6 +83,17 @@ public class RouteOverlay {
         }
     }
     
+    int startPointResource=R.drawable.amap_start;
+    int endPointResource=R.drawable.amap_end;
+    
+    public void setStartPointResource(int startPointResource) {
+        this.startPointResource = startPointResource;
+    }
+    
+    public void setEndPointResource(int endPointResource) {
+        this.endPointResource = endPointResource;
+    }
+    
     /**
      * 给起点Marker设置图标，并返回更换图标的图片。如不用默认图片，需要重写此方法。
      *
@@ -92,7 +102,7 @@ public class RouteOverlay {
      * @since V2.1.0
      */
     protected BitmapDescriptor getStartBitmapDescriptor() {
-        return BitmapDescriptorFactory.fromResource(R.drawable.amap_start);
+        return BitmapDescriptorFactory.fromResource(startPointResource);
     }
     
     /**
@@ -103,7 +113,7 @@ public class RouteOverlay {
      * @since V2.1.0
      */
     protected BitmapDescriptor getEndBitmapDescriptor() {
-        return BitmapDescriptorFactory.fromResource(R.drawable.amap_end);
+        return BitmapDescriptorFactory.fromResource(endPointResource);
     }
     
     /**

@@ -17,9 +17,6 @@ import com.amap.api.location.AMapLocation
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
-import com.amap.api.services.core.AMapException
-import com.amap.api.services.core.LatLonPoint
-import com.amap.api.services.route.*
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
@@ -28,9 +25,7 @@ import com.base.overlay.WalkRouteOverlay
 import com.base.util.DialogManager
 import com.base.util.ToastManager
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_car_rent.*
 import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
@@ -45,6 +40,7 @@ import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.data.RefreshRentCarState
+import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentBinding
@@ -61,8 +57,6 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
-import shy.car.sdk.app.eventbus.RefreshUserInfo
-import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.travel.user.data.User
 
 
@@ -143,7 +137,7 @@ class CarRentFragment : XTBaseFragment() {
                 currentSelectedCarInfo.set(t[0])
                 calDistanceAndTimeInfo()
                 setupCurrentCarInfo(currentSelectedCarInfo.get()!!)
-                findRoutToCar(t[0].lat, t[0].lng)
+//                findRoutToCar(t[0].lat, t[0].lng)
                 hasUsableCar.set(true)
                 checkUserVerifyState()
             } else {
@@ -151,93 +145,93 @@ class CarRentFragment : XTBaseFragment() {
                 ToastManager.showShortToast(activity, "该网点没有该车型车辆，请选择其他车型")
                 currentSelectedCarInfo.set(null)
                 naviInfo.set("")
-                findRoutToCar(carRentPresenter.carPoint?.lat!!, carRentPresenter.carPoint?.lng!!)
+//                findRoutToCar(carRentPresenter.carPoint?.lat!!, carRentPresenter.carPoint?.lng!!)
             }
             circle_indicator.setViewPager(viewPager_car_list)
         }
     }
     var drivingRouteOverlay: WalkRouteOverlay? = null
-    private fun findRoutToCar(lat: Double, lng: Double) {
-
-        val routeSearch = RouteSearch(activity)
-
-        val query = RouteSearch.WalkRouteQuery(RouteSearch.FromAndTo(LatLonPoint(app.location.lat, app.location.lng), LatLonPoint(lat, lng)))
-
-
-
-        Observable.create<WalkRouteResult> {
-            routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
-                override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
-
-                }
-
-                override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
-
-                }
-
-                override fun onRideRouteSearched(p0: RideRouteResult?, p1: Int) {
-
-                }
-
-                override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
-                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
-                        if (result != null) {
-                            it.onNext(result)
-                        }
-                    }
-                }
-
-            })
-            routeSearch.calculateWalkRouteAsyn(query)
-        }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<WalkRouteResult> {
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
-
-                    override fun onNext(result: WalkRouteResult) {
-//                        binding.map.map.clear()// 清理地图上的所有覆盖物
-
-                        activity?.let {
-
-                            if (result.paths != null) {
-                                if (result.paths.size > 0) {
-                                    var mDriveRouteResult = result
-                                    val drivePath = mDriveRouteResult.paths[0] ?: return
-                                    if (drivingRouteOverlay != null) {
-                                        drivingRouteOverlay?.removeFromMap()
-                                    }
-                                    drivingRouteOverlay = WalkRouteOverlay(
-                                            it, binding.map.map, drivePath,
-                                            mDriveRouteResult.startPos,
-                                            mDriveRouteResult.targetPos)
-                                    drivingRouteOverlay?.setNodeIconVisibility(false)//设置节点marker是否显示
-                                    drivingRouteOverlay?.setStartMarkerEnable(false)
-                                    drivingRouteOverlay?.setEndMarkerEnable(false)
-
-                                    drivingRouteOverlay?.addToMap()
-                                    drivingRouteOverlay?.zoomToSpan()
-
-                                } else if (result.paths == null) {
-                                }
-
-                            }
-                        }
-                    }
-                })
-
-
-    }
+//    private fun findRoutToCar(lat: Double, lng: Double) {
+//
+//        val routeSearch = RouteSearch(activity)
+//
+//        val query = RouteSearch.WalkRouteQuery(RouteSearch.FromAndTo(LatLonPoint(app.location.lat, app.location.lng), LatLonPoint(lat, lng)))
+//
+//
+//
+//        Observable.create<WalkRouteResult> {
+//            routeSearch.setRouteSearchListener(object : RouteSearch.OnRouteSearchListener {
+//                override fun onDriveRouteSearched(result: DriveRouteResult?, errorCode: Int) {
+//
+//                }
+//
+//                override fun onBusRouteSearched(p0: BusRouteResult?, p1: Int) {
+//
+//                }
+//
+//                override fun onRideRouteSearched(p0: RideRouteResult?, p1: Int) {
+//
+//                }
+//
+//                override fun onWalkRouteSearched(result: WalkRouteResult?, errorCode: Int) {
+//                    if (errorCode == AMapException.CODE_AMAP_SUCCESS) {
+//                        if (result != null) {
+//                            it.onNext(result)
+//                        }
+//                    }
+//                }
+//
+//            })
+//            routeSearch.calculateWalkRouteAsyn(query)
+//        }
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : Observer<WalkRouteResult> {
+//                    override fun onError(e: Throwable) {
+//                        e.printStackTrace()
+//                    }
+//
+//                    override fun onComplete() {
+//
+//                    }
+//
+//                    override fun onSubscribe(d: Disposable) {
+//
+//                    }
+//
+//                    override fun onNext(result: WalkRouteResult) {
+////                        binding.map.map.clear()// 清理地图上的所有覆盖物
+//
+//                        activity?.let {
+//
+//                            if (result.paths != null) {
+//                                if (result.paths.size > 0) {
+//                                    var mDriveRouteResult = result
+//                                    val drivePath = mDriveRouteResult.paths[0] ?: return
+//                                    if (drivingRouteOverlay != null) {
+//                                        drivingRouteOverlay?.removeFromMap()
+//                                    }
+//                                    drivingRouteOverlay = WalkRouteOverlay(
+//                                            it, binding.map.map, drivePath,
+//                                            mDriveRouteResult.startPos,
+//                                            mDriveRouteResult.targetPos)
+//                                    drivingRouteOverlay?.setNodeIconVisibility(false)//设置节点marker是否显示
+//                                    drivingRouteOverlay?.setStartMarkerEnable(false)
+//                                    drivingRouteOverlay?.setEndMarkerEnable(false)
+//
+//                                    drivingRouteOverlay?.addToMap()
+//                                    drivingRouteOverlay?.zoomToSpan()
+//
+//                                } else if (result.paths == null) {
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                })
+//
+//
+//    }
 
     private fun calDistanceAndTimeInfo() {
         activity?.let {
@@ -328,7 +322,7 @@ class CarRentFragment : XTBaseFragment() {
                 var carInfo = carRentPresenter.carListAdapter.items[position]
                 setupCurrentCarInfo(carInfo)
                 calDistanceAndTimeInfo()
-                findRoutToCar(carInfo.lat, carInfo.lng)
+//                findRoutToCar(carInfo.lat, carInfo.lng)
             }
         })
     }
@@ -376,7 +370,7 @@ class CarRentFragment : XTBaseFragment() {
     private fun initMap() {
 
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
-        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(13f), 1000, null)
+        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(14f), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
         binding.map.map.setOnMarkerClickListener(
                 {
@@ -665,6 +659,7 @@ class CarRentFragment : XTBaseFragment() {
     fun onLoginSuccess(change: LocationChange) {
         carRentPresenter.getNetWorkList()
         checkUserVerifyState()
+        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
     }
 
     /**
@@ -675,7 +670,7 @@ class CarRentFragment : XTBaseFragment() {
         markerList.map {
             if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
                 it.showInfoWindow()
-//                moveCameraAndShowLocation(LatLng(it.position.latitude, it.position.longitude))
+                carRentPresenter.getUsableCarModel()
                 carRentPresenter.getUsableCarList(nearCar)
             }
         }

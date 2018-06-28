@@ -68,6 +68,10 @@ class OrderSendFragment : XTBaseUltimateRecyclerViewFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.presenter = presenter
+    }
+
+    override fun onRealResume() {
+        super.onRealResume()
         onRefresh()
     }
 

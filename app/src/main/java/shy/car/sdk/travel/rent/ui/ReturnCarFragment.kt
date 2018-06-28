@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.location.AMapLocation
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.PolygonOptions
 import com.base.base.ProgressDialog
-import com.base.location.AmapLocationManager
-import com.base.location.AmapOnLocationReceiveListener
-import com.base.location.Location
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observable
@@ -28,6 +24,7 @@ import shy.car.sdk.app.data.RefreshRentCarState
 import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentReturnCarBinding
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.ReturnCarPresenter
 
@@ -37,31 +34,12 @@ import shy.car.sdk.travel.rent.presenter.ReturnCarPresenter
  */
 class ReturnCarFragment : XTBaseFragment(),
         ReturnCarPresenter.CallBack {
-    override fun returnSuccess(t: JsonObject) {
-        activity?.let {
-            ToastManager.showShortToast(it, "还车成功")
-        }
-        EventBus.getDefault()
-                .post(RefreshOrderList())
-        EventBus.getDefault()
-                .post(RefreshRentCarState(presenter.oid))
-        app.goHome()
-        finish()
-    }
-
-    override fun onError(e: Throwable) {
-
-    }
-
-    var dis: Disposable? = null
-    override fun getListSuccess(t: ArrayList<NearCarPoint>) {
-
-
+    override fun getDataSuccess(detail: RentOrderDetail, list: List<NearCarPoint>) {
         Observable.create<NearCarPoint> { emiter ->
             lateinit var near: NearCarPoint
             var isInNetWork = false
             binding.map.map.clear()
-            t.map {
+            list.map {
                 val pOption = PolygonOptions()
                 it.range?.map {
 
@@ -70,7 +48,7 @@ class ReturnCarFragment : XTBaseFragment(),
                 val polygon = binding.map.map.addPolygon(pOption.strokeWidth(4f)
                         .strokeColor(Color.argb(50, 1, 1, 1))
                         .fillColor(Color.argb(50, 1, 1, 1)))
-                if (polygon.contains(LatLng(app.location.lat, app.location.lng))) {
+                if (polygon.contains(LatLng(detail.car?.lat!!, detail.car?.lng!!))) {
                     near = it
                     isInNetWork = true
                 }
@@ -110,8 +88,82 @@ class ReturnCarFragment : XTBaseFragment(),
                 })
     }
 
+    override fun returnSuccess(t: JsonObject) {
+        activity?.let {
+            ToastManager.showShortToast(it, "还车成功")
+        }
+        EventBus.getDefault()
+                .post(RefreshOrderList())
+        EventBus.getDefault()
+                .post(RefreshRentCarState(presenter.oid))
+        app.goHome()
+        finish()
+    }
+
+    override fun onError(e: Throwable) {
+
+    }
+
+    var dis: Disposable? = null
+//    override fun getListSuccess(t: ArrayList<NearCarPoint>) {
+
+
+//        Observable.create<NearCarPoint> { emiter ->
+//            lateinit var near: NearCarPoint
+//            var isInNetWork = false
+//            binding.map.map.clear()
+//            t.map {
+//                val pOption = PolygonOptions()
+//                it.range?.map {
+//
+//                    pOption.add(LatLng(it.lat, it.lng))
+//                }
+//                val polygon = binding.map.map.addPolygon(pOption.strokeWidth(4f)
+//                        .strokeColor(Color.argb(50, 1, 1, 1))
+//                        .fillColor(Color.argb(50, 1, 1, 1)))
+//                if (polygon.contains(LatLng(app.location.lat, app.location.lng))) {
+//                    near = it
+//                    isInNetWork = true
+//                }
+//            }
+//            if (isInNetWork) {
+//                emiter.onNext(near)
+//                emiter.onComplete()
+//            } else {
+//                emiter.onError(Exception())
+//            }
+//        }
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : Observer<NearCarPoint> {
+//                    override fun onComplete() {
+//
+//                    }
+//
+//                    override fun onSubscribe(d: Disposable) {
+//                        dis = d
+//                    }
+//
+//                    override fun onNext(t: NearCarPoint) {
+//                        presenter.locationCheckText.set(t.address)
+//                        presenter.isInNetWork = true
+//                        presenter.nearCarPoint = t
+//                        binding.imgLocation.setImageResource(R.drawable.img_site)
+//                        binding.txtAddress.setTextColor(resources.getColor(R.color.text_primary_333333))
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                        presenter.locationCheckText.set("未到小兔出行科技停放点")
+//                        presenter.isInNetWork = false
+//                        binding.imgLocation.setImageResource(R.drawable.img_not_site)
+//                        binding.txtAddress.setTextColor(resources.getColor(R.color.main_color_red))
+//                    }
+//                })
+//    }
+
     lateinit var binding: FragmentReturnCarBinding
     lateinit var presenter: ReturnCarPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -135,14 +187,14 @@ class ReturnCarFragment : XTBaseFragment(),
         activity?.let {
             ProgressDialog.showLoadingView(it)
         }
-        AmapLocationManager.getInstance()
-                .getLocation(object : AmapOnLocationReceiveListener {
-                    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                        app.location.copy(location)
-                        presenter.location.set(location)
-                        presenter.getNetWork()
-                    }
-                })
+//        AmapLocationManager.getInstance()
+//                .getLocation(object : AmapOnLocationReceiveListener {
+//                    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+//                        app.location.copy(location)
+//                        presenter.location.set(location)
+//
+//                    }
+//                })
     }
 
     fun lockAndReturn() {
@@ -175,6 +227,7 @@ class ReturnCarFragment : XTBaseFragment(),
 
     fun setOid(order: String) {
         presenter.oid = order
+        presenter.getData(order)
     }
 
     fun gotoReturnArea() {

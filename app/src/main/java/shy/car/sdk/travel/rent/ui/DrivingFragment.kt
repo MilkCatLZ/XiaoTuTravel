@@ -13,6 +13,9 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.route.RouteMap.ReturnCar
 import shy.car.sdk.databinding.FragmentDrivingBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.dialog.LockCarDialogFragment
+import shy.car.sdk.travel.rent.dialog.OpenCarDialogFragment
+import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.DrivingPresenter
 
 /**
@@ -73,7 +76,9 @@ class DrivingFragment : XTBaseFragment(),
      * 鸣笛
      */
     fun ringCar() {
-        presenter.carRing()
+        var ring = RingCarDialogFragment()
+        ring.carid = presenter.detail.get()?.car?.carID!!
+        ring.show(childFragmentManager, "fragment_ring")
     }
 
     /**
@@ -90,17 +95,23 @@ class DrivingFragment : XTBaseFragment(),
      * 开启车门
      */
     fun openDoor() {
-        presenter.openDoor()
+        var open = OpenCarDialogFragment()
+        open.carID = presenter.detail.get()?.car?.carID!!
+        open.oid = presenter.detail.get()?.orderId!!
+        open.show(childFragmentManager, "fragment_open")
     }
 
     /**
-     * 开启车门
+     * 关闭车门
      */
     fun lockDoor() {
-        presenter.lockDoor()
+        var open = LockCarDialogFragment()
+        open.carID = presenter.detail.get()?.car?.carID!!
+        open.oid = presenter.detail.get()?.orderId!!
+        open.show(childFragmentManager, "fragment_lock")
     }
 
-    fun gotoReturnCarArea(){
+    fun gotoReturnCarArea() {
         ARouter.getInstance()
                 .build(RouteMap.ReturnArea)
                 .navigation()

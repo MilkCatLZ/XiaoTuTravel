@@ -158,6 +158,8 @@ dependencies {
     implementation project(':BaseProject:PhotoGallery')
     implementation project(':Lib_Map')
     implementation project(':Alipay')
+    implementation  'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'mbanje.kurt:fabbutton:1.2.4@aar'
     implementation('com.contrarywind:wheelview:4.0.5') {
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'

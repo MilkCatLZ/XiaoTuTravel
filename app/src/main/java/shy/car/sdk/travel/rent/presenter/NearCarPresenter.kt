@@ -4,10 +4,8 @@ import android.content.Context
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
 import shy.car.sdk.R
-import shy.car.sdk.app.eventbus.RefreshCarPointList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -45,7 +43,7 @@ class NearCarPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.getNearList(app.location.cityCode, app.location.lat, app.location.lng, (pageIndex - 1) * pageSize, pageSize)
+                .api.getNearList(app.location.cityCode, app.location.lat, app.location.lng, (pageIndex - 1) * pageSize, pageSize, mode = "2")
         val observer = object : Observer<ArrayList<NearCarPoint>> {
             override fun onComplete() {
 
