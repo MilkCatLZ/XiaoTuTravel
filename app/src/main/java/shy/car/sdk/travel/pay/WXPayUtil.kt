@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.pay
 
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.Log
 import com.google.gson.JsonObject
 import com.tencent.mm.opensdk.modelpay.PayReq
 import mall.lianni.alipay.Alipay
@@ -29,7 +30,7 @@ class WXPayUtil {
                                 }
 
                                 override fun onPayFailed(payResult: PayResult?) {
-
+                                    Log.d("alipay-onPayFailed", payResult?.resultStatus + payResult?.result)
                                 }
 
                                 override fun onPayConfirming(payResult: PayResult?) {

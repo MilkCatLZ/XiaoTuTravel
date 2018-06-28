@@ -46,7 +46,7 @@ class UserDetailFragment : XTBaseFragment() {
     }
 
     fun goUserVerifyClick() {
-        if (User.instance.getIsIdentityAuth())
+        if (!User.instance.getIsIdentityAuth())
             ARouter.getInstance()
                     .build(RouteMap.UserVerify)
                     .navigation()

@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="本人身份证"
+                android:text="本人驾驶证"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="17sp" />
 
@@ -55,7 +55,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="15dp"
-            android:text="请提交身份证正面照片，确保文字清晰，无反光，无遮挡"
+            android:text="请提交驾驶证正面照片，确保文字清晰，无反光，无遮挡"
             android:textColor="@color/text_second_primary_666666"
             android:textSize="@dimen/text_primary_14dp" />
 
