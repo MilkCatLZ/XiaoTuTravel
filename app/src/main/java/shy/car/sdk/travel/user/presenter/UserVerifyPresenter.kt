@@ -81,9 +81,9 @@ class UserVerifyPresenter(context: Context) : BasePresenter(context) {
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val drive = RequestBody.create(MediaType.parse("image/*"), driveFile)
-        val idCard = RequestBody.create(MediaType.parse("image/*"), idCardFile)
-        val holdIDCard = RequestBody.create(MediaType.parse("image/*"), holdIDFile)
+        val drive = RequestBody.create(MediaType.parse("image/jpeg"), driveFile)
+        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), idCardFile)
+        val holdIDCard = RequestBody.create(MediaType.parse("image/jpeg"), holdIDFile)
 
         builder.addFormDataPart("driving_licence_photo", driveFile.name, drive)
         builder.addFormDataPart("idcard_img_photo", idCardFile.name, idCard)

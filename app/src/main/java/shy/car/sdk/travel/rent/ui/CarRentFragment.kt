@@ -15,13 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.AMap
-
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
+import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
@@ -40,7 +40,6 @@ import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
@@ -49,6 +48,7 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.data.RefreshRentCarState
 import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
+import shy.car.sdk.app.eventbus.RentOrderCanceled
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentBinding
@@ -135,7 +135,13 @@ class CarRentFragment : XTBaseFragment() {
     private val callBack = object : CarRentPresenter.CallBack {
         override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
             if (list.isNotEmpty()) {
-                carRentPresenter.getUsableCarList(null)
+                if ((binding.detail != null
+                                && binding.detail?.status != RentOrderState.Taked
+                                && binding.detail?.status != RentOrderState.Create) || !User.instance.login)
+                    carRentPresenter.getUsableCarList(null)
+                else {
+                    activity?.let { ProgressDialog.hideLoadingView(it) }
+                }
                 this@CarRentFragment.carPointList.clear()
                 this@CarRentFragment.carPointList.addAll(list)
                 showMarkers(zoomLevel)
@@ -162,22 +168,24 @@ class CarRentFragment : XTBaseFragment() {
                     RentOrderState.Create -> {
                         gotoFindAndRent(orderMineList)
                         takeMode(orderMineList)
-
                     }
                     RentOrderState.Taked -> {
                         drivingMode(orderMineList)
+//                        carRentPresenter.getNetWorkList()
                     }
                     RentOrderState.Return -> {
                         gotoPayRentOrder(orderMineList)
-                        carRentPresenter.getNetWorkList()
+//                        carRentPresenter.getNetWorkList()
                     }
                     else -> {
-                        carRentPresenter.getNetWorkList()
+//                        carRentPresenter.getNetWorkList()
                     }
                 }
+//                carRentPresenter.getNetWorkList()
             } else {
-                carRentPresenter.getNetWorkList()
+                binding.detail = null
             }
+            carRentPresenter.getNetWorkList()
         }
 
         override fun onGetCarError(e: Throwable) {
@@ -474,7 +482,8 @@ class CarRentFragment : XTBaseFragment() {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe({
-                                carRentPresenter.getNetWorkList()
+                                if (!User.instance.login)
+                                    carRentPresenter.getNetWorkList()
                             }, {
 
                             })
@@ -486,8 +495,14 @@ class CarRentFragment : XTBaseFragment() {
 
     val MaxZoom = 14f
     private fun showMarkers(zoomLevel: Float) {
-        if (zoomLevel >= MaxZoom) {
-            showCarMarker()
+        if (binding.detail != null
+                && binding.detail?.status != RentOrderState.Taked
+                && binding.detail?.status != RentOrderState.Create) {
+            if (zoomLevel >= MaxZoom) {
+                showCarMarker()
+            } else {
+                showNetWork()
+            }
         } else {
             showNetWork()
         }
@@ -662,7 +677,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun checkPromiseMoneyPay() {
         //已交保证金
-        if (User.instance.getIsDeposit()) {
+        if (User.instance.getIsDeposit() && User.instance.getIsIdentityAuth()) {
             showConfirmDialog()
         } else {
 
@@ -891,6 +906,15 @@ class CarRentFragment : XTBaseFragment() {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUserInfoRefresh(refresh: RefreshUserInfoSuccess) {
+        checkUserVerifyState()
+    }
+
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onRentOrderCancel(refresh: RentOrderCanceled) {
+        carRentPresenter.getUnProgressOrder()
         checkUserVerifyState()
     }
 }

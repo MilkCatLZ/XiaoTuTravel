@@ -140,8 +140,8 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val drive = RequestBody.create(MediaType.parse("image/*"), leftFile)
-        val idCard = RequestBody.create(MediaType.parse("image/*"), rightFile)
+        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
+        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
 
         builder.addFormDataPart("photo1", leftFile.name, drive)
         builder.addFormDataPart("photo2", rightFile.name, idCard)

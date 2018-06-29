@@ -84,7 +84,7 @@ class UserDetailPresenter(context: Context,var listener: UserEditListener? = nul
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val imageBody = RequestBody.create(MediaType.parse("image/*"), image)
+        val imageBody = RequestBody.create(MediaType.parse("image/jpeg"), image)
         builder.addFormDataPart("avatar", image.name, imageBody)
         return builder.build()
     }

@@ -61,7 +61,7 @@ class ReturnAreaActivity : XTBaseActivity(),
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {
-        binding.mapView.map.moveCamera(CameraUpdateFactory.changeLatLng(latLng))
+        binding.mapView.map.animateCamera(CameraUpdateFactory.changeLatLng(latLng))
 
     }
 

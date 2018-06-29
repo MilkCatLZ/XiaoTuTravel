@@ -10,9 +10,12 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.PolygonOptions
 import com.base.base.ProgressDialog
+import com.base.location.AmapLocationManager
+import com.base.location.Location
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -34,31 +37,14 @@ import shy.car.sdk.travel.rent.presenter.ReturnCarPresenter
  */
 class ReturnCarFragment : XTBaseFragment(),
         ReturnCarPresenter.CallBack {
+    lateinit var near: NearCarPoint
+    private lateinit var detail: RentOrderDetail
+
     override fun getDataSuccess(detail: RentOrderDetail, list: List<NearCarPoint>) {
         Observable.create<NearCarPoint> { emiter ->
-            lateinit var near: NearCarPoint
-            var isInNetWork = false
-            binding.map.map.clear()
-            list.map {
-                val pOption = PolygonOptions()
-                it.range?.map {
-
-                    pOption.add(LatLng(it.lat, it.lng))
-                }
-                val polygon = binding.map.map.addPolygon(pOption.strokeWidth(4f)
-                        .strokeColor(Color.argb(50, 1, 1, 1))
-                        .fillColor(Color.argb(50, 1, 1, 1)))
-                if (polygon.contains(LatLng(detail.car?.lat!!, detail.car?.lng!!))) {
-                    near = it
-                    isInNetWork = true
-                }
-            }
-            if (isInNetWork) {
-                emiter.onNext(near)
-                emiter.onComplete()
-            } else {
-                emiter.onError(Exception())
-            }
+            this@ReturnCarFragment.detail = detail
+            getCarAddress(detail.car?.lat, detail.car?.lng)
+            checkInNetWork(detail, list, emiter)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -80,12 +66,58 @@ class ReturnCarFragment : XTBaseFragment(),
                     }
 
                     override fun onError(e: Throwable) {
+                        activity?.let { ProgressDialog.hideLoadingView(it) }
                         presenter.locationCheckText.set("未到小兔出行科技停放点")
                         presenter.isInNetWork = false
                         binding.imgLocation.setImageResource(R.drawable.img_not_site)
                         binding.txtAddress.setTextColor(resources.getColor(R.color.main_color_red))
                     }
                 })
+    }
+
+    private fun getCarAddress(lat: Double?, lng: Double?) {
+
+        AmapLocationManager.getInstance()
+                .getAddress(lat!!, lng!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    activity?.let { ProgressDialog.hideLoadingView(it) }
+                    val location: Location = Location()
+                    location.latitude = detail.car?.lat!!
+                    location.longitude = detail.car?.lng!!
+                    location.address =  it.regeocodeAddress.formatAddress
+                    location.city = it.regeocodeAddress.city
+                    location.district = it.regeocodeAddress.district
+                    presenter.location.set(location)
+                }, {
+
+                })
+    }
+
+    private fun checkInNetWork(detail: RentOrderDetail, list: List<NearCarPoint>, emiter: ObservableEmitter<NearCarPoint>) {
+        var isInNetWork = false
+        binding.map.map.clear()
+        list.map {
+            val pOption = PolygonOptions()
+            it.range?.map {
+
+                pOption.add(LatLng(it.lat, it.lng))
+            }
+            val polygon = binding.map.map.addPolygon(pOption.strokeWidth(4f)
+                    .strokeColor(Color.argb(50, 1, 1, 1))
+                    .fillColor(Color.argb(50, 1, 1, 1)))
+            if (polygon.contains(LatLng(detail.car?.lat!!, detail.car?.lng!!))) {
+                near = it
+                isInNetWork = true
+            }
+        }
+        if (isInNetWork) {
+            emiter.onNext(near)
+            emiter.onComplete()
+        } else {
+            emiter.onError(Exception())
+        }
     }
 
     override fun returnSuccess(t: JsonObject) {
@@ -192,7 +224,6 @@ class ReturnCarFragment : XTBaseFragment(),
 //                    override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
 //                        app.location.copy(location)
 //                        presenter.location.set(location)
-//
 //                    }
 //                })
     }

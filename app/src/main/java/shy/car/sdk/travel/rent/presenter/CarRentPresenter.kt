@@ -15,7 +15,6 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
@@ -282,7 +281,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     fun getRentOrderDetail(id: String) {
         ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
         val observable = ApiManager.getInstance()
                 .api.getRentOrderDetail(id)
         val observer = object : Observer<RentOrderDetail> {
@@ -291,7 +289,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onSubscribe(d: Disposable) {
-                disposable = d
+
             }
 
             override fun onNext(t: RentOrderDetail) {
@@ -313,29 +311,47 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     fun getNetWorkList() {
 
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getNearList(app.location.cityCode, car = selectedCarCaterogyID.get())
-        val observer = object : Observer<ArrayList<NearCarPoint>> {
-            override fun onComplete() {
+        Observable.create<String> {
+            while (StringUtils.isEmpty(app.location.cityCode)) {
+                try {
+                    Thread.sleep(100)
+                } catch (_: Exception){
 
+                }
             }
-
-            override fun onSubscribe(d: Disposable) {
-                disposable = d
-            }
-
-            override fun onNext(t: ArrayList<NearCarPoint>) {
-                callBack.getNetWorkListSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
+            it.onNext(app.location.cityCode)
         }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
 
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+                    val observable = ApiManager.getInstance()
+                            .api.getNearList(it, car = selectedCarCaterogyID.get())
+                    val observer = object : Observer<ArrayList<NearCarPoint>> {
+                        override fun onComplete() {
+
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: ArrayList<NearCarPoint>) {
+                            callBack.getNetWorkListSuccess(t)
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+                    }
+
+                    ApiManager.getInstance()
+                            .toSubscribe(observable, observer)
+                }, {
+
+                })
+
+
     }
 
 
