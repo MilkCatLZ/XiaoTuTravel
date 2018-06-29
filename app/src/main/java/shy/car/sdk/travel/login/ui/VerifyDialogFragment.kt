@@ -106,8 +106,12 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             if (BuildConfig.DEBUG) {
                 Observable.timer(4, TimeUnit.SECONDS)
                         .subscribe({
-//                            presenter.verify.set(verify)
+                            presenter.verify.set(verify)
+                            binding.edtInput.removeTextChangedListener(textWatcher)
                             binding.edtInput.setText(verify)
+                            progressInput(verify)
+                            lockAndSubmit()
+                            binding.edtInput.addTextChangedListener(textWatcher)
                         }, {
 
                         })
@@ -234,7 +238,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
      */
     private fun lockAndSubmit() {
         if (binding.edtInput.text.length == VerifyLenght) {
-            Observable.timer(500, TimeUnit.MILLISECONDS)
+            Observable.timer(50, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -243,6 +247,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                         presenter.phone.set(phone)
                         presenter.login()
                         isLogining.set(true)
+                    }, {
+
                     })
         }
     }

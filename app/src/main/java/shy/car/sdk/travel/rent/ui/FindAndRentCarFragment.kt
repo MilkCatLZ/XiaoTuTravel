@@ -22,14 +22,17 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_find_and_rent_car.*
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.app.util.CountDownThread
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 
@@ -40,17 +43,34 @@ import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
 class FindAndRentCarFragment : XTBaseFragment(),
         FindAndRentCarPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
-//        presenter.detail.car?.color = t.car?.color
-//        presenter.detail.car?.electricity = t.car?.electricity
-//        presenter.detail.car?.img = t.car?.modelImg
-//        presenter.detail.car?.surplusMileage = t.car?.surplusMileage
-        binding.detail = t
-        //初始化地图
-        setupMap(t)
-        //获取导航数据
-        getRoute()
+        if (t.status == RentOrderState.Taked) {
+            ARouter.getInstance()
+                    .build(RouteMap.Driving)
+                    .withString(String1, t.orderId)
+                    .navigation()
+            finish()
+        } else {
+            binding.detail = t
+            //初始化地图
+            setupMap(t)
+            //获取导航数据
+            getRoute()
 
-        calTimeAndDistances()
+            calTimeAndDistances()
+            startCountDown()
+        }
+    }
+
+    var dispose: Disposable? = null
+    var countdown: CountDownThread? = null
+    private fun startCountDown() {
+        if (binding.detail?.billingTime!! > 0) {
+            countdown = CountDownThread(binding.detail, binding.detail?.billingTime!!)
+            countdown?.start(txt_count_down)
+        } else {
+
+        }
+
     }
 
     private fun calTimeAndDistances() {
@@ -82,6 +102,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     var mDriveRouteResult: DriveRouteResult? = null
     val timeAndDistance = ObservableField<String>("")
+    val countDown = ObservableField<String>("")
     var oid: String = ""
         set(value) {
             field = value
@@ -248,6 +269,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     override fun onDestroy() {
         binding.mapView.onDestroy()
+        dispose?.dispose()
+        countdown?.cancel()
         super.onDestroy()
     }
 

@@ -30,6 +30,11 @@ class DeliveryFragment : XTBaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    override fun onRealResume() {
+        super.onRealResume()
         initPageFragment()
     }
 

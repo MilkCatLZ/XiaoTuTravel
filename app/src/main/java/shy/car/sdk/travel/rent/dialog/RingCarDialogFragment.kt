@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_ring_car.*
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
@@ -54,11 +55,12 @@ class RingCarDialogFragment : XTBaseDialogFragment() {
             }
 
             override fun onNext(t: JsonObject) {
-                content.stopRippleAnimation()
+
                 Observable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
+                            content.stopRippleAnimation()
                             activity?.let { ToastManager.showLongToast(it, "鸣笛成功") }
                             dismissAllowingStateLoss()
                         }, {
@@ -68,7 +70,21 @@ class RingCarDialogFragment : XTBaseDialogFragment() {
             }
 
             override fun onError(e: Throwable) {
-                dismissAllowingStateLoss()
+                if (BuildConfig.DEBUG) {
+
+                    Observable.timer(2, TimeUnit.SECONDS)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                content.stopRippleAnimation()
+                                activity?.let { ToastManager.showLongToast(it, "鸣笛成功") }
+                                dismissAllowingStateLoss()
+                            }, {
+
+                            })
+                }else {
+                    dismissAllowingStateLoss()
+                }
             }
 
         }

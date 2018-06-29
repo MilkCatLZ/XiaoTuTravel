@@ -80,7 +80,7 @@ class CarRentFragment : XTBaseFragment() {
     private var carPointList = ArrayList<NearCarPoint>()
     val naviInfo = ObservableField<String>("")
     val drivingMode = ObservableBoolean(false)
-    val hasUsableCar = ObservableBoolean(false)
+    val hasUsableCar = ObservableBoolean(true)
     private val callBack = object : CarRentPresenter.CallBack {
         override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
             if (list.isNotEmpty()) {
@@ -138,10 +138,12 @@ class CarRentFragment : XTBaseFragment() {
                 calDistanceAndTimeInfo()
                 setupCurrentCarInfo(currentSelectedCarInfo.get()!!)
 //                findRoutToCar(t[0].lat, t[0].lng)
-                hasUsableCar.set(true)
+//                hasUsableCar.set(true)
+                setCarListVisible(true)
                 checkUserVerifyState()
             } else {
-                hasUsableCar.set(false)
+//                hasUsableCar.set(false)
+                setCarListVisible(false)
                 ToastManager.showShortToast(activity, "该网点没有该车型车辆，请选择其他车型")
                 currentSelectedCarInfo.set(null)
                 naviInfo.set("")
@@ -150,6 +152,11 @@ class CarRentFragment : XTBaseFragment() {
             circle_indicator.setViewPager(viewPager_car_list)
         }
     }
+
+    private fun setCarListVisible(visible: Boolean) {
+
+    }
+
     var drivingRouteOverlay: WalkRouteOverlay? = null
 //    private fun findRoutToCar(lat: Double, lng: Double) {
 //

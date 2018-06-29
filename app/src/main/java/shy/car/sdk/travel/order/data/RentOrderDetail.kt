@@ -6,6 +6,7 @@ import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
 import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.LNTextUtil
 
 class RentOrderDetail : BaseObservable() {
@@ -55,6 +56,20 @@ class RentOrderDetail : BaseObservable() {
         set(durationFee) {
             field = durationFee
             notifyChange(BR.durationFee)
+        }
+    @SerializedName("billing_time")
+    @get:Bindable
+    var billingTime: Long = 0
+        set(billingTime) {
+            field = billingTime
+            notifyChange(BR.billingTime)
+        }
+        get() {
+            return if (BuildConfig.DEBUG)
+                2980
+            else {
+                field
+            }
         }
     @SerializedName("mileage_fee")
     @get:Bindable

@@ -101,7 +101,10 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             var isCarModelSelected = false
             do {
                 isCarModelSelected = StringUtils.isNotEmpty(selectedCarCaterogyID.get())
-                Thread.sleep(200)
+                try {
+                    Thread.sleep(200)
+                } catch (e: Exception) {
+                }
             } while (!isCarModelSelected)
             it.onNext(selectedCarCaterogyID.get()!!)
             it.onComplete()

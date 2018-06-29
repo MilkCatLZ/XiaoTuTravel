@@ -37,38 +37,43 @@ class VerifyPresenter(val listener: LoginListener? = null, context: Context) : B
     var phone = ObservableField<String>("")
     var verify = ObservableField<String>("")
 
+    private var isLogining: Boolean = false
+
     /**
      * 登录
      */
     fun login() {
-
-        ApiManager.getInstance()
-                .api.login(phone.get()!!, verify.get()!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<JsonObject> {
-                    override fun onComplete() {
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        disposable = d
-                    }
-
-                    override fun onNext(result: JsonObject) {
-                        if (isLoginSuccess(result)) {
-                            copyLoginInfo(result)
-                            savePhoneNumCache()
-                            listener?.loginSuccess()
-                        } else {
-                            listener?.loginFailed(null)
+        if (!isLogining) {
+            ApiManager.getInstance()
+                    .api.login(phone.get()!!, verify.get()!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<JsonObject> {
+                        override fun onComplete() {
                         }
-                    }
 
-                    override fun onError(e: Throwable) {
-                        listener?.loginFailed(e)
-                        manageVerifyError(e)
-                    }
-                })
+                        override fun onSubscribe(d: Disposable) {
+                            disposable = d
+                        }
+
+                        override fun onNext(result: JsonObject) {
+                            if (isLoginSuccess(result)) {
+                                copyLoginInfo(result)
+                                savePhoneNumCache()
+                                listener?.loginSuccess()
+                            } else {
+                                listener?.loginFailed(null)
+                            }
+                            isLogining = false
+                        }
+
+                        override fun onError(e: Throwable) {
+                            listener?.loginFailed(e)
+                            manageVerifyError(e)
+                            isLogining = false
+                        }
+                    })
+        }
     }
 
     private fun copyLoginInfo(result: JsonObject) {
