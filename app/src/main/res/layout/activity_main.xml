@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/layout_top"
+                android:id="@+id/layout_top_sss"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -47,7 +47,7 @@
                 android:id="@+id/frame_fragment_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/layout_top"
+                android:layout_below="@+id/layout_top_sss"
                 android:background="@color/_foreground_material_light"/>
 
             <LinearLayout
@@ -81,12 +81,10 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true">
 
-            <fragment
-                android:name="shy.car.sdk.travel.user.ui.UserCenterFragment"
-                android:id="@+id/fragment_user_center"
+            <FrameLayout
+                android:id="@+id/frame_user_center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 </layout>

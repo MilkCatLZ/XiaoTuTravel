@@ -105,6 +105,8 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
             presenter = VerifyPresenter(listener, it)
             if (BuildConfig.DEBUG) {
                 Observable.timer(4, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             presenter.verify.set(verify)
                             binding.edtInput.removeTextChangedListener(textWatcher)
@@ -113,7 +115,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                             lockAndSubmit()
                             binding.edtInput.addTextChangedListener(textWatcher)
                         }, {
-
+                            it.printStackTrace()
                         })
 
             }

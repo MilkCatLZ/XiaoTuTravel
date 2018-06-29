@@ -169,6 +169,10 @@ class CarRentFragment : XTBaseFragment() {
                     }
                     RentOrderState.Return -> {
                         gotoPayRentOrder(orderMineList)
+                        carRentPresenter.getNetWorkList()
+                    }
+                    else -> {
+                        carRentPresenter.getNetWorkList()
                     }
                 }
             } else {
@@ -525,9 +529,9 @@ class CarRentFragment : XTBaseFragment() {
         carPointList.map {
             addNetWorkMarkersToMap(it)
         }
-        if (netWorkMarkerList.isNotEmpty()) {
-            netWorkMarkerList[0].showInfoWindow()
-        }
+//        if (netWorkMarkerList.isNotEmpty()) {
+//            netWorkMarkerList[0].showInfoWindow()
+//        }
         carPointList.map {
             drawPointAngel(it)
         }
@@ -663,13 +667,13 @@ class CarRentFragment : XTBaseFragment() {
         } else {
 
 
-            if (BuildConfig.DEBUG) {
-                if (currentSelectedCarInfo.get() != null)
-                    showConfirmDialog()
-                else {
-                    ToastManager.showShortToast(activity, "当前没有可用车辆")
-                }
-            }
+//            if (BuildConfig.DEBUG) {
+//                if (currentSelectedCarInfo.get() != null)
+//                    showConfirmDialog()
+//                else {
+//                    ToastManager.showShortToast(activity, "当前没有可用车辆")
+//                }
+//            }
             //提示未交保证金
             if (userVisibleHint) {
                 val dialog = ARouter.getInstance()

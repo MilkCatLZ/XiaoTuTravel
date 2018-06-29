@@ -1,14 +1,18 @@
 package shy.car.sdk.app
 
+import android.content.Context
+import android.support.multidex.MultiDex
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alipay.sdk.app.EnvUtils
+import com.alipay.sdk.auth.AlipaySDK
 import com.base.app.BaseApplication
 import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
 import com.base.location.Location
 import com.base.util.SPCache
+import com.base.util.crash.CrashHandler
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.tencent.mm.opensdk.openapi.IWXAPI
@@ -47,7 +51,11 @@ class Application : BaseApplication() {
     lateinit var api: IWXAPI
     override fun onCreate() {
         super.onCreate()
-
+        if (BuildConfig.DEBUG)
+            CrashHandler.getInstance()
+                    .init(this, CrashHandler.CrashCallBack {
+                        it.printStackTrace()
+                    })
         initNetWork()
         initRouter()
         initPinYin()
@@ -65,6 +73,10 @@ class Application : BaseApplication() {
         }
     }
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
+    }
 
     private fun initPay() {
         Alipay.Init(this)

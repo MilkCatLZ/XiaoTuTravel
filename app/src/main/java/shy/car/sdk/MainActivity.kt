@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_home_top.*
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.eventbus.RefreshCarPointList
@@ -35,6 +34,7 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
+import shy.car.sdk.travel.user.ui.UserCenterFragment
 import java.util.concurrent.TimeUnit
 
 /**
@@ -92,6 +92,7 @@ class MainActivity : NearCarOpenListener,
     private val deliveryFragment = DeliveryFragment()
     var citySelectFragment = MainCitySelectFragment()
     var nearCarListFragment = MainNearNetWorkFragment()
+    var userCenterFragment = UserCenterFragment()
 
     var city = ObservableField<CurrentLocation>()
 
@@ -118,10 +119,12 @@ class MainActivity : NearCarOpenListener,
         var transaction = supportFragmentManager.beginTransaction()
 
 
-        transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
+        transaction.add(R.id.frame_fragment_content, carRentFragment, "car_rent")
 
         transaction.add(R.id.frame_city_select, citySelectFragment, "citySelectFragment")
         transaction.add(R.id.frame_near_car_list, nearCarListFragment, "nearCarListFragment")
+        transaction.add(R.id.frame_user_center, userCenterFragment, "user_center")
+
         transaction.hide(deliveryFragment)
         transaction.commit()
 
@@ -179,7 +182,7 @@ class MainActivity : NearCarOpenListener,
     }
 
     fun onAvatarClick() {
-        drawer.openDrawer(Gravity.START)
+        binding.drawer.openDrawer(Gravity.START)
         eventBusDefault.post(RefreshUserInfo())
     }
 
@@ -192,8 +195,8 @@ class MainActivity : NearCarOpenListener,
 
     private fun changeFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        if (supportFragmentManager.findFragmentByTag(tag) == null)
-            transaction.add(R.id.frame_fragment_content, fragment, tag)
+        if (supportFragmentManager.fragments.isNotEmpty() && !supportFragmentManager.fragments.contains(fragment))
+            transaction.add(R.id.frame_fragment_content, fragment, "fragment_order")
         transaction.hide(carRentFragment)
         transaction.hide(deliveryFragment)
 //        transaction.hide(orderSendFragment)
