@@ -119,8 +119,6 @@ class MainActivity : NearCarOpenListener,
 
 
         transaction.add(R.id.frame_fragment_content, carRentFragment, tag)
-        transaction.add(R.id.frame_fragment_content, deliveryFragment, tag)
-
 
         transaction.add(R.id.frame_city_select, citySelectFragment, "citySelectFragment")
         transaction.add(R.id.frame_near_car_list, nearCarListFragment, "nearCarListFragment")
@@ -194,6 +192,8 @@ class MainActivity : NearCarOpenListener,
 
     private fun changeFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
+        if (supportFragmentManager.findFragmentByTag(tag) == null)
+            transaction.add(R.id.frame_fragment_content, fragment, tag)
         transaction.hide(carRentFragment)
         transaction.hide(deliveryFragment)
 //        transaction.hide(orderSendFragment)

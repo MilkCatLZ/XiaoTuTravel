@@ -140,7 +140,7 @@
             android:id="@+id/view_bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibleOrGone="@{!fragment.drivingMode&amp;&amp;fragment.hasUsableCar}"
+            android:visibleOrGone="@{!fragment.drivingMode&amp;&amp;!fragment.takeMode&amp;&amp;fragment.hasUsableCar}"
             app:behavior_peekHeight="@dimen/_260dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="visible">
@@ -169,6 +169,22 @@
 
             <include
                 layout="@layout/layout_car_rent_bottomsheet_driving"
+                app:detail="@{detail}"
+                app:fragment="@{fragment}" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view_bottom_sheet_dtake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibleOrGone="@{fragment.takeMode}"
+            app:behavior_peekHeight="245dp"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+            tools:visibility="gone">
+
+            <include
+                layout="@layout/layout_car_rent_bottomsheet_wait_take"
                 app:detail="@{detail}"
                 app:fragment="@{fragment}" />
 

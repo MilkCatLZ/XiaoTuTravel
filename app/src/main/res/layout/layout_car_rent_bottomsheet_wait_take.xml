@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
+
+        <variable
+            name="detail"
+            type="shy.car.sdk.travel.order.data.RentOrderDetail" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        tools:background="#88000000">
+
+        <com.dd.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:sl_shadowColor="#dcdcdc"
+            app:sl_shadowRadius="5dp"
+            tools:background="@color/_foreground_material_light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/back_white_coner_4dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="106dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:imageURL="@{detail.car.modelImg}"
+                            android:src="@drawable/img_car" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{detail.carInfo()}"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="@dimen/text_primary_14dp"
+                            tools:text="桂DJF565 | EQ1 | 白色" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="5dp"
+                                android:drawableStart="@drawable/icon_e_car"
+                                android:gravity="center"
+                                android:text="电量"
+                                android:textColor="@color/text_second_primary_666666"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
+                                android:gravity="center"
+                                android:text="@{detail.car.electricity}"
+                                android:textColor="@color/main_color_red"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="5dp"
+                                android:drawableStart="@drawable/icon_mileage"
+                                android:gravity="center"
+                                android:text="续航"
+                                android:textColor="@color/text_second_primary_666666"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="5dp"
+                                android:gravity="center"
+                                android:text="@{detail.car.surplusMileage}"
+                                android:textColor="@color/main_color_red"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{fragment.naviInfo}"
+                        android:textColor="@color/text_primary_333333"
+                        android:textSize="13sp"
+                        tools:text="距3.5km 步行3小时38分钟" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="广西南宁市西乡塘区鲁班路83号"
+                        android:textColor="@color/text_third_primary_999999"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </com.dd.ShadowLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/back_button_main_green_clickable"
+            android:gravity="center"
+            android:onClick="@{()->fragment.gotoFindAndTake(detail.orderId)}"
+            android:text="去取车"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp" />
+    </LinearLayout>
+</layout>

@@ -78,7 +78,11 @@ public class CountDownThread {
 
         handler.postDelayed(runnable, 0);
 
-        textView.setTag(this);
+        try {
+            textView.setTag(this);
+        } catch (Exception e) {
+
+        }
     }
 
     public void cancel() {

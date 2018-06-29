@@ -43,7 +43,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     var carCategoryListAdapter: DataBindingItemClickAdapter<CarCategory> = DataBindingItemClickAdapter(R.layout.item_car_title, BR.car, BR.click, View.OnClickListener {
         val carCategory = it.tag as CarCategory
         selectedCarCaterogyID.set(carCategory.id)
-        getUsableCarList(carPoint)
+        getUsableCarList(null)
     }, DataBindingAdapter.CallBack { holder, position ->
         holder.binding.setVariable(BR.presenter, this@CarRentPresenter)
     })
@@ -96,7 +96,8 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     var carPoint: NearCarPoint? = null
     fun getUsableCarList(carPoint: NearCarPoint?) {
-        this.carPoint = carPoint
+        if (carPoint !== null)
+            this.carPoint = carPoint
         var watching = Observable.create<String> {
             var isCarModelSelected = false
             do {
@@ -114,7 +115,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
 
         val observable = ApiManager.getInstance()
-                .api.getUsableCarList(app.location.cityCode, carPoint?.id!!, carPoint.lat, carPoint.lng, selectedCarCaterogyID.get()!!)
+                .api.getUsableCarList(app.location.cityCode, carPoint?.id, app.location.lat, app.location.lng, selectedCarCaterogyID.get()!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 

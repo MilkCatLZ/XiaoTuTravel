@@ -16,6 +16,7 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.base.base.ProgressDialog
 import com.base.overlay.DrivingRouteOverlay
+import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -103,11 +104,11 @@ class FindAndRentCarFragment : XTBaseFragment(),
     var mDriveRouteResult: DriveRouteResult? = null
     val timeAndDistance = ObservableField<String>("")
     val countDown = ObservableField<String>("")
+    private var isFirstInit: Boolean = true
     var oid: String = ""
         set(value) {
             field = value
             presenter.oid = oid
-            presenter.getOrderDetail()
         }
 
     lateinit var binding: FragmentFindAndRentCarBinding
@@ -255,6 +256,28 @@ class FindAndRentCarFragment : XTBaseFragment(),
         binding.mapView.map.myLocationStyle = myLocationStyle//设置定位蓝点的Style
 
         binding.mapView.map.isMyLocationEnabled = true
+        binding.mapView.map.setOnMyLocationChangeListener {
+            if (isFirstInit) {
+
+                Observable.create<String> {
+                    while (StringUtils.isEmpty(oid)) {
+                        try {
+                            Thread.sleep(200)
+                        } catch (e: Exception) {
+
+                        }
+                    }
+                    it.onNext(oid)
+                }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            presenter.getOrderDetail()
+                        }, {
+
+                        })
+            }
+        }
     }
 
     override fun onResume() {
