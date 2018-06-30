@@ -12,7 +12,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_lock_car.*
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
@@ -92,12 +91,13 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
 
             override fun onError(e: Throwable) {
 
-                if (BuildConfig.DEBUG) {
-                    isActionFinish = true
-                } else {
-                    ErrorManager.managerError(context, e, "操作失败，请重试")
-                    dismissAllowingStateLoss()
-                }
+//                if (BuildConfig.DEBUG) {
+//                    isActionFinish = true
+//                } else {
+                dis?.dispose()
+                ErrorManager.managerError(context, e, "操作失败，请重试")
+                dismissAllowingStateLoss()
+//                }
             }
         }
 

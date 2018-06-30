@@ -69,6 +69,7 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
 
             ProgressDialog.showLoadingView(context)
 
+            //传手机的经纬度 辅助定位
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
                     .api.returnCar(detail?.orderId!!, netWorkID, app.location.lat.toString(), app.location.lng.toString())

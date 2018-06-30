@@ -34,6 +34,7 @@ import shy.car.sdk.travel.rent.presenter.UnLockCarPresenter
 /**
  * create by 过期猫粮 at 2018/06/19
  * 拍照并取车计费
+ * 租车拍照
  */
 @Route(path = RouteMap.UnLockCar)
 class UnLockCarActivity : XTBaseActivity(),
