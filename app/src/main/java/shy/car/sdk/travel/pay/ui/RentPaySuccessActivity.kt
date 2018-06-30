@@ -10,7 +10,6 @@ import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.ActivityPaySuccessBinding
 import shy.car.sdk.databinding.ActivityRentPaySuccessBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 
@@ -18,7 +17,7 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
  * create by 过期猫粮 at 2018/06/19
  * 保证金支付成功
  */
-@Route(path = RouteMap.PaySuccess)
+@Route(path = RouteMap.RentCarPaySuccess)
 class RentPaySuccessActivity : XTBaseActivity() {
 
     @Autowired(name = Object1)

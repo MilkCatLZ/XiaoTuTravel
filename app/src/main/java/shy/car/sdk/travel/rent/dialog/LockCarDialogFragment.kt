@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -76,7 +75,7 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
     fun LockCar() {
         val observable = ApiManager.getInstance()
                 .api.carAction(carID, oid, status = 3.toString())
-        val observer = object : Observer<JsonObject> {
+        val observer = object : Observer<String> {
             override fun onComplete() {
 
             }
@@ -85,7 +84,7 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
 
             }
 
-            override fun onNext(t: JsonObject) {
+            override fun onNext(t: String) {
                 isActionFinish = true
             }
 

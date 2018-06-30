@@ -36,36 +36,36 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         fun onGetDetailSuccess(t: RentOrderDetail)
     }
 
-    fun carRing() {
-        ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.carAction(detail.car?.carID!!, status = 1.toString())
-        val observer = object : Observer<JsonObject> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                disposable = d
-            }
-
-            override fun onNext(t: JsonObject) {
-                ToastManager.showLongToast(context, "车辆已鸣笛，请尽快找到车辆")
-                ProgressDialog.hideLoadingView(context)
-            }
-
-            override fun onError(e: Throwable) {
-                ErrorManager.managerError(context, e, "操作失败，请重试")
-                ProgressDialog.hideLoadingView(context)
-                callBack.onRingError(e)
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
+//    fun carRing() {
+//        ProgressDialog.showLoadingView(context)
+//        disposable?.dispose()
+//        val observable = ApiManager.getInstance()
+//                .api.carAction(detail.car?.carID!!, status = 1.toString())
+//        val observer = object : Observer<JsonObject> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//                disposable = d
+//            }
+//
+//            override fun onNext(t: JsonObject) {
+//                ToastManager.showLongToast(context, "车辆已鸣笛，请尽快找到车辆")
+//                ProgressDialog.hideLoadingView(context)
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ErrorManager.managerError(context, e, "操作失败，请重试")
+//                ProgressDialog.hideLoadingView(context)
+//                callBack.onRingError(e)
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 
     fun unLockCar() {
 

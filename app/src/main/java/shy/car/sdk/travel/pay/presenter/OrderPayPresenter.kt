@@ -2,6 +2,7 @@ package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
 import android.databinding.ObservableField
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
@@ -10,6 +11,7 @@ import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.pay.data.PayMethod
 
@@ -19,6 +21,7 @@ class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresente
         fun onGetDetailSuccess(t: RentOrderDetail)
         fun onGetDetailError(e: Throwable)
         fun getPayStringSuccess(t: JsonObject)
+        fun paySuccess()
     }
 
     val payMethod = ObservableField<PayMethod>()
@@ -79,12 +82,26 @@ class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresente
 
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
-                callBack.getPayStringSuccess(t)
+                try {
+                    if (t.get("payment").asInt == 3) {
+                        callBack.paySuccess()
+                    } else {
+                        callBack.getPayStringSuccess(t)
+                    }
+                } catch (_: Exception) {
+                    callBack.getPayStringSuccess(t)
+                }
+
             }
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "支付失败")
+                val err = ErrorManager.managerError(context, e, "支付失败")
+                if (err?.error_code == 400118) {
+                    ARouter.getInstance()
+                            .build(RouteMap.Pay)
+                            .navigation()
+                }
             }
 
         }

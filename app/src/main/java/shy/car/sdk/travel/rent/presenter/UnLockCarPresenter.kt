@@ -63,6 +63,8 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                 .toSubscribe(observable, observer)
     }
 
+    private var ieUnLockError: Boolean = false
+
     fun uploadPicAndUnlockCar() {
         if (checkSelect()) {
 
@@ -98,7 +100,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 //                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!,"1", createImageParams().parts())//type=1 取车拍照
+                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, "1", createImageParams().parts())//type=1 取车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 
@@ -109,11 +111,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                     })
                     .doOnError({
                         ProgressDialog.hideLoadingView(context)
-                        disposable?.dispose()
+                        ErrorManager.managerError(context, it, "取车失败，请重试")
+                        ieUnLockError = true
                     })
                     .subscribeOn(Schedulers.io())
                     .flatMap({
-                        observableUpload
+                        if (ieUnLockError) null else observableUpload
                     })
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<JsonObject> {
@@ -132,8 +135,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
                         override fun onError(e: Throwable) {
                             ProgressDialog.hideLoadingView(context)
-                            ErrorManager.managerError(context, e, "解锁失败")
-                            callBack.onUnLockError()
+                            if (e is NullPointerException) {
+
+                            } else {
+                                ErrorManager.managerError(context, e, "解锁失败")
+                                callBack.onUnLockError()
+                            }
                         }
 
                     })

@@ -17,6 +17,7 @@ import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyPaySuccessActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyReturnActivity;
+import shy.car.sdk.travel.pay.ui.RentPaySuccessActivity;
 import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
@@ -304,7 +305,7 @@ public class RouteMap {
     public static final String ReturnPromiseMoney = "/pay/return_promise_money";
 
     /**
-     * {@link PromiseMoneyReturnActivity}
+     * {@link RentPaySuccessActivity}
      * 租车支付成功
      */
     @NotNull

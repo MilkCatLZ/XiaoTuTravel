@@ -25,8 +25,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.constant.ParamsConstant.String2
-import shy.car.sdk.app.data.RefreshRentCarState
-import shy.car.sdk.app.eventbus.RefreshOrderList
+import shy.car.sdk.app.data.ReturnCarSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityReturnCarAndTakePhotoBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -41,14 +40,8 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
         ReturnCarAndTakePhotoPresenter.CallBack {
     override fun onReturnSuccess() {
         ToastManager.showShortToast(this, "还车成功")
-        ARouter.getInstance()
-                .build(RouteMap.OrderPay)
-                .withString(String1, oid)
-                .navigation()
-        RefreshOrderList.refreshOrderList()
         EventBus.getDefault()
-                .post(RefreshRentCarState(presenter.detail?.orderId!!))
-        app.goHome()
+                .post(ReturnCarSuccess(presenter.detail?.orderId!!))
         finish()
     }
 

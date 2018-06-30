@@ -23,8 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.data.RefreshRentCarState
-import shy.car.sdk.app.eventbus.RefreshOrderList
+import shy.car.sdk.app.data.ReturnCarSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentReturnCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -125,10 +124,7 @@ class ReturnCarFragment : XTBaseFragment(),
             ToastManager.showShortToast(it, "还车成功")
         }
         EventBus.getDefault()
-                .post(RefreshOrderList())
-        EventBus.getDefault()
-                .post(RefreshRentCarState(presenter.oid))
-        app.goHome()
+                .post(ReturnCarSuccess(presenter.oid))
         finish()
     }
 

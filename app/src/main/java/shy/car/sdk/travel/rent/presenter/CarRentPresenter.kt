@@ -196,8 +196,12 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
         when (error?.error_code) {
         //存在未完成的订单
-            400101, 400102 -> {
+            400101 -> {
                 getUnProgressOrder()
+            }
+            400102->{
+                getUnProgressOrder()
+                ToastManager.showShortToast(context, "请先支付未完成的订单")
             }
             400105 -> {
                 ARouter.getInstance()

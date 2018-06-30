@@ -5,11 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.alibaba.android.arouter.launcher.ARouter
-import com.base.util.ToastManager
 import com.google.gson.JsonObject
-import com.tencent.mm.opensdk.modelpay.PayReq
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
@@ -17,9 +14,10 @@ import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
-import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.eventbus.PaySuccess
+import shy.car.sdk.app.eventbus.RentCarPaySuccess
 import shy.car.sdk.app.route.RouteMap
+
 import shy.car.sdk.databinding.FragmentOrderPayBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.pay.WXPayUtil
@@ -33,6 +31,15 @@ import shy.car.sdk.travel.pay.presenter.OrderPayPresenter
  */
 class OrderPayFragment : XTBaseFragment(),
         OrderPayPresenter.CallBack {
+    override fun paySuccess() {
+        ARouter.getInstance()
+                .build(RouteMap.RentCarPaySuccess)
+                .withObject(Object1, binding.detail)
+                .navigation()
+        eventBusDefault.post(RentCarPaySuccess())
+        finish()
+    }
+
     override fun getPayStringSuccess(json: JsonObject) {
         activity?.let {
             if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, json)) {
@@ -101,10 +108,6 @@ class OrderPayFragment : XTBaseFragment(),
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun paySuccess(success: PaySuccess) {
-        activity?.let {
-
-            ToastManager.showShortToast(it, "支付成功")
-        }
         ARouter.getInstance()
                 .build(RouteMap.RentCarPaySuccess)
                 .withObject(Object1, binding.detail)

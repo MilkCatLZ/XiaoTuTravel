@@ -6,7 +6,6 @@ import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.alipay.sdk.app.EnvUtils
-import com.alipay.sdk.auth.AlipaySDK
 import com.base.app.BaseApplication
 import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
@@ -31,6 +30,8 @@ import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.data.LoginOutOfDateException
 import shy.car.sdk.app.data.LoginSuccess
+import shy.car.sdk.app.eventbus.RefreshUserInfo
+import shy.car.sdk.app.eventbus.UserLogout
 import shy.car.sdk.app.net.ApiInterface
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.net.BaseInterceptor
@@ -40,7 +41,6 @@ import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
-import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.travel.user.data.User
 
 class Application : BaseApplication() {
@@ -251,6 +251,7 @@ class Application : BaseApplication() {
 
             override fun onNext(t: Response<Void>) {
                 User.logout(this@Application)
+                EventBus.getDefault().post(UserLogout())
                 ApiManager.getInstance()
                         .clearCache()
             }
@@ -268,7 +269,7 @@ class Application : BaseApplication() {
     }
 
     fun goHome() {
-        for (i in (activityList.size - 1) downTo 0) {
+        for (i in (activityList.size - 1) downTo 1) {
             activityList[i].finish()
             activityList.removeAt(i)
         }

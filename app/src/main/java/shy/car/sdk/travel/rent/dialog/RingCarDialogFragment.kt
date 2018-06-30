@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.base.util.ToastManager
-import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,7 +44,7 @@ class RingCarDialogFragment : XTBaseDialogFragment() {
     fun carRing() {
         val observable = ApiManager.getInstance()
                 .api.carAction(carid, status = 1.toString())
-        val observer = object : Observer<JsonObject> {
+        val observer = object : Observer<String> {
             override fun onComplete() {
 
             }
@@ -54,7 +53,7 @@ class RingCarDialogFragment : XTBaseDialogFragment() {
 
             }
 
-            override fun onNext(t: JsonObject) {
+            override fun onNext(t: String) {
 
                 Observable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())

@@ -64,13 +64,7 @@ class RentOrderDetail : BaseObservable() {
             field = billingTime
             notifyChange(BR.billingTime)
         }
-        get() {
-            return if (BuildConfig.DEBUG)
-                2980
-            else {
-                field
-            }
-        }
+
     @SerializedName("mileage_fee")
     @get:Bindable
     var mileageFee: Double = 0.toDouble()
