@@ -22,7 +22,6 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -52,14 +51,9 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     interface CallBack {
         fun onGetCarError(e: Throwable)
         fun onGetCarSuccess(t: List<CarInfo>)
-        /**
-         * 获取到预约未处理的订单
-         */
-        fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?)
-
-        fun getDetailSuccess(t: RentOrderDetail)
         fun onGetCarModelSuccess(t: List<CarCategory>)
         fun getNetWorkListSuccess(t: ArrayList<NearCarPoint>)
+        fun createSuccess(orderMineList: OrderMineList)
     }
 
     fun getUsableCarModel() {
@@ -145,9 +139,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer)
-
-//        ApiManager.getInstance()
-//                .toSubscribe(observable, observer)
     }
 
     fun createRentCarOrder(carId: String, pointID: String) {
@@ -177,7 +168,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                         ProgressDialog.hideLoadingView(context)
                         if (t.isNotEmpty()) {
                             ToastManager.showShortToast(context, "订单创建成功")
-                            callBack.onGetUnProgressOrderSuccess(t[0])
+                            callBack.createSuccess(t[0])
                         }
                     }
 
@@ -197,10 +188,10 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         when (error?.error_code) {
         //存在未完成的订单
             400101 -> {
-                getUnProgressOrder()
+                //TODO 400101
             }
             400102->{
-                getUnProgressOrder()
+                //TODO 400102
                 ToastManager.showShortToast(context, "请先支付未完成的订单")
             }
             400105 -> {
@@ -214,104 +205,6 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         }
     }
 
-//    private fun getUnPayOrder() {
-//        ProgressDialog.showLoadingView(context)
-//        disposable?.dispose()
-//        val observable = ApiManager.getInstance()
-//                .api.getRentOrderList("1", "1", 0, 1)
-//        val observer = object : Observer<List<OrderMineList>> {
-//            override fun onComplete() {
-//
-//            }
-//
-//            override fun onSubscribe(d: Disposable) {
-//
-//            }
-//
-//            override fun onNext(t: List<OrderMineList>) {
-//                ProgressDialog.hideLoadingView(context)
-//                if (t.isNotEmpty()) {
-//                    callBack.onGetUnPayOrderSuccess(t[0])
-//                }
-//            }
-//
-//            override fun onError(e: Throwable) {
-//                ProgressDialog.hideLoadingView(context)
-//                ErrorManager.managerError(context, e, "获取订单失败")
-//            }
-//
-//        }
-//
-//        ApiManager.getInstance()
-//                .toSubscribe(observable, observer)
-//    }
-
-    /**
-     * 获取已预约订单
-     */
-    fun getUnProgressOrder() {
-        ProgressDialog.showLoadingView(context)
-        disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderList("1", "1", 0, 1)
-        val observer = object : Observer<List<OrderMineList>> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: List<OrderMineList>) {
-                ProgressDialog.hideLoadingView(context)
-                if (t.isNotEmpty()) {
-                    callBack.onGetUnProgressOrderSuccess(t[0])
-                } else {
-                    callBack.onGetUnProgressOrderSuccess(null)
-                }
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取订单失败")
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
-
-    fun getRentOrderDetail(id: String) {
-        ProgressDialog.showLoadingView(context)
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(id)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.getDetailSuccess(t)
-            }
-
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取订单失败")
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
 
     fun getNetWorkList() {
 

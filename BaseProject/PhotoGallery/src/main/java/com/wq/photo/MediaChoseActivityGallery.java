@@ -69,6 +69,12 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getBundleExtra(PickConfig.EXTRA_PICK_BUNDLE);
+        chosemode = bundle.getInt(PickConfig.EXTRA_PICK_MODE, PickConfig.MODE_SINGLE_PICK);
+        
+        if (chosemode == PickConfig.MODE_TAKE_PHOTO) {
+            sendStarCamera();
+        }
         setContentView(R.layout.activity_media_chose);
         if (imasgemap != null) {
             imasgemap.clear();
@@ -82,9 +88,9 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
         txtCount = (TextView) findViewById(R.id.txt_count);
         FragmentTransaction fragmentTransaction =
             getSupportFragmentManager().beginTransaction();
-        Bundle bundle = getIntent().getBundleExtra(PickConfig.EXTRA_PICK_BUNDLE);
+        
         spanCount = bundle.getInt(PickConfig.EXTRA_SPAN_COUNT, PickConfig.DEFAULT_SPANCOUNT);
-        chosemode = bundle.getInt(PickConfig.EXTRA_PICK_MODE, PickConfig.MODE_SINGLE_PICK);
+        
         max_chose_count = bundle.getInt(PickConfig.EXTRA_MAX_SIZE, PickConfig.DEFAULT_PICKSIZE);
         isNeedActionbar = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_ACTIONBAR, true);
         isneedCrop = bundle.getBoolean(PickConfig.EXTRA_IS_NEED_CROP, false);
@@ -109,6 +115,7 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
                 imasgemap.put(list.get(i), list.get(i));
             }
         }
+        
     }
     
     
@@ -240,7 +247,23 @@ public class MediaChoseActivityGallery extends GalleryBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CROP && (chosemode == PickConfig.MODE_SINGLE_PICK)) {
+        if (chosemode == PickConfig.MODE_TAKE_PHOTO) {
+            if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CAMERA) {
+                if (currentfile != null && currentfile.exists() && currentfile.length() > 10) {
+                    Intent intent = new Intent();
+                    ArrayList<String> img = new ArrayList<>();
+                    img.add(currentfile.getAbsolutePath());
+                    intent.putExtra(PickConfig.DATA, img);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    insertImage(currentfile.getAbsolutePath());
+                } else {
+                    finish();
+                }
+            } else {
+                finish();
+            }
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CROP && (chosemode == PickConfig.MODE_SINGLE_PICK)) {
             Intent intent = new Intent();
             ArrayList<String> img = new ArrayList<>();
             String crop_path = data.getStringExtra("crop_path");

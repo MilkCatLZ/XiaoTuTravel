@@ -148,7 +148,7 @@ class UnLockCarActivity : XTBaseActivity(),
                     override fun onNext(granted: Boolean) {
                         if (granted) {
                             PickConfig.with(this@UnLockCarActivity)
-                                    .pickMode(PickConfig.MODE_SINGLE_PICK)
+                                    .pickMode(PickConfig.MODE_TAKE_PHOTO)
                                     .isneedcamera(true)
                                     .start()
                         } else {

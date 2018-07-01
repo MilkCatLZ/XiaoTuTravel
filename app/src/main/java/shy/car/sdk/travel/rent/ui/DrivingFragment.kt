@@ -6,6 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
@@ -17,6 +22,7 @@ import shy.car.sdk.travel.rent.dialog.LockCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.OpenCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.DrivingPresenter
+import java.util.concurrent.TimeUnit
 
 /**
  * create by 过期猫粮 at 2018/06/24
@@ -25,7 +31,7 @@ import shy.car.sdk.travel.rent.presenter.DrivingPresenter
 class DrivingFragment : XTBaseFragment(),
         DrivingPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
-
+        startAutoRefresh()
     }
 
     override fun onGetDetailError(e: Throwable) {
@@ -56,6 +62,31 @@ class DrivingFragment : XTBaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    var dispose: Disposable? = null
+    private fun startAutoRefresh() {
+        Observable.interval(5, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Long> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        dispose = d
+                    }
+
+                    override fun onNext(t: Long) {
+                        presenter.getOrderDetail(presenter.detail.get()?.orderId!!)
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                })
     }
 
     /**
@@ -115,5 +146,10 @@ class DrivingFragment : XTBaseFragment(),
         ARouter.getInstance()
                 .build(RouteMap.ReturnArea)
                 .navigation()
+    }
+
+    override fun onDestroy() {
+        dispose?.dispose()
+        super.onDestroy()
     }
 }

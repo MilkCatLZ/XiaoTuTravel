@@ -9,7 +9,7 @@
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.rent.ui.CarRentFragment" />
+            type="shy.car.sdk.travel.rent.ui.CarRentOrderingFragment" />
 
         <variable
             name="detail"
@@ -49,8 +49,7 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/style_car"
                             android:imageURL="@{detail.car.modelImg}"
                             android:src="@drawable/img_car" />
                     </LinearLayout>

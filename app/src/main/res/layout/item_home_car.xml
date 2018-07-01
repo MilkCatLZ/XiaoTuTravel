@@ -30,10 +30,9 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:imageURL="@{car.carImg}"
-                    android:src="@drawable/img_car" />
+                    android:src="@drawable/img_car"
+                    style="@style/style_car"/>
             </LinearLayout>
 
             <LinearLayout

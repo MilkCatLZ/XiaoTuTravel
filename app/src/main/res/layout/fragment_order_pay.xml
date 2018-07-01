@@ -47,8 +47,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/style_car"
                     android:layout_marginTop="20dp"
                     android:imageURL="@{detail.car.modelImg}"
                     android:src="@drawable/img_car"/>

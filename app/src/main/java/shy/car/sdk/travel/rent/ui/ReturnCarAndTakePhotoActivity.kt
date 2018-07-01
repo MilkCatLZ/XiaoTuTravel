@@ -146,7 +146,7 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
                     override fun onNext(granted: Boolean) {
                         if (granted) {
                             PickConfig.with(this@ReturnCarAndTakePhotoActivity)
-                                    .pickMode(PickConfig.MODE_SINGLE_PICK)
+                                    .pickMode(PickConfig.MODE_TAKE_PHOTO)
                                     .isneedcamera(true)
                                     .start()
                         } else {

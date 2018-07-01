@@ -13,8 +13,8 @@ import com.base.base.ProgressDialog
 import com.wq.photo.widget.PickConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.databinding.FragmentUserInfoEditBinding
 import shy.car.sdk.app.eventbus.RefreshUserInfo
+import shy.car.sdk.databinding.FragmentUserInfoEditBinding
 import shy.car.sdk.travel.user.presenter.UserDetailPresenter
 import java.util.*
 
@@ -90,7 +90,7 @@ class UserInfoEditFragment : XTBaseFragment(),
     fun onAvatarClick() {
         activity?.let {
             PickConfig.with(it)
-                    .pickMode(PickConfig.MODE_SINGLE_PICK)
+                    .pickMode(PickConfig.MODE_TAKE_PHOTO)
                     .isneedcamera(true)
                     .isneedactionbar(true)
                     .isneedcrop(true)

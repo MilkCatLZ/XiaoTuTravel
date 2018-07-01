@@ -35,8 +35,7 @@
 
         <ImageView
             android:id="@+id/img_car"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/style_car"
             android:layout_marginTop="15dp"
             android:imageURL="@{car.img}"
             android:src="@drawable/img_car" />

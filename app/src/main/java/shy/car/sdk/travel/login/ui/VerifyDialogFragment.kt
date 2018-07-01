@@ -293,11 +293,11 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
 
     override fun dismiss() {
         d?.dispose()
-        super.dismiss()
+        super.dismissAllowingStateLoss()
     }
 
     fun back() {
-        dismiss()
+        dismissAllowingStateLoss()
         app.startLoginDialog(null, null, dismissListener)
         dismissListener = null
     }

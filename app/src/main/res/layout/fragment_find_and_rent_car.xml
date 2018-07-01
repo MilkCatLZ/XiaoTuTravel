@@ -189,8 +189,7 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/style_car"
                             android:imageURL="@{detail.car.modelImg}"
                             android:src="@drawable/img_car" />
                     </LinearLayout>

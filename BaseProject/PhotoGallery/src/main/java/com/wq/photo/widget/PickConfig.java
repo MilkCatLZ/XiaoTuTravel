@@ -32,6 +32,7 @@ public class PickConfig {
     public static int DEFAULT_PICKSIZE = 1;
     public static int MODE_SINGLE_PICK = 1;
     public static int MODE_MULTIP_PICK = 2;
+    public static int MODE_TAKE_PHOTO = 3;
 
 
     public final static String EXTRA_PICK_BUNDLE = "extra_pick_bundle";

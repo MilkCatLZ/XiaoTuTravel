@@ -5,28 +5,21 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
-import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
 import com.amap.api.services.core.AMapException
 import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
-import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
-import com.base.location.Location
 import com.base.overlay.WalkRouteOverlay
-import com.base.util.DialogManager
 import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observable
@@ -34,30 +27,25 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_car_rent.*
-import kotlinx.android.synthetic.main.layout_car_rent_bottomsheet.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
-import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.eventbus.CreateRentCarOrderSuccess
-import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
-import shy.car.sdk.databinding.FragmentCarRentBinding
+import shy.car.sdk.databinding.FragmentCarRentOrderingBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
-import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
-import shy.car.sdk.travel.rent.data.CarCategory
-import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
-import shy.car.sdk.travel.rent.presenter.CarRentPresenter
+import shy.car.sdk.travel.rent.data.RentOrderState
+import shy.car.sdk.travel.rent.dialog.RentNoPayDialog
+import shy.car.sdk.travel.rent.presenter.CarRentOrderingPresenter
 import shy.car.sdk.travel.user.data.User
 
 
@@ -68,18 +56,13 @@ import shy.car.sdk.travel.user.data.User
  * 其他地方需要调用，使用app.location
  */
 @Route(path = RouteMap.CarRent)
-class CarRentFragment : XTBaseFragment() {
+class CarRentOrderingFragment : XTBaseFragment() {
 
-    private lateinit var binding: FragmentCarRentBinding
-    private lateinit var carRentPresenter: CarRentPresenter
+    private lateinit var binding: FragmentCarRentOrderingBinding
+    var carRentPresenter: CarRentOrderingPresenter? = null
 
     var nearCarListener: NearCarOpenListener? = null
     var locationRefreshListener: MapLocationRefreshListener? = null
-    /**
-     * 当前选中的车辆
-     */
-    var currentSelectedCarInfo = ObservableField<CarInfo>()
-
     /**
      * 在地图上展出的网点的marker列表
      */
@@ -97,72 +80,59 @@ class CarRentFragment : XTBaseFragment() {
      * 当前选中的车辆的定位信息，距离，时间
      */
     val naviInfo = ObservableField<String>("")
-
     /**
-     * 用来确定车辆列表是否显示
-     * true:有可用车辆，显示
-     * false:无可用车辆，不现实
+     * 是否已经取车，如果有取车订单，则隐藏租车
+     * 显示行程中
      */
-    val hasUsableCar = ObservableBoolean(true)
+    val drivingMode = ObservableBoolean(false)
+    /**
+     * 有未取车的订单
+     */
+    val takeMode = ObservableBoolean(false)
 
-
-    lateinit var carListViewPager: ViewPager
     /**
      * 定位默认图标
      */
     lateinit var bitmap: BitmapDescriptor
-    /**
-     *     记录当前缩放等级,用于判断是显示车辆还是网点
-     */
 
-    private var zoomLevel: Float = 14f
-    private val callBack = object : CarRentPresenter.CallBack {
-        override fun createSuccess(orderMineList: OrderMineList) {
-//            ARouter.getInstance()
-//                    .build(RouteMap.FindAndRentCar)
-//                    .withString(String1, orderMineList.id)
-//                    .navigation()
-            eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
-        }
 
+    private val callBack = object : CarRentOrderingPresenter.CallBack {
         override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
             if (list.isNotEmpty()) {
-                carRentPresenter.getUsableCarList(null)
-                this@CarRentFragment.carPointList.clear()
-                this@CarRentFragment.carPointList.addAll(list)
-                showMarkers(zoomLevel)
+                this@CarRentOrderingFragment.carPointList.clear()
+                this@CarRentOrderingFragment.carPointList.addAll(list)
+                showMarkers()
             }
 
         }
 
-        override fun onGetCarModelSuccess(t: List<CarCategory>) {
+
+        override fun getDetailSuccess(t: RentOrderDetail) {
+            drivingMode.set(false)
+            takeMode.set(false)
+            binding.detail = t
+            when (t.status) {
+                RentOrderState.Create -> {
+                    gotoFindAndRent(t)
+                    takeMode(t)
+                }
+                RentOrderState.Taked -> {
+                    drivingMode(t)
+                }
+                RentOrderState.Return -> {
+                    gotoPayRentOrder(t)
+                }
+            }
+        }
+
+        override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?) {
 
         }
 
         override fun onGetCarError(e: Throwable) {
             ToastManager.showShortToast(context, "附近没有可用车辆哦，请选择其他网点")
         }
-
-        override fun onGetCarSuccess(t: List<CarInfo>) {
-            if (t.isNotEmpty()) {
-                currentSelectedCarInfo.set(t[0])
-                setupCurrentCarInfo(t[0])
-                calDistanceAndTimeInfo()
-                findRoutToCar(t[0].lat, t[0].lng)
-                hasUsableCar.set(true)
-            } else {
-                hasUsableCar.set(false)
-                ToastManager.showShortToast(activity, "该网点没有该车型车辆，请选择其他车型")
-                currentSelectedCarInfo.set(null)
-                naviInfo.set("")
-                walkRouteOverlay?.removeFromMap()
-            }
-            circle_indicator.setViewPager(viewPager_car_list)
-            showMarkers(zoomLevel)
-        }
     }
-
-
     var walkRouteOverlay: WalkRouteOverlay? = null
     private fun findRoutToCar(lat: Double, lng: Double) {
 
@@ -213,8 +183,6 @@ class CarRentFragment : XTBaseFragment() {
                     }
 
                     override fun onNext(result: WalkRouteResult) {
-//                        binding.map.map.clear()// 清理地图上的所有覆盖物
-
                         activity?.let {
 
                             if (result.paths != null) {
@@ -246,9 +214,9 @@ class CarRentFragment : XTBaseFragment() {
 
     }
 
-    private fun calDistanceAndTimeInfo() {
+    private fun calDistanceAndTimeInfo(lat: Double, lng: Double) {
         activity?.let {
-            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
+            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(lat, lng), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
 
                     if (allLength != null && allTime != null) {
@@ -260,59 +228,67 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
+    private fun gotoPayRentOrder(detail: RentOrderDetail) {
+        if (userVisibleHint) {
+            try {
+                val dialog = RentNoPayDialog()
+                dialog.oid = detail.orderId!!
+                dialog.show(childFragmentManager, "dialog_order_no_pay")
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    private fun gotoFindAndRent(detail: RentOrderDetail) {
+        Observable.create<String> {
+            var i = 0
+            while (StringUtils.isEmpty(naviInfo.get())) {
+                try {
+                    i++
+                    Thread.sleep(100)
+                    if (i == 40) {
+                        i = 1
+                        calDistanceAndTimeInfo(detail.car?.lat!!, detail.car?.lng!!)
+                    }
+                } catch (e: Exception) {
+                }
+            }
+            it.onNext("")
+        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    ARouter.getInstance()
+                            .build(RouteMap.FindAndRentCar)
+                            .withString(String1, detail.orderId)
+                            .navigation()
+                }, {})
+
+    }
+
     override fun getFragmentName(): CharSequence {
-        return "租车"
+        return "租车-订单模式"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { carRentPresenter = CarRentPresenter(it, callBack) }
+        activity?.let { carRentPresenter = CarRentOrderingPresenter(it, callBack) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent_ordering, null, false)
         binding.map.onCreate(savedInstanceState)
         setBinding()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initLayoutManager()
-        initBottomSheet()
         initMap()
-        register(this)
-        initData()
         refreshLocation()
-        carRentPresenter.getUsableCarModel()
-    }
-
-
-    private fun initData() {
-        carListViewPager = binding.root.findViewById(R.id.viewPager_car_list)
-        carListViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                var carInfo = carRentPresenter.carListAdapter.items[position]
-                setupCurrentCarInfo(carInfo)
-                calDistanceAndTimeInfo()
-                findRoutToCar(carInfo.lat, carInfo.lng)
-            }
-        })
-    }
-
-    private fun setupCurrentCarInfo(carInfo: CarInfo) {
-        val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
-        adapter.setItems(carInfo.discounts?.duration, 1)
-        recyclerView_car_discount.adapter = adapter
-        currentSelectedCarInfo.set(carInfo)
+        register(this)
     }
 
     private fun setBinding() {
@@ -321,67 +297,26 @@ class CarRentFragment : XTBaseFragment() {
         binding.user = User.instance
     }
 
-    private fun initLayoutManager() {
-        var layoutManager = LinearLayoutManager(activity)
-        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+    private var isFirstInit: Boolean = true
 
-        binding.recyclerViewCarCategory.layoutManager = layoutManager
-    }
-
-    lateinit var carBottomSheet: BottomSheetBehavior<View>
-    private fun initBottomSheet() {
-        carBottomSheet = BottomSheetBehavior.from(binding.viewBottomSheet)
-        carBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                view_back.alpha = slideOffset
-            }
-        })
-
-    }
+    var oid: String = ""
 
     /**
      * 初始化地图
      */
     private fun initMap() {
 
-
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
-        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel), 1000, null)
+        binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
         binding.map.map.setOnMarkerClickListener(
                 {
-                    if (zoomLevel >= MaxZoom) {
-                        val car = findCar(it.position)
-//                        findRoutToCar(car?.lat!!, car?.lng!!)
-                        carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
-                    } else {
-                        val carPoint = findCarPoint(it.position)
-                        carRentPresenter.getUsableCarList(carPoint)
-                    }
                     it.showInfoWindow()
                     true
                 }
         )
 
         binding.map.map.uiSettings.isZoomControlsEnabled = false
-
-        binding.map.map.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
-            override fun onCameraChangeFinish(cameraPosition: CameraPosition?) {
-
-                if (zoomLevel != cameraPosition?.zoom)
-                    showMarkers(cameraPosition?.zoom!!)
-                zoomLevel = cameraPosition?.zoom!!
-            }
-
-            override fun onCameraChange(p0: CameraPosition?) {
-
-            }
-
-        })
 
         val myLocationStyle = MyLocationStyle()
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE)
@@ -391,48 +326,64 @@ class CarRentFragment : XTBaseFragment() {
 
         binding.map.map.isMyLocationEnabled = true
         binding.map.map.setOnMyLocationChangeListener {
+            if (isFirstInit) {
+                isFirstInit = false
+                Observable.create<String> {
+                    while (StringUtils.isEmpty(app.location.cityCode)) {
+                        try {
+                            Thread.sleep(200)
+                        } catch (e: Exception) {
 
-            Observable.create<String> {
-                while (StringUtils.isEmpty(app.location.cityCode)) {
-                    try {
-                        Thread.sleep(200)
-                    } catch (e: Exception) {
-
+                        }
                     }
+                    it.onNext(app.location.cityCode)
                 }
-                it.onNext(app.location.cityCode)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            carRentPresenter?.getNetWorkList()
+                        }, {
+
+                        })
+
+                binding.map.map.setOnMyLocationChangeListener(null)
             }
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        carRentPresenter.getNetWorkList()
-                    }, {
-
-                    })
-
-            binding.map.map.setOnMyLocationChangeListener(null)
-
         }
     }
 
-    val MaxZoom = 14f
-    private fun showMarkers(zoomLevel: Float) {
 
-        if (zoomLevel >= MaxZoom) {
-            showCarMarker()
-        } else {
-            showNetWork()
-        }
-
+    private fun showMarkers() {
+        showNetWork()
         carPointList.map {
             drawPointAngel(it)
         }
-        if (currentSelectedCarInfo.get() != null)
-            findMarker(LatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!))?.showInfoWindow()
-        else {
-            if (netWorkMarkerList.isNotEmpty())
-                netWorkMarkerList[0].showInfoWindow()
-        }
+
+    }
+
+    /**
+     * 已经取车，正在行驶中
+     */
+    private fun drivingMode(detail: RentOrderDetail) {
+        walkRouteOverlay?.removeFromMap()
+        binding.map.map.clear()
+        drivingMode.set(true)
+        addUserLocationMarker()
+        addCarMarkersToMap(detail.car?.modelName!!, detail.car?.plateNumber!!, detail.car?.lat!!, detail.car?.lng!!)
+        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+    }
+
+    /**
+     * 已经取车，正在行驶中
+     */
+    private fun takeMode(detail: RentOrderDetail) {
+        walkRouteOverlay?.removeFromMap()
+        binding.map.map.clear()
+        takeMode.set(true)
+        calDistanceAndTimeInfo(detail.car?.lat!!, detail.car?.lng!!)
+        findRoutToCar(detail.car?.lat!!, detail.car?.lng!!)
+        addCarMarkersToMap(detail.car?.modelName!!, detail.car?.plateNumber!!, detail.car?.lat!!, detail.car?.lng!!)
+        addUserLocationMarker()
+        moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
     }
 
     private fun showNetWork() {
@@ -442,54 +393,9 @@ class CarRentFragment : XTBaseFragment() {
         carPointList.map {
             addNetWorkMarkersToMap(it)
         }
-        if (carMarkerList.isNotEmpty())
-            carMarkerList[0].showInfoWindow()
         if (binding.detail == null)
             walkRouteOverlay?.addToMap()
         addUserLocationMarker()
-    }
-
-    private fun showCarMarker() {
-        binding.map.map.clear()
-        carMarkerList.clear()
-        carRentPresenter.carListAdapter.items.map {
-            addCarMarkersToMap(it.carModel, it.plateNumber, it.lat, it.lng)
-        }
-        if (binding.detail == null)
-            walkRouteOverlay?.addToMap()
-        addUserLocationMarker()
-    }
-
-    private fun findCarPoint(position: LatLng): NearCarPoint? {
-        carPointList.map {
-            if (it.lat == position.latitude && it.lng == position.longitude) {
-                return it
-            }
-        }
-        return null
-    }
-
-    private fun findCar(position: LatLng): CarInfo? {
-        carRentPresenter.carListAdapter.items.map {
-            if (it.lat == position.latitude && it.lng == position.longitude) {
-                return it
-            }
-        }
-        return null
-    }
-
-    private fun findMarker(position: LatLng): Marker? {
-        carMarkerList.map {
-            if (it.position.latitude == position.latitude && it.position.latitude == position.longitude) {
-                return it
-            }
-        }
-        netWorkMarkerList.map {
-            if (it.position.latitude == position.latitude && it.position.latitude == position.longitude) {
-                return it
-            }
-        }
-        return null
     }
 
     //刷新位置
@@ -499,7 +405,7 @@ class CarRentFragment : XTBaseFragment() {
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
                             app.changeCurrentLocation(location)
-                            getCityCode(location)
+                            getCityCode()
                             moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
                             addUserLocationMarker()
                             locationRefreshListener?.onLocationChange()
@@ -512,7 +418,7 @@ class CarRentFragment : XTBaseFragment() {
 
     }
 
-    private fun getCityCode(location: Location) {
+    private fun getCityCode() {
         if (app.cityList.isNotEmpty())
             app.cityList.map {
                 if (app.location.cityName == it.cityName) {
@@ -559,76 +465,6 @@ class CarRentFragment : XTBaseFragment() {
         super.onSaveInstanceState(outState)
         //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，保存地图当前的状态
         binding.map.onSaveInstanceState(outState)
-    }
-
-
-    private var isRentClick: Boolean = false
-
-    /**
-     * 租车点击事件
-     */
-    fun onRentClick() {
-        val user = User.instance
-        when (user.login) {
-            true -> checkPromiseMoneyPay()
-            else -> {
-                app.startLoginDialog(null, null, object : onLoginDismiss {
-                    override fun onCancel() {
-                        isRentClick = false
-                    }
-                })
-                isRentClick = true
-            }
-        }
-
-    }
-
-    /**
-     * 租车点击-检查是否认证
-     */
-    private fun checkPromiseMoneyPay() {
-        //已交保证金
-        if (User.instance.getIsDeposit() && User.instance.getIsIdentityAuth()) {
-            showConfirmDialog()
-        } else {
-            //提示未交保证金
-            if (userVisibleHint) {
-                val dialog = ARouter.getInstance()
-                        .build(RouteMap.Dialog_Money_Verify)
-                        .navigation() as XTBaseDialogFragment
-                dialog.show(fragmentManager, "dialog_money_verify")
-            }
-
-        }
-    }
-
-    private fun showConfirmDialog() {
-
-        if (currentSelectedCarInfo.get() != null) {
-            activity?.let {
-                if (userVisibleHint) {
-                    DialogManager.with(it, childFragmentManager)
-                            .title("提示")
-                            .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
-                            .leftButtonText("取消")
-                            .rightButtonText("确定")
-                            .onRightClick({ dialog, witch ->
-                                if (currentSelectedCarInfo.get()?.netWork == null) {
-                                    currentSelectedCarInfo.get()
-                                            ?.netWork = carPointList[0]
-                                }
-                                carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
-                            })
-                            .show()
-                }
-            }
-        } else {
-            ToastManager.showShortToast(activity, "当前没有可用车辆")
-        }
-    }
-
-    fun changeZoom() {
-        binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
     }
 
     /**
@@ -685,20 +521,25 @@ class CarRentFragment : XTBaseFragment() {
         nearCarListener?.onNearCarClick()
     }
 
-    fun gotoVerify() {
-        if (User.instance.login) {
-            if (!User.instance.getIsIdentityAuth()) {
-                ARouter.getInstance()
-                        .build(RouteMap.UserVerify)
-                        .navigation()
-            } else if (!User.instance.getIsDeposit()) {
-                ARouter.getInstance()
-                        .build(RouteMap.MoneyVerify)
-                        .navigation()
-            }
-        }
+    /**
+     * 查看行程中 按钮点击
+     */
+    fun gotoDriving(oid: String) {
+        ARouter.getInstance()
+                .build(RouteMap.Driving)
+                .withString(String1, oid)
+                .navigation()
     }
 
+    /**
+     * 去取车 按钮点击
+     */
+    fun gotoFindAndTake(oid: String) {
+        ARouter.getInstance()
+                .build(RouteMap.FindAndRentCar)
+                .withString(String1, oid)
+                .navigation()
+    }
 
     /**
      * 定位成功 监听
@@ -709,14 +550,6 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     /**
-     * 定位成功 监听
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoginSuccess(refresh: RefreshUserInfoSuccess) {
-        binding.user = User.instance
-    }
-
-    /**
      * 附近网点列表 点击监听
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -724,10 +557,26 @@ class CarRentFragment : XTBaseFragment() {
         netWorkMarkerList.map {
             if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
                 it.showInfoWindow()
-                carRentPresenter.getUsableCarModel()
-                carRentPresenter.getUsableCarList(nearCar)
             }
         }
     }
 
+    fun getOrderDetail() {
+        Observable.create<Boolean> {
+            while (carRentPresenter == null) {
+                try {
+                    Thread.sleep(100)
+                } catch (e: Exception) {
+                }
+
+            }
+            it.onNext(true)
+        }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    carRentPresenter?.getRentOrderDetail(oid)
+                }, {})
+
+    }
 }

@@ -23,8 +23,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.databinding.FragmentVerifyUserBinding
 import shy.car.sdk.app.eventbus.RefreshUserInfo
+import shy.car.sdk.databinding.FragmentVerifyUserBinding
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.data.UserState
 import shy.car.sdk.travel.user.dialog.UserVerifyDriveCardDialog
@@ -160,7 +160,7 @@ class UserVerifyFragment : XTBaseFragment(),
                             if (granted) {
                                 activity?.let {
                                     PickConfig.with(it)
-                                            .pickMode(PickConfig.MODE_SINGLE_PICK)
+                                            .pickMode(PickConfig.MODE_TAKE_PHOTO)
                                             .isneedcamera(true)
                                             .start()
                                 }

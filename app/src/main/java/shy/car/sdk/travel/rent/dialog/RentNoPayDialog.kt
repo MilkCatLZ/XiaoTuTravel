@@ -11,12 +11,11 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogRentCarNoPayBinding
-import shy.car.sdk.travel.order.data.OrderMineList
 
 class RentNoPayDialog : XTBaseDialogFragment() {
 
     lateinit var binding: DialogRentCarNoPayBinding
-    lateinit var orderList: OrderMineList
+    var oid=""
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,7 +29,7 @@ class RentNoPayDialog : XTBaseDialogFragment() {
     fun goPay(){
         ARouter.getInstance()
                 .build(RouteMap.OrderPay)
-                .withString(ParamsConstant.String1, orderList.id)
+                .withString(ParamsConstant.String1, oid)
                 .navigation()
         dismissAllowingStateLoss()
     }
