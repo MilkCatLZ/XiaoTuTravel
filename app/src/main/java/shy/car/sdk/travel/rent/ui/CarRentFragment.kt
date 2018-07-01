@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
@@ -105,6 +107,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     val hasUsableCar = ObservableBoolean(true)
 
+    var isRefershSuccess = false
 
     lateinit var carListViewPager: ViewPager
     /**
@@ -118,10 +121,6 @@ class CarRentFragment : XTBaseFragment() {
     private var zoomLevel: Float = 14f
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
-//            ARouter.getInstance()
-//                    .build(RouteMap.FindAndRentCar)
-//                    .withString(String1, orderMineList.id)
-//                    .navigation()
             eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
         }
 
@@ -159,6 +158,7 @@ class CarRentFragment : XTBaseFragment() {
             }
             circle_indicator.setViewPager(viewPager_car_list)
             showMarkers(zoomLevel)
+            isRefershSuccess = true
         }
     }
 
@@ -697,6 +697,33 @@ class CarRentFragment : XTBaseFragment() {
                         .navigation()
             }
         }
+    }
+
+
+    fun refreshAll() {
+        isRefershSuccess = false
+        activity?.let {
+            val rotate = RotateAnimation(0f, 360f,0.5f,0.5f)
+            rotate.duration = 1000
+            rotate.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationEnd(p0: Animation?) {
+                    if (!isRefershSuccess) {
+                        binding.refresh.startAnimation(rotate)
+                    }
+                }
+
+                override fun onAnimationStart(p0: Animation?) {
+
+                }
+
+                override fun onAnimationRepeat(p0: Animation?) {
+
+                }
+
+            })
+            binding.refresh.startAnimation(rotate)
+        }
+        carRentPresenter.getNetWorkList()
     }
 
 

@@ -89,6 +89,10 @@ class CarRentOrderingFragment : XTBaseFragment() {
      * 有未取车的订单
      */
     val takeMode = ObservableBoolean(false)
+    /**
+     * 有未支付的订单
+     */
+    val payMode = ObservableBoolean(false)
 
     /**
      * 定位默认图标
@@ -110,6 +114,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
         override fun getDetailSuccess(t: RentOrderDetail) {
             drivingMode.set(false)
             takeMode.set(false)
+            payMode.set(false)
             binding.detail = t
             when (t.status) {
                 RentOrderState.Create -> {
@@ -121,6 +126,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
                 }
                 RentOrderState.Return -> {
                     gotoPayRentOrder(t)
+
                 }
             }
         }
@@ -238,6 +244,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
 
             }
         }
+        payMode.set(true)
     }
 
     private fun gotoFindAndRent(detail: RentOrderDetail) {
@@ -537,6 +544,13 @@ class CarRentOrderingFragment : XTBaseFragment() {
     fun gotoFindAndTake(oid: String) {
         ARouter.getInstance()
                 .build(RouteMap.FindAndRentCar)
+                .withString(String1, oid)
+                .navigation()
+    }
+
+    fun goPay(oid: String) {
+        ARouter.getInstance()
+                .build(RouteMap.OrderPay)
                 .withString(String1, oid)
                 .navigation()
     }

@@ -116,7 +116,21 @@
                 app:fragment="@{fragment}" />
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/view_bottom_sheet_wait_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibleOrGone="@{fragment.payMode}"
+            app:behavior_peekHeight="245dp"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+            tools:visibility="gone">
 
+            <include
+                layout="@layout/layout_car_rent_ordering_wait_pay"
+                app:detail="@{detail}"
+                app:fragment="@{fragment}" />
+
+        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
