@@ -13,8 +13,6 @@ import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
-import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.take.data.DeliveryOrderList
 
 class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -132,16 +130,17 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
         ProgressDialog.showLoadingView(context)
         val observable = ApiManager.getInstance()
                 .api.cancelOrder(oid)
-        val observer = object : Observer<JsonObject> {
+        val observer = object : Observer<Response<Void>> {
             override fun onComplete() {
 
             }
 
             override fun onSubscribe(d: Disposable) {
+
                 disposable = d
             }
 
-            override fun onNext(t: JsonObject) {
+            override fun onNext(t: Response<Void>) {
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "订单已取消")
                 ApiManager.getInstance().clearCache()

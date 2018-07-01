@@ -358,7 +358,7 @@ interface ApiInterface {
 
 
     @DELETE("orders/freights/{freight_id}")
-    fun cancelOrder(@Path("freight_id") freight_id: String): Observable<JsonObject>
+    fun cancelOrder(@Path("freight_id") freight_id: String): Observable<Response<Void>>
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
