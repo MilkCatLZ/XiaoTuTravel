@@ -582,7 +582,26 @@ class CarRentOrderingFragment : XTBaseFragment() {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onGetDetailSuccess(detail: RentOrderDetail) {
-        callBack.getDetailSuccess(detail)
+       checkMode(detail)
+    }
+
+    private fun checkMode(detail: RentOrderDetail) {
+        this.detail = detail
+        drivingMode.set(false)
+        takeMode.set(false)
+        payMode.set(false)
+        binding.detail = detail
+        when (detail.status) {
+            RentOrderState.Create -> {
+                takeMode(detail)
+            }
+            RentOrderState.Taked -> {
+                drivingMode(detail)
+            }
+            RentOrderState.Return -> {
+                payMode.set(true)
+            }
+        }
     }
 
     fun getOrderDetail() {

@@ -20,6 +20,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
     interface CallBack {
         fun onGetDetailSuccess(t: DeliveryOrderDetail)
         fun onError(e: Throwable)
+        fun cancelOrderSuccess()
     }
 
     var oid: String = ""
@@ -144,7 +145,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "订单已取消")
                 ApiManager.getInstance().clearCache()
-                getOrderDetail()
+                callBack.cancelOrderSuccess()
             }
 
             override fun onError(e: Throwable) {

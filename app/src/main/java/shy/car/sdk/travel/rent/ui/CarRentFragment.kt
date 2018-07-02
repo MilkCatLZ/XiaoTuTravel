@@ -47,6 +47,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.eventbus.CreateRentCarOrderSuccess
 import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.route.RouteMap
@@ -124,6 +125,10 @@ class CarRentFragment : XTBaseFragment() {
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
             eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
+            ARouter.getInstance()
+                    .build(RouteMap.FindAndRentCar)
+                    .withString(String1, orderMineList.id)
+                    .navigation()
         }
 
         override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
@@ -706,7 +711,7 @@ class CarRentFragment : XTBaseFragment() {
         isRefershSuccess = false
         activity?.let {
             var operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
-            var lin= LinearInterpolator()
+            var lin = LinearInterpolator()
             operatingAnim.interpolator = lin
 
 //            val rotate = RotateAnimation(0f, 360f, 1f, 1f)

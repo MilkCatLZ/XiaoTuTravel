@@ -34,6 +34,9 @@ import shy.car.sdk.travel.user.data.User
 @Route(path = RouteMap.OrderTakeDetailFragment)
 class OrderDetailFragment : XTBaseFragment(),
         OrderDetailPresenter.CallBack {
+    override fun cancelOrderSuccess() {
+        finish()
+    }
 
     override fun onGetDetailSuccess(t: DeliveryOrderDetail) {
         activity?.let {
@@ -152,14 +155,14 @@ class OrderDetailFragment : XTBaseFragment(),
     }
 
     fun cancelOrder() {
-        if(binding.detail?.status==OrderState.StateWaitPay){
+        if (binding.detail?.status == OrderState.StateWaitPay) {
             DialogManager.with(activity, childFragmentManager)
                     .leftButtonText("取消")
                     .rightButtonText("确定")
                     .message("该订单已有司机接单，确认取消该订单？")
                     .onRightClick { _, _ -> presenter.cancelOrder() }
                     .show()
-        }else {
+        } else {
             DialogManager.with(activity, childFragmentManager)
                     .leftButtonText("取消")
                     .rightButtonText("确定")

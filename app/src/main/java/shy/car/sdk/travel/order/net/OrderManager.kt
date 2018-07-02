@@ -3,6 +3,7 @@ package shy.car.sdk.travel.order.net
 import com.base.base.ProgressDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import org.greenrobot.eventbus.EventBus
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.travel.order.data.RentOrderDetail
 
@@ -30,6 +31,10 @@ class OrderManager {
                 }
 
                 override fun onNext(t: RentOrderDetail) {
+                    if (needPost) {
+                        EventBus.getDefault()
+                                .post(t)
+                    }
                     callBack?.getDetailSuccess(t)
 
                 }

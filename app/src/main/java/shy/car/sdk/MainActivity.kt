@@ -37,7 +37,6 @@ import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearNetWorkFragment
 import shy.car.sdk.travel.order.data.OrderMineList
-import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.ui.CarRentFragment
@@ -325,7 +324,6 @@ class MainActivity : NearCarOpenListener,
     fun createSuccess(success: CreateRentCarOrderSuccess) {
         rentMode = false
         changeFragment(carRentOrderingFragment, RentOrdering)
-
     }
 
     /**
