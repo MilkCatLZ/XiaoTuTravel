@@ -199,6 +199,13 @@ class RentOrderDetail : BaseObservable() {
             field = discounts
             notifyChange(BR.discounts)
         }
+    @SerializedName("dispatch_phone")
+    @get:Bindable
+    var dispatchPhone: String? = null
+        set(dispatchPhone) {
+            field = dispatchPhone
+            notifyChange(BR.dispatchPhone)
+        }
 
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()

@@ -245,7 +245,7 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("cars/{carID}")
-    fun carAction(@Path("carID") carId: String, @Query(ParamsConstant.CarID) carid: String = carId, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<String>
+    fun carAction(@Path("carID") carId: String, @Query(ParamsConstant.CarID) carid: String = carId, @Field(ParamsConstant.OrderId) oid: String? = null, @Field(ParamsConstant.Status) status: String? = null): Observable<JsonObject>
 
     /**
      * 获取充值可用列表

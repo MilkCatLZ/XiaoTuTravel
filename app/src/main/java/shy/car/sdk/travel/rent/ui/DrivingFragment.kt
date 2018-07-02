@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.Log
+import com.base.util.Phone
 import com.base.util.StringUtils
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -120,7 +121,9 @@ class DrivingFragment : XTBaseFragment(),
      * 联系调度员
      */
     fun callAdmin() {
-
+        activity?.let {
+            Phone.call(it, presenter.detail.get()?.dispatchPhone)
+        }
     }
 
     /**
