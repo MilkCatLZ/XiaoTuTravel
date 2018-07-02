@@ -1,4 +1,4 @@
 package shy.car.sdk.app.eventbus
 
-class PaySuccess {
+class PaySuccess(var oid: String = "") {
 }

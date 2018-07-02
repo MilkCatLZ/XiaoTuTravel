@@ -18,6 +18,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.order.net.OrderManager
 
 /**
  * 找车取车
@@ -141,7 +142,8 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                     ApiManager.getInstance()
                             .clearCache()
                     RefreshOrderList.refreshOrderList()
-                 EventBus.getDefault().post(RentOrderCanceled())
+                    EventBus.getDefault()
+                            .post(RentOrderCanceled())
                 }, {
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelError(it)
@@ -153,30 +155,22 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
     fun getOrderDetail() {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(oid)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
+        OrderManager.getOrderDetail(oid, true, callBack = object : OrderManager.GetDetailCallBack {
+            override fun getDetailSuccess(t: RentOrderDetail) {
+                ProgressDialog.hideLoadingView(context)
+                detail = t
+                callBack.onGetDetailSuccess(t)
+            }
 
+            override fun getDetailError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                callBack.onGetDetailError(e)
             }
 
             override fun onSubscribe(d: Disposable) {
                 disposable = d
             }
 
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                detail = t
-                callBack.onGetDetailSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.onGetDetailError(e)
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+        })
     }
 }

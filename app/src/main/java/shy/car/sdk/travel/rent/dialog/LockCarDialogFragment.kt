@@ -90,9 +90,6 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
 
             override fun onError(e: Throwable) {
 
-//                if (BuildConfig.DEBUG) {
-//                    isActionFinish = true
-//                } else {
                 dis?.dispose()
                 ErrorManager.managerError(context, e, "操作失败，请重试")
                 dismissAllowingStateLoss()

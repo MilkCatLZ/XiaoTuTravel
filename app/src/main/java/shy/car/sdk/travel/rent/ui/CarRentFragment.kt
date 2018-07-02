@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
@@ -442,8 +444,8 @@ class CarRentFragment : XTBaseFragment() {
         carPointList.map {
             addNetWorkMarkersToMap(it)
         }
-        if (carMarkerList.isNotEmpty())
-            carMarkerList[0].showInfoWindow()
+//        if (carMarkerList.isNotEmpty())
+//            carMarkerList[0].showInfoWindow()
         if (binding.detail == null)
             walkRouteOverlay?.addToMap()
         addUserLocationMarker()
@@ -703,12 +705,16 @@ class CarRentFragment : XTBaseFragment() {
     fun refreshAll() {
         isRefershSuccess = false
         activity?.let {
-            val rotate = RotateAnimation(0f, 360f,0.5f,0.5f)
-            rotate.duration = 1000
-            rotate.setAnimationListener(object : Animation.AnimationListener {
+            var operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
+            var lin= LinearInterpolator()
+            operatingAnim.interpolator = lin
+
+//            val rotate = RotateAnimation(0f, 360f, 1f, 1f)
+//            rotate.duration = 1000
+            operatingAnim.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationEnd(p0: Animation?) {
                     if (!isRefershSuccess) {
-                        binding.refresh.startAnimation(rotate)
+                        binding.refresh.startAnimation(operatingAnim)
                     }
                 }
 
@@ -721,7 +727,7 @@ class CarRentFragment : XTBaseFragment() {
                 }
 
             })
-            binding.refresh.startAnimation(rotate)
+            binding.refresh.startAnimation(operatingAnim)
         }
         carRentPresenter.getNetWorkList()
     }

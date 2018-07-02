@@ -14,6 +14,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.order.net.OrderManager
 import shy.car.sdk.travel.rent.data.NearCarPoint
 
 /**
@@ -36,32 +37,23 @@ class CarRentOrderingPresenter(context: Context, var callBack: CallBack) : BaseP
 
     fun getRentOrderDetail(id: String) {
         ProgressDialog.showLoadingView(context)
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(id)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: RentOrderDetail) {
+        disposable?.dispose()
+        OrderManager.getOrderDetail(id, false, callBack = object : OrderManager.GetDetailCallBack {
+            override fun getDetailSuccess(t: RentOrderDetail) {
                 ProgressDialog.hideLoadingView(context)
                 callBack.getDetailSuccess(t)
             }
 
-
-            override fun onError(e: Throwable) {
+            override fun getDetailError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
                 ErrorManager.managerError(context, e, "获取订单失败")
             }
 
-        }
+            override fun onSubscribe(d: Disposable) {
+                disposable = d
+            }
 
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+        })
     }
 
     fun getNetWorkList() {
@@ -70,7 +62,7 @@ class CarRentOrderingPresenter(context: Context, var callBack: CallBack) : BaseP
             while (StringUtils.isEmpty(app.location.cityCode)) {
                 try {
                     Thread.sleep(100)
-                } catch (_: Exception){
+                } catch (_: Exception) {
 
                 }
             }

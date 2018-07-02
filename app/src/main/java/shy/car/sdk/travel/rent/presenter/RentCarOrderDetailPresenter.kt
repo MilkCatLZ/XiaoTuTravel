@@ -8,6 +8,7 @@ import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.order.net.OrderManager
 
 class RentCarOrderDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -19,31 +20,22 @@ class RentCarOrderDetailPresenter(context: Context, var callBack: CallBack) : Ba
     fun getRentOrderDetail(orderID:String) {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(orderID)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
+        OrderManager.getOrderDetail(orderID, true, callBack = object : OrderManager.GetDetailCallBack {
+            override fun getDetailSuccess(t: RentOrderDetail) {
+                ProgressDialog.hideLoadingView(context)
+                callBack.getDetailSuccess(t)
+            }
 
+            override fun getDetailError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "获取订单失败")
+                callBack.onError(e)
             }
 
             override fun onSubscribe(d: Disposable) {
                 disposable = d
             }
 
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.getDetailSuccess(t)
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取订单失败")
-                callBack.onError(e)
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+        })
     }
 }

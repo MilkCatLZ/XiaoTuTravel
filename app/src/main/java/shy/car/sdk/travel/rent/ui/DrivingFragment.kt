@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.Log
+import com.base.util.StringUtils
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +24,8 @@ import shy.car.sdk.travel.rent.dialog.LockCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.OpenCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.DrivingPresenter
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -31,7 +35,7 @@ import java.util.concurrent.TimeUnit
 class DrivingFragment : XTBaseFragment(),
         DrivingPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
-        startAutoRefresh()
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun onGetDetailError(e: Throwable) {
@@ -39,11 +43,13 @@ class DrivingFragment : XTBaseFragment(),
     }
 
     fun setOid(oid: String) {
-        presenter.getOrderDetail(oid)
+        presenter.oid = oid
     }
 
     lateinit var binding: FragmentDrivingBinding
     lateinit var presenter: DrivingPresenter
+
+    var isRunningRefreshing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,31 +68,52 @@ class DrivingFragment : XTBaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.getOrderDetail(presenter.oid)
+        }
+        startAutoRefresh()
     }
 
     var dispose: Disposable? = null
     private fun startAutoRefresh() {
-        Observable.interval(5, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Long> {
-                    override fun onComplete() {
-
+        if (!isRunningRefreshing) {
+            isRunningRefreshing = true
+            Observable.create<String> {
+                while (StringUtils.isEmpty(presenter.oid)) {
+                    try {
+                        Thread.sleep(100)
+                    } catch (e: Exception) {
                     }
-
-                    override fun onSubscribe(d: Disposable) {
-                        dispose = d
+                }
+                it.onNext(presenter.oid)
+            }
+                    .subscribeOn(Schedulers.io())
+                    .flatMap {
+                        Observable.interval(0, 30, TimeUnit.SECONDS)
                     }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<Long> {
+                        override fun onComplete() {
 
-                    override fun onNext(t: Long) {
-                        presenter.getOrderDetail(presenter.detail.get()?.orderId!!)
-                    }
+                        }
 
-                    override fun onError(e: Throwable) {
+                        override fun onSubscribe(d: Disposable) {
+                            dispose = d
+                        }
 
-                    }
+                        override fun onNext(t: Long) {
+                            presenter.getOrderDetail(presenter.oid)
+                            Log.d("asdfsdasdfsa", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(Calendar.getInstance().time))
 
-                })
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+
+                    })
+        }
     }
 
     /**
@@ -150,6 +177,18 @@ class DrivingFragment : XTBaseFragment(),
 
     override fun onDestroy() {
         dispose?.dispose()
+        isRunningRefreshing = false
         super.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        dispose?.dispose()
+        isRunningRefreshing = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startAutoRefresh()
     }
 }

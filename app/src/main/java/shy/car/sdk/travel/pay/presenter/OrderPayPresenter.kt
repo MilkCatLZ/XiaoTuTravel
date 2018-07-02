@@ -13,6 +13,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.order.net.OrderManager
 import shy.car.sdk.travel.pay.data.PayMethod
 
 class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
@@ -32,32 +33,25 @@ class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresente
     fun getOrderDetail(orderID: String) {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(orderID)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
+        OrderManager.getOrderDetail(orderID, true, callBack = object : OrderManager.GetDetailCallBack {
+            override fun getDetailSuccess(t: RentOrderDetail) {
+                ProgressDialog.hideLoadingView(context)
+                this@OrderPayPresenter.detail = t
+                callBack.onGetDetailSuccess(t)
+            }
 
+            override fun getDetailError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "获取详情失败")
+                callBack.onGetDetailError(e)
             }
 
             override fun onSubscribe(d: Disposable) {
                 disposable = d
             }
 
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                this@OrderPayPresenter.detail = t
-                callBack.onGetDetailSuccess(t)
-            }
+        })
 
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取详情失败")
-                callBack.onGetDetailError(e)
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
     }
 
     fun pay() {

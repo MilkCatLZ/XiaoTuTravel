@@ -5,9 +5,11 @@ import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.order.net.OrderManager
 
 class DrivingPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     interface CallBack {
@@ -17,35 +19,28 @@ class DrivingPresenter(context: Context, var callBack: CallBack) : BasePresenter
     }
 
     var detail = ObservableField<RentOrderDetail>()
-
+    var oid = ""
     fun getOrderDetail(orderID: String) {
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        val observable = ApiManager.getInstance()
-                .api.getRentOrderDetail(orderID)
-        val observer = object : Observer<RentOrderDetail> {
-            override fun onComplete() {
+        OrderManager.getOrderDetail(orderID, true, callBack = object : OrderManager.GetDetailCallBack {
+            override fun getDetailSuccess(t: RentOrderDetail) {
+                ProgressDialog.hideLoadingView(context)
+                detail.set(t)
+                callBack.onGetDetailSuccess(t)
+            }
 
+            override fun getDetailError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                callBack.onGetDetailError(e)
             }
 
             override fun onSubscribe(d: Disposable) {
                 disposable = d
             }
 
-            override fun onNext(t: RentOrderDetail) {
-                ProgressDialog.hideLoadingView(context)
-                detail.set(t)
-                callBack.onGetDetailSuccess(t)
-            }
+        })
 
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                callBack.onGetDetailError(e)
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
     }
 
 //    fun carRing() {

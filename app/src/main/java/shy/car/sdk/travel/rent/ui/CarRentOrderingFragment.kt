@@ -100,6 +100,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
     lateinit var bitmap: BitmapDescriptor
 
 
+    var detail: RentOrderDetail? = null
     private val callBack = object : CarRentOrderingPresenter.CallBack {
         override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
             if (list.isNotEmpty()) {
@@ -112,6 +113,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
 
 
         override fun getDetailSuccess(t: RentOrderDetail) {
+            detail = t
             drivingMode.set(false)
             takeMode.set(false)
             payMode.set(false)
@@ -573,6 +575,14 @@ class CarRentOrderingFragment : XTBaseFragment() {
                 it.showInfoWindow()
             }
         }
+    }
+
+    /**
+     * 详情刷新时间
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onGetDetailSuccess(detail: RentOrderDetail) {
+        callBack.getDetailSuccess(detail)
     }
 
     fun getOrderDetail() {

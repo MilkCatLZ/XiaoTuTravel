@@ -108,10 +108,9 @@ class UnLockCarActivity : XTBaseActivity(),
                     val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0])), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
-                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            ProgressDialog.hideLoadingView(this)
                             when {
                                 isLeft -> {
                                     presenter.leftImage.set(it)
@@ -120,6 +119,7 @@ class UnLockCarActivity : XTBaseActivity(),
                                     presenter.rightImage.set(it)
                                 }
                             }
+                            ProgressDialog.hideLoadingView(this)
                         }, {
                             ProgressDialog.hideLoadingView(this)
                             it.printStackTrace()

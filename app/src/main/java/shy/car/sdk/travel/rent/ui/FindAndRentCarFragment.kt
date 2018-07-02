@@ -28,6 +28,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.eventbus.TakeCarSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.CountDownThread
 import shy.car.sdk.app.util.MapUtil
@@ -99,6 +100,8 @@ class FindAndRentCarFragment : XTBaseFragment(),
                 .build(RouteMap.Driving)
                 .withString(String1, oid)
                 .navigation()
+        eventBusDefault.post(TakeCarSuccess())
+        finish()
     }
 
     var mDriveRouteResult: DriveRouteResult? = null

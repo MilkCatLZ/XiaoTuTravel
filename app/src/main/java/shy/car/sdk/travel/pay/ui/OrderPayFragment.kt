@@ -15,7 +15,6 @@ import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.eventbus.PaySuccess
-import shy.car.sdk.app.eventbus.RentCarPaySuccess
 import shy.car.sdk.app.route.RouteMap
 
 import shy.car.sdk.databinding.FragmentOrderPayBinding
@@ -36,7 +35,7 @@ class OrderPayFragment : XTBaseFragment(),
                 .build(RouteMap.RentCarPaySuccess)
                 .withObject(Object1, binding.detail)
                 .navigation()
-        eventBusDefault.post(RentCarPaySuccess())
+        eventBusDefault.post(PaySuccess())
         finish()
     }
 

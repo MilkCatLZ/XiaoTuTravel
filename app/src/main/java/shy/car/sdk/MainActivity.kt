@@ -37,7 +37,9 @@ import shy.car.sdk.travel.location.data.LocationChange
 import shy.car.sdk.travel.main.ui.MainCitySelectFragment
 import shy.car.sdk.travel.main.ui.MainNearNetWorkFragment
 import shy.car.sdk.travel.order.data.OrderMineList
+import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.NearCarPoint
+import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.rent.ui.CarRentOrderingFragment
 import shy.car.sdk.travel.user.data.User
@@ -321,9 +323,9 @@ class MainActivity : NearCarOpenListener,
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun createSuccess(success: CreateRentCarOrderSuccess) {
+        rentMode = false
         changeFragment(carRentOrderingFragment, RentOrdering)
-        carRentOrderingFragment.oid = success.oid
-        carRentOrderingFragment.getOrderDetail()
+
     }
 
     /**
@@ -332,8 +334,6 @@ class MainActivity : NearCarOpenListener,
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun takeCarSuccess(take: TakeCarSuccess) {
         rentMode = false
-        carRentOrderingFragment.oid = take.oid
-        carRentOrderingFragment.getOrderDetail()
     }
 
     /**
@@ -350,7 +350,7 @@ class MainActivity : NearCarOpenListener,
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun cancelOrder(cancel: RentOrderCanceled) {
-        rentMode = true
+        getUnProgressOrder()
     }
 
     /**
@@ -369,8 +369,11 @@ class MainActivity : NearCarOpenListener,
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun paySuccess(success: PaySuccess) {
-
-        rentMode = true
+        if (!rentMode) {
+            if (carRentOrderingFragment.detail != null && carRentOrderingFragment.detail?.status == RentOrderState.Return) {
+                rentMode = true
+            }
+        }
     }
 
     override fun onResume() {
