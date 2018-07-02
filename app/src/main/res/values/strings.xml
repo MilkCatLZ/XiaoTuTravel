@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">小兔出行</string>
+    <string name="app_name">小兔出行云</string>
     <string name="str_login_failed">登录失败，请重试</string>
     <string name="str_verify_failed">获取失败，请重试</string>
     <string name="str_verify_send_to">验证码已发送至 </string>
