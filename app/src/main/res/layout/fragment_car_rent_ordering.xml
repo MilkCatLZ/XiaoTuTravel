@@ -59,14 +59,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="15dp"
-                        android:onClick="@{()->fragment.onNearCarClick()}"
-                        android:src="@drawable/icon_site" />
-
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="15dp"
                         android:layout_marginTop="10dp"
                         android:onClick="@{()->fragment.refreshLocation()}"
                         android:src="@drawable/icon_locat" />

@@ -366,7 +366,8 @@ class CarRentOrderingFragment : XTBaseFragment() {
         carPointList.map {
             drawPointAngel(it)
         }
-
+        if (detail != null)
+            addCarMarkersToMap(detail?.car?.modelName!!, detail?.car?.plateNumber!!, detail?.car?.lat!!, detail?.car?.lng!!)
     }
 
     /**
@@ -379,6 +380,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
         addUserLocationMarker()
         addCarMarkersToMap(detail.car?.modelName!!, detail.car?.plateNumber!!, detail.car?.lat!!, detail.car?.lng!!)
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+        showMarkers()
     }
 
     /**
@@ -393,6 +395,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
         addCarMarkersToMap(detail.car?.modelName!!, detail.car?.plateNumber!!, detail.car?.lat!!, detail.car?.lng!!)
         addUserLocationMarker()
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
+        showMarkers()
     }
 
     private fun showNetWork() {
@@ -497,7 +500,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
      */
     private fun addCarMarkersToMap(carModel: String, plateNumber: String, lat: Double, lng: Double) {
 
-        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_car_green_400_24dp))
                 .anchor(0.5f, 1.0f)
                 .title(carModel)
                 .snippet("$carModel | $plateNumber")
@@ -565,24 +568,13 @@ class CarRentOrderingFragment : XTBaseFragment() {
         moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
     }
 
-    /**
-     * 附近网点列表 点击监听
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onNearCarPointChange(nearCar: NearCarPoint) {
-        netWorkMarkerList.map {
-            if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
-                it.showInfoWindow()
-            }
-        }
-    }
 
     /**
      * 详情刷新时间
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onGetDetailSuccess(detail: RentOrderDetail) {
-       checkMode(detail)
+        checkMode(detail)
     }
 
     private fun checkMode(detail: RentOrderDetail) {

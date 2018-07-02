@@ -8,6 +8,7 @@ import com.base.util.StringUtils
 import com.google.gson.annotations.SerializedName
 
 import shy.car.sdk.BR
+import shy.car.sdk.app.constant.ParamsConstant.City
 
 
 /**
@@ -198,6 +199,20 @@ open class UserBase : BaseObservable() {
             notifyPropertyChanged(BR.scope
             )
         }
+    @SerializedName(Profession)
+    @get:Bindable
+    var profession: String? = null
+        set(profession) {
+            field = profession
+            notifyPropertyChanged(BR.profession)
+        }
+    @SerializedName(City)
+    @get:Bindable
+    var city:  String? = null
+        set(city) {
+            field = city
+            notifyPropertyChanged(BR.city)
+        }
 
     @SerializedName(TokenType)
     var tokenType: String = ""
@@ -228,6 +243,7 @@ open class UserBase : BaseObservable() {
         const val SEX = "sex"
         const val CouponNum = "coupon_num"
         const val BankCardNum = "bank_card_num"
+        const val Profession = "profession"
     }
 
 }

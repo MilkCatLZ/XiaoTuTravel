@@ -176,8 +176,13 @@ interface ApiInterface {
      * 修改用户头像
      */
     @Multipart
-    @POST("avatar")
-    fun uploadAvatar(@Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    @POST("users/info")
+    fun uploadUserDetail(@Part(ParamsConstant.NickName) nickName: String? = null,
+                         @Part(ParamsConstant.Sex) sex: String? = null,
+                         @Part(ParamsConstant.Birthday) birthday: String? = null,
+                         @Part(ParamsConstant.City) city: String? = null,
+                         @Part(ParamsConstant.Profession) profession: String? = null,
+                         @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
     /**
      * 提交身份认证
@@ -204,7 +209,7 @@ interface ApiInterface {
      */
     @GET("cars")
     fun getUsableCarList(@Query(ParamsConstant.CityID) cityID: String,
-                         @Query(ParamsConstant.NetWorkID) netId: String?=null,
+                         @Query(ParamsConstant.NetWorkID) netId: String? = null,
                          @Query(ParamsConstant.Lat) lat: Double,
                          @Query(ParamsConstant.Lng) lng: Double,
                          @Query(ParamsConstant.ModelID) modelID: String): Observable<List<CarInfo>>

@@ -7,14 +7,11 @@ import com.base.databinding.DataBindingBaseAdapter
 import com.base.util.key.KeyValue
 import com.google.gson.JsonObject
 import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
@@ -26,34 +23,41 @@ import java.io.File
  * create by LZ at 2018/06/11
  *
  */
-class UserDetailPresenter(context: Context,var listener: UserEditListener? = null) : BasePresenter(context) {
+class UserDetailPresenter(context: Context, var listener: UserEditListener? = null) : BasePresenter(context) {
     interface UserEditListener {
         fun onUploadAvatarSuccess()
-        fun onUploadAvatar()
+        fun onUploadAvatarError()
 
     }
 
-    var nickName = ObservableField<String>("")
+    var nickName = ObservableField<String>()
     var sex: Int = 0
-    var birthDay = ObservableField<String>("")
-    var jobAdapter = DataBindingBaseAdapter<com.base.util.key.KeyValue>(R.layout.item_spinner, BR.item, context, null)
+    var sexText = ObservableField<String>()
+    var city: String? = null
+    var avatar = ObservableField<String>(User.instance.avatar)
+    var birthDay = ObservableField<String>()
+    var job = ObservableField<String>()
+    //    var jobAdapter = DataBindingBaseAdapter<com.base.util.key.KeyValue>(R.layout.item_spinner, BR.item, context, null)
+    var sexAdapter = DataBindingBaseAdapter<com.base.util.key.KeyValue>(R.layout.item_spinner, BR.item, context, null)
 
     init {
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
-        jobAdapter.items.add(KeyValue("IT工程师", "IT工程师"))
+        nickName.set(User.instance.name)
+        sexAdapter.items.add(KeyValue("保密", "0"))
+        sexAdapter.items.add(KeyValue("男", "1"))
+        sexAdapter.items.add(KeyValue("女", "2"))
+
+        sex = User.instance.sex
+        sexText.set(sexAdapter.items[sex].key)
+        city = User.instance.city
+        job.set(User.instance.profession)
     }
 
 
+    fun upload() {
 
-    fun uploadAvatar(path: String) {
-
-
+        ProgressDialog.showLoadingView(context)
         var observable = ApiManager.getInstance()
-                .api.uploadAvatar(getAvatarPat(path).parts())
+                .api.uploadUserDetail(nickName.get(), sex.toString(), birthDay.get(), city, job.get(), getAvatarPat(avatar.get()))
         var observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
@@ -64,12 +68,14 @@ class UserDetailPresenter(context: Context,var listener: UserEditListener? = nul
             }
 
             override fun onNext(t: JsonObject) {
+                ProgressDialog.hideLoadingView(context)
                 listener?.onUploadAvatarSuccess()
             }
 
             override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
                 ErrorManager.managerError(context, e, "上传失败，请重试")
-                listener?.onUploadAvatar()
+                listener?.onUploadAvatarError()
             }
 
         }
@@ -78,7 +84,10 @@ class UserDetailPresenter(context: Context,var listener: UserEditListener? = nul
                 .toSubscribe(observable, observer)
     }
 
-    private fun getAvatarPat(path: String): MultipartBody {
+    private fun getAvatarPat(path: String? = null): List<MultipartBody.Part>? {
+        if (path == null || avatar.get() == User.instance.avatar) {
+            return null
+        }
         val image = File(path)
 
         val builder = MultipartBody.Builder()
@@ -87,5 +96,6 @@ class UserDetailPresenter(context: Context,var listener: UserEditListener? = nul
         val imageBody = RequestBody.create(MediaType.parse("image/jpeg"), image)
         builder.addFormDataPart("avatar", image.name, imageBody)
         return builder.build()
+                .parts()
     }
 }

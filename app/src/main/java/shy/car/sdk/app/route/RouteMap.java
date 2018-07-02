@@ -310,4 +310,11 @@ public class RouteMap {
      */
     @NotNull
     public static final String RentCarPaySuccess = "/pay/rent_car_success";
+
+    /**
+     * {@link RentPaySuccessActivity}
+     * 故障上报
+     */
+    @NotNull
+    public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
 }

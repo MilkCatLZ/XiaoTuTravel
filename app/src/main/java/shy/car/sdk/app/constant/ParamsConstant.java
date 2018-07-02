@@ -78,4 +78,9 @@ public class ParamsConstant {
     public static final String Action = "action";
     public static final String CouponID = "coupon_id";
     public static final String GetMode = "get_mode";
+    public static final String NickName = "nickname";
+    public static final String Sex = "sex";
+    public static final String Birthday = "birthday";
+    public static final String Profession = "profession";
+
 }

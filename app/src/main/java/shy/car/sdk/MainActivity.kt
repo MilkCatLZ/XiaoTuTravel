@@ -234,12 +234,8 @@ class MainActivity : NearCarOpenListener,
         app.startLoginDialog(null, null)
     }
 
-//    fun changeToOrderTakeFragment() {
-//        changeFragment(orderTakeFragment)
-//    }
-
     fun changeToCarRentFragment() {
-        changeFragment(carRentFragment, RouteMap.CarRent)
+       onResume()
     }
 
     private var Delivery: String = "fragment_delivery"

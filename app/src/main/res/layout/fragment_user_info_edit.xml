@@ -39,6 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
+                android:onClick="@{()->fragment.upload()}"
                 android:text="完成" />
         </RelativeLayout>
 
@@ -57,7 +58,7 @@
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
-                android:appAvatarURL="@{user.avatar}"
+                android:appAvatarURL="@{presenter.avatar}"
                 android:background="@drawable/back_avatar_back" />
 
             <TextView
@@ -103,12 +104,16 @@
 
                 <TextView
                     style="@style/style_user_info_edt"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{()->fragment.sexClick()}"
+                    android:text="@{presenter.sexText}"
                     android:hint="请选择您的性别" />
 
                 <Spinner
                     android:id="@+id/spinner_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:entries="@array/sex"
                     android:visibility="invisible" />
             </RelativeLayout>
@@ -142,7 +147,7 @@
             <Spinner
                 android:id="@+id/spinner_city"
                 style="@style/style_user_info_edt"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="1dp"
                 android:entries="@array/city_array"
                 android:hint="请选择您所在的城市"
                 android:textSize="@dimen/text_primary_14dp" />
@@ -157,10 +162,13 @@
                 style="@style/style_user_info_title"
                 android:text="职业" />
 
-            <Spinner
-                android:id="@+id/spinner_job"
+
+            <EditText
                 style="@style/style_user_info_edt"
-                android:hint="添加您的职业" />
+                android:ellipsize="end"
+                android:hint="请填写您的职业"
+                android:maxLines="1"
+                android:text="@={presenter.job}" />
 
         </LinearLayout>
     </LinearLayout>
