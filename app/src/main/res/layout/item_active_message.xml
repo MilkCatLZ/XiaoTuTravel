@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
@@ -39,7 +40,8 @@
                 android:id="@+id/img_message_logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/timg"
+                android:imageURL="@{message.img}"
+                android:src="@drawable/timg"
                 />
 
             <TextView
@@ -49,7 +51,8 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="17dp"
-                android:text="现在下单，送租车百元大礼包"
+                tools:text="现在下单，送租车百元大礼包"
+                android:text="@{message.title}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="@dimen/text_primary_14dp"/>
 
@@ -62,7 +65,8 @@
                 android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="新用户坐专车享优惠，前三单均送百元礼包，不要犹豫，赶快下单吧。"
+                tools:text="新用户坐专车享优惠，前三单均送百元礼包，不要犹豫，赶快下单吧。"
+                android:text="@{message.content}"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_second_primary_12dp"/>
 

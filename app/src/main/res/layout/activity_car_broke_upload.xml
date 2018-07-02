@@ -20,7 +20,7 @@
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_bank_card}"/>
+            app:title="@{@string/str_car_broke}"/>
 
         <View style="@style/style_shadow"/>
 

@@ -11,7 +11,7 @@ import shy.car.sdk.databinding.ActivityMessageCenterBinding
 
 /**
  * create by LZ at 2018/05/16
- * 活动消息
+ * 消息中心
  */
 @Route(path = RouteMap.MessageCenter)
 class MessageCenterActivity : XTBaseActivity() {

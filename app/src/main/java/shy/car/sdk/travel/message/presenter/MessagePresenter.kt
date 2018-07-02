@@ -21,7 +21,7 @@ class MessagePresenter(context: Context, var callBack: CallBack) : BasePresenter
         fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<MessageList> = DataBindingItemClickAdapter(R.layout.item_message, BR.message, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<MessageList> = DataBindingItemClickAdapter(R.layout.item_active_message, BR.message, BR.click, {})
     var pageSize = 10
     var pageIndex = 1
 

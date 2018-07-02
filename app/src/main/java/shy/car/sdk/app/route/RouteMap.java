@@ -319,4 +319,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
+    
+    public static final String RegisterAgree = "/login/register_agree";
+    public static final String ReturnCarAgree = "/rent/return_car_agree";
 }
