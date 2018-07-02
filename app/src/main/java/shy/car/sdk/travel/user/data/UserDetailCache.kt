@@ -16,6 +16,11 @@ data class UserDetailCache(
         @SerializedName("score") var score: Int,
         @SerializedName("phone") var phone: String,
         @SerializedName("bank_card_num") var bankCardNum: Int,
-        @SerializedName("coupon_num") var couponNum: Int
+        @SerializedName("coupon_num") var couponNum: Int,
+        @SerializedName("city") var city: String,
+        @SerializedName("profession") var profession: String,
+        @SerializedName("birthday") var birthday: String,
+        @SerializedName("nickname") var nickname: String,
+        @SerializedName("scope") var scope: String
 )
 

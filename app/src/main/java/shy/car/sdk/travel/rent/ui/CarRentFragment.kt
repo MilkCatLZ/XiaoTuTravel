@@ -659,7 +659,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun addCarMarkersToMap(carModel: String, plateNumber: String, lat: Double, lng: Double) {
 
-        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_car_green_400_24dp))
+        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_samll_car))
                 .anchor(0.5f, 1.0f)
                 .title(carModel)
                 .snippet("$carModel | $plateNumber")

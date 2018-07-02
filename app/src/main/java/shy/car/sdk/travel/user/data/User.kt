@@ -41,6 +41,11 @@ class User private constructor() : UserBase() {
         instance.couponNum = detail.couponNum
         instance.rank = detail.rank
         instance.rankText = detail.rankText
+        instance.sex = detail.sex
+        instance.nickName = detail.nickname
+        instance.profession = detail.profession
+        instance.birthday = detail.birthday
+        instance.city = detail.city
     }
 
     /**
@@ -171,6 +176,11 @@ class User private constructor() : UserBase() {
             instance.couponNum = dis.couponNum
             instance.rank = dis.rank
             instance.rankText = dis.rankText
+            instance.sex = dis.sex
+            instance.nickName = dis.nickName
+            instance.profession = dis.profession
+            instance.birthday = dis.birthday
+            instance.city = dis.city
         }
 
     }

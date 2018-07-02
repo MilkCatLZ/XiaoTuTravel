@@ -56,6 +56,13 @@ open class UserBase : BaseObservable() {
             field = avatar
             notifyPropertyChanged(BR.avatar)
         }
+    @SerializedName(Birthday)
+    @get:Bindable
+    var birthday: String = ""
+        set(birthday) {
+            field = birthday
+            notifyPropertyChanged(BR.birthday)
+        }
     /**
      * 性别（0保密 1男 2女）
      */
@@ -86,6 +93,16 @@ open class UserBase : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.rankText)
+        }
+    /**
+     * 昵称
+     */
+    @SerializedName("nickname")
+    @get:Bindable
+    var nickName: String = ""
+        set(nickName) {
+            field = nickName
+            notifyPropertyChanged(BR.nickName)
         }
     /**
      * 用户类型
@@ -244,6 +261,7 @@ open class UserBase : BaseObservable() {
         const val CouponNum = "coupon_num"
         const val BankCardNum = "bank_card_num"
         const val Profession = "profession"
+        const val Birthday = "birthday"
     }
 
 }

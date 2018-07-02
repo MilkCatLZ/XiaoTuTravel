@@ -121,11 +121,11 @@ public class ImageUtil {
      * @param image 压缩图片到1MB以下
      * @return
      */
-    public static Bitmap compressImage(Bitmap image) {
+    public static Bitmap compressImage(Bitmap image,int quality) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
         int options = 90;
-        while (baos.toByteArray().length / 1024 > 250) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+        while (baos.toByteArray().length / 1024 > quality) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
             baos.reset(); // 重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
             options -= 10;// 每次都减少10

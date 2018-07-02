@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import com.base.base.ProgressDialog
 import com.base.util.ImageUtil
+import com.base.util.ToastManager
 import com.wq.photo.widget.PickConfig
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +35,10 @@ class UserInfoEditFragment : XTBaseFragment(),
         UserDetailPresenter.UserEditListener {
     override fun onUploadAvatarSuccess() {
         activity?.let { ProgressDialog.hideLoadingView(it) }
-        eventBusDefault.post(RefreshUserInfo())
+        activity?.let {
+            ToastManager.showShortToast(it, "修改成功")
+        }
+        finish()
     }
 
     override fun onUploadAvatarError() {
@@ -71,7 +75,8 @@ class UserInfoEditFragment : XTBaseFragment(),
 
         activity?.let {
             birthDayView = DatePickerDialog(it, DatePickerDialog.OnDateSetListener { p0, year, month, monOfDay ->
-                presenter.birthDay.set("$year-${month + 1}-$monOfDay")
+                var s = "$year-${month + 1}-$monOfDay"
+                presenter.birthDay.set(s)
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         }
     }
@@ -84,6 +89,7 @@ class UserInfoEditFragment : XTBaseFragment(),
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 presenter.sex = p2
+                presenter.sexText.set(presenter.sexAdapter.items[p2].key)
             }
         }
         binding.spinnerSex.adapter = presenter.sexAdapter
@@ -94,13 +100,14 @@ class UserInfoEditFragment : XTBaseFragment(),
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 presenter.city = cities[position]
-                presenter.sexText.set(presenter.sexAdapter.items[position].key)
             }
         }
 
         cities.forEachIndexed { index, value ->
-            if (User.instance.city == value)
+            if (User.instance.city == value) {
                 binding.spinnerCity.setSelection(index)
+                presenter.city = value
+            }
         }
     }
 
@@ -136,7 +143,7 @@ class UserInfoEditFragment : XTBaseFragment(),
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0])), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .subscribeOn(Schedulers.io())

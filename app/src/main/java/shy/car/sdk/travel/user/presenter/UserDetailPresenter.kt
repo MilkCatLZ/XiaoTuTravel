@@ -41,7 +41,7 @@ class UserDetailPresenter(context: Context, var listener: UserEditListener? = nu
     var sexAdapter = DataBindingBaseAdapter<com.base.util.key.KeyValue>(R.layout.item_spinner, BR.item, context, null)
 
     init {
-        nickName.set(User.instance.name)
+        nickName.set(User.instance.nickName)
         sexAdapter.items.add(KeyValue("保密", "0"))
         sexAdapter.items.add(KeyValue("男", "1"))
         sexAdapter.items.add(KeyValue("女", "2"))
@@ -57,7 +57,7 @@ class UserDetailPresenter(context: Context, var listener: UserEditListener? = nu
 
         ProgressDialog.showLoadingView(context)
         var observable = ApiManager.getInstance()
-                .api.uploadUserDetail(nickName.get(), sex.toString(), birthDay.get(), city, job.get(), getAvatarPat(avatar.get()))
+                .api.uploadUserDetail(nickName.get().toString(), sex.toString(), birthDay.get().toString(), city, job.get(), getAvatarPat(avatar.get()))
         var observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
