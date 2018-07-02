@@ -21,6 +21,7 @@ import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
 import shy.car.sdk.travel.remain.data.RemainList
+import shy.car.sdk.travel.rent.data.BrokeType
 import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
@@ -177,11 +178,11 @@ interface ApiInterface {
      */
     @Multipart
     @POST("users/info")
-    fun uploadUserDetail(@Part(ParamsConstant.NickName) nickName: String? = null,
-                         @Part(ParamsConstant.Sex) sex: String? = null,
-                         @Part(ParamsConstant.Birthday) birthday: String? = null,
-                         @Part(ParamsConstant.City) city: String? = null,
-                         @Part(ParamsConstant.Profession) profession: String? = null,
+    fun uploadUserDetail(@Part(ParamsConstant.NickName) nickName: RequestBody? = null,
+                         @Part(ParamsConstant.Sex) sex: RequestBody? = null,
+                         @Part(ParamsConstant.Birthday) birthday: RequestBody? = null,
+                         @Part(ParamsConstant.City) city: RequestBody? = null,
+                         @Part(ParamsConstant.Profession) profession: RequestBody? = null,
                          @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
     /**
@@ -352,7 +353,10 @@ interface ApiInterface {
      */
     @Multipart
     @POST("orders/{oid}/photos")
-    fun uploadCarPic(@Path("oid") order_id: String, @Query(ParamsConstant.OrderId) oid: String, @Part(ParamsConstant.Type) type: String, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun uploadCarPic(@Path("oid") order_id: String,
+                     @Query(ParamsConstant.OrderId) oid: String,
+                     @Part(ParamsConstant.Type) type: RequestBody,
+                     @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
@@ -389,5 +393,18 @@ interface ApiInterface {
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
     fun payOrder(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.PaymentID) payment: String, @Field(ParamsConstant.CouponID) coupon: String? = null, @Field(ParamsConstant.OrderStatus) orderStatus: String = "5"): Observable<JsonObject>
+
+    @GET("cars/notice/type")
+    fun getBrokeType(): Observable<List<BrokeType>>
+
+    /**
+     * 修改用户头像
+     */
+    @Multipart
+    @POST("cars/notice")
+    fun uploadCarBroke(@Part(ParamsConstant.CarID) carid: RequestBody? = null,
+                         @Part(ParamsConstant.Type) type: RequestBody? = null,
+                         @Part(ParamsConstant.Content) content: RequestBody? = null,
+                         @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
 }

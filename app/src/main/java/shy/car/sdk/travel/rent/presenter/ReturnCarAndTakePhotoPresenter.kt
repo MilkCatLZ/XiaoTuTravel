@@ -71,7 +71,7 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
                     .subscribeOn(Schedulers.io())
 
             val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, "2", createImageParams().parts())//type=2 还车拍照
+                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("2")!!, createImageParams().parts())//type=2 还车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 

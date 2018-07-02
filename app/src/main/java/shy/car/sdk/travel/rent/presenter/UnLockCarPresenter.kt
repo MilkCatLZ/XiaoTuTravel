@@ -94,7 +94,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 //                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, "1", createImageParams().parts())//type=1 取车拍照
+                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("1")!!, createImageParams().parts())//type=1 取车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 

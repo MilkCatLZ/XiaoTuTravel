@@ -82,5 +82,7 @@ public class ParamsConstant {
     public static final String Sex = "sex";
     public static final String Birthday = "birthday";
     public static final String Profession = "profession";
+    public static final String Img = "img";
+    public static final String Content = "content";
 
 }

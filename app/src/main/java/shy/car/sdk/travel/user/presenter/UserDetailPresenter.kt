@@ -57,7 +57,12 @@ class UserDetailPresenter(context: Context, var listener: UserEditListener? = nu
 
         ProgressDialog.showLoadingView(context)
         var observable = ApiManager.getInstance()
-                .api.uploadUserDetail(nickName.get().toString(), sex.toString(), birthDay.get().toString(), city, job.get(), getAvatarPat(avatar.get()))
+                .api.uploadUserDetail(ApiManager.toRequestBody(nickName.get()),
+                ApiManager.toRequestBody(sex.toString()),
+                ApiManager.toRequestBody(birthDay.get()),
+                ApiManager.toRequestBody(city),
+                ApiManager.toRequestBody(job.get()),
+                getAvatarPat(avatar.get()))
         var observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

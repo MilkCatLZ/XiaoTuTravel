@@ -3,6 +3,9 @@ package shy.car.sdk.app.net
 
 import com.base.network.retrofit.BaseApiManager
 import com.base.network.retrofit.BaseRetrofitInterface
+import com.base.util.StringUtils
+import okhttp3.MediaType
+import okhttp3.RequestBody
 
 /**
  * 统一接口管理
@@ -26,5 +29,11 @@ class ApiManager(baseUrl: String, interceptor: BaseInterceptor, listener: BaseRe
             ins = ApiManager(baseUrl, interceptor, listener, c)
         }
 
+        fun toRequestBody(value: String? = null): RequestBody? {
+            return if (StringUtils.isEmpty(value)) {
+                null
+            } else
+                RequestBody.create(MediaType.parse("text/plain"), value)
+        }
     }
 }

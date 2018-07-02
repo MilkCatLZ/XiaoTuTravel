@@ -5,21 +5,113 @@
 
         <variable
             name="ac"
-            type="shy.car.sdk.travel.rent.ui.CarBrokeUploadActivity" />
+            type="shy.car.sdk.travel.rent.ui.CarBrokeUploadActivity"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.rent.presenter.CarBrokeUploadPresenter"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/main_back"
+                  android:orientation="vertical">
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_bank_card}" />
+            app:title="@{@string/str_bank_card}"/>
 
-        <View style="@style/style_shadow" />
+        <View style="@style/style_shadow"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:paddingEnd="19dp"
+            android:paddingStart="20dp"
+            android:paddingTop="16dp">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/iocn_notify"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="为了保障您的权益不受损失"
+                    android:textColor="@color/text_second_primary_666666"
+                    android:textSize="@dimen/text_second_primary_12dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="如您发现车辆有外观划痕或有故障请及时进行报备"
+                    android:textColor="@color/text_second_primary_666666"
+                    android:textSize="@dimen/text_second_primary_12dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_broke_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:minHeight="100dp"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/_foreground_material_light"
+            android:maxLength="300"
+            android:paddingEnd="10dp"
+            android:paddingStart="5dp"
+            android:paddingTop="20dp"
+            android:text="@={presenter.content}"
+            android:textColor="@color/text_primary_333333"
+            android:textColorHint="#cccccc"
+            android:textSize="@dimen/text_title_16dp"/>
+
+        <RelativeLayout
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/back_white_coner_2dp_dash"
+            android:onClick="@{()->ac.goAlbum()}">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_photo_add"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imageURL="@{presenter.photo}"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_button_main_green_clickable"
+            android:onClick="@{()->ac.upload()}"
+            android:text="提交"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp"/>
     </LinearLayout>
 </layout>
