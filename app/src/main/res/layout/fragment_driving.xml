@@ -265,13 +265,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:onClick="@{()->fragment.callAdmin()}">
 
                                 <TextView
                                     style="@style/style_ww.text_12_999"
                                     android:drawablePadding="5dp"
                                     android:drawableStart="@drawable/icon_call"
-                                    android:onClick="@{()->fragment.callAdmin()}"
+
                                     android:text="联系调度员"
                                     android:textColor="@color/text_second_primary_666666" />
                             </LinearLayout>
@@ -282,13 +283,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:gravity="center">
+                                android:gravity="center"
+                                android:onClick="@{()->fragment.feedBackTrouble()}">
 
                                 <TextView
                                     style="@style/style_ww.text_12_999"
                                     android:drawablePadding="5dp"
                                     android:drawableStart="@drawable/icon_trouble"
-                                    android:onClick="@{()->fragment.feedBackTrouble()}"
+
                                     android:text="上报故障"
                                     android:textColor="@color/text_second_primary_666666" />
                             </LinearLayout>

@@ -38,7 +38,8 @@ import shy.car.sdk.travel.rent.presenter.CarBrokeUploadPresenter
  * 故障上报
  */
 @Route(path = RouteMap.CarBrokeUpLoad)
-class CarBrokeUploadActivity : XTBaseActivity(), CarBrokeUploadPresenter.CallBack {
+class CarBrokeUploadActivity : XTBaseActivity(),
+        CarBrokeUploadPresenter.CallBack {
     override fun upLoadSuccess(t: JsonObject) {
         ToastManager.showShortToast(this, "故障申报成功")
         finish()
@@ -47,6 +48,7 @@ class CarBrokeUploadActivity : XTBaseActivity(), CarBrokeUploadPresenter.CallBac
     override fun getTypeSuccess(t: List<BrokeType>) {
         if (t.isNotEmpty())
             presenter.checkID.set(t[0].id)
+        binding.recyclerViewBrokeType.adapter = presenter.adapter
     }
 
     lateinit var binding: ActivityCarBrokeUploadBinding
@@ -79,7 +81,7 @@ class CarBrokeUploadActivity : XTBaseActivity(), CarBrokeUploadPresenter.CallBac
     }
 
     fun upload() {
-
+        presenter.uploadCarBroke()
     }
 
     fun goAlbum() {

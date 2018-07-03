@@ -130,7 +130,9 @@ class DrivingFragment : XTBaseFragment(),
      * 上报故障
      */
     fun feedBackTrouble() {
-        ARouter.getInstance().build(RouteMap.CarBrokeUpLoad)
+        ARouter.getInstance()
+                .build(RouteMap.CarBrokeUpLoad)
+                .navigation()
     }
 
     /**
