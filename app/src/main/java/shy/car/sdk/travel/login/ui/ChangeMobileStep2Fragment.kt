@@ -1,11 +1,14 @@
 package shy.car.sdk.travel.login.ui
 
 import android.annotation.SuppressLint
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.util.ToastManager
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_change_mobile_step2.*
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.databinding.FragmentChangeMobileStep2Binding
 import shy.car.sdk.travel.login.presenter.ChangeMobilePresenter
 import java.util.concurrent.TimeUnit
 
@@ -24,6 +28,12 @@ import java.util.concurrent.TimeUnit
 @Route(path = RouteMap.ChangeMobile)
 class ChangeMobileStep2Fragment : XTBaseFragment(),
         ChangeMobilePresenter.ChangeMobileListener {
+    override fun verifyMobileSuccess(t: JsonObject) {
+        app.logout()
+        app.goHome()
+        activity?.let { ToastManager.showShortToast(it, "手机修改成功"); }
+    }
+
     override fun onGetVerifySuccess(interval: Int) {
         startCountDown(interval)
     }
@@ -32,17 +42,22 @@ class ChangeMobileStep2Fragment : XTBaseFragment(),
 
     }
 
-    override fun verify(interval: Int, verify: String) {
-
-    }
 
     lateinit var presenter: ChangeMobilePresenter
 
+    lateinit var binding: FragmentChangeMobileStep2Binding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_change_mobile_step2, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_change_mobile_step2, null, false)
+        binding.fragment = this
+        binding.presenter = presenter
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         edt_phone.addTextChangedListener(presenter.phoneTextWatcher)
         edt_verify.addTextChangedListener(presenter.verifyTextWatcher)
-        return view
     }
 
 

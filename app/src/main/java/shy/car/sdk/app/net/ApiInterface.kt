@@ -64,9 +64,10 @@ interface ApiInterface {
      * 修改新手机
      */
     @FormUrlEncoded
-    @POST("phone/{phone}/captcha")
-    fun changeMobile(@Field(ParamsConstant.Code) name: String? = null,
-                     @Field(ParamsConstant.Step) step: String = "1"): Observable<JsonObject>
+    @POST("users/phone")
+    fun changeMobile(@Field(ParamsConstant.NewPhone) new_phone: String? = null,
+                     @Field(ParamsConstant.Code) name: String? = null,
+                     @Field(ParamsConstant.Step) step: String = "2"): Observable<JsonObject>
 
 
     /**

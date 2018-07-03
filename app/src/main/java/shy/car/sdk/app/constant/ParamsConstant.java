@@ -86,5 +86,6 @@ public class ParamsConstant {
     public static final String Content = "content";
     public static final String Step = "step";
     public static final String Code = "code";
+    public static final String NewPhone = "new_phone";
 
 }

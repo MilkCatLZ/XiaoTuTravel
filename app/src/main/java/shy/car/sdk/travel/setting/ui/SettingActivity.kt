@@ -82,18 +82,19 @@ class SettingActivity : XTBaseActivity() {
         Observable.create<Float> {
             val size = FileManager.getFolderSize(File(FileManager.getDirectory(this@SettingActivity)))
             val sizes = FileManager.getFolderSize(Glide.getPhotoCacheDir(this@SettingActivity))
-            size + sizes
+
+            it.onNext(size + sizes)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { it ->
+                .subscribe({ it ->
                     if (it == 0f) {
                         txtSettingCache.text = "0m"
                     } else {
                         val format = DecimalFormat("#.#")
                         txtSettingCache.text = (format.format(it) + " M")
                     }
-                }
+                }, {})
     }
 
     var disposable: Disposable? = null
@@ -132,9 +133,15 @@ class SettingActivity : XTBaseActivity() {
         finish()
     }
 
-    fun about(){
+    fun about() {
         ARouter.getInstance()
                 .build(RouteMap.About)
+                .navigation()
+    }
+
+    fun changeMobile() {
+        ARouter.getInstance()
+                .build(RouteMap.ChangeMobile)
                 .navigation()
     }
 }
