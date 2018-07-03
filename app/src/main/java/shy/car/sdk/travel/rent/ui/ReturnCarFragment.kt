@@ -263,4 +263,9 @@ class ReturnCarFragment : XTBaseFragment(),
                 .navigation()
     }
 
+    fun returnCarAgree(){
+        ARouter.getInstance()
+                .build(RouteMap.ReturnCarAgree)
+                .navigation()
+    }
 }

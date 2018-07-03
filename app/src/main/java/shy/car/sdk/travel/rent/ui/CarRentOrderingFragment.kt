@@ -444,9 +444,11 @@ class CarRentOrderingFragment : XTBaseFragment() {
         binding.map.map.animateCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 
+    var userMaker: Marker? = null
 
     fun addUserLocationMarker() {
-        binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
+        userMaker?.remove()
+        userMaker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
                 .anchor(0.5f, 1.0f)
                 .snippet(app.location.address)
                 .position(LatLng(app.location.lat, app.location.lng))

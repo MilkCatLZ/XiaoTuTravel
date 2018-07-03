@@ -104,7 +104,7 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
         activity?.let {
             presenter = VerifyPresenter(listener, it)
             if (BuildConfig.DEBUG) {
-                Observable.timer(4, TimeUnit.SECONDS)
+                Observable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({

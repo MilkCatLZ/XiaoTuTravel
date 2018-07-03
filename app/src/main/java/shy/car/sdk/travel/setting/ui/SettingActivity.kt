@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.util.FileManager
 import com.base.util.ToastManager
@@ -22,6 +23,7 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivitySettingBinding
 import shy.car.sdk.travel.update.UpdateHelper
+import shy.car.sdk.travel.user.data.User
 import java.io.File
 import java.text.DecimalFormat
 
@@ -37,6 +39,7 @@ class SettingActivity : XTBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_setting)
         binding.ac = this
+        binding.user = User.instance
         version.set(Version.getVersion(this))
         showCache()
     }
@@ -127,5 +130,11 @@ class SettingActivity : XTBaseActivity() {
     fun logout() {
         app.logout()
         finish()
+    }
+
+    fun about(){
+        ARouter.getInstance()
+                .build(RouteMap.About)
+                .navigation()
     }
 }

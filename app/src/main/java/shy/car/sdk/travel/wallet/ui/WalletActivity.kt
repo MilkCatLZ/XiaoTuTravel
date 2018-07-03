@@ -104,7 +104,10 @@ class WalletActivity : XTBaseActivity(),
      * 保证金
      */
     fun onBaoZhengJinClick() {
-
+        User.instance.getUserDetail(this)
+        ARouter.getInstance()
+                .build(RouteMap.ReturnPromiseMoney)
+                .navigation()
     }
 
     /**

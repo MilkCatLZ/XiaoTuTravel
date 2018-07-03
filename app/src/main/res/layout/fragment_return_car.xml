@@ -213,6 +213,7 @@
                 style="@style/style_ww.text_12_999"
                 android:layout_marginStart="5dp"
                 android:text="《小兔出行还车协议》"
+                android:onClick="@{()->fragment.returnCarAgree()}"
                 android:textColor="@color/main_color_red"/>
 
         </LinearLayout>

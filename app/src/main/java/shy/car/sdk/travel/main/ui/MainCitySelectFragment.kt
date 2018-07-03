@@ -15,8 +15,11 @@ import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
 import me.yokeyword.indexablerv.IndexableLayout
 import me.yokeyword.indexablerv.SimpleHeaderAdapter
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.eventbus.RefreshCity
 import shy.car.sdk.databinding.LayoutCitySelectBinding
 import shy.car.sdk.travel.location.LocationPresenter
 import shy.car.sdk.travel.location.SearchFragment
@@ -147,24 +150,6 @@ class MainCitySelectFragment : XTBaseFragment() {
             //----------------------添加热门城市
             val hotCity = ArrayList<CurrentLocation>()
             hotCity.addAll(list)
-//            var l1=CurrentLocation()
-//            l1.cityName="南宁市"
-//            l1.cityCode="0771"
-//            l1.lng=108.36637
-//            l1.lat=22.817746
-//            var l2=CurrentLocation()
-//            l2.cityName="柳州"
-//            l2.cityCode="0772"
-//            l2.lng=109.411703
-//            l2.lat=24.314617
-//            var l3=CurrentLocation()
-//            l3.cityName="北海"
-//            l3.cityCode="0773"
-//            l3.lng=109.119254
-//            l3.lat=21.473343
-//            hotCity.add(l1)
-//            hotCity.add(l2)
-//            hotCity.add(l3)
 
             //添加头部
             val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)
@@ -206,5 +191,10 @@ class MainCitySelectFragment : XTBaseFragment() {
     override fun onRealResume() {
         super.onRealResume()
         getLocation()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshCity(refresh: RefreshCity){
+        locationPresenter.getCity()
     }
 }

@@ -333,6 +333,12 @@ public class RouteMap {
     @NotNull
     public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
 
-    public static final String RegisterAgree = "/login/register_agree";
-    public static final String ReturnCarAgree = "/rent/return_car_agree";
+    public static final String RegisterAgree = "/html/register_agree";
+    public static final String ReturnCarAgree = "/html/return_car_agree";
+    public static final String About = "/html/about";
+    /**
+     * 修改手机号
+     * {@link shy.car.sdk.travel.login.ui.ChangeMobileActivity}
+     */
+    public static final String ChangeMobile = "/login/change_mobile";
 }

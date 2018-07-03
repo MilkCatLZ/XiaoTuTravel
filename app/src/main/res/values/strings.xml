@@ -67,4 +67,5 @@
     <string name="str_recharge_agree_ment">充值协议</string>
     <string name="str_message_system">系统消息</string>
     <string name="str_message_service">服务消息</string>
+    <string name="str_change_mobile">修改手机</string>
 </resources>

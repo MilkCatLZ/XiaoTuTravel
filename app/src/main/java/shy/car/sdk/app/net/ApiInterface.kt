@@ -48,7 +48,25 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("phone/{phone}/captcha")
-    fun gerVerify(@Path(ParamsConstant.Phone) phone: String, @Field("") name: String? = null): Observable<JsonObject>
+    fun gerVerify(@Path(ParamsConstant.Phone) phone: String,
+                  @Field("") name: String? = null): Observable<JsonObject>
+
+
+    /**
+     * 验证原手机
+     */
+    @FormUrlEncoded
+    @POST("users/phone")
+    fun verifyOriginMobile(@Field(ParamsConstant.Code) name: String? = null,
+                           @Field(ParamsConstant.Step) step: String = "1"): Observable<JsonObject>
+
+    /**
+     * 修改新手机
+     */
+    @FormUrlEncoded
+    @POST("phone/{phone}/captcha")
+    fun changeMobile(@Field(ParamsConstant.Code) name: String? = null,
+                     @Field(ParamsConstant.Step) step: String = "1"): Observable<JsonObject>
 
 
     /**
@@ -56,7 +74,10 @@ interface ApiInterface {
      * JsonString：{"phone":"","verify":"","uuid":"",}
      */
     @GET("oauth/access_token")
-    fun login(@Query(ParamsConstant.UserName) userName: String, @Query(ParamsConstant.PASSWORD) verify: String, @Query(ParamsConstant.GrantType) grant_type: String = "password", @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<JsonObject>
+    fun login(@Query(ParamsConstant.UserName) userName: String,
+              @Query(ParamsConstant.PASSWORD) verify: String,
+              @Query(ParamsConstant.GrantType) grant_type: String = "password",
+              @Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<JsonObject>
 
     /**
      * 登出
@@ -79,14 +100,16 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @PUT("xt/password")
-    fun setupPassWord(@Query(ParamsConstant.UID) uid: String, @Query(ParamsConstant.PASSWORD) passWord: String): Observable<String>
+    fun setupPassWord(@Query(ParamsConstant.UID) uid: String,
+                      @Query(ParamsConstant.PASSWORD) passWord: String): Observable<String>
 
     /**
      * 获取城市列表
      * JsonString：{"phone":"","password":""}
      */
     @GET("cities")
-    fun getCityList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 1000): Observable<List<CurrentLocation>>
+    fun getCityList(@Query(ParamsConstant.Offset) offset: Int = 0,
+                    @Query(ParamsConstant.Limit) limit: Int = 1000): Observable<List<CurrentLocation>>
 
     /**
      * 获取接单列表
@@ -191,13 +214,16 @@ interface ApiInterface {
      */
     @Multipart
     @POST("users/identity")
-    fun uploadUserVerify(@Part(ParamsConstant.Name) name: RequestBody, @Part(ParamsConstant.IDcard) idCard: RequestBody, @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+    fun uploadUserVerify(@Part(ParamsConstant.Name) name: RequestBody,
+                         @Part(ParamsConstant.IDcard) idCard: RequestBody,
+                         @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     /**
      * 获取余额明细
      */
     @GET("users/bill")
-    fun getRemainDetailList(@Query(ParamsConstant.Offset) offset: Int, @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<RemainList>>
+    fun getRemainDetailList(@Query(ParamsConstant.Offset) offset: Int,
+                            @Query(ParamsConstant.Limit) pageSize: Int): Observable<List<RemainList>>
 
     /**
      * 获取支付方式

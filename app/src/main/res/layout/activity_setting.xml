@@ -114,6 +114,7 @@
 
         <LinearLayout
             android:id="@+id/layout_about"
+            android:onClick="@{()->ac.about()}"
             style="@style/style_setting_content">
 
             <TextView

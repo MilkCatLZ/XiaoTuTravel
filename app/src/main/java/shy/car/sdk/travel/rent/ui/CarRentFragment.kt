@@ -49,6 +49,7 @@ import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.eventbus.CreateRentCarOrderSuccess
+import shy.car.sdk.app.eventbus.RefreshCity
 import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
@@ -533,9 +534,10 @@ class CarRentFragment : XTBaseFragment() {
         binding.map.map.animateCamera(CameraUpdateFactory.changeLatLng(latLng))
     }
 
-
+    var userMaker: Marker? = null
     fun addUserLocationMarker() {
-        binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
+        userMaker?.remove()
+        userMaker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat))
                 .anchor(0.5f, 1.0f)
                 .snippet(app.location.address)
                 .position(LatLng(app.location.lat, app.location.lng))
@@ -714,8 +716,6 @@ class CarRentFragment : XTBaseFragment() {
             var lin = LinearInterpolator()
             operatingAnim.interpolator = lin
 
-//            val rotate = RotateAnimation(0f, 360f, 1f, 1f)
-//            rotate.duration = 1000
             operatingAnim.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationEnd(p0: Animation?) {
                     if (!isRefershSuccess) {
@@ -734,6 +734,7 @@ class CarRentFragment : XTBaseFragment() {
             })
             binding.refresh.startAnimation(operatingAnim)
         }
+        eventBusDefault.post(RefreshCity())
         carRentPresenter.getNetWorkList()
     }
 
