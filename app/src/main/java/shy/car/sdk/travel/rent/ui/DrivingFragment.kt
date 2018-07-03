@@ -16,6 +16,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.route.RouteMap.ReturnCar
@@ -132,6 +133,7 @@ class DrivingFragment : XTBaseFragment(),
     fun feedBackTrouble() {
         ARouter.getInstance()
                 .build(RouteMap.CarBrokeUpLoad)
+                .withObject(Object1, presenter.detail.get())
                 .navigation()
     }
 

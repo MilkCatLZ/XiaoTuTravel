@@ -58,7 +58,7 @@ class CarBrokeUploadPresenter(context: Context, var callBack: CallBack) : BasePr
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "提交失败")
+
             }
 
         }
@@ -70,7 +70,7 @@ class CarBrokeUploadPresenter(context: Context, var callBack: CallBack) : BasePr
     fun uploadCarBroke() {
         ProgressDialog.showLoadingView(context)
         val observable = ApiManager.getInstance()
-                .api.uploadCarBroke(ApiManager.toRequestBody(detail?.orderId),
+                .api.uploadCarBroke(ApiManager.toRequestBody(detail?.car?.carID),
                 ApiManager.toRequestBody(checkID.get()),
                 ApiManager.toRequestBody(content.get()),
                 createImageParams().parts())
@@ -91,6 +91,7 @@ class CarBrokeUploadPresenter(context: Context, var callBack: CallBack) : BasePr
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "提交失败")
             }
 
         }
