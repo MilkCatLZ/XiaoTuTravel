@@ -27,4 +27,16 @@ class MessageCenterActivity : XTBaseActivity() {
                 .build(RouteMap.MessageActive)
                 .navigation()
     }
+
+    fun onMessageServiceClick() {
+        ARouter.getInstance()
+                .build(RouteMap.MessageService)
+                .navigation()
+    }
+
+    fun onMessageSystemClick() {
+        ARouter.getInstance()
+                .build(RouteMap.MessageSystem)
+                .navigation()
+    }
 }

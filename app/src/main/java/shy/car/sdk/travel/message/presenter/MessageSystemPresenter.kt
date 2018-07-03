@@ -12,26 +12,26 @@ import shy.car.sdk.travel.message.data.MessageList
 
 /**
  * create by LZ at 2018/05/16
- * 活动列表
+ * 系统消息列表
  */
-class MessagePresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
+class MessageSystemPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     interface CallBack {
         fun getListSuccess(list: ArrayList<MessageList>)
         fun getListError(e: Throwable)
     }
 
-    var adapter: DataBindingItemClickAdapter<MessageList> = DataBindingItemClickAdapter(R.layout.item_active_message, BR.message, BR.click, {})
+    var adapter: DataBindingItemClickAdapter<MessageList> = DataBindingItemClickAdapter(R.layout.item_message_system, BR.message, BR.click, {})
     var pageSize = 10
     var pageIndex = 1
 
     init {
-        val list = ArrayList<MessageList>()
-        for (i in 1..9) {
-            list.add(MessageList())
-        }
+//        val list = ArrayList<MessageList>()
+//        for (i in 1..9) {
+//            list.add(MessageList())
+//        }
 
-        adapter.setItems(list, 1)
+//        adapter.setItems(list, 1)
     }
 
     fun hasMore(): Boolean {
@@ -40,16 +40,20 @@ class MessagePresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     fun refresh() {
         pageIndex = 1
-        getOrderList()
+        getMessageList()
     }
 
     fun nextPage() {
         pageIndex++
-        getOrderList()
+        getMessageList()
     }
 
-    private fun getOrderList() {
-        ApiManager.getInstance().api.getMessageList(pageIndex,pageSize).subscribe(object: Observer<ArrayList<MessageList>>{
+    private fun getMessageList() {
+
+
+        val observable = ApiManager.getInstance()
+                .api.getMessageList(1, (pageIndex - 1) * pageSize, pageSize)//固定1:系统消息
+        val observer = object : Observer<ArrayList<MessageList>> {
             override fun onComplete() {
 
             }
@@ -59,13 +63,17 @@ class MessagePresenter(context: Context, var callBack: CallBack) : BasePresenter
             }
 
             override fun onNext(t: ArrayList<MessageList>) {
+                adapter.setItems(t, pageIndex)
                 callBack.getListSuccess(t)
             }
 
             override fun onError(e: Throwable) {
                 callBack.getListError(e)
             }
-        })
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun getTotal(): Int {

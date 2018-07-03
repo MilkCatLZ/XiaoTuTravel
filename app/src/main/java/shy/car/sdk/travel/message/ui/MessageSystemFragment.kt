@@ -12,24 +12,25 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.databinding.FragmentMessageActiveBinding
+import shy.car.sdk.databinding.FragmentMessageSystemBinding
 import shy.car.sdk.travel.message.data.MessageList
-import shy.car.sdk.travel.message.presenter.MessagePresenter
+import shy.car.sdk.travel.message.presenter.MessageSystemPresenter
 
 /**
  * create by LZ at 2018/05/16
- * 活动消息
+ * 系统消息
  */
 
-class MessageFragment : XTBaseUltimateRecyclerViewFragment() {
-    lateinit var binding: FragmentMessageActiveBinding
-    lateinit var presenter: MessagePresenter
+class MessageSystemFragment : XTBaseUltimateRecyclerViewFragment() {
+    lateinit var binding: FragmentMessageSystemBinding
+    lateinit var presenter: MessageSystemPresenter
 
     val checkedTab = ObservableInt(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let {
-            presenter = MessagePresenter(it, object : MessagePresenter.CallBack {
+            presenter = MessageSystemPresenter(it, object : MessageSystemPresenter.CallBack {
                 override fun getListError(e: Throwable) {
                     refreshOrLoadMoreComplete()
                     checkHasMore()
@@ -52,7 +53,7 @@ class MessageFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message_active, null, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_message_system, null, false)
         binding.fragment = this
         binding.presenter = presenter
         return binding.root
@@ -60,7 +61,7 @@ class MessageFragment : XTBaseUltimateRecyclerViewFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        onRefresh()
     }
 
 
@@ -85,7 +86,7 @@ class MessageFragment : XTBaseUltimateRecyclerViewFragment() {
     }
 
     override fun getUltimateRecyclerView(): UltimateRecyclerView {
-        return binding.recyclerViewOrderMine
+        return binding.recyclerViewMessage
     }
 
     override fun getAdapter(): DataBindingAdapter<*> {

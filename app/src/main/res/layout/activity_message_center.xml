@@ -70,6 +70,7 @@
         <View style="@style/line_horizontal"/>
 
         <LinearLayout
+            android:onClick="@{()->ac.onMessageServiceClick()}"
             style="@style/style_message_center_content">
 
             <ImageView
@@ -93,6 +94,7 @@
         <View style="@style/line_horizontal"/>
 
         <LinearLayout
+            android:onClick="@{()->ac.onMessageSystemClick()}"
             style="@style/style_message_center_content">
 
             <ImageView

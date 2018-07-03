@@ -65,4 +65,6 @@
     <string name="str_car_broke">故障申报</string>
     <string name="str_return_car_agree">还车协议</string>
     <string name="str_recharge_agree_ment">充值协议</string>
+    <string name="str_message_system">系统消息</string>
+    <string name="str_message_service">服务消息</string>
 </resources>

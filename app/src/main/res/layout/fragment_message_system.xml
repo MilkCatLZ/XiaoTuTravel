@@ -11,11 +11,11 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.message.presenter.MessageActivePresenter"/>
+            type="shy.car.sdk.travel.message.presenter.MessageSystemPresenter"/>
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.message.ui.MessageActiveFragment"/>
+            type="shy.car.sdk.travel.message.ui.MessageSystemFragment"/>
     </data>
 
     <LinearLayout
@@ -26,13 +26,13 @@
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_message}"/>
+            app:title="@{@string/str_message_system}"/>
 
         <View
             style="@style/style_shadow"/>
 
         <com.base.widget.UltimateRecyclerView
-            android:id="@+id/recyclerView_message"
+            android:id="@+id/recyclerViewMessage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
@@ -43,7 +43,7 @@
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"
-            tools:listitem="@layout/item_message_active"/>
+            tools:listItem="@layout/item_message_system"/>
 
     </LinearLayout>
 </layout>

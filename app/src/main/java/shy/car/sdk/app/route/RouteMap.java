@@ -82,10 +82,23 @@ public class RouteMap {
     @NotNull
     public static final String OrderMine = "/order/mine";
     /**
-     * shy.car.sdk.travel.message.ui.MessageActiveActivity
+     * {@link shy.car.sdk.travel.message.ui.MessageActiveActivity}
+     * 活动消息
      */
     @NotNull
     public static final String MessageActive = "/message/active";
+    /**
+     * {@link shy.car.sdk.travel.message.ui.MessageServiceActivity}
+     * 服务消息
+     */
+    @NotNull
+    public static final String MessageService = "/message/service";
+    /**
+     * {@link shy.car.sdk.travel.message.ui.MessageSystemActivity}
+     * 系統消息
+     */
+    @NotNull
+    public static final String MessageSystem = "/message/system";
     /**
      * shy.car.sdk.travel.message.ui.MessageActiveActivity
      */
@@ -319,7 +332,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
-    
+
     public static final String RegisterAgree = "/login/register_agree";
     public static final String ReturnCarAgree = "/rent/return_car_agree";
 }

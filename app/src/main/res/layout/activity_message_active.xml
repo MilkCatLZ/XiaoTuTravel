@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragment_message"
-        android:name="shy.car.sdk.travel.message.ui.MessageFragment"
+        android:name="shy.car.sdk.travel.message.ui.MessageActiveFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </android.support.constraint.ConstraintLayout>

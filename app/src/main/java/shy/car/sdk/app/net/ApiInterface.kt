@@ -148,10 +148,11 @@ interface ApiInterface {
      * 获取发货列表
      *
      */
-    @GET("xt/message")
+    @GET("users/messages")
     fun getMessageList(
-            @Query(ParamsConstant.PageIndex) pageIndex: Int,
-            @Query(ParamsConstant.PageSize) pageSize: Int): Observable<ArrayList<MessageList>>
+            @Query(ParamsConstant.Type) type: Int,
+            @Query(ParamsConstant.Offset) offset: Int,
+            @Query(ParamsConstant.Limit) limit: Int): Observable<ArrayList<MessageList>>
 
     /**
      * 附近网点列表
@@ -403,8 +404,8 @@ interface ApiInterface {
     @Multipart
     @POST("cars/notice")
     fun uploadCarBroke(@Part(ParamsConstant.CarID) carid: RequestBody? = null,
-                         @Part(ParamsConstant.Type) type: RequestBody? = null,
-                         @Part(ParamsConstant.Content) content: RequestBody? = null,
-                         @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
+                       @Part(ParamsConstant.Type) type: RequestBody? = null,
+                       @Part(ParamsConstant.Content) content: RequestBody? = null,
+                       @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
 }
