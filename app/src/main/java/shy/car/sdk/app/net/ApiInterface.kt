@@ -165,7 +165,7 @@ interface ApiInterface {
      * 检查更新
      *
      */
-    @GET("xt/update")
+    @GET("versions")
     fun getUpdateInfo(): Observable<String>
 
     /**

@@ -10,19 +10,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class UpdateInfo implements BaseUpdate {
     
-    
-    /**
-     * version : 0.5.2
-     * content : 版本说明
-     * download_url :
-     * compulsion : 1
-     * date : 2017-03-01
-     * sessionTime : 2592000
-     * patchVersion : patch3.0.175.xy
-     * patchDownload : http://cn2.php.net/get/php-7.1.2.tar.gz/from/this/mirror
-     */
-    
-    @SerializedName( "version")
+
+    @SerializedName( "ver")
     private String version;
     @SerializedName( "content")
     private String content;
@@ -30,14 +19,9 @@ public class UpdateInfo implements BaseUpdate {
     private String downloadUrl;
     @SerializedName( "compulsion")
     private int compulsion;
-    @SerializedName( "date")
-    private String date;
-    @SerializedName( "sessionTime")
-    private int sessionTime;
-    @SerializedName( "patchVersion")
-    private String patchVersion;
-    @SerializedName( "patchDownload")
-    private String patchDownload;
+    @SerializedName( "time")
+    private String time;
+
     
     public String getVersion() { return version;}
     
@@ -55,19 +39,8 @@ public class UpdateInfo implements BaseUpdate {
     
     public void setCompulsion(int compulsion) { this.compulsion = compulsion;}
     
-    public String getDate() { return date;}
+    public String getTime() { return time;}
     
-    public void setDate(String date) { this.date = date;}
+    public void setTime(String time) { this.time = time;}
     
-    public int getSessionTime() { return sessionTime;}
-    
-    public void setSessionTime(int sessionTime) { this.sessionTime = sessionTime;}
-    
-    public String getPatchVersion() { return patchVersion;}
-    
-    public void setPatchVersion(String patchVersion) { this.patchVersion = patchVersion;}
-    
-    public String getPatchDownload() { return patchDownload;}
-    
-    public void setPatchDownload(String patchDownload) { this.patchDownload = patchDownload;}
 }

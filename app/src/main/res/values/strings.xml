@@ -71,4 +71,5 @@
     <string name="str_promise_return">退还申请</string>
     <string name="str_comment">我的评价</string>
     <string name="str_insurance_process">保险流程</string>
+    <string name="str_about">关于我们</string>
 </resources>
