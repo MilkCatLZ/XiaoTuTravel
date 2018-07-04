@@ -57,7 +57,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         } else if (presenter.carSelect.get() != null && presenter.carSelect.get()?.promiseMoneyPrice!! > t) {
             btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!! - t)}元")
         }
-        promiseMoney.set(LNTextUtil.getPriceText(t))
+        promiseMoney.set(LNTextUtil.getPriceText(if (t < 0) 0.0 else t))
     }
 
     lateinit var presenter: PromiseMoneyPayPresenter

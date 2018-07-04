@@ -137,7 +137,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="用车时长：" />
+                        android:text="用车时长" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -155,7 +155,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="用车里程：" />
+                        android:text="用车里程" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -173,7 +173,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="用车时段：" />
+                        android:text="用车时段" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -191,7 +191,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="按时计费：" />
+                        android:text="按时计费" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -209,7 +209,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="里程费用：" />
+                        android:text="里程费用" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -227,7 +227,7 @@
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="最低消费：" />
+                        android:text="最低消费" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"
@@ -238,10 +238,9 @@
                 </LinearLayout>
 
                 <android.support.v7.widget.RecyclerView
-android:id="@+id/recyclerView_order_car_discount"
+                    android:id="@+id/recyclerView_order_car_discount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="120dp"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 
@@ -253,7 +252,7 @@ android:id="@+id/recyclerView_order_car_discount"
                     <TextView
                         style="@style/style_ww.text_14_666"
                         android:layout_weight="1"
-                        android:text="实付金额：" />
+                        android:text="实付金额" />
 
                     <TextView
                         style="@style/style_ww.text_14_666"

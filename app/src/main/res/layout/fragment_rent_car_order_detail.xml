@@ -20,6 +20,8 @@
         <variable
             name="detail"
             type="shy.car.sdk.travel.order.data.RentOrderDetail" />
+
+        <import type="shy.car.sdk.travel.rent.data.RentOrderState"/>
     </data>
 
     <LinearLayout
@@ -274,6 +276,187 @@
 
                 </LinearLayout>
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/_foreground_material_light"
+                    android:orientation="vertical"
+                    android:visibleOrGone="@{detail.status==RentOrderState.Return||detail.status==RentOrderState.Finish}"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            style="@style/line_horizontal"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginStart="70dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:text="费用详情" />
+
+                        <View
+                            style="@style/line_horizontal"
+                            android:layout_marginEnd="70dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/_foreground_material_light"
+                        android:orientation="vertical"
+                        android:paddingBottom="20dp"
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingTop="5dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车时长" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{detail.duration}"
+                                tools:text="00:02:30" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车里程" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.mileage)+@string/str_km}"
+                                tools:text="32km" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车时段" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{detail.useCarTime}"
+                                tools:text="15:00 ~ 19:00" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="按时计费" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.durationFee)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="里程费用" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.mileageFee)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="最低消费" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.car.cost.minimum)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView_order_car_discount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="实付金额" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.realpayMoney)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <Space
                     android:layout_width="match_parent"
@@ -301,7 +484,7 @@
 
                         <TextView
                             style="@style/style_ww.text_12_999"
-                            android:text="费用详情" />
+                            android:text="订单详情" />
 
                         <View
                             style="@style/line_horizontal"
@@ -333,9 +516,8 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            tools:text="@{detail.payMethod}"
                             android:text="微信支付"
-                            />
+                            tools:text="@{detail.payMethod}" />
 
                     </LinearLayout>
 
@@ -347,9 +529,8 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            tools:text="04-10 15:00"
                             android:text="@{detail.finishAt}"
-                            />
+                            tools:text="04-10 15:00" />
 
                     </LinearLayout>
 
@@ -361,9 +542,8 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            tools:text="@{detail.createdAt}"
                             android:text="04-10 15:00"
-                            />
+                            tools:text="@{detail.createdAt}" />
 
                     </LinearLayout>
 
@@ -376,8 +556,7 @@
                         <TextView
                             style="@style/style_order_detail_text"
                             android:text="@{detail.returnAt}"
-                            tools:text="04-10 15:00"
-                            />
+                            tools:text="04-10 15:00" />
 
                     </LinearLayout>
 
@@ -389,9 +568,8 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            tools:text="20180505"
                             android:text="@{detail.orderId}"
-                            />
+                            tools:text="20180505" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -459,9 +637,8 @@
                             <TextView
                                 style="@style/style_ww.text_12_999"
                                 android:layout_marginTop="3dp"
-                                tools:text="南宁市鲁班路83号小兔科技"
                                 android:text="@{detail.fromNetwork}"
-                                />
+                                tools:text="南宁市鲁班路83号小兔科技" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -493,8 +670,7 @@
                                 style="@style/style_ww.text_12_999"
                                 android:layout_marginTop="3dp"
                                 android:text="@{detail.toNetwork}"
-                                tools:text="南宁市鲁班路83号小兔科技"
-                                />
+                                tools:text="南宁市鲁班路83号小兔科技" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -507,8 +683,8 @@
                 <LinearLayout
                     android:id="@+id/layout_baoxianliucheng"
                     style="@style/style_setting_content"
-                    android:onClick="@{()->fragment.gotuInsuranceProcess()}"
-                    android:layout_marginTop="7dp">
+                    android:layout_marginTop="7dp"
+                    android:onClick="@{()->fragment.gotuInsuranceProcess()}">
 
                     <TextView
                         style="@style/style_setting_nav_title"
@@ -524,8 +700,8 @@
 
                 <LinearLayout
                     android:id="@+id/layout_my_pingjia"
-                    android:onClick="@{()->fragment.gotuCommentProcess()}"
-                    style="@style/style_setting_content">
+                    style="@style/style_setting_content"
+                    android:onClick="@{()->fragment.gotuCommentProcess()}">
 
                     <TextView
                         style="@style/style_setting_nav_title"

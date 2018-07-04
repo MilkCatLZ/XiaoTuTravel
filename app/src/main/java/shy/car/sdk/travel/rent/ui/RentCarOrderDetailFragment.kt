@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.util.Phone
+import com.base.widget.FullLinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_rent_car_order_detail.*
 import shy.car.sdk.BR
 import shy.car.sdk.R
@@ -39,6 +40,13 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
         val adapter = DataBindingAdapter<RentOrderDetail.DiscountsBean>(R.layout.item_order_car_discount, BR.discount, null)
         adapter.setItems(t.discounts, 1)
         recyclerView_car_discount.adapter = adapter
+
+        val adapter1 = DataBindingAdapter<shy.car.sdk.travel.order.data.RentOrderDetail.PreferentialBean>(R.layout.item_rent_car_discount, BR.preferential, null)
+        adapter1.setItems(t.preferential, 1)
+        activity?.let {
+            recyclerView_order_car_discount.layoutManager = FullLinearLayoutManager(it)
+        }
+        recyclerView_order_car_discount.adapter = adapter1
     }
 
     override fun onError(e: Throwable) {

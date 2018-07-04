@@ -33,10 +33,10 @@
 
                 <TextView
                     style="@style/style_order_take_state"
-                    android:shadowColor="@color/text_third_primary_999999"
-                    android:textColor="@{detail.status>OrderState.StateWaitTake?@color/main_color_green:detail.status==OrderState.StateWaitTake?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     android:background="@{detail.status==OrderState.StateWaitTake?@drawable/icon_jiedan:@drawable/white}"
-                    android:text="@{detail.status>OrderState.StateWaitTake?@string/str_taked:@string/str_wait_take}" />
+                    android:shadowColor="@color/text_third_primary_999999"
+                    android:text="@{detail.status>OrderState.StateWaitTake?@string/str_taked:@string/str_wait_take}"
+                    android:textColor="@{detail.status>OrderState.StateWaitTake?@color/main_color_green:detail.status==OrderState.StateWaitTake?@color/_foreground_material_light:@color/text_third_primary_999999}" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -69,9 +69,9 @@
 
                 <TextView
                     style="@style/style_order_take_state"
-                    android:textColor="@{detail.status>OrderState.StateWaitPay?@color/main_color_green:detail.status==OrderState.StateWaitPay?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     android:background="@{detail.status==OrderState.StateWaitPay?@drawable/icon_jiedan:@drawable/white}"
                     android:text="@{detail.status>OrderState.StateWaitPay?@string/str_already_pay:@string/str_wait_pay}"
+                    android:textColor="@{detail.status>OrderState.StateWaitPay?@color/main_color_green:detail.status==OrderState.StateWaitPay?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     tools:enabled="false" />
 
                 <RelativeLayout
@@ -112,9 +112,9 @@
 
                 <TextView
                     style="@style/style_order_take_state"
-                    android:textColor="@{detail.status>OrderState.StateSending?@color/main_color_green:detail.status==OrderState.StateSending?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     android:background="@{detail.status==OrderState.StateSending?@drawable/icon_jiedan:@drawable/white}"
                     android:text="运输中"
+                    android:textColor="@{detail.status>OrderState.StateSending?@color/main_color_green:detail.status==OrderState.StateSending?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     tools:enabled="false" />
 
                 <RelativeLayout
@@ -155,9 +155,9 @@
 
                 <TextView
                     style="@style/style_order_take_state"
-                    android:textColor="@{detail.status>OrderState.StateFinish?@color/main_color_green:detail.status==OrderState.StateFinish?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     android:background="@{detail.status==OrderState.StateFinish?@drawable/icon_jiedan:@drawable/white}"
                     android:text="已完成"
+                    android:textColor="@{detail.status>OrderState.StateFinish?@color/main_color_green:detail.status==OrderState.StateFinish?@color/_foreground_material_light:@color/text_third_primary_999999}"
                     tools:enabled="false" />
 
                 <RelativeLayout
@@ -206,10 +206,12 @@
                 tools:text="南宁江南区" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_weight="1"
                 android:ellipsize="end"
+                android:gravity="end"
                 android:maxLines="1"
                 android:text="@{detail.toAddress}"
                 android:textColor="@color/text_third_primary_999999"

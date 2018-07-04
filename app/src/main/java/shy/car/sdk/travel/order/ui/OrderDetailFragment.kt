@@ -12,17 +12,26 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.util.DialogManager
 import com.base.util.Phone
+import com.base.util.ToastManager
 import com.google.gson.JsonObject
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
+import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderDetailBinding
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.presenter.OrderDetailPresenter
+import shy.car.sdk.travel.pay.WXPayUtil
+import shy.car.sdk.travel.pay.data.PayMethod
+import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
 import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.take.data.OrderState
 import shy.car.sdk.travel.user.data.User
@@ -34,6 +43,21 @@ import shy.car.sdk.travel.user.data.User
 @Route(path = RouteMap.OrderTakeDetailFragment)
 class OrderDetailFragment : XTBaseFragment(),
         OrderDetailPresenter.CallBack {
+    override fun paySuccess() {
+        activity?.let {
+            ToastManager.showShortToast(it, "支付成功")
+        }
+        presenter.getOrderDetail()
+    }
+
+    override fun onCreatePaySuccess(t: JsonObject) {
+        activity?.let {
+            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, t)) {
+
+            }
+        }
+    }
+
     override fun cancelOrderSuccess() {
         finish()
     }
@@ -63,10 +87,12 @@ class OrderDetailFragment : XTBaseFragment(),
             }
             OrderState.StateSending -> {
                 isBtnVisible.set(User.instance.phone == binding.detail?.user?.phone)
+                canCancel.set(false)
                 "确认签收"
             }
             else -> {
                 isBtnVisible.set(false)
+                canCancel.set(false)
                 ""
             }
         }
@@ -129,10 +155,7 @@ class OrderDetailFragment : XTBaseFragment(),
                 }
             }
             OrderState.StateWaitPay -> {
-                ARouter.getInstance()
-                        .build(RouteMap.OrderPay)
-                        .withObject(Object1, binding.detail)
-                        .navigation()
+                selectPayMethod()
             }
             OrderState.StateSending -> {
                 DialogManager.with(activity, childFragmentManager)
@@ -170,6 +193,28 @@ class OrderDetailFragment : XTBaseFragment(),
                     .onRightClick { _, _ -> presenter.cancelOrder() }
                     .show()
         }
+    }
+
+    fun selectPayMethod() {
+        val dialog = ARouter.getInstance().build(RouteMap.PaySelect)
+                .withObject(ParamsConstant.Object1, presenter.payMethod.get())
+                .withInt(ParamsConstant.Int1, 2)//1:充值，2:支付
+                .navigation() as PayMethodSelectDialog
+        dialog.listener = object : PayMethodSelectDialog.OnPayClick {
+            override fun onPaySelect(payMethod: PayMethod) {
+                presenter.payMethod.set(payMethod)
+                presenter.createPay()
+            }
+        }
+        dialog.show(childFragmentManager, "fragment_pay")
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun paySuccess(success: PaySuccess) {
+        activity?.let {
+            ToastManager.showShortToast(it, "支付成功")
+        }
+        presenter.getOrderDetail()
     }
 }
 

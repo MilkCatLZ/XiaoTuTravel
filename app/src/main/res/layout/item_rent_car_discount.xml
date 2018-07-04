@@ -11,10 +11,7 @@
         <import type="shy.car.sdk.app.LNTextUtil" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,5 +30,4 @@
                 android:text="@{LNTextUtil.getPriceText(preferential.money)}"
                 tools:text="￥20" />
         </LinearLayout>
-    </LinearLayout>
 </layout>

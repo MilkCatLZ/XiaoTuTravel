@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
+import com.base.widget.FullLinearLayoutManager
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.fragment_order_pay.*
 import org.greenrobot.eventbus.Subscribe
@@ -53,6 +54,9 @@ class OrderPayFragment : XTBaseFragment(),
         binding.detail = t
         val adapter = DataBindingAdapter<shy.car.sdk.travel.order.data.RentOrderDetail.PreferentialBean>(R.layout.item_rent_car_discount, BR.preferential, null)
         adapter.setItems(t.preferential, 1)
+        activity?.let {
+            recyclerView_order_car_discount.layoutManager = FullLinearLayoutManager(it)
+        }
         recyclerView_order_car_discount.adapter = adapter
     }
 

@@ -261,6 +261,17 @@ interface ApiInterface {
     fun createRecharge(@Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.PaymentID) payMethodID: String): Observable<JsonObject>
 
     /**
+     * 货运订单支付
+     */
+    @FormUrlEncoded
+    @PATCH("orders/freights/{freight_id}")
+    fun createDeliveryOrderPay(
+            @Path(ParamsConstant.FreightID) freight_id: String,
+            @Field(ParamsConstant.PaymentID) payMethodID: String,
+            @Field(ParamsConstant.FreightStatus) status: String = "3"//3：支付
+    ): Observable<JsonObject>
+
+    /**
      * 押金列表
      */
     @GET("users/deposits/logs")
@@ -391,15 +402,15 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
-    fun takeDeliveryOrder(@Path("freight_id") freight_id: String, @Field("freight_status") status: String = "1"): Observable<JsonObject>
+    fun takeDeliveryOrder(@Path(ParamsConstant.FreightID) freight_id: String, @Field("freight_status") status: String = "1"): Observable<JsonObject>
 
 
     @DELETE("orders/freights/{freight_id}")
-    fun cancelOrder(@Path("freight_id") freight_id: String): Observable<Response<Void>>
+    fun cancelOrder(@Path(ParamsConstant.FreightID) freight_id: String): Observable<Response<Void>>
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
-    fun deliveryFinish(@Path("freight_id") id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
+    fun deliveryFinish(@Path(ParamsConstant.FreightID) id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
 
     @FormUrlEncoded
     @PATCH("balance")

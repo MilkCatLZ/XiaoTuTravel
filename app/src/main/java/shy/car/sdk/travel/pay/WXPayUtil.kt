@@ -20,7 +20,7 @@ class WXPayUtil {
          */
         fun pay(activity: XTBaseActivity, payMethod: PayMethod, results: JsonObject): Boolean {
             when {
-                payMethod.name.contains("支付宝") -> {
+                payMethod.id == 1 -> {
                     Alipay.getInstance()
                             .pay(activity, results.get("pay_info").asString, object : Alipay.OnPayCallBack {
                                 override fun onPaySuccess(payResult: PayResult?) {
@@ -44,7 +44,7 @@ class WXPayUtil {
                             })
                     return true
                 }
-                payMethod.name.contains("微信") -> {
+                payMethod.id == 2 -> {
                     val req = PayReq()
                     var result = results.getAsJsonObject("pay_info")
 

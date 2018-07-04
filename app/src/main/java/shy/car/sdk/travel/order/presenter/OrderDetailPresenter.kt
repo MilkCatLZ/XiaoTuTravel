@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.order.presenter
 
 import android.content.Context
+import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
@@ -13,6 +14,7 @@ import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
+import shy.car.sdk.travel.pay.data.PayMethod
 
 class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
@@ -21,9 +23,14 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
         fun onGetDetailSuccess(t: DeliveryOrderDetail)
         fun onError(e: Throwable)
         fun cancelOrderSuccess()
+        fun onCreatePaySuccess(t: JsonObject)
+        fun paySuccess()
     }
 
     var oid: String = ""
+
+
+    private var detail: DeliveryOrderDetail? = null
 
 
     fun getOrderDetail() {
@@ -41,6 +48,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
 
             override fun onNext(t: DeliveryOrderDetail) {
                 ProgressDialog.hideLoadingView(context)
+                detail = t
                 callBack.onGetDetailSuccess(t)
             }
 
@@ -144,14 +152,16 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
             override fun onNext(t: Response<Void>) {
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "订单已取消")
-                ApiManager.getInstance().clearCache()
+                ApiManager.getInstance()
+                        .clearCache()
                 callBack.cancelOrderSuccess()
             }
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
                 ErrorManager.managerError(context, e, "取消失败")
-                ApiManager.getInstance().clearCache()
+                ApiManager.getInstance()
+                        .clearCache()
                 getOrderDetail()
 
             }
@@ -159,6 +169,50 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
         }
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
+    }
+
+    var payMethod = ObservableField<PayMethod>()
+
+    fun createPay() {
+        ProgressDialog.showLoadingView(context)
+        val observable = ApiManager.getInstance()
+                .api.createDeliveryOrderPay(detail?.freightId!!, payMethod.get()?.id.toString())
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: JsonObject) {
+                ProgressDialog.hideLoadingView(context)
+                try {
+                    if (t.get("payment").asInt == 3) {
+                        callBack.paySuccess()
+                    } else {
+                        callBack.onCreatePaySuccess(t)
+                    }
+                } catch (_: Exception) {
+                    callBack.onCreatePaySuccess(t)
+                }
+
+            }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(context)
+                ErrorManager.managerError(context, e, "支付失败")
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    fun pay() {
+
     }
 
 }

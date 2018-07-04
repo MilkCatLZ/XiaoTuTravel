@@ -102,8 +102,6 @@ class MainActivity : NearCarOpenListener,
     }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
@@ -236,12 +234,14 @@ class MainActivity : NearCarOpenListener,
     }
 
     fun changeToCarRentFragment() {
-       onResume()
+        dilivery = false
+        onResume()
     }
 
     private var Delivery: String = "fragment_delivery"
-
+    var dilivery = false
     fun changeToDelivery() {
+        dilivery = true
         changeFragment(deliveryFragment, Delivery)
     }
 
@@ -373,18 +373,19 @@ class MainActivity : NearCarOpenListener,
 
     override fun onResume() {
         super.onResume()
-        if (!isCreate) {
-            if (rentMode) {
-                changeFragment(carRentFragment, RouteMap.CarRent)
+        if (!dilivery)
+            if (!isCreate) {
+                if (rentMode) {
+                    changeFragment(carRentFragment, RouteMap.CarRent)
+                } else {
+                    changeFragment(carRentOrderingFragment, RentOrdering)
+                }
             } else {
-                changeFragment(carRentOrderingFragment, RentOrdering)
+                if (User.instance.login) {
+                    getUnProgressOrder()
+                } else {
+                    changeFragment(carRentFragment, RouteMap.CarRent)
+                }
             }
-        } else {
-            if (User.instance.login) {
-                getUnProgressOrder()
-            } else {
-                changeFragment(carRentFragment, RouteMap.CarRent)
-            }
-        }
     }
 }

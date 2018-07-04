@@ -75,6 +75,7 @@ public class ParamsConstant {
     public static final String FromAddress = "from_address";
     public static final String OrderStatus = "order_status";
     public static final String FreightID = "freight_id";
+    public static final String FreightStatus = "freight_status";
     public static final String Action = "action";
     public static final String CouponID = "coupon_id";
     public static final String GetMode = "get_mode";
