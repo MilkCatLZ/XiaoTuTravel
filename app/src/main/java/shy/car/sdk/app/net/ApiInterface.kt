@@ -425,6 +425,9 @@ interface ApiInterface {
     @GET("cars/notice/type")
     fun getBrokeType(): Observable<List<BrokeType>>
 
+    @POST("users/deposits/refund")
+    fun promiseMoneyRefund(): Observable<JsonObject>
+
     /**
      * 修改用户头像
      */

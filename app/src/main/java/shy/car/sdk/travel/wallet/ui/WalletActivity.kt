@@ -5,6 +5,7 @@ import android.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.util.ToastManager
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant
@@ -43,18 +44,18 @@ class WalletActivity : XTBaseActivity(),
         couponText.set("${User.instance.couponNum}张")
     }
 
-    /**
-     * 支付方式
-     */
-    fun onPayClick() {
-        var dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 1).navigation() as PayMethodSelectDialog
-        dialog.listener = object : PayMethodSelectDialog.OnPayClick {
-            override fun onPaySelect(payMethod: PayMethod) {
-
-            }
-        }
-        dialog.show(supportFragmentManager, "fragment_pay_method")
-    }
+//    /**
+//     * 支付方式
+//     */
+//    fun onPayClick() {
+//        var dialog = ARouter.getInstance().build(RouteMap.PaySelect).withInt(Int1, 1).navigation() as PayMethodSelectDialog
+//        dialog.listener = object : PayMethodSelectDialog.OnPayClick {
+//            override fun onPaySelect(payMethod: PayMethod) {
+//
+//            }
+//        }
+//        dialog.show(supportFragmentManager, "fragment_pay_method")
+//    }
 
     /**
      * 余额
@@ -115,7 +116,7 @@ class WalletActivity : XTBaseActivity(),
      *  保险
      */
     fun onWalletApplyClick() {
-
+        ToastManager.showShortToast(this, "业务准备中…")
     }
 
     /**

@@ -56,6 +56,21 @@ class MainActivity : NearCarOpenListener,
         XTBaseActivity(),
         MainNearNetWorkFragment.CancelListener {
 
+    private val LOCATING = "正在定位..."
+
+    var isNearVisible = ObservableBoolean(false)
+    var isCitySelectVisible = ObservableBoolean(false)
+
+    lateinit var binding: ActivityMainBinding
+
+    private val carRentFragment = CarRentFragment()
+    private val carRentOrderingFragment = CarRentOrderingFragment()
+    private val deliveryFragment = DeliveryFragment()
+    var citySelectFragment = MainCitySelectFragment()
+    var nearCarListFragment = MainNearNetWorkFragment()
+    var userCenterFragment = UserCenterFragment()
+
+    var city = ObservableField<CurrentLocation>()
 
     override fun onCitySelected(location: CurrentLocation) {
         isCitySelectVisible.set(false)
@@ -87,21 +102,7 @@ class MainActivity : NearCarOpenListener,
     }
 
 
-    private val LOCATING = "正在定位..."
 
-    var isNearVisible = ObservableBoolean(false)
-    var isCitySelectVisible = ObservableBoolean(false)
-
-    lateinit var binding: ActivityMainBinding
-
-    private val carRentFragment = CarRentFragment()
-    private val carRentOrderingFragment = CarRentOrderingFragment()
-    private val deliveryFragment = DeliveryFragment()
-    var citySelectFragment = MainCitySelectFragment()
-    var nearCarListFragment = MainNearNetWorkFragment()
-    var userCenterFragment = UserCenterFragment()
-
-    var city = ObservableField<CurrentLocation>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.rent.ui.InsuranceProcessActivity"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_insurance_process}" />
+
+        <View style="@style/style_shadow" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_tel" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="严重事故报警"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="严重事故，人员受伤的请先拨打报警电话122" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_camera" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="拍照取证"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="车辆损失部分、车辆停放角度等" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_service" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="联系客服"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="请联系客服人员进行报案" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_sign" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="登记事故"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="登记当事人信息、出险地点和时间等" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_pre" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="保险定损"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="保险定损人员与车东、驾客协商处理" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_set" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="车辆维修"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="如需修车，将车辆送至协商的4S店或修车厂" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_docum" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="递交材料"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="递交事故责任单等相关材料" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_insure_money" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="赔款到账"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            style="@style/style_ww.text_12_999"
+                            android:layout_marginTop="5dp"
+                            android:text="提交资料后，相关费用转账给车东及驾客" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_ww.text_12_999"
+                    android:layout_width="match_parent"
+                    android:background="@color/main_back"
+                    android:gravity="center"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:onClick="@{()->ac.call()}"
+                    android:text="客服热线：400-056-5317" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

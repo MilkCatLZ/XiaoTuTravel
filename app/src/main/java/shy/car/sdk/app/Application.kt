@@ -45,7 +45,7 @@ import shy.car.sdk.travel.user.data.User
 
 class Application : BaseApplication() {
 
-
+    var servicePhone = "400-056-5317"
     var device_token: String = ""
     var location: CurrentLocation = CurrentLocation()
     lateinit var api: IWXAPI
@@ -251,7 +251,8 @@ class Application : BaseApplication() {
 
             override fun onNext(t: Response<Void>) {
                 User.logout(this@Application)
-                EventBus.getDefault().post(UserLogout())
+                EventBus.getDefault()
+                        .post(UserLogout())
                 ApiManager.getInstance()
                         .clearCache()
             }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -67,7 +68,8 @@
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:layout_marginTop="5dp"
-                        android:text="微信缴纳"/>
+                        android:text="@{ac.payMethodText}"
+                        tools:text="微信缴纳"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -82,7 +84,8 @@
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:layout_marginTop="5dp"
-                        android:text="￥999.9元"
+                        tools:text="￥999.9元"
+                        android:text="@{@string/str_yuan+ac.price}"
                         android:textColor="@color/main_color_red"/>
                 </LinearLayout>
             </LinearLayout>

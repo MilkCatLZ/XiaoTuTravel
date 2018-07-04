@@ -137,7 +137,7 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="15dp"
-                    android:background="@drawable/back_button_main_green_clickable"
+                    android:background="@drawable/back_button_main_green_clickable_corner_2dp"
                     android:gravity="center"
                     android:onClick="@{()->fragment.pay()}"
                     android:text="立即充值"

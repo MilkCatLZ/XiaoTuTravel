@@ -258,31 +258,39 @@ class CarRentFragment : XTBaseFragment() {
 
     private fun calDistanceAndTimeInfo() {
         activity?.let {
+            getNaviInfo()
             Observable.create<Boolean> {
-                while (!(app.location.lat != 0.0 && app.location.lng != 0.0 && currentSelectedCarInfo.get() != null)) {
+                while (StringUtils.isEmpty(naviInfo.get())) {
                     try {
-                        Thread.sleep(100)
+                        Thread.sleep(1000)
+                        if (StringUtils.isEmpty(naviInfo.get())) {
+                            it.onNext(true)
+                        }
                     } catch (e: Exception) {
                     }
                 }
-                it.onNext(true)
+                it.onComplete()
             }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        MapUtil.getDriveTimeAndDistance(app, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
-                            override fun calculateSuccess(allLength: Int?, allTime: Int?) {
-
-                                if (allLength != null && allTime != null) {
-                                    naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
-                                }
-                            }
-
-                        })
+                        getNaviInfo()
                     }, {})
 
 
         }
+    }
+
+    private fun getNaviInfo() {
+        MapUtil.getDriveTimeAndDistance(app, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
+            override fun calculateSuccess(allLength: Int?, allTime: Int?) {
+
+                if (allLength != null && allTime != null) {
+                    naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
+                }
+            }
+
+        })
     }
 
     override fun getFragmentName(): CharSequence {
@@ -329,6 +337,7 @@ class CarRentFragment : XTBaseFragment() {
                 setupCurrentCarInfo(carInfo)
                 calDistanceAndTimeInfo()
                 findRoutToCar(carInfo.lat, carInfo.lng)
+
             }
         })
     }
@@ -338,6 +347,7 @@ class CarRentFragment : XTBaseFragment() {
         adapter.setItems(carInfo.discounts?.duration, 1)
         recyclerView_car_discount.adapter = adapter
         currentSelectedCarInfo.set(carInfo)
+        findMarker(LatLng(carInfo.lat, carInfo.lng), carMarkerList)?.showInfoWindow()
     }
 
     private fun setBinding() {

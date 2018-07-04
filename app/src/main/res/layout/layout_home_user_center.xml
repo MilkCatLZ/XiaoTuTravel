@@ -10,13 +10,15 @@
         <import type="com.base.util.Phone" />
 
         <variable
-            name="ac"
+            name="fragment"
             type="shy.car.sdk.travel.user.ui.UserCenterFragment" />
 
         <variable
             name="user"
             type="shy.car.sdk.travel.user.data.User" />
+
         <import type="shy.car.sdk.travel.user.data.UserState.UserIdentityAuth"/>
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -30,7 +32,7 @@
             android:layout_width="62dp"
             android:layout_height="62dp"
             android:layout_marginTop="54dp"
-            android:onClick="@{()->ac.onUserPicClick()}"
+            android:onClick="@{()->fragment.onUserPicClick()}"
             android:appAvatarURL="@{user.avatar}"
             android:src="@drawable/icon_pre_header" />
 
@@ -67,28 +69,28 @@
             <TextView
                 style="@style/style_user_center_menu"
                 android:drawableStart="@drawable/icon_pre_wallet"
-                android:onClick="@{()->ac.onWalletClick()}"
+                android:onClick="@{()->fragment.onWalletClick()}"
                 android:text="钱 包" />
 
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
                 android:drawableStart="@drawable/icon_pre_route"
-                android:onClick="@{()->ac.onOrderClick()}"
+                android:onClick="@{()->fragment.onOrderClick()}"
                 android:text="订 单" />
 
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
                 android:drawableStart="@drawable/icon_pre_set"
-                android:onClick="@{()->ac.onSettingClick()}"
+                android:onClick="@{()->fragment.onSettingClick()}"
                 android:text="设 置" />
 
             <TextView
                 style="@style/style_user_center_menu"
                 android:layout_marginTop="35dp"
                 android:drawableStart="@drawable/icon_pre_service"
-                android:onClick="@{()->ac.onKeFuClick()}"
+                android:onClick="@{()->fragment.onKeFuClick()}"
                 android:text="客 服" />
         </LinearLayout>
 
@@ -115,6 +117,7 @@
                 <TextView
                     style="@style/style_ww.user_center_bottom_icon"
                     android:drawablePadding="10dp"
+                    android:onClick="@{()->fragment.active()}"
                     android:drawableTop="@drawable/icon_pre_send"
                     android:text="发货补贴" />
             </LinearLayout>
@@ -124,6 +127,7 @@
                 <TextView
                     style="@style/style_ww.user_center_bottom_icon"
                     android:drawablePadding="10dp"
+                    android:onClick="@{()->fragment.active()}"
                     android:drawableTop="@drawable/icon_pre_income"
                     android:text="接单有礼" />
             </LinearLayout>

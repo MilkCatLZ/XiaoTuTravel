@@ -18,6 +18,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
@@ -36,12 +37,12 @@ import shy.car.sdk.travel.user.data.User
 class PayFragment : XTBaseFragment(),
         PayPresenter.CallBack {
     override fun onCreatePaySuccess(t: JsonObject) {
-            activity?.let {
+        activity?.let {
 
-                if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, t)) {
+            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, t)) {
 
-                }
             }
+        }
     }
 
     override fun onGetListSuccess(t: List<PayAmount>) {
@@ -105,8 +106,12 @@ class PayFragment : XTBaseFragment(),
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun paySuccess(success: PaySuccess) {
+        success.payMethod = presenter.payMethod.get()
+        success.price = presenter.amount.get()
+                .toString()
         ARouter.getInstance()
                 .build(RouteMap.PaySuccess)
+                .withObject(Object1, success)
                 .navigation()
         eventBusDefault.post(RefreshUserInfo())
         finish()

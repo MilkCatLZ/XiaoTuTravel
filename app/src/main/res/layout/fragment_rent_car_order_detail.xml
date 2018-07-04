@@ -507,6 +507,7 @@
                 <LinearLayout
                     android:id="@+id/layout_baoxianliucheng"
                     style="@style/style_setting_content"
+                    android:onClick="@{()->fragment.gotuInsuranceProcess()}"
                     android:layout_marginTop="7dp">
 
                     <TextView
@@ -523,6 +524,7 @@
 
                 <LinearLayout
                     android:id="@+id/layout_my_pingjia"
+                    android:onClick="@{()->fragment.gotuCommentProcess()}"
                     style="@style/style_setting_content">
 
                     <TextView

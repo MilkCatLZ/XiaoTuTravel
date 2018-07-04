@@ -22,6 +22,7 @@ import shy.car.sdk.travel.remain.ui.TiXianActivity;
 import shy.car.sdk.travel.rent.ui.CarBrokeUploadActivity;
 import shy.car.sdk.travel.rent.ui.DrivingActivity;
 import shy.car.sdk.travel.rent.ui.FindAndRentCarActivity;
+import shy.car.sdk.travel.rent.ui.InsuranceProcessActivity;
 import shy.car.sdk.travel.rent.ui.ReturnAreaActivity;
 import shy.car.sdk.travel.rent.ui.ReturnCarActivity;
 import shy.car.sdk.travel.rent.ui.ReturnCarFragment;
@@ -341,4 +342,19 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.login.ui.ChangeMobileActivity}
      */
     public static final String ChangeMobile = "/login/change_mobile";
+    /**
+     * 保证金退还申请成功
+     * {@link shy.car.sdk.travel.pay.ui.ReturnPromiseMoneySuccessActivity}
+     */
+    public static final String ReturnPromiseMoneySuccess = "/pay/return_promise";
+    /**
+     * 保险流程
+     * {@link InsuranceProcessActivity}
+     */
+    public static final String InsuranceProcess = "/rent/insurance_process";
+    /**
+     * 评价
+     * {@link shy.car.sdk.travel.rent.ui.RentOrderCommentActivity}
+     */
+    public static final String RentComment = "/rent/comment";
 }

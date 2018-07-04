@@ -5,9 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
+import com.base.databinding.DataBindingAdapter
 import com.base.util.Phone
+import kotlinx.android.synthetic.main.fragment_rent_car_order_detail.*
+import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentRentCarOrderDetailBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.presenter.RentCarOrderDetailPresenter
@@ -30,6 +36,9 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
 
     override fun getDetailSuccess(t: RentOrderDetail) {
         binding.detail = t
+        val adapter = DataBindingAdapter<RentOrderDetail.DiscountsBean>(R.layout.item_order_car_discount, BR.discount, null)
+        adapter.setItems(t.discounts, 1)
+        recyclerView_car_discount.adapter = adapter
     }
 
     override fun onError(e: Throwable) {
@@ -53,7 +62,20 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
 
 
     fun call() {
-        activity?.let { Phone.call(it, "400-056-5317") }
+        activity?.let { Phone.call(it, app.servicePhone) }
+    }
+
+    fun gotuCommentProcess() {
+        ARouter.getInstance()
+                .build(RouteMap.RentComment)
+                .withObject(Object1, binding.detail)
+                .navigation()
+    }
+
+    fun gotuInsuranceProcess() {
+        ARouter.getInstance()
+                .build(RouteMap.InsuranceProcess)
+                .navigation()
     }
 
 }

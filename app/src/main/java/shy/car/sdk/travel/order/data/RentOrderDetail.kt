@@ -207,6 +207,14 @@ class RentOrderDetail : BaseObservable() {
             notifyChange(BR.dispatchPhone)
         }
 
+    @SerializedName("preferential")
+    @get:Bindable
+    var preferential: List<PreferentialBean>? = null
+        set(preferential) {
+            field = preferential
+            notifyChange(BR.preferential)
+        }
+
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
@@ -240,6 +248,63 @@ class RentOrderDetail : BaseObservable() {
 
     fun costInfo(): String {
         return "计费标准： ￥${car?.cost?.minutePrice}/分钟+￥${car?.cost?.kmPrice}/公里；最低消费：${LNTextUtil.getPriceText(car?.cost?.minimum!!)}元"
+    }
+
+
+    /**
+     * 优惠信息
+     */
+    open class PreferentialBean : Observable {
+
+        @SerializedName("id")
+        @get:Bindable
+        var id: String? = null
+            set(id) {
+                field = id
+                notifyChange(BR.id)
+            }
+        @SerializedName("money")
+        @get:Bindable
+        var money: Double? = null
+            set(money) {
+                field = money
+                notifyChange(BR.money)
+            }
+        @SerializedName("name")
+        @get:Bindable
+        var name: String? = null
+            set(name) {
+                field = name
+                notifyChange(BR.name)
+            }
+
+        @Transient
+        private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
+
+        @Synchronized
+        private fun notifyChange(propertyId: Int) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.notifyChange(this, propertyId)
+        }
+
+        @Synchronized
+        override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry == null) {
+                propertyChangeRegistry = PropertyChangeRegistry()
+            }
+            propertyChangeRegistry!!.add(callback)
+
+        }
+
+        @Synchronized
+        override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback) {
+            if (propertyChangeRegistry != null) {
+                propertyChangeRegistry!!.remove(callback)
+            }
+        }
+
     }
 
     open class CarBean : Observable {

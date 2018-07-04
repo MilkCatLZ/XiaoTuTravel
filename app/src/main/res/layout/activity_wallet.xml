@@ -29,25 +29,25 @@
             style="@style/style_shadow"/>
 
 
-        <LinearLayout
-            android:id="@+id/layout_pay"
-            style="@style/style_wallet_content"
-            android:layout_marginTop="7dp"
-            android:onClick="@{()->ac.onPayClick()}">
+        <!--<LinearLayout-->
+            <!--android:id="@+id/layout_pay"-->
+            <!--style="@style/style_wallet_content"-->
+            <!--android:layout_marginTop="7dp"-->
+            <!--android:onClick="@{()->ac.onPayClick()}">-->
 
-            <TextView
-                style="@style/style_wallet_nav_title"
-                android:drawableStart="@drawable/icon_wallet_payment"
-                android:text="支付方式"/>
+            <!--<TextView-->
+                <!--style="@style/style_wallet_nav_title"-->
+                <!--android:drawableStart="@drawable/icon_wallet_payment"-->
+                <!--android:text="支付方式"/>-->
 
-            <TextView
-                style="@style/style_wallet_nav_hint"
-                android:text="选择支付方式"/>
+            <!--<TextView-->
+                <!--style="@style/style_wallet_nav_hint"-->
+                <!--android:text="选择支付方式"/>-->
 
-            <ImageView
-                style="@style/style_wallet_nav_arrow"
-                android:src="@drawable/login_return"/>
-        </LinearLayout>
+            <!--<ImageView-->
+                <!--style="@style/style_wallet_nav_arrow"-->
+                <!--android:src="@drawable/login_return"/>-->
+        <!--</LinearLayout>-->
 
 
         <LinearLayout

@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.databinding.DataBindingAdapter
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.fragment_order_pay.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import shy.car.sdk.BR
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
@@ -16,7 +19,6 @@ import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
-
 import shy.car.sdk.databinding.FragmentOrderPayBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.pay.WXPayUtil
@@ -49,6 +51,9 @@ class OrderPayFragment : XTBaseFragment(),
 
     override fun onGetDetailSuccess(t: RentOrderDetail) {
         binding.detail = t
+        val adapter = DataBindingAdapter<shy.car.sdk.travel.order.data.RentOrderDetail.PreferentialBean>(R.layout.item_rent_car_discount, BR.preferential, null)
+        adapter.setItems(t.preferential, 1)
+        recyclerView_order_car_discount.adapter = adapter
     }
 
     override fun onGetDetailError(e: Throwable) {

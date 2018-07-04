@@ -68,4 +68,7 @@
     <string name="str_message_system">系统消息</string>
     <string name="str_message_service">服务消息</string>
     <string name="str_change_mobile">修改手机</string>
+    <string name="str_promise_return">退还申请</string>
+    <string name="str_comment">我的评价</string>
+    <string name="str_insurance_process">保险流程</string>
 </resources>

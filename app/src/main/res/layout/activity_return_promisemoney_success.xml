@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.pay.ui.ReturnPromiseMoneySuccessActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_foreground_material_light"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_pay_success}" />
+
+        <View style="@style/style_shadow" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="85dp"
+            android:src="@drawable/icon_win" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="申请成功"
+            android:textColor="@color/text_primary_333333"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/back_button_main_green_clickable"
+            android:gravity="center"
+            android:onClick="@{()->ac.goHome()}"
+            android:text="返回首页"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_title_16dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <TextView
+            style="@style/style_ww.text_12_999"
+            android:layout_marginBottom="15dp"
+            android:gravity="bottom"
+            android:onClick="@{()->ac.call()}"
+            android:text="客服热线：400-056-5317" />
+
+    </LinearLayout>
+</layout>
