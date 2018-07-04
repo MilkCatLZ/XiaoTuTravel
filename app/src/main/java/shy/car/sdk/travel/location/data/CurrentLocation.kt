@@ -45,7 +45,7 @@ class CurrentLocation : BaseObservable(),
             field = value
             notifyPropertyChanged(BR.lat)
         }
-//        get():Double {
+    //        get():Double {
 //            return if (BuildConfig.DEBUG) {
 //                22.841251
 //            } else {
@@ -104,7 +104,7 @@ class CurrentLocation : BaseObservable(),
         cityName = location.cityName
         lat = location.latLonPoint.latitude
         lng = location.latLonPoint.longitude
-        address = location.provinceName + location.cityName + location.businessArea + location.snippet
+        address = location.cityName + location.businessArea + location.snippet + location.toString()
         district = location.adName
         cityCode = location.cityCode
     }

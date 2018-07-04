@@ -91,7 +91,7 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
     }
 
     private fun initMap() {
-        binding.mapLocationSelect.map.animateCamera(CameraUpdateFactory.zoomTo(10f), 1000, null)
+        binding.mapLocationSelect.map.animateCamera(CameraUpdateFactory.zoomTo(14f), 1000, null)
         activity?.let { binding.mapLocationSelect.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
     }
 
@@ -99,7 +99,7 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
      * 刷新定位
      */
     private fun refreshLocation() {
-        Observable.create<CurrentLocation>({
+        Observable.create<CurrentLocation> {
             AmapLocationManager.getInstance()
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
@@ -107,13 +107,13 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
                             it.onNext(this@LocationSelectFragment.location)
                         }
                     })
-        })
+        }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .subscribe {
                     moveCameraAndShowLocation(location)
                     addMarkersToMap()
-                })
+                }
 
     }
 

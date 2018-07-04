@@ -29,9 +29,9 @@ class LocationSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
     var searchDispose: Disposable? = null
 
-    var adapter: DataBindingItemClickAdapter<PoiItem> = DataBindingItemClickAdapter(R.layout.item_location_select, BR.item, BR.click, {
+    var adapter: DataBindingItemClickAdapter<PoiItem> = DataBindingItemClickAdapter(R.layout.item_location_select, BR.item, BR.click) {
         callBack.onAddressClick(it.tag as PoiItem)
-    })
+    }
 
     init {
         adapter.disableFooter()
