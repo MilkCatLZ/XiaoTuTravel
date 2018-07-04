@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
@@ -28,7 +27,6 @@ import com.amap.api.services.route.*
 import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
-import com.base.location.Location
 import com.base.overlay.WalkRouteOverlay
 import com.base.util.DialogManager
 import com.base.util.StringUtils
@@ -66,7 +64,6 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 
-
 /**
  * create by LZ at 2018/05/11
  * 租车
@@ -86,6 +83,10 @@ class CarRentFragment : XTBaseFragment() {
      */
     var currentSelectedCarInfo = ObservableField<CarInfo>()
 
+    /**
+     * 当前选中的车辆
+     */
+    var currentSelectedNetWork = ObservableField<NearCarPoint>()
     /**
      * 在地图上展出的网点的marker列表
      */
@@ -132,11 +133,12 @@ class CarRentFragment : XTBaseFragment() {
                     .navigation()
         }
 
-        override fun getNetWorkListSuccess(list: ArrayList<NearCarPoint>) {
-            if (list.isNotEmpty()) {
+        override fun getNetWorkListSuccess(t: ArrayList<NearCarPoint>) {
+            if (t.isNotEmpty()) {
                 carRentPresenter.getUsableCarList(null)
+                currentSelectedNetWork.set(t[0])
                 this@CarRentFragment.carPointList.clear()
-                this@CarRentFragment.carPointList.addAll(list)
+                this@CarRentFragment.carPointList.addAll(t)
                 showMarkers(zoomLevel)
             }
 
@@ -227,7 +229,7 @@ class CarRentFragment : XTBaseFragment() {
 
                             if (result.paths != null) {
                                 if (result.paths.size > 0) {
-                                    var mDriveRouteResult = result
+                                    val mDriveRouteResult = result
                                     val drivePath = mDriveRouteResult.paths[0] ?: return
                                     if (walkRouteOverlay != null) {
                                         walkRouteOverlay?.removeFromMap()
@@ -256,15 +258,30 @@ class CarRentFragment : XTBaseFragment() {
 
     private fun calDistanceAndTimeInfo() {
         activity?.let {
-            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
-                override fun calculateSuccess(allLength: Int?, allTime: Int?) {
-
-                    if (allLength != null && allTime != null) {
-                        naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
+            Observable.create<Boolean> {
+                while (!(app.location.lat != 0.0 && app.location.lng != 0.0 && currentSelectedCarInfo.get() != null)) {
+                    try {
+                        Thread.sleep(100)
+                    } catch (e: Exception) {
                     }
                 }
+                it.onNext(true)
+            }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        MapUtil.getDriveTimeAndDistance(app, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
+                            override fun calculateSuccess(allLength: Int?, allTime: Int?) {
 
-            })
+                                if (allLength != null && allTime != null) {
+                                    naviInfo.set("全程${LNTextUtil.getPriceText(allLength / 1000.0)}公里 步行${allTime / 60}分钟")
+                                }
+                            }
+
+                        })
+                    }, {})
+
+
         }
     }
 
@@ -308,7 +325,7 @@ class CarRentFragment : XTBaseFragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                var carInfo = carRentPresenter.carListAdapter.items[position]
+                val carInfo = carRentPresenter.carListAdapter.items[position]
                 setupCurrentCarInfo(carInfo)
                 calDistanceAndTimeInfo()
                 findRoutToCar(carInfo.lat, carInfo.lng)
@@ -330,7 +347,7 @@ class CarRentFragment : XTBaseFragment() {
     }
 
     private fun initLayoutManager() {
-        var layoutManager = LinearLayoutManager(activity)
+        val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
         binding.recyclerViewCarCategory.layoutManager = layoutManager
@@ -360,20 +377,19 @@ class CarRentFragment : XTBaseFragment() {
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
-        binding.map.map.setOnMarkerClickListener(
-                {
-                    if (zoomLevel >= MaxZoom) {
-                        val car = findCar(it.position)
-//                        findRoutToCar(car?.lat!!, car?.lng!!)
-                        carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
-                    } else {
-                        val carPoint = findCarPoint(it.position)
-                        carRentPresenter.getUsableCarList(carPoint)
-                    }
-                    it.showInfoWindow()
-                    true
-                }
-        )
+        binding.map.map.setOnMarkerClickListener {
+            if (zoomLevel >= MaxZoom) {
+                val car = findCar(it.position)
+                currentSelectedCarInfo.set(car)
+                carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
+            } else {
+                val carPoint = findCarPoint(it.position)
+                currentSelectedNetWork.set(carPoint)
+                carRentPresenter.getUsableCarList(carPoint)
+            }
+            it.showInfoWindow()
+            true
+        }
 
         binding.map.map.uiSettings.isZoomControlsEnabled = false
 
@@ -382,7 +398,7 @@ class CarRentFragment : XTBaseFragment() {
 
                 if (zoomLevel != cameraPosition?.zoom)
                     showMarkers(cameraPosition?.zoom!!)
-                zoomLevel = cameraPosition?.zoom!!
+                zoomLevel = cameraPosition.zoom
             }
 
             override fun onCameraChange(p0: CameraPosition?) {
@@ -428,18 +444,20 @@ class CarRentFragment : XTBaseFragment() {
 
         if (zoomLevel >= MaxZoom) {
             showCarMarker()
+            if (currentSelectedCarInfo.get() != null) {
+                val marker = findMarker(LatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), carMarkerList)
+                marker?.showInfoWindow()
+            }
         } else {
             showNetWork()
+            if (currentSelectedNetWork.get() != null) {
+                val marker = findMarker(LatLng(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!), netWorkMarkerList)
+                marker?.showInfoWindow()
+            }
         }
 
         carPointList.map {
             drawPointAngel(it)
-        }
-        if (currentSelectedCarInfo.get() != null)
-            findMarker(LatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!))?.showInfoWindow()
-        else {
-            if (netWorkMarkerList.isNotEmpty())
-                netWorkMarkerList[0].showInfoWindow()
         }
     }
 
@@ -486,14 +504,9 @@ class CarRentFragment : XTBaseFragment() {
         return null
     }
 
-    private fun findMarker(position: LatLng): Marker? {
-        carMarkerList.map {
-            if (it.position.latitude == position.latitude && it.position.latitude == position.longitude) {
-                return it
-            }
-        }
-        netWorkMarkerList.map {
-            if (it.position.latitude == position.latitude && it.position.latitude == position.longitude) {
+    private fun findMarker(position: LatLng, list: List<Marker>): Marker? {
+        list.map {
+            if (it.position.latitude == position.latitude && it.position.longitude == position.longitude) {
                 return it
             }
         }
@@ -502,25 +515,25 @@ class CarRentFragment : XTBaseFragment() {
 
     //刷新位置
     fun refreshLocation() {
-        Observable.create<com.base.location.Location>({
+        Observable.create<com.base.location.Location> {
             AmapLocationManager.getInstance()
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
                             app.changeCurrentLocation(location)
-                            getCityCode(location)
+                            getCityCode()
                             moveCameraAndShowLocation(LatLng(app.location.lat, app.location.lng))
                             addUserLocationMarker()
                             locationRefreshListener?.onLocationChange()
                         }
                     })
-        })
+        }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
 
     }
 
-    private fun getCityCode(location: Location) {
+    private fun getCityCode() {
         if (app.cityList.isNotEmpty())
             app.cityList.map {
                 if (app.location.cityName == it.cityName) {
@@ -621,13 +634,13 @@ class CarRentFragment : XTBaseFragment() {
                             .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
                             .leftButtonText("取消")
                             .rightButtonText("确定")
-                            .onRightClick({ dialog, witch ->
+                            .onRightClick { dialog, witch ->
                                 if (currentSelectedCarInfo.get()?.netWork == null) {
                                     currentSelectedCarInfo.get()
                                             ?.netWork = carPointList[0]
                                 }
                                 carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
-                            })
+                            }
                             .show()
                 }
             }
@@ -645,7 +658,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun addNetWorkMarkersToMap(point: NearCarPoint) {
 
-        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+        val marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
                 .title(point.name)
                 .snippet("可用车${point.usableCarsNum}辆")
@@ -661,7 +674,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun addCarMarkersToMap(carModel: String, plateNumber: String, lat: Double, lng: Double) {
 
-        var marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_samll_car))
+        val marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_samll_car))
                 .anchor(0.5f, 1.0f)
                 .title(carModel)
                 .snippet("$carModel | $plateNumber")
@@ -678,7 +691,7 @@ class CarRentFragment : XTBaseFragment() {
      */
     private fun drawPointAngel(network: NearCarPoint) {
         // 定义多边形的5个点点坐标
-        var polygonOptions = PolygonOptions()
+        val polygonOptions = PolygonOptions()
         network.range?.map {
             val latLng = LatLng(it.lat, it.lng)
             polygonOptions.add(latLng)
@@ -712,8 +725,8 @@ class CarRentFragment : XTBaseFragment() {
     fun refreshAll() {
         isRefershSuccess = false
         activity?.let {
-            var operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
-            var lin = LinearInterpolator()
+            val operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
+            val lin = LinearInterpolator()
             operatingAnim.interpolator = lin
 
             operatingAnim.setAnimationListener(object : Animation.AnimationListener {

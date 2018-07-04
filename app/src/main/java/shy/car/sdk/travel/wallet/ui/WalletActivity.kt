@@ -9,6 +9,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.constant.ParamsConstant.Int1
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityWalletBinding
 import shy.car.sdk.travel.pay.data.PayMethod
@@ -104,7 +105,7 @@ class WalletActivity : XTBaseActivity(),
      * 保证金
      */
     fun onBaoZhengJinClick() {
-        User.instance.getUserDetail(this)
+        eventBusDefault.post(RefreshUserInfo())
         ARouter.getInstance()
                 .build(RouteMap.ReturnPromiseMoney)
                 .navigation()

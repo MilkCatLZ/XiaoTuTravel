@@ -1,6 +1,7 @@
 package mall.lianni.alipay;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -35,6 +36,7 @@ public class Alipay {
     
     }
     
+    @SuppressLint("HandlerLeak")
     private static Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
         public void handleMessage(Message msg) {
@@ -44,7 +46,7 @@ public class Alipay {
                     
                     PayResult payResult = new PayResult();
                     payResult.setMemo(mapResult.get("memo"));
-                    payResult.setResultStatus(mapResult.get("resultSta  tus"));
+                    payResult.setResultStatus(mapResult.get("resultStatus"));
                     payResult.setResult(new Gson().fromJson(mapResult.get("result"), Result.class));
                     /**
                      * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/

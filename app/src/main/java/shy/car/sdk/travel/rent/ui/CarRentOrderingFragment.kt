@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
@@ -33,6 +36,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.eventbus.RefreshCity
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentOrderingBinding
@@ -318,12 +322,10 @@ class CarRentOrderingFragment : XTBaseFragment() {
         bitmap = BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_locat)
         binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(15f), 1000, null)
         activity?.let { binding.map.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
-        binding.map.map.setOnMarkerClickListener(
-                {
-                    it.showInfoWindow()
-                    true
-                }
-        )
+        binding.map.map.setOnMarkerClickListener {
+            it.showInfoWindow()
+            true
+        }
 
         binding.map.map.uiSettings.isZoomControlsEnabled = false
 
@@ -412,7 +414,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
 
     //刷新位置
     fun refreshLocation() {
-        Observable.create<com.base.location.Location>({
+        Observable.create<com.base.location.Location> {
             AmapLocationManager.getInstance()
                     .getLocation(object : AmapOnLocationReceiveListener {
                         override fun onLocationReceive(ampLocation: AMapLocation, location: com.base.location.Location) {
@@ -423,7 +425,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
                             locationRefreshListener?.onLocationChange()
                         }
                     })
-        })
+        }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
@@ -615,5 +617,34 @@ class CarRentOrderingFragment : XTBaseFragment() {
                     carRentPresenter?.getRentOrderDetail(oid)
                 }, {})
 
+    }
+
+    var isRefershSuccess = false
+    fun refreshAll() {
+        isRefershSuccess = false
+        activity?.let {
+            val operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
+            val lin = LinearInterpolator()
+            operatingAnim.interpolator = lin
+
+            operatingAnim.setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationEnd(p0: Animation?) {
+                    if (!isRefershSuccess) {
+                        binding.refresh.startAnimation(operatingAnim)
+                    }
+                }
+
+                override fun onAnimationStart(p0: Animation?) {
+
+                }
+
+                override fun onAnimationRepeat(p0: Animation?) {
+
+                }
+
+            })
+            binding.refresh.startAnimation(operatingAnim)
+        }
+        getOrderDetail()
     }
 }

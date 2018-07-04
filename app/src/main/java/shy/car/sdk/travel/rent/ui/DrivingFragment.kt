@@ -22,6 +22,7 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.route.RouteMap.ReturnCar
 import shy.car.sdk.databinding.FragmentDrivingBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.LockCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.OpenCarDialogFragment
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
@@ -37,6 +38,9 @@ import java.util.concurrent.TimeUnit
 class DrivingFragment : XTBaseFragment(),
         DrivingPresenter.CallBack {
     override fun onGetDetailSuccess(t: RentOrderDetail) {
+        if (t.status != RentOrderState.Taked) {
+            finish()
+        }
         binding.swipeRefresh.isRefreshing = false
     }
 

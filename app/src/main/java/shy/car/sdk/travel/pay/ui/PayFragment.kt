@@ -19,6 +19,7 @@ import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
 import shy.car.sdk.app.eventbus.PaySuccess
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentPayBinding
 import shy.car.sdk.travel.pay.WXPayUtil
@@ -107,6 +108,7 @@ class PayFragment : XTBaseFragment(),
         ARouter.getInstance()
                 .build(RouteMap.PaySuccess)
                 .navigation()
+        eventBusDefault.post(RefreshUserInfo())
         finish()
     }
 }
