@@ -72,4 +72,6 @@
     <string name="str_comment">我的评价</string>
     <string name="str_insurance_process">保险流程</string>
     <string name="str_about">关于我们</string>
+    <string name="str_user_detail">个人信息</string>
+    <string name="srt_vip_center">会员中心</string>
 </resources>

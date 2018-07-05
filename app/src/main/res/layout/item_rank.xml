@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="rank"
+            type="shy.car.sdk.travel.user.data.Rank" />
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User" />
+
+        <variable
+            name="nextScore"
+            type="int" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center|end"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/style_order_take_state"
+                android:background="@{user.score>=rank.score&amp;&amp;nextScore>user.score?@drawable/icon_jiedan:@drawable/white}"
+                android:enabled="@{user.score>=rank.score}"
+                android:text="@{rank.name}"
+                android:textColor="@{user.score>=rank.score&amp;&amp;nextScore>user.score?@color/_foreground_material_light:rank.score>user.score?@color/text_third_primary_999999:@color/main_color_green}"
+                tools:enabled="true"
+                tools:text="白金会员" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/style_order_take_indicator_line"
+                    android:layout_toStartOf="@+id/img_state_2"
+                    android:enabled="@{user.score>=rank.score}"
+                    android:visibleOrGone="@{rank.id>1}"
+                    tools:enabled="false" />
+
+                <RelativeLayout
+                    android:id="@+id/img_state_2"
+                    style="@style/style_order_take_indicator_out"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp">
+
+                    <TextView
+                        style="@style/style_order_take_indicator_in"
+                        android:enabled="@{user.score>=rank.score}"
+                        tools:enabled="false" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

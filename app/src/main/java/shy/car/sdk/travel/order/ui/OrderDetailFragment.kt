@@ -137,6 +137,7 @@ class OrderDetailFragment : XTBaseFragment(),
         super.onViewCreated(view, savedInstanceState)
         activity?.let { ProgressDialog.showLoadingView(it) }
         presenter.getOrderDetail()
+        register(this)
     }
 
     fun onButtonClick() {

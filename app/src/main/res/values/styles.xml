@@ -128,4 +128,14 @@
         <item name="android:padding">3dp</item>
         <item name="android:scaleType">centerCrop</item>
     </style>
+
+    <style name="style_vip_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_third_primary_999999</item>
+        <item name="android:textSize">@dimen/text_second_primary_12dp</item>
+    </style>
 </resources>

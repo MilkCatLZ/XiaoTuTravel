@@ -1,12 +1,15 @@
 package shy.car.sdk.travel.html
 
+import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import kotlinx.android.synthetic.main.activity_register_agreement.*
-import shy.car.sdk.BuildConfig
+import com.base.util.Phone
+import com.base.util.Version
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.databinding.ActivityAboutBinding
 
 /**
  * create by Sharon at 2018/07/02
@@ -14,10 +17,20 @@ import shy.car.sdk.app.route.RouteMap
  */
 @Route(path = RouteMap.About)
 class AboutActivity : XTBaseActivity() {
+
+    var servicePhone = app.servicePhone
+    var version = ObservableField<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register_agreement)
-        webView_register_agreement.settings.domStorageEnabled = true
-        webView_register_agreement.loadUrl(BuildConfig.Host + "html/about.html")
+        var binding = DataBindingUtil.setContentView<ActivityAboutBinding>(this, R.layout.activity_about)
+        binding.ac = this
+        version.set("v" + Version.getVersion(this))
+//        webView_register_agreement.settings.domStorageEnabled = true
+//        webView_register_agreement.loadUrl(BuildConfig.Host + "html/about.html")
+    }
+
+    fun call() {
+        Phone.call(this, servicePhone)
     }
 }

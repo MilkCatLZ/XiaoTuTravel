@@ -1,34 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.html.AboutActivity" />
 
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:background="@color/main_back"
-                  android:gravity="center_horizontal"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_about}"/>
+            app:title="@{@string/str_about}" />
 
-        <View style="@style/style_shadow"/>
+        <View style="@style/style_shadow" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="85dp"
-            android:src="@drawable/logo"/>
+            android:layout_marginTop="70dp"
+            android:src="@drawable/logo" />
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:gravity="left"
+            android:paddingStart="90dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客服热线："
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_title_16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->ac.call()}"
+                android:text="@{ac.servicePhone}"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_title_16dp"
+                tools:text="400-056-5317" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="left"
+            android:paddingStart="90dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客服邮箱："
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_title_16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_title_16dp"
+                tools:text="xxxx@xx.com" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="left"
+            android:paddingStart="90dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前版本："
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_title_16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ac.version}"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_title_16dp"
+                tools:text="v1.0.0" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 </layout>

@@ -46,6 +46,7 @@ class User private constructor() : UserBase() {
         instance.profession = detail.profession
         instance.birthday = detail.birthday
         instance.city = detail.city
+        instance.score = detail.score
     }
 
     /**
@@ -181,6 +182,7 @@ class User private constructor() : UserBase() {
             instance.profession = dis.profession
             instance.birthday = dis.birthday
             instance.city = dis.city
+            instance.score = dis.score
         }
 
     }

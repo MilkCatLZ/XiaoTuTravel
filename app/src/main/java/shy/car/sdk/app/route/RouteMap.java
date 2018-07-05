@@ -357,4 +357,9 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.rent.ui.RentOrderCommentActivity}
      */
     public static final String RentComment = "/rent/comment";
+    /**
+     * 评价
+     * {@link shy.car.sdk.travel.user.ui.VipActivity}
+     */
+    public static final String Vip = "/user/vip";
 }

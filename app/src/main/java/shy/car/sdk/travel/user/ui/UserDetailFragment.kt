@@ -42,7 +42,9 @@ class UserDetailFragment : XTBaseFragment() {
     }
 
     fun goVipHomeClick() {
-
+            ARouter.getInstance()
+                    .build(RouteMap.Vip)
+                    .navigation()
     }
 
     fun goUserVerifyClick() {

@@ -29,6 +29,7 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.take.data.DeliveryOrderList
+import shy.car.sdk.travel.user.data.Rank
 import shy.car.sdk.travel.user.data.UserDetailCache
 
 
@@ -440,6 +441,7 @@ interface ApiInterface {
     @POST("users/deposits/refund")
     fun promiseMoneyRefund(): Observable<JsonObject>
 
+
     /**
      * 修改用户头像
      */
@@ -450,4 +452,6 @@ interface ApiInterface {
                        @Part(ParamsConstant.Content) content: RequestBody? = null,
                        @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
+    @GET("users/rank")
+    fun getRankList(): Observable<List<Rank>>
 }
