@@ -83,7 +83,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="-20dp"
-                app:sl_shadowColor="#dcdcdc"
+                app:sl_shadowColor="#c2c2c2"
                 app:sl_shadowRadius="5dp">
 
                 <LinearLayout
@@ -112,9 +112,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="14dp"
-                            android:text="当前享受1项权益"
                             android:textColor="@color/text_third_primary_999999"
-                            android:textSize="@dimen/text_second_primary_12dp" />
+                            android:textSize="@dimen/text_second_primary_12dp"
+                            tools:text="当前享受1项权益" />
 
                     </LinearLayout>
 
@@ -125,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:paddingEnd="25dp"
+                        android:onClick="@{()->fragment.jifen()}"
                         android:paddingStart="25dp"
                         android:paddingTop="25dp">
 
@@ -189,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                app:sl_shadowColor="#dcdcdc"
+                app:sl_shadowColor="#c2c2c2"
                 app:sl_shadowRadius="5dp">
 
                 <LinearLayout
@@ -245,7 +246,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text='@{""+user.rank}'
+                            android:text='@{""+user.score}'
                             android:textColor="@color/main_color_red"
                             android:textSize="@dimen/text_second_primary_12dp"
                             tools:text="12" />
@@ -299,9 +300,8 @@
                         android:id="@+id/recyclerView_rank"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="25dp"
-                        android:layout_marginStart="25dp"
-                        android:paddingBottom="15dp"
+                        android:paddingBottom="30dp"
+                        android:paddingTop="40dp"
                         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                         tools:lisitem="@layout/item_rank" />
                 </LinearLayout>

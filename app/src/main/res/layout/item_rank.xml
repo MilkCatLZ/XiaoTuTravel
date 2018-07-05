@@ -12,6 +12,14 @@
             type="shy.car.sdk.travel.user.data.User" />
 
         <variable
+            name="isFirst"
+            type="boolean" />
+
+        <variable
+            name="isLast"
+            type="boolean" />
+
+        <variable
             name="nextScore"
             type="int" />
     </data>
@@ -24,7 +32,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center|end"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -38,20 +46,19 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
                 <TextView
-                    style="@style/style_order_take_indicator_line"
-                    android:layout_toStartOf="@+id/img_state_2"
+                    style="@style/style_order_take_indicator_line_user_vip"
                     android:enabled="@{user.score>=rank.score}"
-                    android:visibleOrGone="@{rank.id>1}"
+                    android:visibleOrInvisible="@{!isFirst}"
                     tools:enabled="false" />
 
                 <RelativeLayout
                     android:id="@+id/img_state_2"
                     style="@style/style_order_take_indicator_out"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp">
+                    android:layout_alignParentEnd="true">
 
                     <TextView
                         style="@style/style_order_take_indicator_in"
@@ -59,6 +66,12 @@
                         tools:enabled="false" />
 
                 </RelativeLayout>
+
+                <TextView
+                    style="@style/style_order_take_indicator_line_user_vip"
+                    android:enabled="@{user.score>=nextScore}"
+                    android:visibleOrInvisible="@{!isLast}"
+                    tools:enabled="false" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

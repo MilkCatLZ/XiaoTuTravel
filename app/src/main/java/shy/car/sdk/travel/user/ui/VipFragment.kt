@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.util.ToastManager
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.route.RouteMap
@@ -35,9 +36,9 @@ class VipFragment : XTBaseFragment(),
 
         for (i in 0 until list.size) {
             val rank = list[i]
-            if (User.instance.rank < rank.score) {
+            if (User.instance.score < rank.score) {
                 nextRankText.set(rank.name)
-                score.set((rank.score - User.instance.rank).toString())
+                score.set((rank.score - User.instance.score).toString())
                 break
             }
         }
@@ -65,6 +66,12 @@ class VipFragment : XTBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getRankList()
+    }
+
+    fun jifen() {
+        activity?.let {
+            ToastManager.showShortToast(it, "业务准备中")
+        }
     }
 
 }

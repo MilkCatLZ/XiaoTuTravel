@@ -35,8 +35,14 @@
         <item name="android:background">@drawable/img_circle_selector</item>
     </style>
 
+    <style name="style_order_take_indicator_line_user_vip">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/back_order_state_line_selector</item>
+    </style>
     <style name="style_order_take_indicator_line">
-        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@drawable/back_order_state_line_selector</item>

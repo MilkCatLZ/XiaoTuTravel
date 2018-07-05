@@ -18,14 +18,24 @@ class VipPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     }
 
     var list = ArrayList<Rank>()
-    val adapter = DataBindingItemClickAdapter<Rank>(R.layout.item_rank, BR.rank, BR.click, {}, { holder, position ->
+    val adapter = DataBindingItemClickAdapter<Rank>(R.layout.item_rank, BR.rank, BR.click, {}) { holder, position ->
         holder.binding.setVariable(BR.user, User.instance)
+        if (position == 0) {
+            holder.binding.setVariable(BR.isFirst, true)
+            holder.binding.setVariable(BR.isLast, false)
+        } else if (position == list.size - 1) {
+            holder.binding.setVariable(BR.isLast, true)
+            holder.binding.setVariable(BR.isFirst, false)
+        } else {
+            holder.binding.setVariable(BR.isLast, false)
+            holder.binding.setVariable(BR.isFirst, false)
+        }
         if (position < list.size - 1) {
             holder.binding.setVariable(BR.nextScore, list[position + 1].score)
         } else {
             holder.binding.setVariable(BR.nextScore, list[position].score + 50000)
         }
-    })
+    }
 
 
     fun getRankList() {
