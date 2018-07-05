@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="orders"
+            type="shy.car.sdk.travel.invoice.data.InvoiceList.Orders"/>
+
+        <variable
+            name="adapter"
+            type="com.base.databinding.DataBindingItemClickAdapter"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter"/>
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="79dp"
+        android:background="@color/_foreground_material_light"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp">
+
+        <CheckBox
+            android:id="@+id/check_order"
+            android:layout_width="wrap_content"
+            android:tag="@{orders}"
+            android:checked="@{presenter.checkList.contain(orders)}"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/style_ww.text_12_999"
+                tools:text="2018.7.7 12：12"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="#4b4b4b"
+                android:textSize="16sp"
+                tools:text="EQ | 桂A737579"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_color_red"
+                android:textSize="15sp"
+                tools:text="55"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="15sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</layout>

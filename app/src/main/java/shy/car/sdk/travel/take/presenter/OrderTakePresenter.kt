@@ -21,22 +21,6 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
     var adapter: DataBindingItemClickAdapter<DeliveryOrderList> = DataBindingItemClickAdapter(R.layout.item_order_take, BR.order, BR.click, {
         callBack.onItemClick(it.tag as DeliveryOrderList)
     })
-    var pageSize = 10
-    var pageIndex = 1
-
-    fun hasMore(): Boolean {
-        return adapter.adapterItemCount >= pageIndex * pageSize
-    }
-
-    fun refresh() {
-        pageIndex = 1
-        getOrderList()
-    }
-
-    fun nextPage() {
-        pageIndex++
-        getOrderList()
-    }
 
     private fun getOrderList() {
         val observable = ApiManager.getInstance()
@@ -64,6 +48,22 @@ class OrderTakePresenter(context: Context, var callBack: CallBack) : BasePresent
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
 
+    }
+    var pageSize = 10
+    var pageIndex = 1
+
+    fun hasMore(): Boolean {
+        return adapter.adapterItemCount >= pageIndex * pageSize
+    }
+
+    fun refresh() {
+        pageIndex = 1
+        getOrderList()
+    }
+
+    fun nextPage() {
+        pageIndex++
+        getOrderList()
     }
 
     fun getTotal(): Int {

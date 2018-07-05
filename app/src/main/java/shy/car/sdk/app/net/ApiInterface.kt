@@ -12,6 +12,7 @@ import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.coupon.data.Coupon
+import shy.car.sdk.travel.invoice.data.InvoiceList
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
@@ -310,7 +311,9 @@ interface ApiInterface {
      * 获取优惠券列表
      */
     @GET("coupons")
-    fun getCouponList(@Query(ParamsConstant.Offset) offset: Int = 0, @Query(ParamsConstant.Limit) limit: Int = 10, @Query(ParamsConstant.Status) status: String? = null): Observable<List<Coupon>>
+    fun getCouponList(@Query(ParamsConstant.Offset) offset: Int = 0,
+                      @Query(ParamsConstant.Limit) limit: Int = 10,
+                      @Query(ParamsConstant.Status) status: String? = null): Observable<List<Coupon>>
 
     /**
      * 获取支持银行列表
@@ -324,7 +327,12 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("users/bank_cards")
-    fun addBankCard(@Query(ParamsConstant.UID) uid: String, @Field(ParamsConstant.BankID) bankID: String, @Field(ParamsConstant.Bank) bank: String, @Field(ParamsConstant.AccountHolder) accountHolder: String, @Field(ParamsConstant.AccountNumber) accountNumber: String, @Field(ParamsConstant.Phone) phone: String, @Field(ParamsConstant.Default) default: String = "1"): Observable<JsonObject>
+    fun addBankCard(@Query(ParamsConstant.UID) uid: String,
+                    @Field(ParamsConstant.BankID) bankID: String,
+                    @Field(ParamsConstant.Bank) bank: String,
+                    @Field(ParamsConstant.AccountHolder) accountHolder: String,
+                    @Field(ParamsConstant.AccountNumber) accountNumber: String,
+                    @Field(ParamsConstant.Phone) phone: String, @Field(ParamsConstant.Default) default: String = "1"): Observable<JsonObject>
 
     /**
      * 创建租车订单
@@ -332,7 +340,9 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @POST("orders")
-    fun createRentCarOrder(@Field(ParamsConstant.CarID) carID: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Type) type: String = "1"): Observable<JsonObject>
+    fun createRentCarOrder(@Field(ParamsConstant.CarID) carID: String,
+                           @Field(ParamsConstant.NetWorkID) networkID: String,
+                           @Field(ParamsConstant.Type) type: String = "1"): Observable<JsonObject>
 
     /**
      * 创建租车订单
@@ -377,7 +387,8 @@ interface ApiInterface {
     ): Observable<JsonObject>
 
     @DELETE("orders/{order_id}")
-    fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String, @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<Response<Void>>
+    fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String,
+                        @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<Response<Void>>
 
     @GET("orders/freights/car")
     fun getCarTypeList(): Observable<List<shy.car.sdk.travel.send.data.CarInfo>>
@@ -387,7 +398,8 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
-    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
+    fun orderUnLockCarAndStart(@Path(ParamsConstant.OrderId) oid: String,
+                               @Field(ParamsConstant.OrderStatus) status: String = "3"/*, @Part image: List<MultipartBody.Part>? = null*/): Observable<JsonObject>
 
     /**
      * 提交身份认证
@@ -404,7 +416,8 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
-    fun takeDeliveryOrder(@Path(ParamsConstant.FreightID) freight_id: String, @Field("freight_status") status: String = "1"): Observable<JsonObject>
+    fun takeDeliveryOrder(@Path(ParamsConstant.FreightID) freight_id: String,
+                          @Field("freight_status") status: String = "1"): Observable<JsonObject>
 
 
     @DELETE("orders/freights/{freight_id}")
@@ -412,15 +425,22 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
-    fun deliveryFinish(@Path(ParamsConstant.FreightID) id: String, @Field("freight_status") status: String = "4"): Observable<JsonObject>
+    fun deliveryFinish(@Path(ParamsConstant.FreightID) id: String,
+                       @Field("freight_status") status: String = "4"): Observable<JsonObject>
 
     @FormUrlEncoded
     @PATCH("balance")
-    fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String, @Field(ParamsConstant.Amount) amount: String, @Field(ParamsConstant.Action) action: String = "1"): Observable<JsonObject>
+    fun tixian(@Field(ParamsConstant.BankCardID) bankCardID: String,
+               @Field(ParamsConstant.Amount) amount: String,
+               @Field(ParamsConstant.Action) action: String = "1"): Observable<JsonObject>
 
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
-    fun returnCar(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.NetWorkID) networkID: String, @Field(ParamsConstant.Lat) lat: String, @Field(ParamsConstant.Lng) lng: String, @Field(ParamsConstant.OrderStatus) orderStatus: String = "4"): Observable<JsonObject>
+    fun returnCar(@Path(ParamsConstant.OrderId) oid: String,
+                  @Field(ParamsConstant.NetWorkID) networkID: String,
+                  @Field(ParamsConstant.Lat) lat: String,
+                  @Field(ParamsConstant.Lng) lng: String,
+                  @Field(ParamsConstant.OrderStatus) orderStatus: String = "4"): Observable<JsonObject>
 
     /**
      * 	status：1取车 2还车
@@ -433,7 +453,10 @@ interface ApiInterface {
 
     @FormUrlEncoded
     @PATCH("orders/{order_id}")
-    fun payOrder(@Path(ParamsConstant.OrderId) oid: String, @Field(ParamsConstant.PaymentID) payment: String, @Field(ParamsConstant.CouponID) coupon: String? = null, @Field(ParamsConstant.OrderStatus) orderStatus: String = "5"): Observable<JsonObject>
+    fun payOrder(@Path(ParamsConstant.OrderId) oid: String,
+                 @Field(ParamsConstant.PaymentID) payment: String,
+                 @Field(ParamsConstant.CouponID) coupon: String? = null,
+                 @Field(ParamsConstant.OrderStatus) orderStatus: String = "5"): Observable<JsonObject>
 
     @GET("cars/notice/type")
     fun getBrokeType(): Observable<List<BrokeType>>
@@ -454,4 +477,8 @@ interface ApiInterface {
 
     @GET("users/rank")
     fun getRankList(): Observable<List<Rank>>
+
+    @GET("users/invoice")
+    fun getInvoiceList(@Query(ParamsConstant.Offset) offset: Int = 0,
+                       @Query(ParamsConstant.Limit) limit: Int = 10 ): Observable<List<InvoiceList>>
 }

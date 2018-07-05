@@ -49,17 +49,49 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingStart="15dp"
+                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:layout_weight="1">
+                android:orientation="vertical"
+                android:paddingStart="15dp">
 
                 <CheckBox
+                    android:id="@+id/check_all"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="全选"
-                    android:textSize="@dimen/text_title_16dp"
                     android:textColor="@color/text_primary_333333"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="@dimen/text_title_16dp"/>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="6dp">
+
+                    <TextView
+                        style="@style/style_ww.text_14_333"
+                        android:textColor="@color/main_color_red"
+                        tools:text="5"/>
+
+                    <TextView
+                        style="@style/style_ww.text_12_999"
+                        android:text="个行程 共"
+                        android:textColor="@color/text_second_primary_666666"/>
+
+                    <TextView
+                        style="@style/style_ww.text_14_333"
+                        android:textColor="@color/main_color_red"
+                        tools:text="100"/>
+
+                    <TextView
+                        style="@style/style_ww.text_12_999"
+                        android:text="元"
+                        android:textColor="@color/text_second_primary_666666"/>
+
+                    <TextView
+                        style="@style/style_ww.text_12_999"
+                        android:text="（满500元包邮）"
+                        android:textColor="@color/text_second_primary_666666"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -70,6 +102,7 @@
                 android:background="@drawable/back_main_green_4dp"
                 android:gravity="center"
                 android:text="下一步"
+                android:onClick="@{()->fragment.next()}"
                 android:textColor="@color/_foreground_material_light"
                 android:textSize="@dimen/text_title_16dp"/>
         </LinearLayout>
