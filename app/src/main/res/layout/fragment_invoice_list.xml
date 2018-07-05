@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.invoice.ui.InvoiceListFragment"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_find_and_rent}"/>
+
+        <View style="@style/style_shadow"/>
+
+        <com.base.widget.UltimateRecyclerView
+            android:id="@+id/recyclerView_invoice_list"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_back"
+            android:bindAdapter="@{presenter.adapter}"
+            app:recyclerviewDefaultSwipeColor="@array/google_colors"
+            app:recyclerviewEmptyView="@layout/error_no_record"
+            app:recyclerviewScrollbars="vertical"
+            tools:listitem="@layout/item_invoice_list"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:background="#f5f5f5"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingStart="15dp"
+                android:gravity="center_vertical"
+                android:layout_weight="1">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:text="全选"
+                    android:textSize="@dimen/text_title_16dp"
+                    android:textColor="@color/text_primary_333333"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="45dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/back_main_green_4dp"
+                android:gravity="center"
+                android:text="下一步"
+                android:textColor="@color/_foreground_material_light"
+                android:textSize="@dimen/text_title_16dp"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>
