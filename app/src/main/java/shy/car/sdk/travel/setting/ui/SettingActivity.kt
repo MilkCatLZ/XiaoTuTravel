@@ -16,6 +16,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_setting.*
+import okhttp3.ResponseBody
+import retrofit2.Response
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.data.ErrorManager
@@ -103,7 +105,7 @@ class SettingActivity : XTBaseActivity() {
         ProgressDialog.showLoadingView(this)
         val observable = ApiManager.getInstance()
                 .api.getUpdateInfo()
-        val observer = object : Observer<String> {
+        val observer = object : Observer<ResponseBody> {
             override fun onComplete() {
                 ProgressDialog.hideLoadingView(this@SettingActivity)
             }
@@ -112,8 +114,8 @@ class SettingActivity : XTBaseActivity() {
                 disposable = d
             }
 
-            override fun onNext(t: String) {
-                UpdateHelper(this@SettingActivity, R.mipmap.ic_launcher, false, true).checkUpdate(t)
+            override fun onNext(t: ResponseBody) {
+                UpdateHelper(this@SettingActivity, R.mipmap.ic_launcher, false, true).checkUpdate(String(t.bytes()))
             }
 
             override fun onError(e: Throwable) {

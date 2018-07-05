@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 import shy.car.sdk.app.constant.ParamsConstant
@@ -165,8 +166,8 @@ interface ApiInterface {
      * 检查更新
      *
      */
-    @GET("versions")
-    fun getUpdateInfo(): Observable<String>
+    @GET("versions/newest")
+    fun getUpdateInfo(): Observable<ResponseBody>
 
     /**
      * 获取发货列表

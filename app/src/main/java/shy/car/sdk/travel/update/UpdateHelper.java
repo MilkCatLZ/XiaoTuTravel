@@ -14,7 +14,7 @@ import com.google.gson.Gson;
  * 更新
  */
 public class UpdateHelper extends BaseUpdateHelper<UpdateInfo> {
-    
+
     /**
      * @param context
      * @param logo         默认logo
@@ -24,22 +24,25 @@ public class UpdateHelper extends BaseUpdateHelper<UpdateInfo> {
     public UpdateHelper(@NonNull Context context, int logo, boolean isAutoUpdate, boolean needMessage) {
         super(context, logo, isAutoUpdate, needMessage);
     }
-    
-    
+
+
     @Override
     protected UpdateInfo getNewUpdateInfo(String result) {
         return new Gson().fromJson(result, UpdateInfo.class);
     }
-    
+
     @Override
     protected UpdateInfo getTodayInfo(String nowString) {
-        return SPCache.getObject(context, nowString, UpdateInfo.class);
+        try {
+            return SPCache.getObject(context, nowString, UpdateInfo.class);
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
+
     /**
      * @param nowVersion
      * @param newVersion
-     *
      * @return true:有新版本，false：没有新版本
      */
     @Override
@@ -55,12 +58,12 @@ public class UpdateHelper extends BaseUpdateHelper<UpdateInfo> {
         }
         return false;
     }
-    
+
     @Override
     protected String getAlreadyNewMessage() {
         return "当前已是最新版本";
     }
-    
+
     @Override
     protected String getAppName() {
         return "连你配送-";
