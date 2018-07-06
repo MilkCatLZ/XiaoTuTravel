@@ -74,4 +74,5 @@
     <string name="str_about">关于我们</string>
     <string name="str_user_detail">个人信息</string>
     <string name="srt_vip_center">会员中心</string>
+    <string name="str_invoice">开具发票</string>
 </resources>

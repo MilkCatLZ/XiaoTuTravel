@@ -23,13 +23,13 @@
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_find_and_rent}"/>
+            app:title="@{@string/str_invoice}"/>
 
         <View style="@style/style_shadow"/>
 
         <com.base.widget.UltimateRecyclerView
             android:id="@+id/recyclerView_invoice_list"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/main_back"
@@ -60,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:text="全选"
                     android:textColor="@color/text_primary_333333"
+                    android:checked="@={presenter.selectAllChecked}"
                     android:textSize="@dimen/text_title_16dp"/>
 
                 <LinearLayout
@@ -70,6 +71,7 @@
                     <TextView
                         style="@style/style_ww.text_14_333"
                         android:textColor="@color/main_color_red"
+                        android:text="@{presenter.invoiceCount}"
                         tools:text="5"/>
 
                     <TextView

@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.invoice.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,8 @@ import shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter
  * create by Sharon at 2018/07/05
  * 发票列表
  */
-class InvoiceListFragment : XTBaseUltimateRecyclerViewFragment(), CommonCallBack<List<InvoiceList>> {
+class InvoiceListFragment : XTBaseUltimateRecyclerViewFragment(),
+        CommonCallBack<List<InvoiceList>> {
     override fun getFragmentName(): String {
         return "开具发票"
     }
@@ -78,13 +80,9 @@ class InvoiceListFragment : XTBaseUltimateRecyclerViewFragment(), CommonCallBack
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_invoice_list, null, false)
-        binding.checkAll.setOnCheckedChangeListener { p0, p1 ->
-            if (p1) {
-                presenter.selectNone()
-            } else {
-                presenter.selectAll()
-            }
-        }
+        binding.fragment = this
+        binding.presenter = presenter
+
         return binding.root
 
     }

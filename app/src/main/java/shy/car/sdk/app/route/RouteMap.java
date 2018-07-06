@@ -362,4 +362,12 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.user.ui.VipActivity}
      */
     public static final String Vip = "/user/vip";
+
+    /**
+     * 发票列表
+     * {@link shy.car.sdk.travel.invoice.ui.InvoiceListActivity}
+     */
+    public static final String InvoiceList = "/invoice/list";
+
+
 }

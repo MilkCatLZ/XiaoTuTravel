@@ -123,6 +123,8 @@ class WalletActivity : XTBaseActivity(),
      *  发票
      */
     fun onFaPiaoClick() {
-
+        ARouter.getInstance()
+                .build(RouteMap.InvoiceList)
+                .navigation()
     }
 }
