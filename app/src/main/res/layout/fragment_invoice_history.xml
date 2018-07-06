@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.invoice.ui.InvoiceHistoryFragment"/>
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.invoice.presenter.InvoiceHistoryPresenter"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_invoice_history}" />
+
+        <View style="@style/style_shadow" />
+
+        <com.base.widget.UltimateRecyclerView
+            android:id="@+id/recyclerView_invoice_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/main_back"
+            android:bindAdapter="@{presenter.adapter}"
+            app:recyclerviewDefaultSwipeColor="@array/google_colors"
+            app:recyclerviewEmptyView="@layout/error_no_record"
+            app:recyclerviewScrollbars="vertical"
+            tools:listitem="@layout/item_invoice_history" />
+
+    </LinearLayout>
+</layout>

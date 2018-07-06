@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.invoice.ui.InvoiceHistoryFragment" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_back"
+        android:orientation="vertical">
+
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_invoice_detail}" />
+
+        <View style="@style/style_shadow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="#2100b3ba"
+            android:gravity="center"
+            android:text="已开票"
+            android:textColor="@color/main_color_green"
+            android:textSize="@dimen/text_second_primary_12dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/_foreground_material_light"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="14dp"
+                            android:background="@color/main_color_green" />
+
+                        <TextView
+                            style="@style/style_ww.text_14_333"
+                            android:layout_marginStart="10dp"
+                            android:text="开票内容" />
+                    </LinearLayout>
+
+                    <View style="@style/line_horizontal" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="15dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="开票类型：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="个人/非企业" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="发票抬头：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="XXX" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="发票内容：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="租车费" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="开票金额：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="155元" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="申请时间：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="2018.07.06 17:44" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/main_back" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:gravity="center_vertical">
+
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="14dp"
+                            android:background="@color/main_color_green" />
+
+                        <TextView
+                            style="@style/style_ww.text_14_333"
+                            android:layout_marginStart="10dp"
+                            android:text="收件信息" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="15dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingTop="15dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="收  件  人：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="张三丰" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="联系电话：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="17777777777" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="详细地址：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="这里是详细地址" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/style_ww.text_13_999"
+                                android:text="邮政编码：" />
+
+                            <TextView
+                                style="@style/style_ww.text_13_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                tools:text="530000" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/_foreground_material_light"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        style="@style/style_ww.text_14_333"
+                        android:text="1张发票 含5个行程" />
+
+                    <TextView
+                        style="@style/style_ww.text_12_999"
+                        android:layout_marginTop="3dp"
+                        tools:text="2018.01.01~2018.07.05" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -12,6 +12,7 @@ import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.coupon.data.Coupon
+import shy.car.sdk.travel.invoice.data.InvoiceHistory
 import shy.car.sdk.travel.invoice.data.InvoiceList
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.message.data.MessageList
@@ -481,6 +482,9 @@ interface ApiInterface {
     @GET("users/invoice")
     fun getInvoiceList(@Query(ParamsConstant.Offset) offset: Int = 0,
                        @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceList>>
+    @GET("users/invoice/history")
+    fun getInvoiceHistoryList(@Query(ParamsConstant.Offset) offset: Int = 0,
+                       @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceHistory>>
 
     @FormUrlEncoded
     @POST("users/invoice")
