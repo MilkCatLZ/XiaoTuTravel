@@ -31,6 +31,7 @@
             android:id="@+id/check_order"
             android:layout_width="wrap_content"
             android:tag="@{orders}"
+            android:button="@drawable/back_invoice_checked_list"
             android:checked="@{presenter.checkList.contains(orders)}"
             android:layout_height="wrap_content"/>
 

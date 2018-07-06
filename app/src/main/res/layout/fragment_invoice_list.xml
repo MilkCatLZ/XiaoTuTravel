@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="fragment"
-            type="shy.car.sdk.travel.invoice.ui.InvoiceListFragment"/>
+            type="shy.car.sdk.travel.invoice.ui.InvoiceListFragment" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter"/>
+            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter" />
     </data>
 
     <LinearLayout
@@ -23,9 +23,9 @@
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_invoice}"/>
+            app:title="@{@string/str_invoice}" />
 
-        <View style="@style/style_shadow"/>
+        <View style="@style/style_shadow" />
 
         <com.base.widget.UltimateRecyclerView
             android:id="@+id/recyclerView_invoice_list"
@@ -37,7 +37,7 @@
             app:recyclerviewDefaultSwipeColor="@array/google_colors"
             app:recyclerviewEmptyView="@layout/error_no_record"
             app:recyclerviewScrollbars="vertical"
-            tools:listitem="@layout/item_invoice_list"/>
+            tools:listitem="@layout/item_invoice_list" />
 
 
         <LinearLayout
@@ -58,10 +58,12 @@
                     android:id="@+id/check_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/back_invoice_checked_select"
+                    android:checked="@={presenter.selectAllChecked}"
+                    android:paddingStart="10dp"
                     android:text="全选"
                     android:textColor="@color/text_primary_333333"
-                    android:checked="@={presenter.selectAllChecked}"
-                    android:textSize="@dimen/text_title_16dp"/>
+                    android:textSize="@dimen/text_title_16dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -70,29 +72,29 @@
 
                     <TextView
                         style="@style/style_ww.text_14_333"
-                        android:textColor="@color/main_color_red"
                         android:text="@{presenter.invoiceCount}"
-                        tools:text="5"/>
+                        android:textColor="@color/main_color_red"
+                        tools:text="5" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:text="个行程 共"
-                        android:textColor="@color/text_second_primary_666666"/>
+                        android:textColor="@color/text_second_primary_666666" />
 
                     <TextView
                         style="@style/style_ww.text_14_333"
                         android:textColor="@color/main_color_red"
-                        tools:text="100"/>
+                        tools:text="100" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:text="元"
-                        android:textColor="@color/text_second_primary_666666"/>
+                        android:textColor="@color/text_second_primary_666666" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:text="（满500元包邮）"
-                        android:textColor="@color/text_second_primary_666666"/>
+                        android:textColor="@color/text_second_primary_666666" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -103,10 +105,10 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/back_main_green_4dp"
                 android:gravity="center"
-                android:text="下一步"
                 android:onClick="@{()->fragment.next()}"
+                android:text="下一步"
                 android:textColor="@color/_foreground_material_light"
-                android:textSize="@dimen/text_title_16dp"/>
+                android:textSize="@dimen/text_title_16dp" />
         </LinearLayout>
     </LinearLayout>
 </layout>
