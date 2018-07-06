@@ -43,7 +43,9 @@
 
             <TextView
                 style="@style/style_ww.text_12_999"
-                tools:text="2018.7.7 12：12"/>
+                android:text="2018.7.7 12：12"
+                tools:text="2018.7.7 12：12"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +53,9 @@
                 android:layout_marginTop="5dp"
                 android:textColor="#4b4b4b"
                 android:textSize="16sp"
-                tools:text="EQ | 桂A737579"/>
+                android:text="EQ | 桂A737579"
+                tools:text="EQ | 桂A737579"
+                />
 
         </LinearLayout>
 
@@ -64,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_color_red"
                 android:textSize="15sp"
+                android:text="55"
                 tools:text="55"/>
 
             <TextView
