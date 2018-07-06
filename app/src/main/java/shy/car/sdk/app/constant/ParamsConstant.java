@@ -88,5 +88,14 @@ public class ParamsConstant {
     public static final String Step = "step";
     public static final String Code = "code";
     public static final String NewPhone = "new_phone";
+    public static final String ExpressAddress = "express_address";
+
+    //纳税人识别号
+    public static final String Tim = "tim";
+    public static final String Title = "title";
+    public static final String Money = "money";
+    public static final String Contact = "contact";
+    public static final String ContactNum = "contact_number";
+    public static final String ZipCode = "zip_code";
 
 }

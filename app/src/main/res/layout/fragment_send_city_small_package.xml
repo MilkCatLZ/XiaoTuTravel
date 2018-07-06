@@ -288,6 +288,7 @@
                         android:button="@null"
                         android:drawablePadding="10dp"
                         android:drawableStart="@drawable/check_rule"
+                        android:textColor="@drawable/color_agree_check_999_main_red"
                         android:checked="@={presenter.agree}"
                         android:text="确认表示同意" />
 

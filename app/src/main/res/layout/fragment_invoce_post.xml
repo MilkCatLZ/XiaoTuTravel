@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="util"
+            type="com.base.util.StringUtils" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.invoice.presenter.InvoicePostPresenter" />
+
+        <variable
+            name="fragment"
+            type="shy.car.sdk.travel.invoice.ui.InvoicePostFragment" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_title"
+            app:title="@{@string/str_post_invoice}" />
+
+        <View style="@style/style_shadow" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_back"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+
+                <include
+                    layout="@layout/layout_invoice_post_detail"
+                    app:presenter="@{presenter}" />
+
+                <include
+                    layout="@layout/layout_invoice_post_address"
+                    app:presenter="@{presenter}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/back_main_green_4dp_click"
+                    android:gravity="center"
+                    android:onClick="@{()->fragment.post()}"
+                    android:text="提交"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_title_16dp" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

@@ -480,5 +480,17 @@ interface ApiInterface {
 
     @GET("users/invoice")
     fun getInvoiceList(@Query(ParamsConstant.Offset) offset: Int = 0,
-                       @Query(ParamsConstant.Limit) limit: Int = 10 ): Observable<List<InvoiceList>>
+                       @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceList>>
+
+    @FormUrlEncoded
+    @POST("users/invoice")
+    fun postTakeInvoice(@Field(ParamsConstant.Type) taitouType: String?,
+                        @Field(ParamsConstant.Title) taitou: String?,
+                        @Field(ParamsConstant.Tim) tim: String? = null,
+                        @Field(ParamsConstant.Money) money: String?,
+                        @Field(ParamsConstant.Contact) contact: String?,
+                        @Field(ParamsConstant.ContactNum) contact_number: String?,
+                        @Field(ParamsConstant.ExpressAddress) express_address: String?,
+                        @Field(ParamsConstant.ZipCode) zip_code: String?
+    ): Observable<JsonObject>
 }

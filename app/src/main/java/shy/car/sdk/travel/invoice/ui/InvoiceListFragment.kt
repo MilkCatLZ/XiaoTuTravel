@@ -6,11 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
+import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentInvoiceListBinding
 import shy.car.sdk.travel.interfaces.CommonCallBack
 import shy.car.sdk.travel.invoice.data.InvoiceList
@@ -93,6 +99,9 @@ class InvoiceListFragment : XTBaseUltimateRecyclerViewFragment(),
     }
 
     fun next() {
-
+        ARouter.getInstance()
+                .build(RouteMap.InvoicePost)
+                .withObject(Object1, presenter.checkList)
+                .navigation()
     }
 }

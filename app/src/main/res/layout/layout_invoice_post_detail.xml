@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="presenter"
+            type="shy.car.sdk.travel.invoice.presenter.InvoicePostPresenter" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:text="发票内容" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="18dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                style="@style/style_invoice_post_input_title"
+                android:text="抬头类型" />
+
+            <RadioGroup
+                android:id="@+id/radio_taitou_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_com"
+                    style="@style/style_invoice_post_input_content"
+                    android:text="企业" />
+
+                <RadioButton
+                    android:id="@+id/radio_person"
+                    style="@style/style_invoice_post_input_content"
+                    android:layout_marginStart="20dp"
+                    android:button="@drawable/back_invoice_checked_post"
+                    android:paddingStart="5dp"
+                    android:text="个人/非企业" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="18dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                style="@style/style_invoice_post_input_title"
+                android:text="发票抬头" />
+
+            <EditText
+                android:id="@+id/edt_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:hint="填写发票抬头"
+                android:maxLines="1"
+                android:text="@={presenter.taitou}"
+                android:textColor="#4b4b4b"
+                android:textColorHint="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_primary_14dp" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@color/_foreground_material_light"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibleOrGone="@{presenter.taitouType==2}"
+                android:paddingEnd="18dp"
+                android:paddingStart="18dp">
+
+                <TextView
+                    style="@style/style_invoice_post_input_title"
+                    android:text="身份证号" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="填写身份证号"
+                    android:maxLines="1"
+                    android:text="@={presenter.idCard}"
+                    android:textColor="#4b4b4b"
+                    android:textColorHint="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_primary_14dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@color/_foreground_material_light"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="18dp"
+                android:visibleOrGone="@{presenter.taitouType==1}"
+                android:paddingStart="18dp">
+
+                <TextView
+                    style="@style/style_invoice_post_input_title"
+                    android:text="税        号" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:hint="填写纳税人识别号"
+                    android:maxLines="1"
+                    android:text="@={presenter.idCard}"
+                    android:textColor="#4b4b4b"
+                    android:textColorHint="@color/text_third_primary_999999"
+                    android:textSize="@dimen/text_primary_14dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="18dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                style="@style/style_invoice_post_input_title"
+                android:text="身份证号" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+
+                android:maxLines="1"
+                android:text="租车（不可修改）"
+                android:textColor="#4b4b4b"
+                android:textColorHint="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_primary_14dp" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="18dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                style="@style/style_invoice_post_input_title"
+                android:text="开票金额" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@={presenter.amount}"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_primary_14dp"
+                tools:text="155元" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/_foreground_material_light"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="18dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                style="@style/style_invoice_post_input_title"
+                android:text="付款方式" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="货到付款（不可修改）"
+                android:textColor="#4b4b4b"
+                android:textSize="@dimen/text_primary_14dp"
+                tools:text="货到付款（不可修改）" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
+    </LinearLayout>
+</layout>

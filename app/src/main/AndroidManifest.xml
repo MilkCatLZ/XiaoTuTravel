@@ -309,6 +309,10 @@
             android:name=".travel.invoice.ui.InvoiceListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".travel.invoice.ui.InvoicePostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
     </application>
 

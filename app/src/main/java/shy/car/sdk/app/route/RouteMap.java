@@ -369,5 +369,13 @@ public class RouteMap {
      */
     public static final String InvoiceList = "/invoice/list";
 
+    /**
+     * 提交开票申请
+     * {@link shy.car.sdk.travel.invoice.ui.InvoicePostActivity}
+     * withString（String1,Gson().toJson(ArrayList<InvoiceList.Orders>)）
+     * withObject1（Object1,ArrayList<InvoiceList.Orders>）
+     */
+    public static final String InvoicePost = "/invoice/post";
+
 
 }

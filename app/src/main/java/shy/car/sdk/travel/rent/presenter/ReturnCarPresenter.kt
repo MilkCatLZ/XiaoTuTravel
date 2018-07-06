@@ -25,9 +25,10 @@ class ReturnCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     interface CallBack {
         fun onError(e: Throwable)
-//        fun getListSuccess(t: ArrayList<NearCarPoint>)
+        //        fun getListSuccess(t: ArrayList<NearCarPoint>)
         fun returnSuccess(t: JsonObject)
-//        fun getDetailSuccess(t: RentOrderDetail)
+
+        //        fun getDetailSuccess(t: RentOrderDetail)
         fun getDataSuccess(detail: RentOrderDetail, list: List<NearCarPoint>)
 
     }
@@ -75,62 +76,68 @@ class ReturnCarPresenter(context: Context, var callBack: CallBack) : BasePresent
     fun returnCar() {
         if (nearCarPoint == null) {
             ToastManager.showShortToast(context, "请先将车辆开进停车区域的停车位内")
-        } else {
+            return
+        }
+        if (!agree.get()) {
+            ToastManager.showLongToast(context, "请仔细阅读契约条款")
+            return
+        }
 
-            ProgressDialog.showLoadingView(context)
+
+        ProgressDialog.showLoadingView(context)
 
 
-            val observable = ApiManager.getInstance()
-                    .api.returnCar(oid, nearCarPoint?.id!!, app.location.lat.toString(), app.location.lng.toString())
+        val observable = ApiManager.getInstance()
+                .api.returnCar(oid, nearCarPoint?.id!!, app.location.lat.toString(), app.location.lng.toString())
 
-            val observableShouldTakePhoto = ApiManager.getInstance()
-                    .api.shoulTakePhoto("2")// 2还车
-            observableShouldTakePhoto.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnNext({
-                        if (it.get("whether").asInt == 1) {
-                            ARouter.getInstance()
-                                    .build(RouteMap.ReturnCarUploadPhoto)
-                                    .withString(ParamsConstant.String1, oid)
-                                    .withString(ParamsConstant.String2, nearCarPoint?.id)
-                                    .navigation()
-                        }
-                    })
-                    .subscribeOn(Schedulers.io())
+        val observableShouldTakePhoto = ApiManager.getInstance()
+                .api.shoulTakePhoto("2")// 2还车
+        observableShouldTakePhoto.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext {
+                    if (it.get("whether").asInt == 1) {
+                        ARouter.getInstance()
+                                .build(RouteMap.ReturnCarUploadPhoto)
+                                .withString(ParamsConstant.String1, oid)
+                                .withString(ParamsConstant.String2, nearCarPoint?.id)
+                                .navigation()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
 
-                    .flatMap {
-                        if (it.get("whether").asInt == 0) {
-                            observable
+                .flatMap {
+                    if (it.get("whether").asInt == 0) {
+                        observable
+                    } else {
+                        null
+                    }
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<JsonObject> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        disposable = d
+                    }
+
+                    override fun onNext(t: JsonObject) {
+                        ProgressDialog.hideLoadingView(context)
+                        callBack.returnSuccess(t)
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                        ProgressDialog.hideLoadingView(context)
+                        if (e is NullPointerException) {
+
                         } else {
-                            null
+                            ErrorManager.managerError(context, e, "还车失败，请重试")
                         }
                     }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<JsonObject> {
-                        override fun onComplete() {
+                })
 
-                        }
-
-                        override fun onSubscribe(d: Disposable) {
-                            disposable = d
-                        }
-
-                        override fun onNext(t: JsonObject) {
-                            ProgressDialog.hideLoadingView(context)
-                            callBack.returnSuccess(t)
-                        }
-
-                        override fun onError(e: Throwable) {
-
-                            ProgressDialog.hideLoadingView(context)
-                            if (e is NullPointerException) {
-
-                            } else {
-                                ErrorManager.managerError(context, e, "还车失败，请重试")
-                            }
-                        }
-                    })
-        }
 
     }
 
