@@ -31,7 +31,7 @@
             android:id="@+id/check_order"
             android:layout_width="wrap_content"
             android:tag="@{orders}"
-            android:checked="@{presenter.checkList.contain(orders)}"
+            android:checked="@{presenter.checkList.contains(orders)}"
             android:layout_height="wrap_content"/>
 
         <LinearLayout
