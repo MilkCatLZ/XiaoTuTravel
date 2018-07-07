@@ -11,6 +11,7 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.interfaces.CommonCallBack
@@ -87,11 +88,13 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
 
                 override fun onNext(t: JsonObject) {
                     ProgressDialog.hideLoadingView(context)
+                    ToastManager.showLongToast(context,"开票申请成功")
                     callBack.onSuccess(t)
                 }
 
                 override fun onError(e: Throwable) {
                     ProgressDialog.hideLoadingView(context)
+                    ErrorManager.managerError(context,e,"开票申请失败")
                     callBack.onError(e)
                 }
 

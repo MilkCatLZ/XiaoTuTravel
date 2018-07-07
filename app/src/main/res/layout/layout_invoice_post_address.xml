@@ -6,9 +6,10 @@
     <data>
 
         <import type="shy.car.sdk.app.LNTextUtil"/>
+
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.invoice.presenter.InvoicePostPresenter" />
+            type="shy.car.sdk.travel.invoice.presenter.InvoicePostPresenter"/>
     </data>
 
 
@@ -23,9 +24,9 @@
             android:layout_height="45dp"
             android:layout_marginStart="15dp"
             android:gravity="center_vertical"
-            android:text="收票地址" />
+            android:text="收票地址"/>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,25 +39,27 @@
 
             <TextView
                 style="@style/style_invoice_post_input_title"
-                android:text="收  件  人" />
+                android:text="收  件  人"/>
 
             <EditText
                 android:id="@+id/edt_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
                 android:layout_marginStart="25dp"
+                android:nextFocusDown="@+id/edt_phone"
+                android:singleLine="true"
                 android:background="@android:color/transparent"
                 android:ellipsize="end"
                 android:hint="填写收件人"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:text="@={presenter.name}"
                 android:textColor="#4b4b4b"
                 android:textColorHint="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_primary_14dp" />
+                android:textSize="@dimen/text_primary_14dp"/>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,25 +72,27 @@
 
             <TextView
                 style="@style/style_invoice_post_input_title"
-                android:text="联系电话" />
+                android:text="联系电话"/>
 
             <EditText
+                android:id="@+id/edt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:singleLine="true"
                 android:background="@android:color/transparent"
-                android:imeOptions="actionNext"
                 android:ellipsize="end"
                 android:hint="填写联系电话"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
                 android:maxLines="1"
                 android:text="@={presenter.phone}"
-                android:inputType="phone"
                 android:textColor="#4b4b4b"
                 android:textColorHint="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_primary_14dp" />
+                android:textSize="@dimen/text_primary_14dp"/>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -100,24 +105,27 @@
 
             <TextView
                 style="@style/style_invoice_post_input_title"
-                android:text="详细地址" />
+                android:text="详细地址"/>
 
             <EditText
+                android:id="@+id/edt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:singleLine="true"
                 android:background="@android:color/transparent"
-                android:imeOptions="actionNext"
                 android:ellipsize="end"
                 android:hint="填写详细地址"
+                android:imeOptions="actionNext"
+                android:nextFocusDown="@+id/edt_zip"
                 android:maxLines="1"
                 android:text="@={presenter.address}"
                 android:textColor="#4b4b4b"
                 android:textColorHint="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_primary_14dp" />
+                android:textSize="@dimen/text_primary_14dp"/>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,9 +138,10 @@
 
             <TextView
                 style="@style/style_invoice_post_input_title"
-                android:text="邮政编码" />
+                android:text="邮政编码"/>
 
             <EditText
+                android:id="@+id/edt_zip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -143,9 +152,9 @@
                 android:text="@={presenter.postnum}"
                 android:textColor="#4b4b4b"
                 android:textColorHint="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_primary_14dp" />
+                android:textSize="@dimen/text_primary_14dp"/>
         </LinearLayout>
 
-        <View style="@style/line_horizontal" />
+        <View style="@style/line_horizontal"/>
     </LinearLayout>
 </layout>

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
+import com.base.util.ToastManager
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
@@ -89,16 +90,20 @@ class InvoiceListFragment : XTBaseUltimateRecyclerViewFragment(),
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onRealResume() {
+        super.onRealResume()
         onRefresh()
     }
 
     fun next() {
-        ARouter.getInstance()
-                .build(RouteMap.InvoicePost)
-                .withObject(Object1, presenter.checkList)
-                .navigation()
+        if (presenter.checkList.isNotEmpty())
+            ARouter.getInstance()
+                    .build(RouteMap.InvoicePost)
+                    .withObject(Object1, presenter.checkList)
+                    .navigation()
+        else {
+            activity?.let { ToastManager.showShortToast(it, "请选择需要开票的订单") }
+        }
     }
 
     fun gotoHistory() {

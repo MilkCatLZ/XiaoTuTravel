@@ -80,12 +80,14 @@
             <EditText
                 android:id="@+id/edt_weight"
                 android:layout_width="match_parent"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:imeOptions="actionNext"
                 android:background="@android:color/transparent"
                 android:ellipsize="end"
                 android:hint="填写发票抬头"
+                android:nextFocusDown="@+id/txt_tim"
                 android:maxLines="1"
                 android:text="@={presenter.taitou}"
                 android:textColor="#4b4b4b"
@@ -114,12 +116,14 @@
                     android:text="身份证号" />
 
                 <EditText
+                    android:id="@+id/txt_tim"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:hint="填写身份证号"
+                    android:nextFocusDown="@+id/edt_weight"
                     android:maxLines="1"
                     android:text="@={presenter.idCard}"
                     android:textColor="#4b4b4b"
@@ -145,6 +149,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
+                    android:singleLine="true"
+
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:hint="填写纳税人识别号"

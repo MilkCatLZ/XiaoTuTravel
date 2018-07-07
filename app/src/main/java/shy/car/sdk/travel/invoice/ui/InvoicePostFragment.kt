@@ -21,7 +21,7 @@ import shy.car.sdk.travel.invoice.presenter.InvoicePostPresenter
 class InvoicePostFragment : XTBaseFragment(),
         CommonCallBack<JsonObject> {
     override fun onSuccess(t: JsonObject) {
-
+        finish()
     }
 
     override fun onError(e: Throwable) {
