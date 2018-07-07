@@ -46,7 +46,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
                 ProgressDialog.hideLoadingView(context)
                 var s = t.get("amount")
                         .asString
-                amount = s.toDouble()
+//                amount = s.toDouble()
                 callBack.onGetPromiseMoneySuccess(amount)
 
             }
@@ -70,6 +70,10 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
             }
             carSelect.get() == null -> {
                 ToastManager.showShortToast(context, "请选择车辆类型")
+                return
+            }
+            amount <= 0 -> {
+                ToastManager.showShortToast(context, "无需支付保证金")
                 return
             }
         }
@@ -96,7 +100,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
 
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
-               callBack.onCreatePaySuccess(t)
+                callBack.onCreatePaySuccess(t)
             }
 
             override fun onError(e: Throwable) {

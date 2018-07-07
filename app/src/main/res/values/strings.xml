@@ -78,4 +78,5 @@
     <string name="str_post_invoice">开具发票</string>
     <string name="str_invoice_history">开票历史</string>
     <string name="str_invoice_detail">开票详情</string>
+    <string name="str_feed_back">意见反馈</string>
 </resources>

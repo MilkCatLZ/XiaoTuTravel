@@ -4,14 +4,17 @@ import android.content.Context
 import android.databinding.ObservableField
 import android.databinding.ObservableInt
 import com.base.base.ProgressDialog
-import com.base.util.StringUtils
+import com.base.util.DoubleUtil
+import com.base.util.Log
 import com.base.util.ToastManager
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.interfaces.CommonCallBack
+import shy.car.sdk.travel.invoice.data.InvoiceList
 
 /**
  * create by LZ at 2018/07/06
@@ -26,6 +29,7 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
     val phone = ObservableField<String>()
     val address = ObservableField<String>()
     val postnum = ObservableField<String>()
+    lateinit var list: ArrayList<InvoiceList.Orders>
 
 
     private fun checkInput(): Boolean {
@@ -69,7 +73,10 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
                     name.get(),
                     phone.get(),
                     address.get(),
-                    postnum.get())
+                    postnum.get(),
+                    createIDString()
+
+            )
             val observer = object : Observer<JsonObject> {
                 override fun onComplete() {
 
@@ -93,5 +100,25 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
             ApiManager.getInstance()
                     .toSubscribe(observable, observer)
         }
+    }
+
+    private fun createIDString(): String {
+
+        var array = JsonArray()
+        list.map {
+            array.add(it.id == null)
+        }
+        Log.d("sdjkfhkjshdkfjsdfkj", array.toString())
+        return array.toString()
+    }
+
+    fun setLists(list: ArrayList<InvoiceList.Orders>) {
+        this.list = list
+        var totleAmount = 0.0
+        list.map {
+            totleAmount = DoubleUtil.add(totleAmount, it.money)
+        }
+        amount.set(totleAmount.toString())
+
     }
 }

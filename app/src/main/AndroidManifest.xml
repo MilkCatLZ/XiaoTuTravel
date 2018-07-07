@@ -189,7 +189,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name="shy.car.sdk.travel.user.ui.FeedBackActivity"
+            android:name=".travel.setting.ui.FeedBackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity

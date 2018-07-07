@@ -18,7 +18,7 @@ import shy.car.sdk.databinding.ActivityAboutBinding
 @Route(path = RouteMap.About)
 class AboutActivity : XTBaseActivity() {
 
-    var servicePhone = app.servicePhone
+    var servicePhone = ObservableField<String>()
     var version = ObservableField<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,11 +26,12 @@ class AboutActivity : XTBaseActivity() {
         var binding = DataBindingUtil.setContentView<ActivityAboutBinding>(this, R.layout.activity_about)
         binding.ac = this
         version.set("v" + Version.getVersion(this))
+        servicePhone.set(app.servicePhone)
 //        webView_register_agreement.settings.domStorageEnabled = true
 //        webView_register_agreement.loadUrl(BuildConfig.Host + "html/about.html")
     }
 
     fun call() {
-        Phone.call(this, servicePhone)
+        Phone.call(this, servicePhone.get())
     }
 }

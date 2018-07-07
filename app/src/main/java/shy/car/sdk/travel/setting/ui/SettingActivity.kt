@@ -17,7 +17,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_setting.*
 import okhttp3.ResponseBody
-import retrofit2.Response
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.data.ErrorManager
@@ -144,6 +143,11 @@ class SettingActivity : XTBaseActivity() {
     fun changeMobile() {
         ARouter.getInstance()
                 .build(RouteMap.ChangeMobile)
+                .navigation()
+    }
+    fun feedBack() {
+        ARouter.getInstance()
+                .build(RouteMap.FeedBack)
                 .navigation()
     }
 }

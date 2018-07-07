@@ -14,124 +14,130 @@ class MapUtil {
     }
 
 
-    companion object : AMapNaviListener {
-        override fun onNaviInfoUpdate(p0: NaviInfo?) {
+    companion object {
+        val listener = object : AMapNaviListener {
 
-        }
+            override fun onNaviInfoUpdate(p0: NaviInfo?) {
 
-        override fun onCalculateRouteSuccess(p0: IntArray?) {
+            }
 
-        }
+            override fun onNaviRouteNotify(p0: AMapNaviRouteNotifyData?): Unit {
 
-        override fun onCalculateRouteSuccess(p0: AMapCalcRouteResult?) {
-            callBack?.calculateSuccess(mAMapNavi?.naviPath?.allLength, mAMapNavi?.naviPath?.allTime)
-            callBack = null
-        }
+            }
 
-        override fun onCalculateRouteFailure(p0: Int) {
-        }
+            override fun onCalculateRouteSuccess(p0: IntArray?) {
 
-        override fun onCalculateRouteFailure(p0: AMapCalcRouteResult?) {
-        }
+            }
 
-        override fun onServiceAreaUpdate(p0: Array<out AMapServiceAreaInfo>?) {
-        }
+            override fun onCalculateRouteSuccess(p0: AMapCalcRouteResult?) {
+                callBack?.calculateSuccess(mAMapNavi?.naviPath?.allLength, mAMapNavi?.naviPath?.allTime)
+                callBack = null
+            }
 
-        override fun onEndEmulatorNavi() {
-        }
+            override fun onCalculateRouteFailure(p0: Int) {
+            }
 
-        override fun onArrivedWayPoint(p0: Int) {
-        }
+            override fun onCalculateRouteFailure(p0: AMapCalcRouteResult?) {
+            }
 
-        override fun onArriveDestination() {
-        }
+            override fun onServiceAreaUpdate(p0: Array<out AMapServiceAreaInfo>?) {
+            }
 
-        override fun onPlayRing(p0: Int) {
-        }
+            override fun onEndEmulatorNavi() {
+            }
 
-        override fun onTrafficStatusUpdate() {
-        }
+            override fun onArrivedWayPoint(p0: Int) {
+            }
 
-        override fun onGpsOpenStatus(p0: Boolean) {
-        }
+            override fun onArriveDestination() {
+            }
 
-        override fun updateAimlessModeCongestionInfo(p0: AimLessModeCongestionInfo?) {
-        }
+            override fun onPlayRing(p0: Int) {
+            }
 
-        override fun showCross(p0: AMapNaviCross?) {
-        }
+            override fun onTrafficStatusUpdate() {
+            }
 
-        override fun onGetNavigationText(p0: Int, p1: String?) {
-        }
+            override fun onGpsOpenStatus(p0: Boolean) {
+            }
 
-        override fun onGetNavigationText(p0: String?) {
-        }
+            override fun updateAimlessModeCongestionInfo(p0: AimLessModeCongestionInfo?) {
+            }
 
-        override fun updateAimlessModeStatistics(p0: AimLessModeStat?) {
-        }
+            override fun showCross(p0: AMapNaviCross?) {
+            }
 
-        override fun hideCross() {
-        }
+            override fun onGetNavigationText(p0: Int, p1: String?) {
+            }
 
-        override fun onInitNaviFailure() {
-        }
+            override fun onGetNavigationText(p0: String?) {
+            }
 
-        override fun onInitNaviSuccess() {
-            if (type == 1) {
-                mAMapNavi?.calculateDriveRoute(startList, endList, null, PathPlanningStrategy.DRIVING_DEFAULT)
-            } else {
-                mAMapNavi?.calculateWalkRoute(startList[0], endList[0])
+            override fun updateAimlessModeStatistics(p0: AimLessModeStat?) {
+            }
+
+            override fun hideCross() {
+            }
+
+            override fun onInitNaviFailure() {
+            }
+
+            override fun onInitNaviSuccess() {
+                if (type == 1) {
+                    mAMapNavi?.calculateDriveRoute(startList, endList, null, PathPlanningStrategy.DRIVING_DEFAULT)
+                } else {
+                    mAMapNavi?.calculateWalkRoute(startList[0], endList[0])
+                }
+            }
+
+            override fun onReCalculateRouteForTrafficJam() {
+            }
+
+            override fun updateIntervalCameraInfo(p0: AMapNaviCameraInfo?, p1: AMapNaviCameraInfo?, p2: Int) {
+            }
+
+            override fun hideLaneInfo() {
+            }
+
+            override fun onNaviInfoUpdated(p0: AMapNaviInfo?) {
+            }
+
+            override fun showModeCross(p0: AMapModelCross?) {
+            }
+
+            override fun updateCameraInfo(p0: Array<out AMapNaviCameraInfo>?) {
+            }
+
+            override fun hideModeCross() {
+            }
+
+            override fun onLocationChange(p0: AMapNaviLocation?) {
+            }
+
+            override fun onReCalculateRouteForYaw() {
+            }
+
+            override fun onStartNavi(p0: Int) {
+            }
+
+            override fun notifyParallelRoad(p0: Int) {
+            }
+
+            override fun OnUpdateTrafficFacility(p0: AMapNaviTrafficFacilityInfo?) {
+            }
+
+            override fun OnUpdateTrafficFacility(p0: Array<out AMapNaviTrafficFacilityInfo>?) {
+            }
+
+            override fun OnUpdateTrafficFacility(p0: TrafficFacilityInfo?) {
+            }
+
+            override fun showLaneInfo(p0: Array<out AMapLaneInfo>?, p1: ByteArray?, p2: ByteArray?) {
+            }
+
+            override fun showLaneInfo(p0: AMapLaneInfo?) {
             }
         }
-
-        override fun onReCalculateRouteForTrafficJam() {
-        }
-
-        override fun updateIntervalCameraInfo(p0: AMapNaviCameraInfo?, p1: AMapNaviCameraInfo?, p2: Int) {
-        }
-
-        override fun hideLaneInfo() {
-        }
-
-        override fun onNaviInfoUpdated(p0: AMapNaviInfo?) {
-        }
-
-        override fun showModeCross(p0: AMapModelCross?) {
-        }
-
-        override fun updateCameraInfo(p0: Array<out AMapNaviCameraInfo>?) {
-        }
-
-        override fun hideModeCross() {
-        }
-
-        override fun onLocationChange(p0: AMapNaviLocation?) {
-        }
-
-        override fun onReCalculateRouteForYaw() {
-        }
-
-        override fun onStartNavi(p0: Int) {
-        }
-
-        override fun notifyParallelRoad(p0: Int) {
-        }
-
-        override fun OnUpdateTrafficFacility(p0: AMapNaviTrafficFacilityInfo?) {
-        }
-
-        override fun OnUpdateTrafficFacility(p0: Array<out AMapNaviTrafficFacilityInfo>?) {
-        }
-
-        override fun OnUpdateTrafficFacility(p0: TrafficFacilityInfo?) {
-        }
-
-        override fun showLaneInfo(p0: Array<out AMapLaneInfo>?, p1: ByteArray?, p2: ByteArray?) {
-        }
-
-        override fun showLaneInfo(p0: AMapLaneInfo?) {
-        }
-
         var mAMapNavi: AMapNavi? = null
         var startList = ArrayList<NaviLatLng>()
         var endList = ArrayList<NaviLatLng>()
@@ -151,7 +157,7 @@ class MapUtil {
                 mAMapNavi = AMapNavi.getInstance(applicationContext)
             } else {
                 //添加监听回调，用于处理算路成功
-                mAMapNavi?.addAMapNaviListener(this)
+                mAMapNavi?.addAMapNaviListener(listener)
                 if (type == 1) {
                     mAMapNavi?.calculateDriveRoute(startList, endList, null, PathPlanningStrategy.DRIVING_DEFAULT)
                 } else {

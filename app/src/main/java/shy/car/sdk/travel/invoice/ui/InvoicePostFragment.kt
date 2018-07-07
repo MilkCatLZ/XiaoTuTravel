@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.layout_invoice_post_detail.*
 import shy.car.sdk.R
@@ -30,6 +29,10 @@ class InvoicePostFragment : XTBaseFragment(),
     }
 
     var list = ArrayList<InvoiceList.Orders>()
+    set(value){
+        field=value
+        presenter.setLists(list)
+    }
 
     lateinit var binding: FragmentInvocePostBinding
     lateinit var presenter: InvoicePostPresenter
@@ -37,7 +40,9 @@ class InvoicePostFragment : XTBaseFragment(),
         super.onCreate(savedInstanceState)
         activity?.let {
             presenter = InvoicePostPresenter(it, this)
-        }
+
+    }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

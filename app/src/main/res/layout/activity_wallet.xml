@@ -63,7 +63,8 @@
 
             <TextView
                 style="@style/style_wallet_nav_hint"
-                android:text="0元"/>
+
+                android:text="@{ac.balanceText}"/>
 
             <ImageView
                 style="@style/style_wallet_nav_arrow"

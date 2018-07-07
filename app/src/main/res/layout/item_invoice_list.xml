@@ -30,7 +30,7 @@
             android:textColor="@color/text_second_primary_666666"
             android:textSize="14sp"
             tools:text="03月"
-            android:text="03月"
+            android:text="@{invoice.monthText}"
             />
 
         <android.support.v7.widget.RecyclerView

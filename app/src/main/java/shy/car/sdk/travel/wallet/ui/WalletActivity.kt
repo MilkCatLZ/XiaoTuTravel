@@ -8,13 +8,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.ToastManager
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
-import shy.car.sdk.app.constant.ParamsConstant
-import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityWalletBinding
-import shy.car.sdk.travel.pay.data.PayMethod
-import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.wallet.presenter.WalletPresenter
 
@@ -32,6 +28,7 @@ class WalletActivity : XTBaseActivity(),
     val remainText = ObservableField<String>()
     val bankCardText = ObservableField<String>()
     val couponText = ObservableField<String>()
+    val balanceText = ObservableField<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +39,8 @@ class WalletActivity : XTBaseActivity(),
         remainText.set("可提现金额${User.instance.balance}元")
         bankCardText.set("${User.instance.bankCardNum}张")
         couponText.set("${User.instance.couponNum}张")
+        balanceText.set("${User.instance.balance}元")
+
     }
 
 //    /**
@@ -123,6 +122,7 @@ class WalletActivity : XTBaseActivity(),
      *  发票
      */
     fun onFaPiaoClick() {
+//        ToastManager.showShortToast(this, "开发中…")
         ARouter.getInstance()
                 .build(RouteMap.InvoiceList)
                 .navigation()

@@ -54,6 +54,7 @@
         <LinearLayout
             android:id="@+id/layout_feed_back"
             style="@style/style_setting_content"
+            android:onClick="@{()->ac.feedBack()}"
             android:layout_marginTop="7dp">
 
             <TextView

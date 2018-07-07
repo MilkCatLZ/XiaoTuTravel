@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="shy.car.sdk.app.LNTextUtil"/>
+
         <variable
             name="orders"
             type="shy.car.sdk.travel.invoice.data.InvoiceList.Orders"/>
@@ -30,10 +32,10 @@
         <CheckBox
             android:id="@+id/check_order"
             android:layout_width="wrap_content"
-            android:tag="@{orders}"
+            android:layout_height="wrap_content"
             android:button="@drawable/back_invoice_checked_list"
             android:checked="@{presenter.checkList.contains(orders)}"
-            android:layout_height="wrap_content"/>
+            android:tag="@{orders}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +46,7 @@
 
             <TextView
                 style="@style/style_ww.text_12_999"
-                android:text="2018.7.7 12：12"
+                android:text="@{orders.createdAt}"
                 tools:text="2018.7.7 12：12"
                 />
 
@@ -52,9 +54,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:text="@{orders.carInfo}"
                 android:textColor="#4b4b4b"
                 android:textSize="16sp"
-                android:text="EQ | 桂A737579"
                 tools:text="EQ | 桂A737579"
                 />
 
@@ -67,9 +69,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@{LNTextUtil.getPriceText(orders.money)}"
                 android:textColor="@color/main_color_red"
                 android:textSize="15sp"
-                android:text="55"
                 tools:text="55"/>
 
             <TextView

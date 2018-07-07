@@ -30,6 +30,7 @@ import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendList
+import shy.car.sdk.travel.setting.data.FeedBack
 import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.user.data.Rank
 import shy.car.sdk.travel.user.data.UserDetailCache
@@ -462,6 +463,9 @@ interface ApiInterface {
     @GET("cars/notice/type")
     fun getBrokeType(): Observable<List<BrokeType>>
 
+    @GET("feedback")
+    fun getFeedback(): Observable<List<FeedBack>>
+
     @POST("users/deposits/refund")
     fun promiseMoneyRefund(): Observable<JsonObject>
 
@@ -476,15 +480,30 @@ interface ApiInterface {
                        @Part(ParamsConstant.Content) content: RequestBody? = null,
                        @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
+
+    /**
+     * 修改用户头像
+     */
+    @Multipart
+    @POST("feedback")
+    fun feedBack(
+            @Part(ParamsConstant.Type) type: RequestBody? = null,
+            @Part(ParamsConstant.Content) content: RequestBody? = null,
+            @Part image: List<MultipartBody.Part>? = null,
+            @Part(ParamsConstant.OrderId) oid: RequestBody? = null
+    ): Observable<JsonObject>
+
     @GET("users/rank")
     fun getRankList(): Observable<List<Rank>>
 
-    @GET("users/invoice")
+    @GET("invoices")
     fun getInvoiceList(@Query(ParamsConstant.Offset) offset: Int = 0,
                        @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceList>>
+
+
     @GET("users/invoice/history")
     fun getInvoiceHistoryList(@Query(ParamsConstant.Offset) offset: Int = 0,
-                       @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceHistory>>
+                              @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceHistory>>
 
     @FormUrlEncoded
     @POST("users/invoice")
@@ -495,6 +514,7 @@ interface ApiInterface {
                         @Field(ParamsConstant.Contact) contact: String?,
                         @Field(ParamsConstant.ContactNum) contact_number: String?,
                         @Field(ParamsConstant.ExpressAddress) express_address: String?,
-                        @Field(ParamsConstant.ZipCode) zip_code: String?
+                        @Field(ParamsConstant.ZipCode) zip_code: String?,
+                        @Field(ParamsConstant.IDS) ids: String?
     ): Observable<JsonObject>
 }

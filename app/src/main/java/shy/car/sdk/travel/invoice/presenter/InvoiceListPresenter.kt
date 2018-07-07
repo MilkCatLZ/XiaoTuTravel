@@ -16,7 +16,6 @@ import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.interfaces.CommonCallBack
 import shy.car.sdk.travel.invoice.data.InvoiceList
-import kotlin.reflect.jvm.internal.impl.util.Check
 
 class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<InvoiceList>>) : BasePresenter(context) {
 
@@ -128,7 +127,7 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
             val list = ArrayList<InvoiceList>()
             for (i in 1..3) {
                 val invoice = InvoiceList()
-                invoice.id = i
+                invoice.month = i
                 list.add(invoice)
             }
             invoiceList.addAll(list)
@@ -152,9 +151,20 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
             }
 
             override fun onNext(t: List<InvoiceList>) {
-                adapter.setItems(t, pageIndex)
-                invoiceList.clear()
-                invoiceList.addAll(t)
+                if (t.isEmpty() || BuildConfig.DEBUG) {
+                    for (i in 1..3) {
+                        val invoice = InvoiceList()
+                        invoice.month = i
+                        invoiceList.add(invoice)
+                    }
+                    invoiceList.map {
+                        totalInvoiceCount += it.orders.size
+                    }
+                } else {
+                    invoiceList.clear()
+                    invoiceList.addAll(t)
+                }
+                adapter.setItems(invoiceList, pageIndex)
                 totalInvoiceCount = 0
                 invoiceList.map {
                     totalInvoiceCount += it.orders.size
