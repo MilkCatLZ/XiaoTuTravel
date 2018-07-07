@@ -1,23 +1,18 @@
 package shy.car.sdk.travel.invoice.presenter
 
 import android.content.Context
-import android.databinding.*
-import android.support.v7.widget.RecyclerView
-import android.widget.CheckBox
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingItemClickAdapter
-import com.base.databinding.ItemViewHolder
-import com.base.widget.FullLinearLayoutManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.interfaces.CommonCallBack
 import shy.car.sdk.travel.invoice.data.InvoiceHistory
-import shy.car.sdk.travel.invoice.data.InvoiceList
-import kotlin.reflect.jvm.internal.impl.util.Check
 
 class InvoiceHistoryPresenter(context: Context, var callBack: CommonCallBack<List<InvoiceHistory>>) : BasePresenter(context) {
 
@@ -26,8 +21,11 @@ class InvoiceHistoryPresenter(context: Context, var callBack: CommonCallBack<Lis
 
 
     val adapter = DataBindingItemClickAdapter<InvoiceHistory>(R.layout.item_invoice_history, BR.history, BR.click, {
-    }, { holder, position ->
-
+        val invoice = it.tag as InvoiceHistory
+        ARouter.getInstance()
+                .build(RouteMap.InvoiceDetail)
+                .withString(String1, invoice.id.toString())
+                .navigation()
     })
 
 

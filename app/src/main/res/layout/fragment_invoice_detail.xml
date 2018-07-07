@@ -5,10 +5,11 @@
 
     <data>
 
-        <variable
-            name="fragment"
-            type="shy.car.sdk.travel.invoice.ui.InvoiceHistoryFragment" />
+     <variable
+         name="detail"
+         type="shy.car.sdk.travel.invoice.data.InvoiceDetail"/>
 
+        <import type="shy.car.sdk.app.LNTextUtil"/>
     </data>
 
     <LinearLayout
@@ -29,7 +30,8 @@
             android:layout_height="34dp"
             android:background="#2100b3ba"
             android:gravity="center"
-            android:text="已开票"
+            tools:text="已开票"
+            android:text="@{detail.statusText}"
             android:textColor="@color/main_color_green"
             android:textSize="@dimen/text_second_primary_12dp" />
 
@@ -87,6 +89,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.typeText}"
                                 tools:text="个人/非企业" />
                         </LinearLayout>
 
@@ -103,6 +106,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.title}"
                                 tools:text="XXX" />
                         </LinearLayout>
 
@@ -119,7 +123,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="租车费" />
+                                android:text="@{detail.content}" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -135,6 +139,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{LNTextUtil.getPriceText(detail.money)+@string/str_yuan_c}"
                                 tools:text="155元" />
                         </LinearLayout>
 
@@ -151,6 +156,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.createdAt}"
                                 tools:text="2018.07.06 17:44" />
                         </LinearLayout>
 
@@ -198,6 +204,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.contact.name}"
                                 tools:text="张三丰" />
                         </LinearLayout>
 
@@ -214,6 +221,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.contact.phone}"
                                 tools:text="17777777777" />
                         </LinearLayout>
 
@@ -230,7 +238,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="这里是详细地址" />
+                                android:text="@{detail.contact.address}" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -246,6 +254,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
+                                android:text="@{detail.contact.zipCode}"
                                 tools:text="530000" />
                         </LinearLayout>
 
@@ -268,11 +277,12 @@
 
                     <TextView
                         style="@style/style_ww.text_14_333"
-                        android:text="1张发票 含5个行程" />
+                        android:text="@{detail.invoiceText}" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:layout_marginTop="3dp"
+                        android:text="@{detail.order.periodTime}"
                         tools:text="2018.01.01~2018.07.05" />
 
 

@@ -29,7 +29,7 @@
         <View style="@style/style_shadow" />
 
         <com.base.widget.UltimateRecyclerView
-            android:id="@+id/recyclerView_invoice_list"
+            android:id="@+id/recyclerView_invoice_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

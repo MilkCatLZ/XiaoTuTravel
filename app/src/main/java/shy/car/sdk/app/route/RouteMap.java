@@ -378,4 +378,8 @@ public class RouteMap {
     public static final String InvoicePost = "/invoice/post";
     
     public static final String FeedBack = "/setting/feedback";
+    
+    public static final String InvoiceHistory = "/invoice/history";
+    
+    public static final String InvoiceDetail = "/invoice/detail";
 }

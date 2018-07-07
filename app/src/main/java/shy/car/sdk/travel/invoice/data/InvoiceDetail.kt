@@ -13,6 +13,18 @@ import shy.car.sdk.BR
 
 class InvoiceDetail : BaseObservable(), Observable {
 
+    @Bindable
+    fun getTypeText():String{
+        if(type==1){
+            return "企业"
+        }else{
+            return "个人/非企业"
+        }
+    }
+    @Bindable
+    fun getInvoiceText():String{
+       return "1张发票含${order?.number}个行程"
+    }
 
     /**
      * id : 1006

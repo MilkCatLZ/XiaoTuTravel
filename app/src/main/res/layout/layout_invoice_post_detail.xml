@@ -82,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:imeOptions="actionNext"
                 android:background="@android:color/transparent"
                 android:ellipsize="end"
                 android:hint="填写发票抬头"
@@ -147,6 +148,7 @@
                     android:background="@android:color/transparent"
                     android:ellipsize="end"
                     android:hint="填写纳税人识别号"
+                    android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:text="@={presenter.idCard}"
                     android:textColor="#4b4b4b"
@@ -200,7 +202,7 @@
                 android:text="开票金额" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:background="@android:color/transparent"
@@ -209,7 +211,16 @@
                 android:text="@={presenter.amount}"
                 android:textColor="@color/main_color_green"
                 android:textSize="@dimen/text_primary_14dp"
-                tools:text="155元" />
+                tools:text="155" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="元"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_primary_14dp"/>
         </LinearLayout>
 
         <View style="@style/line_horizontal" />

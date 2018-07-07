@@ -8,6 +8,7 @@
     <dimen name="_260dp">240dp</dimen>4
     <dimen name="_400dp">400dp</dimen>
     <dimen name="_450dp">450dp</dimen>
+    <dimen name="title_height">46dp</dimen>
 
 
 </resources>

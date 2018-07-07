@@ -21,7 +21,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
 import shy.car.sdk.app.constant.ParamsConstant
@@ -103,22 +102,22 @@ class VerifyDialogFragment : XTBaseDialogFragment() {
                 .inject(this)
         activity?.let {
             presenter = VerifyPresenter(listener, it)
-            if (BuildConfig.DEBUG) {
-                Observable.timer(2, TimeUnit.SECONDS)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({
-                            presenter.verify.set(verify)
-                            binding.edtInput.removeTextChangedListener(textWatcher)
-                            binding.edtInput.setText(verify)
-                            progressInput(verify)
-                            lockAndSubmit()
-                            binding.edtInput.addTextChangedListener(textWatcher)
-                        }, {
-                            it.printStackTrace()
-                        })
+//            if (BuildConfig.DEBUG) {
+//                Observable.timer(2, TimeUnit.SECONDS)
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe({
+//                            presenter.verify.set(verify)
+//                            binding.edtInput.removeTextChangedListener(textWatcher)
+//                            binding.edtInput.setText(verify)
+//                            progressInput(verify)
+//                            lockAndSubmit()
+//                            binding.edtInput.addTextChangedListener(textWatcher)
+//                        }, {
+//                            it.printStackTrace()
+//                        })
 
-            }
+//            }
         }
     }
 

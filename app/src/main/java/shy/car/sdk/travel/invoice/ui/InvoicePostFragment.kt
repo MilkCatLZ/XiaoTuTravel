@@ -29,10 +29,10 @@ class InvoicePostFragment : XTBaseFragment(),
     }
 
     var list = ArrayList<InvoiceList.Orders>()
-    set(value){
-        field=value
-        presenter.setLists(list)
-    }
+        set(value) {
+            field = value
+            presenter.setLists(list)
+        }
 
     lateinit var binding: FragmentInvocePostBinding
     lateinit var presenter: InvoicePostPresenter
@@ -41,12 +41,13 @@ class InvoicePostFragment : XTBaseFragment(),
         activity?.let {
             presenter = InvoicePostPresenter(it, this)
 
-    }
+        }
 
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_invoce_post, null, false)
+        binding.fragment = this
         binding.presenter = presenter
         return binding.root
 

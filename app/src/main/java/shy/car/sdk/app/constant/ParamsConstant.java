@@ -97,6 +97,6 @@ public class ParamsConstant {
     public static final String Contact = "contact";
     public static final String ContactNum = "contact_number";
     public static final String ZipCode = "zip_code";
-    public static final String IDS = "ids";
+    public static final String Orders = "orders";
 
 }

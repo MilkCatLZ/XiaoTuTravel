@@ -69,7 +69,6 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
                     .api.postTakeInvoice(taitouType.get().toString(),
                     taitou.get(),
                     idCard.get(),
-                    amount.get(),
                     name.get(),
                     phone.get(),
                     address.get(),
@@ -106,7 +105,7 @@ class InvoicePostPresenter(context: Context, var callBack: CommonCallBack<JsonOb
 
         var array = JsonArray()
         list.map {
-            array.add(it.id == null)
+            array.add(it.id)
         }
         Log.d("sdjkfhkjshdkfjsdfkj", array.toString())
         return array.toString()

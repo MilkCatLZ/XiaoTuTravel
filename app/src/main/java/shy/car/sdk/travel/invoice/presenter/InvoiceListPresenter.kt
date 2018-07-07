@@ -10,7 +10,6 @@ import com.base.widget.FullLinearLayoutManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
@@ -123,19 +122,19 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
     }
 
     private fun initData() {
-        if (BuildConfig.DEBUG) {
-            val list = ArrayList<InvoiceList>()
-            for (i in 1..3) {
-                val invoice = InvoiceList()
-                invoice.month = i
-                list.add(invoice)
-            }
-            invoiceList.addAll(list)
-            invoiceList.map {
-                totalInvoiceCount += it.orders.size
-            }
-            adapter.setItems(invoiceList, 1)
-        }
+//        if (BuildConfig.DEBUG) {
+//            val list = ArrayList<InvoiceList>()
+//            for (i in 1..3) {
+//                val invoice = InvoiceList()
+//                invoice.month = i
+//                list.add(invoice)
+//            }
+//            invoiceList.addAll(list)
+//            invoiceList.map {
+//                totalInvoiceCount += it.orders!!.size
+//            }
+//            adapter.setItems(invoiceList, 1)
+//        }
     }
 
     private fun getInvoiceList() {
@@ -151,23 +150,23 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
             }
 
             override fun onNext(t: List<InvoiceList>) {
-                if (t.isEmpty() || BuildConfig.DEBUG) {
-                    for (i in 1..3) {
-                        val invoice = InvoiceList()
-                        invoice.month = i
-                        invoiceList.add(invoice)
-                    }
-                    invoiceList.map {
-                        totalInvoiceCount += it.orders.size
-                    }
-                } else {
+//                if (t.isEmpty() || BuildConfig.DEBUG) {
+//                    for (i in 1..3) {
+//                        val invoice = InvoiceList()
+//                        invoice.month = i
+//                        invoiceList.add(invoice)
+//                    }
+//                    invoiceList.map {
+//                        totalInvoiceCount += it.orders!!.size
+//                    }
+//                } else {
                     invoiceList.clear()
                     invoiceList.addAll(t)
-                }
+//                }
                 adapter.setItems(invoiceList, pageIndex)
                 totalInvoiceCount = 0
                 invoiceList.map {
-                    totalInvoiceCount += it.orders.size
+                    totalInvoiceCount += it.orders!!.size
                 }
                 callBack.onSuccess(t)
             }
@@ -211,7 +210,7 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
 
     fun selectAll() {
         invoiceList.map {
-            it.orders.map {
+            it.orders?.map {
                 if (!checkList.contains(it))
                     checkList.add(it)
             }

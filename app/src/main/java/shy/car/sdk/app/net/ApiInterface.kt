@@ -12,6 +12,7 @@ import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.coupon.data.Coupon
+import shy.car.sdk.travel.invoice.data.InvoiceDetail
 import shy.car.sdk.travel.invoice.data.InvoiceHistory
 import shy.car.sdk.travel.invoice.data.InvoiceList
 import shy.car.sdk.travel.location.data.CurrentLocation
@@ -496,25 +497,27 @@ interface ApiInterface {
     @GET("users/rank")
     fun getRankList(): Observable<List<Rank>>
 
-    @GET("invoices")
+    @GET("invoices/{invoice_id}")
+    fun getInvoiceDetail(@Path("invoice_id") id: String): Observable<InvoiceDetail>
+
+    @GET("invoices/order")
     fun getInvoiceList(@Query(ParamsConstant.Offset) offset: Int = 0,
                        @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceList>>
 
 
-    @GET("users/invoice/history")
+    @GET("invoices")
     fun getInvoiceHistoryList(@Query(ParamsConstant.Offset) offset: Int = 0,
                               @Query(ParamsConstant.Limit) limit: Int = 10): Observable<List<InvoiceHistory>>
 
     @FormUrlEncoded
-    @POST("users/invoice")
+    @POST("invoices")
     fun postTakeInvoice(@Field(ParamsConstant.Type) taitouType: String?,
                         @Field(ParamsConstant.Title) taitou: String?,
                         @Field(ParamsConstant.Tim) tim: String? = null,
-                        @Field(ParamsConstant.Money) money: String?,
                         @Field(ParamsConstant.Contact) contact: String?,
                         @Field(ParamsConstant.ContactNum) contact_number: String?,
                         @Field(ParamsConstant.ExpressAddress) express_address: String?,
                         @Field(ParamsConstant.ZipCode) zip_code: String?,
-                        @Field(ParamsConstant.IDS) ids: String?
+                        @Field(ParamsConstant.Orders) ids: String?
     ): Observable<JsonObject>
 }
