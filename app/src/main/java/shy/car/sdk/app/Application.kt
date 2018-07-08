@@ -120,7 +120,7 @@ class Application : BaseApplication() {
                 .init(this)
 //        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
 //            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-//                Log.d("获取位置成功", "经纬度={${location.latitude},${location.longitude}}")
+//                Log.d("获取位置成功", "经纬度={${location.startLatitude},${location.startLongitude}}")
 //                this@Application.location = location
 //            }
 //        })

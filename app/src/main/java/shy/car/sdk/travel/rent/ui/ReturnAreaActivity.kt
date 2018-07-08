@@ -12,6 +12,7 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.base.base.ProgressDialog
 import com.base.overlay.DrivingRouteOverlay
+import com.base.util.MapSelectDialogFragment
 import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseActivity
@@ -53,6 +54,7 @@ class ReturnAreaActivity : XTBaseActivity(),
                 marker.showInfoWindow()
                 network.set(it)
                 getNaviDetail()
+                calculateRoute()
             }
             drawPointAngel(it)
         }
@@ -90,6 +92,7 @@ class ReturnAreaActivity : XTBaseActivity(),
 
                     network.set(findCarPoint(it.position))
                     getNaviDetail()
+                    calculateRoute()
                     true
                 }
         )
@@ -106,7 +109,9 @@ class ReturnAreaActivity : XTBaseActivity(),
     }
 
     fun naviToNetWork() {
-        calculateRoute()
+        var dialog = MapSelectDialogFragment()
+        dialog.startLatitude = network.get()?.lat!!
+        dialog.startLongitude = network.get()?.lng!!
     }
 
     var drivingRouteOverlay: DrivingRouteOverlay? = null

@@ -37,7 +37,7 @@ public class DrivingRouteOverlay extends RouteOverlay{
     private PolylineOptions mPolylineOptionscolor;
     private Context mContext;
     private boolean isColorfulline = true;
-    private float mWidth = 25;
+    private float mWidth = 18;
     private List<LatLng> mLatLngsOfPath;
 
 	public void setIsColorfulline(boolean iscolorfulline) {

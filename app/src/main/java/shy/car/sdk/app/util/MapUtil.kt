@@ -145,7 +145,7 @@ class MapUtil {
 
         var callBack: GetDetailListener? = null
 
-        open fun getDriveTimeAndDistance(applicationContext: Context, startPoint: NaviLatLng, endPoint: NaviLatLng, type: Int, callBack: GetDetailListener) {
+         fun getDriveTimeAndDistance(applicationContext: Context, startPoint: NaviLatLng, endPoint: NaviLatLng, type: Int, callBack: GetDetailListener) {
             startList.clear()
             endList.clear()
 
@@ -167,5 +167,7 @@ class MapUtil {
 
 
         }
+
+
     }
 }
