@@ -91,7 +91,7 @@ class Application : BaseApplication() {
                     UMShareAPI.get(this@Application)
                     if (BuildConfig.DEBUG)
                         Config.DEBUG = true
-                    PlatformConfig.setWeixin("wx924cfac83dfacd67", "1613260f247d8749a1e7d271ecb36d05")
+                    PlatformConfig.setWeixin("wx8e279dc5392e19c2", "e5b5f46c2671209f9a75d0ae28c71303")
                     val id = DeviceConfig.getAndroidID(this@Application)
                     Log.d("LNDeliveryApplication", id)
                 },{})

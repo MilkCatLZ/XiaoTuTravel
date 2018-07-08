@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.layout_home_top.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.data.ReturnCarSuccess
 import shy.car.sdk.app.eventbus.*
@@ -338,6 +339,10 @@ class MainActivity : NearCarOpenListener,
     fun returnSuccess(returnCar: ReturnCarSuccess) {
         rentMode = false
         app.goHome()
+        ARouter.getInstance()
+                .build(RouteMap.OrderPay)
+                .withString(String1, returnCar.oid)
+                .navigation()
     }
 
     /**
@@ -376,7 +381,7 @@ class MainActivity : NearCarOpenListener,
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun paySuccess(logout: UserLogout) {
-        rentMode = false
+        rentMode = true
         switchMode()
     }
 

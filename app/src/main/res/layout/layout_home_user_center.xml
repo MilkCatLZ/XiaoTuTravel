@@ -102,8 +102,8 @@
             android:paddingBottom="30dp">
 
             <LinearLayout
-                style="@style/style_user_center_bottom_content"
-                android:visibility="gone">
+                android:onClick="@{()->fragment.share()}"
+                style="@style/style_user_center_bottom_content">
 
                 <TextView
                     style="@style/style_ww.user_center_bottom_icon"

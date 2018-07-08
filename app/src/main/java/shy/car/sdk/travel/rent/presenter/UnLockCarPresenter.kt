@@ -62,36 +62,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
     fun uploadPicAndUnlockCar() {
         if (checkSelect()) {
 
-            ProgressDialog.showLoadingView(context)
 
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
                     .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-//            val observer = object : Observer<JsonObject> {
-//                override fun onComplete() {
-//
-//                }
-//
-//                override fun onSubscribe(d: Disposable) {
-//
-//                }
-//
-//                override fun onNext(t: JsonObject) {
-//                    ProgressDialog.hideLoadingView(context)
-//                    callBack.onUnLockSuccess()
-//                }
-//
-//                override fun onError(e: Throwable) {
-//                    ProgressDialog.hideLoadingView(context)
-//                    ErrorManager.managerError(context, e, "解锁失败")
-//                    callBack.onUnLockError()
-//                }
-//            }
-//
-//            ApiManager.getInstance()
-//                    .toSubscribe(observableUnLock, observer)
 
             val observableUpload = ApiManager.getInstance()
                     .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("1")!!, createImageParams().parts())//type=1 取车拍照
@@ -103,8 +79,11 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                     .doOnSubscribe({
                         disposable = it
                     })
+                    .doOnNext({
+
+                    })
                     .doOnError({
-                        ProgressDialog.hideLoadingView(context)
+
                         ErrorManager.managerError(context, it, "取车失败，请重试")
                         ieUnLockError = true
                     })
@@ -123,12 +102,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                         }
 
                         override fun onNext(t: JsonObject) {
-                            ProgressDialog.hideLoadingView(context)
+
                             callBack.onUnLockSuccess()
                         }
 
                         override fun onError(e: Throwable) {
-                            ProgressDialog.hideLoadingView(context)
+
                             if (e is NullPointerException) {
 
                             } else {

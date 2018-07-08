@@ -29,6 +29,7 @@ import shy.car.sdk.app.eventbus.UnLockSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityUnlockCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.dialog.UnLockCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.UnLockCarPresenter
 
 /**
@@ -40,19 +41,23 @@ import shy.car.sdk.travel.rent.presenter.UnLockCarPresenter
 class UnLockCarActivity : XTBaseActivity(),
         UnLockCarPresenter.CallBack {
     override fun onUnLockSuccess() {
-        ToastManager.showShortToast(this, "车辆已解锁，请及时上车")
-        ARouter.getInstance()
-                .build(RouteMap.Driving)
-                .withString(String1, oid)
-                .navigation()
-        RefreshOrderList.refreshOrderList()
-        EventBus.getDefault()
-                .post(UnLockSuccess())
-        finish()
+
+        unlockAnim.dialog.setOnDismissListener({
+            ToastManager.showShortToast(this, "车辆已解锁，请及时上车")
+            ARouter.getInstance()
+                    .build(RouteMap.Driving)
+                    .withString(String1, oid)
+                    .navigation()
+            RefreshOrderList.refreshOrderList()
+            EventBus.getDefault()
+                    .post(UnLockSuccess())
+            finish()
+        })
+        unlockAnim.finish()
     }
 
     override fun onUnLockError() {
-
+        unlockAnim.dismissAllowingStateLoss()
     }
 
     override fun onGetDetailSuccess(t: RentOrderDetail) {
@@ -84,8 +89,10 @@ class UnLockCarActivity : XTBaseActivity(),
         presenter.getOrderDetail(orderID = oid)
     }
 
+    var unlockAnim = UnLockCarDialogFragment()
     fun submitAndUnLock() {
         presenter.uploadPicAndUnlockCar()
+        unlockAnim.show(supportFragmentManager, "fragment_unlock_dialog")
     }
 
     fun leftPhotoClick() {
@@ -105,7 +112,7 @@ class UnLockCarActivity : XTBaseActivity(),
             if (imgs != null && imgs.size > 0) {
                 ProgressDialog.showLoadingView(this)
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]),350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .subscribeOn(Schedulers.io())

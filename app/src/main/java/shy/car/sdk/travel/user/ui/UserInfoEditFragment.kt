@@ -18,10 +18,8 @@ import com.wq.photo.widget.PickConfig
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_user_info_edit.*
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
-import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.databinding.FragmentUserInfoEditBinding
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.presenter.UserDetailPresenter
@@ -143,7 +141,7 @@ class UserInfoEditFragment : XTBaseFragment(),
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .subscribeOn(Schedulers.io())

@@ -36,7 +36,6 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
-import shy.car.sdk.app.eventbus.RefreshCity
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentOrderingBinding
@@ -112,7 +111,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
                 this@CarRentOrderingFragment.carPointList.addAll(list)
                 showMarkers()
             }
-
+            isRefershSuccess = false
         }
 
 
@@ -135,10 +134,11 @@ class CarRentOrderingFragment : XTBaseFragment() {
 
                 }
             }
+            isRefershSuccess = false
         }
 
         override fun onGetUnProgressOrderSuccess(orderMineList: OrderMineList?) {
-
+            isRefershSuccess = false
         }
 
         override fun onGetCarError(e: Throwable) {

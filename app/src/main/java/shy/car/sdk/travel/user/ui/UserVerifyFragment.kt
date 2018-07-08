@@ -186,13 +186,12 @@ class UserVerifyFragment : XTBaseFragment(),
             if (imgs != null && imgs.size > 0) {
                 ProgressDialog.showLoadingView(activity!!)
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]),350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe({
-                            ProgressDialog.hideLoadingView(activity!!)
                             when {
                                 idFront -> {
                                     presenter.frontImagePath.set(it)
@@ -204,6 +203,7 @@ class UserVerifyFragment : XTBaseFragment(),
                                     presenter.driveImagePath.set(it)
                                 }
                             }
+                            ProgressDialog.hideLoadingView(activity!!)
                         }, {
                             ProgressDialog.hideLoadingView(activity!!)
                             it.printStackTrace()

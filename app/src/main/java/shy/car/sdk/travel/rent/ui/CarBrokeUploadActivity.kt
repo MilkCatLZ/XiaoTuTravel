@@ -122,7 +122,7 @@ class CarBrokeUploadActivity : XTBaseActivity(),
             if (imgs != null && imgs.size > 0) {
                 ProgressDialog.showLoadingView(this)
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]),30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .subscribeOn(Schedulers.io())

@@ -4,20 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.google.gson.JsonObject
 import io.reactivex.Observable
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_lock_car.*
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseDialogFragment
-import shy.car.sdk.app.constant.ParamsConstant.String1
-import shy.car.sdk.app.constant.ParamsConstant.String2
-import shy.car.sdk.app.data.ErrorManager
-import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.widget.FabButton
 import java.util.concurrent.TimeUnit
 
@@ -25,7 +18,7 @@ import java.util.concurrent.TimeUnit
  * create by Sharon at 2018/06/28
  * 鸣笛
  */
-class OpenCarDialogFragment : XTBaseDialogFragment() {
+class UnLockCarDialogFragment : XTBaseDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.dialog_unlock_car, null, false)
@@ -36,8 +29,8 @@ class OpenCarDialogFragment : XTBaseDialogFragment() {
     var dis: Disposable? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LockCar()
-        Observable.intervalRange(1, 100, 0, 100, TimeUnit.MILLISECONDS)
+//        LockCar()
+        Observable.intervalRange(1, 100, 0, 250, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({
@@ -65,44 +58,48 @@ class OpenCarDialogFragment : XTBaseDialogFragment() {
         }
     }
 
-    @Autowired(name = String1)
-    @JvmField
-    var oid = ""
-    @Autowired(name = String2)
-    @JvmField
-    var carID = ""
-
-    fun LockCar() {
-        val observable = ApiManager.getInstance()
-                .api.carAction(carID, oid, status = 2.toString())
-        val observer = object : Observer<JsonObject> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: JsonObject) {
-                isActionFinish = true
-            }
-
-            override fun onError(e: Throwable) {
-
-//                if (BuildConfig.DEBUG) {
-//                    isActionFinish = true
-//                } else {
-                dis?.dispose()
-                ErrorManager.managerError(context, e, "操作失败，请重试")
-                dismissAllowingStateLoss()
-//                }
-            }
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-
+    fun finish() {
+        isActionFinish = true
     }
+
+//    @Autowired(name = String1)
+//    @JvmField
+//    var oid = ""
+//    @Autowired(name = String2)
+//    @JvmField
+//    var carID = ""
+
+//    fun LockCar() {
+//        val observable = ApiManager.getInstance()
+//                .api.carAction(carID, oid, status = 2.toString())
+//        val observer = object : Observer<JsonObject> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//
+//            }
+//
+//            override fun onNext(t: JsonObject) {
+//                isActionFinish = true
+//            }
+//
+//            override fun onError(e: Throwable) {
+//
+////                if (BuildConfig.DEBUG) {
+////                    isActionFinish = true
+////                } else {
+//                dis?.dispose()
+//                ErrorManager.managerError(context, e, "操作失败，请重试")
+//                dismissAllowingStateLoss()
+////                }
+//            }
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//
+//    }
 
 }

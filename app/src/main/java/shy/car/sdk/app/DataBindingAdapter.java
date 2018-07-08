@@ -27,7 +27,7 @@ public class DataBindingAdapter extends BindingAdapter {
     @android.databinding.BindingAdapter("android:imageURL")
     public static void setUrlImage(@NonNull ImageView imageView, String url) {
         try {
-            if (!url.contains(BuildConfig.Host) && !url.contains("storage")) {
+            if (!url.contains("http") && !url.contains("storage")) {
                 url = BuildConfig.Host + url;
             }
             if (ImageUtil.hasImage(url)) {

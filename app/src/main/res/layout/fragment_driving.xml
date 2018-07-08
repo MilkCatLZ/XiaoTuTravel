@@ -151,6 +151,8 @@
                             android:paddingEnd="20dp"
                             android:paddingStart="20dp"
                             android:paddingTop="17dp"
+                            android:minHeight="62dp"
+                            android:gravity="center_vertical"
                             android:text="@{presenter.detail.costInfo()}"
                             android:textColor="@color/text_primary_333333"
                             android:textSize="11sp"

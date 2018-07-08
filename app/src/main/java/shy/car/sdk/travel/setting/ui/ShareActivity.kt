@@ -1,8 +1,9 @@
 package shy.car.sdk.travel.setting.ui
 
-import android.graphics.Bitmap
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.base.ProgressDialog
 import com.base.umeng.UmengShareManager
 import com.base.util.Log
 import com.base.util.ToastManager
@@ -10,9 +11,14 @@ import com.umeng.socialize.ShareAction
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.umeng.socialize.media.UMImage
 import com.umeng.socialize.media.UMWeb
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.route.RouteMap
+import shy.car.sdk.databinding.ActivityShareBinding
+import shy.car.sdk.travel.setting.data.ShareDetail
 
 /**
  * create by Sharon at 2018/07/07
@@ -38,7 +44,6 @@ class ShareActivity : XTBaseActivity() {
 
             if (message != null && message.contains("2008"))
                 when (p0?.name) {
-                    "QQ" -> ToastManager.showShortToast(this@ShareActivity, "请先安装QQ客户端")
                     "WEIXIN", "WEIXIN_CIRCLE" -> ToastManager.showShortToast(this@ShareActivity, "请先安装微信客户端")
                 }
         }
@@ -48,9 +53,41 @@ class ShareActivity : XTBaseActivity() {
         }
     }
 
+    lateinit var binding: ActivityShareBinding
+    lateinit var detail: ShareDetail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_share)
+        binding.ac = this
+        ProgressDialog.showLoadingView(this)
+        getShareDetail()
+    }
+
+    private fun getShareDetail() {
+        val observable = ApiManager.getInstance()
+                .api.getShareDetail()
+        val observer = object : Observer<ShareDetail> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(detail: ShareDetail) {
+                ProgressDialog.hideLoadingView(this@ShareActivity)
+                this@ShareActivity.detail = detail
+            }
+
+            override fun onError(e: Throwable) {
+                ProgressDialog.hideLoadingView(this@ShareActivity)
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
     }
 
     fun wechat() {
@@ -73,22 +110,12 @@ class ShareActivity : XTBaseActivity() {
      * 分享图片
      */
     private fun getUmengMedia(): UMWeb {
-        val web = UMWeb("")
-        web.title = "Come on ！点击链接，解锁你的喝水新姿势【连你订水】"
+        val web = UMWeb(detail.urls.android)
+        web.title = detail.title
+        web.description = detail.content
         val thumb = UMImage(this, R.mipmap.ic_launcher)
         web.setThumb(thumb)
-        web.description = "Come on ！点击链接，解锁你的喝水新姿势【连你订水】"
-
-
         return web
-    }
-
-    /**
-     * 分享图片
-     */
-    private fun getUmengMedia(result: Bitmap?): UMImage {
-        val image = UMImage(this, result)
-        return image
     }
 
 }

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
-import com.amap.api.col.n3.it
 import com.base.util.ToastManager
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
@@ -56,6 +55,11 @@ class UserCenterFragment : XTBaseFragment() {
     fun onOrderClick() {
         ARouter.getInstance()
                 .build(RouteMap.OrderMine)
+                .navigation()
+    }
+    fun share() {
+        ARouter.getInstance()
+                .build(RouteMap.Share)
                 .navigation()
     }
 

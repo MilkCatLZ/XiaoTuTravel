@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -19,12 +20,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseInterceptor? = null, var listener: BaseRetrofitInterface? = null, var c: Class<T>) {
     var api: T
     var builder = OkHttpClient.Builder()
+
     var client: OkHttpClient
     var retrofit: Retrofit
     var cookieJar: CookieJar? = null
 
     init {
         //初始化拦截器
+        builder.connectTimeout(90, TimeUnit.SECONDS)
+                .readTimeout(90, TimeUnit.SECONDS)
+                .writeTimeout(90, TimeUnit.SECONDS)
+
         if (interceptor != null) {
             builder.addInterceptor(interceptor)
         }
@@ -33,7 +39,6 @@ open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseIntercept
             builder.cookieJar(cookieJar)
         }
         client = builder.build()
-
 
         //初始化retrofit
         retrofit = Retrofit.Builder()

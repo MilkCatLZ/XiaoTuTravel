@@ -32,6 +32,7 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.setting.data.FeedBack
+import shy.car.sdk.travel.setting.data.ShareDetail
 import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.user.data.Rank
 import shy.car.sdk.travel.user.data.UserDetailCache
@@ -520,4 +521,7 @@ interface ApiInterface {
                         @Field(ParamsConstant.ZipCode) zip_code: String?,
                         @Field(ParamsConstant.Orders) ids: String?
     ): Observable<JsonObject>
+
+    @GET("config/invitation")
+    fun getShareDetail(): Observable<ShareDetail>
 }

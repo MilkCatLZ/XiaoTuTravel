@@ -400,5 +400,5 @@ public class RouteMap {
      * 分享
      * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
      */
-    public static final String Share = "/invoice/detail";
+    public static final String Share = "/setting/share";
 }

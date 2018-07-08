@@ -65,7 +65,12 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
     var netWorkID = ""
 
     lateinit var presenter: ReturnCarAndTakePhotoPresenter
-    var isLeft = true
+    var left = false
+    var right = false
+    var driveRoom = false
+    var backRoom = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -78,7 +83,7 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
         presenter = ReturnCarAndTakePhotoPresenter(this, this)
         binding.presenter = presenter
 
-        presenter.netWorkID=netWorkID
+        presenter.netWorkID = netWorkID
         presenter.getOrderDetail(orderID = oid)
     }
 
@@ -88,12 +93,33 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
 
     fun leftPhotoClick() {
         checkPermission()
-        isLeft = true
+        reset()
+        left = true
     }
 
     fun rightPhotoClick() {
         checkPermission()
-        isLeft = false
+        reset()
+        right = true
+    }
+
+    fun driveRoomPhoto() {
+        checkPermission()
+        reset()
+        driveRoom = true
+    }
+
+    fun backRoomPhoto() {
+        checkPermission()
+        reset()
+        backRoom = true
+    }
+
+    fun reset() {
+        left = false
+        right = false
+        backRoom = false
+        driveRoom = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -103,21 +129,28 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
             if (imgs != null && imgs.size > 0) {
                 ProgressDialog.showLoadingView(this)
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]),350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+//                    ProgressDialog.showLoadingView(this)
+                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30,350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
                     it.onNext(path)
                 }
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe({
-                            ProgressDialog.hideLoadingView(this)
                             when {
-                                isLeft -> {
+                                left -> {
                                     presenter.leftImage.set(it)
                                 }
-                                else -> {
+                                right -> {
                                     presenter.rightImage.set(it)
                                 }
+                                driveRoom -> {
+                                    presenter.driveRoom.set(it)
+                                }
+                                backRoom -> {
+                                    presenter.backRoom.set(it)
+                                }
                             }
+                            ProgressDialog.hideLoadingView(this)
                         }, {
                             ProgressDialog.hideLoadingView(this)
                             it.printStackTrace()

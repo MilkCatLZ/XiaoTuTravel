@@ -31,6 +31,8 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
 
     val leftImage = ObservableField<String>()
     val rightImage = ObservableField<String>()
+    val driveRoom = ObservableField<String>()
+    val backRoom = ObservableField<String>()
 
     var detail: RentOrderDetail? = null
     var netWorkID: String = ""
@@ -66,12 +68,17 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
             //传手机的经纬度 辅助定位
             val observableUnLock = ApiManager.getInstance()
                     //固定传3
-                    .api.returnCar(detail?.orderId!!, netWorkID, app.location.lat.toString(), app.location.lng.toString())
+                    .api.returnCar(detail?.orderId!!,
+                    netWorkID,
+                    app.location.lat.toString(),
+                    app.location.lng.toString())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 
             val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("2")!!, createImageParams().parts())//type=2 还车拍照
+                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!,
+                    ApiManager.toRequestBody("2")!!,
+                    createImageParams().parts())//type=2 还车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 
@@ -125,21 +132,36 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
             ToastManager.showShortToast(context, "请拍摄车辆右侧照片")
             return false
         }
+        if (StringUtils.isEmpty(driveRoom.get())) {
+            ToastManager.showShortToast(context, "请拍摄车辆驾驶室找")
+            return false
+        }
+        if (StringUtils.isEmpty(backRoom.get())) {
+            ToastManager.showShortToast(context, "请拍摄车辆后尾箱照片")
+            return false
+        }
         return true
     }
 
     private fun createImageParams(): MultipartBody {
         val leftFile = File(leftImage.get())
         val rightFile = File(rightImage.get())
+        val driveRoomFile = File(driveRoom.get())
+        val backRoomFile = File(backRoom.get())
 
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
         val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
         val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
+        val driveRoom = RequestBody.create(MediaType.parse("image/jpeg"), driveRoomFile)
+        val backRoom = RequestBody.create(MediaType.parse("image/jpeg"), backRoomFile)
 
         builder.addFormDataPart("photo1", leftFile.name, drive)
         builder.addFormDataPart("photo2", rightFile.name, idCard)
+        builder.addFormDataPart("photo3", driveRoomFile.name, driveRoom)
+        builder.addFormDataPart("photo4", backRoomFile.name, backRoom)
+
         return builder.build()
 
     }
