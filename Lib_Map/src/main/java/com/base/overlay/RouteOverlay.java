@@ -233,11 +233,11 @@ public class RouteOverlay {
     }
     
     protected float getRouteWidth() {
-        return 18f;
+        return 14f;
     }
     
     protected int getWalkColor() {
-        return Color.parseColor("#6db74d");
+        return Color.parseColor("#1CAAE6");
     }
     
     /**

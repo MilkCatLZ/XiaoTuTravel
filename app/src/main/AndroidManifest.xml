@@ -216,6 +216,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".travel.rent.ui.DrivingActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
