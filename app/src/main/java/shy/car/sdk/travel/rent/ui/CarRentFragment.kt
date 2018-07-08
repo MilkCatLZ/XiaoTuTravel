@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
+import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
@@ -52,6 +53,7 @@ import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentBinding
+import shy.car.sdk.databinding.ItemNetworkBinding
 import shy.car.sdk.travel.interfaces.MapLocationRefreshListener
 import shy.car.sdk.travel.interfaces.NearCarOpenListener
 import shy.car.sdk.travel.interfaces.onLoginDismiss
@@ -115,14 +117,15 @@ class CarRentFragment : XTBaseFragment() {
     var isRefershSuccess = false
 
     lateinit var carListViewPager: ViewPager
+
     /**
      * 定位默认图标
      */
     lateinit var bitmap: BitmapDescriptor
-    /**
-     *     记录当前缩放等级,用于判断是显示车辆还是网点
-     */
 
+    /**
+     * 记录当前缩放等级,用于判断是显示车辆还是网点
+     */
     private var zoomLevel: Float = 14f
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
@@ -392,12 +395,14 @@ class CarRentFragment : XTBaseFragment() {
                 val car = findCar(it.position)
                 currentSelectedCarInfo.set(car)
                 carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
+                it.showInfoWindow()
             } else {
                 val carPoint = findCarPoint(it.position)
                 currentSelectedNetWork.set(carPoint)
                 carRentPresenter.getUsableCarList(carPoint)
+                it.hideInfoWindow()
             }
-            it.showInfoWindow()
+
             true
         }
 
@@ -460,10 +465,10 @@ class CarRentFragment : XTBaseFragment() {
             }
         } else {
             showNetWork()
-            if (currentSelectedNetWork.get() != null) {
-                val marker = findMarker(LatLng(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!), netWorkMarkerList)
-                marker?.showInfoWindow()
-            }
+//            if (currentSelectedNetWork.get() != null) {
+//                val marker = findMarker(LatLng(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!), netWorkMarkerList)
+//                marker?.showInfoWindow()
+//            }
         }
 
         carPointList.map {
@@ -667,16 +672,20 @@ class CarRentFragment : XTBaseFragment() {
      * 在地图上添加marker
      */
     private fun addNetWorkMarkersToMap(point: NearCarPoint) {
-
-        val marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
-                .anchor(0.5f, 1.0f)
-                .title(point.name)
-                .snippet("可用车${point.usableCarsNum}辆")
-                .position(LatLng(point.lat, point.lng))
-                .displayLevel(1)
-                .draggable(false))
-        marker.isClickable = true
-        netWorkMarkerList.add(marker)
+        activity?.let {
+            val markerBinding = DataBindingUtil.inflate<ItemNetworkBinding>(LayoutInflater.from(it), R.layout.item_network, null, false)
+            val txt=markerBinding.root.findViewById(R.id.txt_car_num) as TextView
+            txt.text="${point.usableCarsNum}辆"
+            val marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromView(markerBinding.root))
+                    .anchor(0.5f, 1.0f)
+                    .title(point.name)
+                    .snippet("可用车${point.usableCarsNum}辆")
+                    .position(LatLng(point.lat, point.lng))
+                    .displayLevel(1)
+                    .draggable(false))
+            marker.isClickable = true
+            netWorkMarkerList.add(marker)
+        }
     }
 
     /**
