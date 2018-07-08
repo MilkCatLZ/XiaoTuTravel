@@ -157,6 +157,7 @@ dependencies {
     implementation project(':BaseProject:util')
     implementation project(':BaseProject:PhotoGallery')
     implementation project(':Lib_Map')
+    implementation project(':Lib_UmengShare')
     implementation project(':Alipay')
     implementation  'com.skyfishjy.ripplebackground:library:1.0.1'
     implementation 'mbanje.kurt:fabbutton:1.2.4@aar'

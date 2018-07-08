@@ -10,14 +10,22 @@ import com.base.app.BaseApplication
 import com.base.base.ProgressDialog
 import com.base.location.AmapLocationManager
 import com.base.location.Location
+import com.base.util.Log
 import com.base.util.SPCache
 import com.base.util.crash.CrashHandler
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
+import com.umeng.socialize.Config
+import com.umeng.socialize.PlatformConfig
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.utils.DeviceConfig
+import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import mall.lianni.alipay.Alipay
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -42,6 +50,7 @@ import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
 import shy.car.sdk.travel.user.data.User
+import java.util.concurrent.TimeUnit
 
 class Application : BaseApplication() {
 
@@ -61,6 +70,7 @@ class Application : BaseApplication() {
         initPinYin()
         initAmap()
         initUserCache()
+        initShare()
         EventBus.builder()
                 .build()
         EventBus.getDefault()
@@ -71,6 +81,21 @@ class Application : BaseApplication() {
         if (BuildConfig.DEBUG) {
             EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
         }
+    }
+
+    private fun initShare() {
+        Observable.timer(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    UMShareAPI.get(this@Application)
+                    if (BuildConfig.DEBUG)
+                        Config.DEBUG = true
+                    PlatformConfig.setWeixin("wx924cfac83dfacd67", "1613260f247d8749a1e7d271ecb36d05")
+                    val id = DeviceConfig.getAndroidID(this@Application)
+                    Log.d("LNDeliveryApplication", id)
+                },{})
+
     }
 
     override fun attachBaseContext(base: Context?) {

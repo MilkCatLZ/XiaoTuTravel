@@ -27,4 +27,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_second_primary_666666</item>
     </style>
+    <style name="style_ww.text_16_333">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/text_primary_333333</item>
+    </style>
 </resources>
