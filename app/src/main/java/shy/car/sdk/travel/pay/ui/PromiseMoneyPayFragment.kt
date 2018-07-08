@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.google.gson.JsonObject
-import mall.lianni.alipay.Alipay
-import mall.lianni.alipay.PayResult
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
@@ -100,8 +98,9 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
                 .withInt(Int1, 1)//1：充值
                 .withObject(Object1, presenter.payMethod)
                 .navigation() as PayMethodSelectDialog
+
         dialog?.listener = this
-//        }
+        dialog!!.type = 1
         dialog?.show(childFragmentManager, "dialog_pay_method_select")
     }
 

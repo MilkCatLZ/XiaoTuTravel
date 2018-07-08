@@ -20,19 +20,16 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
-import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderDetailBinding
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
-import shy.car.sdk.travel.order.data.OrderMineList
 import shy.car.sdk.travel.order.presenter.OrderDetailPresenter
 import shy.car.sdk.travel.pay.WXPayUtil
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog
-import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.take.data.OrderState
 import shy.car.sdk.travel.user.data.User
 
@@ -201,6 +198,7 @@ class OrderDetailFragment : XTBaseFragment(),
                 .withObject(ParamsConstant.Object1, presenter.payMethod.get())
                 .withInt(ParamsConstant.Int1, 2)//1:充值，2:支付
                 .navigation() as PayMethodSelectDialog
+        dialog.type = 2
         dialog.listener = object : PayMethodSelectDialog.OnPayClick {
             override fun onPaySelect(payMethod: PayMethod) {
                 presenter.payMethod.set(payMethod)

@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.StringUtils
 import com.google.gson.JsonObject
-import mall.lianni.alipay.Alipay
-import mall.lianni.alipay.PayResult
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.R
@@ -92,6 +90,7 @@ class PayFragment : XTBaseFragment(),
                 .withObject(ParamsConstant.Object1, presenter.payMethod.get())
                 .withInt(ParamsConstant.Int1, 1)//1:充值
                 .navigation() as PayMethodSelectDialog
+        dialog.type = 1
         dialog.listener = object : PayMethodSelectDialog.OnPayClick {
             override fun onPaySelect(payMethod: PayMethod) {
                 presenter.payMethod.set(payMethod)

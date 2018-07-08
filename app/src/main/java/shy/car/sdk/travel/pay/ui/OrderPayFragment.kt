@@ -95,6 +95,7 @@ class OrderPayFragment : XTBaseFragment(),
                 .withObject(ParamsConstant.Object1, presenter.payMethod.get())
                 .withInt(ParamsConstant.Int1, 2)//2:支付
                 .navigation() as PayMethodSelectDialog
+        dialog.type = 2
         dialog.listener = object : PayMethodSelectDialog.OnPayClick {
             override fun onPaySelect(payMethod: PayMethod) {
                 presenter.payMethod.set(payMethod)

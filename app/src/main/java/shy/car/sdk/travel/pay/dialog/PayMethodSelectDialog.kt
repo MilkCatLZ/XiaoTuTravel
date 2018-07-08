@@ -1,7 +1,6 @@
 package shy.car.sdk.travel.pay.dialog
 
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableInt
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -17,7 +16,6 @@ import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.DialogPayMethodSelectBinding
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.presenter.PayMethodPresenter
-import java.lang.reflect.Method
 
 /**
  * create by LZ at 2018/05/21
@@ -60,9 +58,9 @@ class PayMethodSelectDialog : BottomSheetDialogFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.let { presenter = PayMethodPresenter(it, this) }
         ARouter.getInstance()
                 .inject(this)
+        activity?.let { presenter = PayMethodPresenter(it, this) }
         presenter.type = type
         if (payMethod != null) {
             presenter.checkPayID.set(payMethod!!.id)

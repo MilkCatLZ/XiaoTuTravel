@@ -29,6 +29,7 @@ import shy.car.sdk.travel.rent.ui.ReturnCarFragment;
 import shy.car.sdk.travel.rent.ui.UnLockCarActivity;
 import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
+import shy.car.sdk.travel.setting.ui.FeedBackActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
 
 
@@ -372,14 +373,32 @@ public class RouteMap {
     /**
      * 提交开票申请
      * {@link shy.car.sdk.travel.invoice.ui.InvoicePostActivity}
-     * withString（String1,Gson().toJson(ArrayList<InvoiceList.Orders>)）
      * withObject1（Object1,ArrayList<InvoiceList.Orders>）
      */
     public static final String InvoicePost = "/invoice/post";
     
+    /**
+     * 反馈
+     * {@link FeedBackActivity
+     */
     public static final String FeedBack = "/setting/feedback";
     
+    /**
+     * 开票历史
+     * {@link shy.car.sdk.travel.invoice.data.InvoiceHistory}
+     */
     public static final String InvoiceHistory = "/invoice/history";
     
+    /**
+     * 开票详情
+     * {@link shy.car.sdk.travel.invoice.data.InvoiceDetail}
+     * withString(String1,id)
+     */
     public static final String InvoiceDetail = "/invoice/detail";
+    
+    /**
+     * 分享
+     * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
+     */
+    public static final String Share = "/invoice/detail";
 }

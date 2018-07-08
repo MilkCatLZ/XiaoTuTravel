@@ -371,8 +371,21 @@ class MainActivity : NearCarOpenListener,
         }
     }
 
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun paySuccess(logout: UserLogout) {
+        rentMode = false
+        switchMode()
+    }
+
     override fun onResume() {
         super.onResume()
+        switchMode()
+    }
+
+    fun switchMode() {
         if (!dilivery)
             if (!isCreate) {
                 if (rentMode) {
