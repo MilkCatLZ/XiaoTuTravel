@@ -141,7 +141,7 @@ class UserInfoEditFragment : XTBaseFragment(),
             val imgs = data!!.getStringArrayListExtra(PickConfig.DATA)
             if (imgs != null && imgs.size > 0) {
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(BitmapFactory.decodeFile(imgs[0]), Environment.getExternalStorageDirectory().absolutePath + "/cache", 35)
                     it.onNext(path)
                 }
                         .subscribeOn(Schedulers.io())

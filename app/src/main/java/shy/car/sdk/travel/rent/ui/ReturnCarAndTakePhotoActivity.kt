@@ -130,7 +130,7 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
                 ProgressDialog.showLoadingView(this)
                 Observable.create<String> {
 //                    ProgressDialog.showLoadingView(this)
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30,350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(BitmapFactory.decodeFile(imgs[0]), Environment.getExternalStorageDirectory().absolutePath + "/cache", 35)
                     it.onNext(path)
                 }
                         .observeOn(AndroidSchedulers.mainThread())

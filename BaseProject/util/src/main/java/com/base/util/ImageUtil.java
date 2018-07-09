@@ -111,6 +111,38 @@ public class ImageUtil {
         
         return fullPath;
     }
+    /**
+     * 保存bitmap到指定路径
+     *
+     * @param bitmap
+     * @param dir
+     *
+     * @return
+     */
+    public static String saveBitmapToSD(Bitmap bitmap, String dir,int qualtity) {
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String fullPath = dir + "/" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        FileOutputStream out = null;
+
+        File imageFile = new File(fullPath);//
+        try {
+            out = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, qualtity, out);
+            System.out.println("___________保存的__sd___下_______________________");
+        } catch (FileNotFoundException e) {
+        }
+        try {
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return fullPath;
+    }
     
     public static boolean hasImage(String logo) {
         return StringUtils.isNotEmpty(logo) && (logo.contains(".jpg") || logo.contains(".png") || logo.contains(".gif") || logo.contains(".jpeg") || logo.contains("wx"));

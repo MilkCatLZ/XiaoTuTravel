@@ -3,6 +3,7 @@ package shy.car.sdk.travel.setting.ui
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
+import android.os.Environment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
@@ -51,7 +52,11 @@ class SettingActivity : XTBaseActivity() {
         Observable.create<String> {
             FileManager.clearCache()
             FileManager.clearCache(Glide.getPhotoCacheDir(this@SettingActivity))
-            Thread.sleep(2000)
+            FileManager.clearCache(File(Environment.getExternalStorageDirectory().absolutePath + "/cache"))
+            try {
+                Thread.sleep(1000)
+            } catch (e: Exception) {
+            }
             it.onComplete()
         }
                 .subscribeOn(Schedulers.io())
@@ -83,8 +88,9 @@ class SettingActivity : XTBaseActivity() {
         Observable.create<Float> {
             val size = FileManager.getFolderSize(File(FileManager.getDirectory(this@SettingActivity)))
             val sizes = FileManager.getFolderSize(Glide.getPhotoCacheDir(this@SettingActivity))
+            val sizess = FileManager.getFolderSize(File(Environment.getExternalStorageDirectory().absolutePath + "/cache"))
 
-            it.onNext(size + sizes)
+            it.onNext(size + sizes + sizess)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -145,6 +151,7 @@ class SettingActivity : XTBaseActivity() {
                 .build(RouteMap.ChangeMobile)
                 .navigation()
     }
+
     fun feedBack() {
         ARouter.getInstance()
                 .build(RouteMap.FeedBack)

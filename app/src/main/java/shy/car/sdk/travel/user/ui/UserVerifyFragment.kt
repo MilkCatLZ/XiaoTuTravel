@@ -160,12 +160,12 @@ class UserVerifyFragment : XTBaseFragment(),
                             if (granted) {
                                 activity?.let {
                                     PickConfig.with(it)
-                                            .pickMode(PickConfig.MODE_TAKE_PHOTO)
+                                            .pickMode(if (idBack) PickConfig.MODE_SINGLE_PICK else PickConfig.MODE_TAKE_PHOTO)
                                             .isneedcamera(true)
                                             .start()
                                 }
                             } else {
-                                ToastManager.showShortToast(it, "请先允许相机权限");
+                                ToastManager.showShortToast(it, "请先允许相机权限")
                             }
                         }
 
@@ -186,7 +186,7 @@ class UserVerifyFragment : XTBaseFragment(),
             if (imgs != null && imgs.size > 0) {
                 ProgressDialog.showLoadingView(activity!!)
                 Observable.create<String> {
-                    val path = ImageUtil.saveBitmapToSD(ImageUtil.compressImage(BitmapFactory.decodeFile(imgs[0]), 30, 350), Environment.getExternalStorageDirectory().absolutePath + "/cache")
+                    val path = ImageUtil.saveBitmapToSD(BitmapFactory.decodeFile(imgs[0]), Environment.getExternalStorageDirectory().absolutePath + "/cache", 35)
                     it.onNext(path)
                 }
                         .observeOn(AndroidSchedulers.mainThread())
