@@ -78,6 +78,7 @@ class ShareActivity : XTBaseActivity() {
             override fun onNext(detail: ShareDetail) {
                 ProgressDialog.hideLoadingView(this@ShareActivity)
                 this@ShareActivity.detail = detail
+                binding.detail = detail
             }
 
             override fun onError(e: Throwable) {

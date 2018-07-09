@@ -16,7 +16,7 @@ import shy.car.sdk.app.eventbus.PayCancel
 import shy.car.sdk.app.eventbus.PaySuccess
 
 
-class WXEntryActivity : XTBaseActivity(),
+class WXPayEntryActivity : XTBaseActivity(),
         IWXAPIEventHandler {
 
     // IWXAPI 是第三方app和微信通信的openapi接口
@@ -31,16 +31,6 @@ class WXEntryActivity : XTBaseActivity(),
 
     // 微信发送请求到第三方应用时，会回调到该方法
     override fun onReq(req: BaseReq) {
-//        Toast.makeText(this, "openid = " + req.openId, Toast.LENGTH_SHORT)
-//                .show()
-//
-//        when (req.type) {
-//            ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX -> goToGetMsg()
-//            ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX -> goToShowMsg(req as ShowMessageFromWX.Req)
-//            ConstantsAPI.COMMAND_LAUNCH_BY_WX -> Toast.makeText(this, R.string.launch_from_wx, Toast.LENGTH_SHORT).show()
-//            else -> {
-//            }
-//        }
         Log.d("WXPAY------------------",req.openId)
     }
 

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.amap.api.maps.CoordinateConverter
 import kotlinx.android.synthetic.main.dialog_map_select.*
+import com.base.location.R
 
 
 class MapSelectDialogFragment : DialogFragment() {
@@ -27,13 +28,13 @@ class MapSelectDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        txt_baidu.setOnClickListener({
+        txt_baidu.setOnClickListener {
             gotoBaidu()
-        })
+        }
 
-        txt_gaode.setOnClickListener({
+        txt_gaode.setOnClickListener {
             gotoGaoDe()
-        })
+        }
     }
 
     private fun gotoGaoDe() {
@@ -50,16 +51,11 @@ class MapSelectDialogFragment : DialogFragment() {
     private fun gotoBaidu() {
         if (isPackageInstalled("com.baidu.BaiduMap")) {
             activity?.let {
-                val converter = CoordinateConverter(it)
-// CoordType.GPS 待转换坐标类型
-                converter.from(CoordinateConverter.CoordType.GPS)
-// sourceLatLng待转换坐标点 LatLng类型
-                converter.coord(sourceLatLng)
-// 执行转换操作
-                val desLatLng = converter.convert()
+                val startLatLong = gaoDeToBaidu(startLatitude, startLongitude)
+                val endLatLong = gaoDeToBaidu(endLatitude, endLongitude)
 
                 val i1 = Intent()
-                i1.data = Uri.parse("baidumap://map/direction?&origin=$startLatitude,$startLongitude&destination=latlng:$endLatitude,$endLongitude&mode=driving")
+                i1.data = Uri.parse("baidumap://map/direction?&origin=${startLatLong[0]},${startLatLong[1]}&destination=latlng:${endLatLong[0]},${endLatLong[1]}&mode=driving")
                 startActivity(i1)
             }
         } else {
@@ -67,6 +63,18 @@ class MapSelectDialogFragment : DialogFragment() {
         }
 
         dismissAllowingStateLoss()
+    }
+
+
+    private fun gaoDeToBaidu(gd_lon: Double, gd_lat: Double): DoubleArray {
+        val bd_lat_lon = DoubleArray(2)
+        val PI = 3.14159265358979324 * 3000.0 / 180.0
+        val z = Math.sqrt(gd_lon * gd_lon + gd_lat * gd_lat) + 0.00002 * Math.sin(gd_lat * PI)
+        val theta = Math.atan2(gd_lat, gd_lon) + 0.000003 * Math.cos(gd_lon * PI)
+        bd_lat_lon[0] = z * Math.cos(theta) + 0.0065
+        bd_lat_lon[1] = z * Math.sin(theta) + 0.006
+        return bd_lat_lon
+
     }
 
     fun isPackageInstalled(packagename: String): Boolean {

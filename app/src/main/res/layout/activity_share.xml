@@ -46,7 +46,8 @@
 
             <TextView
                 style="@style/style_ww.text_16_333"
-                android:text="10元减免优惠券一张"
+                android:text="@{detail.getCouponText()}"
+                tools:text="10元减免优惠券一张"
                 android:textSize="18sp"/>
 
         </LinearLayout>
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_color_green"
                 android:textSize="24sp"
+                android:text="@{detail.code}"
                 tools:text="6597845645"/>
 
             <TextView
