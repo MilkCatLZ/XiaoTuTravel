@@ -42,7 +42,7 @@ class UnLockCarActivity : XTBaseActivity(),
         UnLockCarPresenter.CallBack {
     override fun onUnLockSuccess() {
 
-        unlockAnim.dialog.setOnDismissListener({
+        unlockAnim.dialog.setOnDismissListener {
             ToastManager.showShortToast(this, "车辆已解锁，请及时上车")
             ARouter.getInstance()
                     .build(RouteMap.Driving)
@@ -52,7 +52,7 @@ class UnLockCarActivity : XTBaseActivity(),
             EventBus.getDefault()
                     .post(UnLockSuccess())
             finish()
-        })
+        }
         unlockAnim.finish()
     }
 
@@ -121,6 +121,7 @@ class UnLockCarActivity : XTBaseActivity(),
                             when {
                                 isLeft -> {
                                     presenter.leftImage.set(it)
+                                    presenter.uploadLeftCarImage()
                                 }
                                 else -> {
                                     presenter.rightImage.set(it)

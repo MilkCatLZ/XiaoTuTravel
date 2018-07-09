@@ -2,9 +2,13 @@ package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import com.base.base.ProgressDialog
+import com.base.network.retrofit.UploadFileRequestBody
+import com.base.util.Log
 import com.base.util.StringUtils
 import com.base.util.ToastManager
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,6 +35,8 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     val leftImage = ObservableField<String>()
     val rightImage = ObservableField<String>()
+    val leftProgress = ObservableInt(0)
+    val rightProgress = ObservableInt(0)
 
     private var detail: RentOrderDetail? = null
 
@@ -61,66 +67,88 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     fun uploadPicAndUnlockCar() {
         if (checkSelect()) {
-
-
-            val observableUnLock = ApiManager.getInstance()
-                    //固定传3
-                    .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
+            ProgressDialog.showLoadingView(context)
+            io.reactivex.Observable.create<String> {
+                while (photoList.size < 2) {
+                    Thread.sleep(100)
+                }
+                it.onNext("")
+            }
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-
-            val observableUpload = ApiManager.getInstance()
-                    .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("1")!!, createImageParams().parts())//type=1 取车拍照
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-
-            observableUnLock.observeOn(AndroidSchedulers.mainThread())
-                    .subscribeOn(Schedulers.io())
-                    .doOnSubscribe({
-                        disposable = it
-                    })
-                    .doOnNext({
-
-                    })
-                    .doOnError({
-
-                        ErrorManager.managerError(context, it, "取车失败，请重试")
-                        ieUnLockError = true
-                    })
-                    .subscribeOn(Schedulers.io())
-                    .flatMap({
-                        if (ieUnLockError) null else observableUpload
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : Observer<JsonObject> {
-                        override fun onComplete() {
-
-                        }
-
-                        override fun onSubscribe(d: Disposable) {
-
-                        }
-
-                        override fun onNext(t: JsonObject) {
-
-                            callBack.onUnLockSuccess()
-                        }
-
-                        override fun onError(e: Throwable) {
-
-                            if (e is NullPointerException) {
-
-                            } else {
-                                ErrorManager.managerError(context, e, "解锁失败")
-                                callBack.onUnLockError()
-                            }
-                        }
-
-                    })
+                    .subscribe({
+                        submit()
+                    }, {})
 
 
         }
 
+    }
+
+    private fun submit() {
+        val observableUnLock = ApiManager.getInstance()
+                //固定传3
+                .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = createImageParams().parts()*/)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+
+        val observableUpload = ApiManager.getInstance()
+                .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!, ApiManager.toRequestBody("1")!!, getPhotoParamsString())//type=1 取车拍照
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+
+        observableUnLock.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe {
+                    disposable = it
+                }
+                .doOnNext {
+
+                }
+                .doOnError {
+
+                    ErrorManager.managerError(context, it, "取车失败，请重试")
+                    ieUnLockError = true
+                }
+                .subscribeOn(Schedulers.io())
+                .flatMap {
+                    if (ieUnLockError) null else observableUpload
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<JsonObject> {
+                    override fun onComplete() {
+
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(t: JsonObject) {
+
+                        callBack.onUnLockSuccess()
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                        if (e is NullPointerException) {
+
+                        } else {
+                            ErrorManager.managerError(context, e, "解锁失败")
+                            callBack.onUnLockError()
+                        }
+                    }
+
+                })
+
+    }
+
+    private fun getPhotoParamsString(): RequestBody {
+        val list = ArrayList<String>()
+        photoList.map {
+            list.add(it.value)
+        }
+        return convertToRequestBody(Gson().toJson(list))
     }
 
     private fun checkSelect(): Boolean {
@@ -151,8 +179,80 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     }
 
+    val disposableList = ArrayList<Disposable>()
+    val photoList = HashMap<String, String>()
+
+    fun uploadLeftCarImage() {
+        val body = getImageParts(leftImage.get()!!, leftProgress)
+        uploadImage(body, "left")
+    }
+
+    fun uploadRightCarImage() {
+        val body = getImageParts(rightImage.get()!!, rightProgress)
+        uploadImage(body, "right")
+    }
+
+    fun uploadImage(body: MultipartBody, key: String) {
+        val observable = ApiManager.getInstance()
+                .api.uploadPhoto(convertToRequestBody("1"), convertToRequestBody("1"), body.parts())
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposableList.add(d)
+            }
+
+            override fun onNext(t: JsonObject) {
+                photoList[key] = t.get("id")
+                        .asString
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    private fun getImageParts(photoPath: String, progressObservable: ObservableInt): MultipartBody {
+
+        val file = File(photoPath)
+
+        val builder = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+
+        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val left = UploadFileRequestBody(cache, object : UploadFileRequestBody.ProgressListener {
+            override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
+                val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 100.0).toInt()
+                Log.d("onProgress-----------------", "progress============$progress")
+                progressObservable.set(progress)
+            }
+
+        })
+
+        builder.addFormDataPart("photo", file.name, left)
+        return builder.build()
+    }
+
+
     private fun convertToRequestBody(param: String?): RequestBody {
         return RequestBody.create(MediaType.parse("text/plain"), param)
+    }
+
+    override fun destroy() {
+        disposableList.map {
+            try {
+                it.dispose()
+            } catch (e: Exception) {
+            }
+        }
+        super.destroy()
     }
 
 }

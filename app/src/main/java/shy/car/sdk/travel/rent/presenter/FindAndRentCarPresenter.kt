@@ -83,14 +83,14 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
         observableShouldTakePhoto.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext({
+                .doOnNext {
                     if (it.get("whether").asInt == 1) {
                         ARouter.getInstance()
                                 .build(RouteMap.UnLockCar)
                                 .withString(String1, detail.orderId)
                                 .navigation()
                     }
-                })
+                }
                 .subscribeOn(Schedulers.io())
                 .flatMap {
                     if (it.get("whether").asInt == 0) {

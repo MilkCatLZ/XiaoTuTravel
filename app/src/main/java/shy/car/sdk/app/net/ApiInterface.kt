@@ -413,7 +413,15 @@ interface ApiInterface {
     fun uploadCarPic(@Path("oid") order_id: String,
                      @Query(ParamsConstant.OrderId) oid: String,
                      @Part(ParamsConstant.Type) type: RequestBody,
-                     @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+                     @Part image: List<MultipartBody.Part>): Observable<JsonObject> /**
+     * 提交身份认证
+     */
+    @Multipart
+    @POST("orders/{oid}/photos")
+    fun uploadCarPic(@Path("oid") order_id: String,
+                     @Query(ParamsConstant.OrderId) oid: String,
+                     @Part(ParamsConstant.Type) type: RequestBody,
+                     @Part(ParamsConstant.Images) images: RequestBody): Observable<JsonObject>
 
     @GET("orders/freights/type")
     fun getFreightTypeList(): Observable<List<GoodsType>>
@@ -524,4 +532,14 @@ interface ApiInterface {
 
     @GET("config/invitation")
     fun getShareDetail(): Observable<ShareDetail>
+
+    /**
+     * 修改用户头像
+     */
+    @Multipart
+    @POST("upload/images")
+    fun uploadPhoto(
+                       @Part(ParamsConstant.Type) type: RequestBody? = null,
+                       @Part(ParamsConstant.UploadStatus) upload_status: RequestBody? = null,
+                       @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 }

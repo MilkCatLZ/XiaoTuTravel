@@ -80,4 +80,5 @@
     <string name="str_invoice_detail">开票详情</string>
     <string name="str_feed_back">意见反馈</string>
     <string name="str_share">分享有礼</string>
+    <string name="str_percent">%</string>
 </resources>
