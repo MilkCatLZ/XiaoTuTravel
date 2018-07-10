@@ -17,6 +17,7 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.base.base.ProgressDialog
 import com.base.overlay.DrivingRouteOverlay
+import com.base.util.DialogManager
 import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observable
@@ -29,6 +30,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.LNTextUtil
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.dialog.HintDialog
 import shy.car.sdk.app.eventbus.TakeCarSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.CountDownThread
@@ -321,7 +323,15 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     fun cancelOrder() {
-        presenter.cancelOrder()
+        activity?.let {
+            HintDialog.with(it, childFragmentManager)
+                    .message("当日取消订单5次将无法租车")
+                    .listener(object : HintDialog.OnDissmiss {
+                        override fun onConfirmClick() {
+                            presenter.cancelOrder()
+                        }
+                    }).show()
+        }
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {

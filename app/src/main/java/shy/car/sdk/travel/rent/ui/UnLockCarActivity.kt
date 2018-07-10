@@ -105,6 +105,14 @@ class UnLockCarActivity : XTBaseActivity(),
         isLeft = false
     }
 
+    fun retryRightUpload() {
+        presenter.uploadRightCarImage()
+    }
+
+    fun retryLeftUpload() {
+        presenter.uploadLeftCarImage()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {

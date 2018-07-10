@@ -39,7 +39,9 @@ class RemainDetailPresenter(context: Context, var callback: OnRemainCallBack? = 
             }
 
             override fun onNext(list: List<RemainList>) {
+                adapter.setItems(list, pageIndex)
                 callback?.onGetListSuccess(list)
+
             }
 
             override fun onError(e: Throwable) {

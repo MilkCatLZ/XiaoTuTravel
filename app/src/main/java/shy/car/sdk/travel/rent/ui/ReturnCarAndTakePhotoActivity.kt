@@ -122,6 +122,19 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
         driveRoom = false
     }
 
+    fun retryLeftUpload(){
+        presenter.uploadLeftCarImage()
+    }
+    fun retryRightUpload(){
+        presenter.uploadRightCarImage()
+    }
+    fun retryBackUpload(){
+        presenter.uploadBackRoomImage()
+    }
+    fun retryDriveUpload(){
+        presenter.uploadDriveRoomImage()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == PickConfig.PICK_REQUEST_CODE) {

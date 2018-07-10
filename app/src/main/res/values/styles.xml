@@ -155,4 +155,12 @@
         <item name="android:textColor">#4b4b4b</item>
         <item name="android:textSize">@dimen/text_primary_14dp</item>
     </style>
+
+    <style name="style_upload_retry">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/_foreground_material_light</item>
+    </style>
 </resources>

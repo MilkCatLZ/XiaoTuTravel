@@ -51,29 +51,31 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:onClick="@{()->ac.leftPhotoClick()}">
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/pho_car_right"/>
+                        android:onClick="@{()->ac.leftPhotoClick()}"
+                        android:src="@drawable/pho_car_right" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/icon_camera"/>
+                        android:src="@drawable/icon_camera" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:imageURL="@{presenter.leftImage}"/>
+
+                        android:imageURL="@{presenter.leftImage}" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="#88000000"
-                        android:visibleOrGone="@{presenter.leftProgress>0}">
+                        android:visibleOrGone="@{presenter.leftProgress>0||presenter.leftProgress==-1}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -81,9 +83,16 @@
                             android:layout_centerInParent="true"
                             android:text='@{""+presenter.leftProgress+@string/str_percent}'
                             android:textColor="@color/_foreground_material_light"
-                            tools:text="99%"/>
-                    </RelativeLayout>
+                            android:visibleOrGone="@{presenter.leftProgress>0}"
+                            tools:text="99%" />
 
+                        <TextView
+                            style="@style/style_upload_retry"
+                            android:text="上传失败，点击重试"
+                            android:onClick="@{()->ac.retryLeftUpload()}"
+                            android:visibleOrGone="@{presenter.leftProgress==-1}"
+                            tools:text="99%" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -92,23 +101,25 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:onClick="@{()->ac.rightPhotoClick()}">
+                    android:background="@drawable/back_dialog_corner_2dp"
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/pho_car_left"/>
+                        android:onClick="@{()->ac.rightPhotoClick()}"
+                        android:src="@drawable/pho_car_left" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:src="@drawable/icon_camera"/>
+                        android:src="@drawable/icon_camera" />
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:imageURL="@{presenter.rightImage}"/>
+                        android:imageURL="@{presenter.rightImage}" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -122,7 +133,14 @@
                             android:layout_centerInParent="true"
                             android:text='@{""+presenter.rightProgress+@string/str_percent}'
                             android:textColor="@color/_foreground_material_light"
-                            tools:text="99%"/>
+                            tools:text="99%" />
+
+                        <TextView
+                            style="@style/style_upload_retry"
+                            android:text="上传失败，点击重试"
+                            android:onClick="@{()->ac.retryRightUpload()}"
+                            android:visibleOrGone="@{presenter.rightProgress==-1}"
+                            tools:text="99%" />
                     </RelativeLayout>
                 </RelativeLayout>
 

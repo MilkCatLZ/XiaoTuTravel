@@ -1,6 +1,7 @@
 package com.base.util;
 
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -212,6 +213,7 @@ public class DialogManager extends DialogFragment {
         return this;
     }
     
+    @SuppressLint("StaticFieldLeak")
     private void setDialogTextColor() {
         new AsyncTask<String, String, String>() {
             @Override

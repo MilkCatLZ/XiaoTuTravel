@@ -183,15 +183,15 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     fun uploadLeftCarImage() {
         val body = getImageParts(leftImage.get()!!, leftProgress)
-        uploadImage(body, "left")
+        uploadImage(body, "left", leftProgress)
     }
 
     fun uploadRightCarImage() {
         val body = getImageParts(rightImage.get()!!, rightProgress)
-        uploadImage(body, "right")
+        uploadImage(body, "right", rightProgress)
     }
 
-    fun uploadImage(body: MultipartBody, key: String) {
+    fun uploadImage(body: MultipartBody, key: String, progress: ObservableInt) {
         val observable = ApiManager.getInstance()
                 .api.uploadPhoto(convertToRequestBody("1"), convertToRequestBody("1"), body.parts())
         val observer = object : Observer<JsonObject> {
@@ -206,10 +206,12 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
             override fun onNext(t: JsonObject) {
                 photoList[key] = t.get("id")
                         .asString
+                progress.set(100)
             }
 
             override fun onError(e: Throwable) {
-
+                photoList.remove(key)
+                progress.set(-1)
             }
 
         }
@@ -228,7 +230,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
         val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
         val left = UploadFileRequestBody(cache, object : UploadFileRequestBody.ProgressListener {
             override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
-                val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 100.0).toInt()
+                val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 99.0).toInt()
                 Log.d("onProgress-----------------", "progress============$progress")
                 progressObservable.set(progress)
             }
