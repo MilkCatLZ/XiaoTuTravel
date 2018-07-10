@@ -21,6 +21,7 @@ data class UserDetailCache(
         @SerializedName("profession") var profession: String,
         @SerializedName("birthday") var birthday: String,
         @SerializedName("nickname") var nickname: String,
+        @SerializedName("deposit") var deposit: Double,
         @SerializedName("scope") var scope: String
 )
 

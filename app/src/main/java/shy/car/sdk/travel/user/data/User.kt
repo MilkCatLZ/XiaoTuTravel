@@ -6,7 +6,6 @@ import com.base.util.AesUtil
 import com.base.util.SPCache
 import com.base.util.StringUtils
 import com.google.gson.Gson
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -35,7 +34,7 @@ class User private constructor() : UserBase() {
         instance.type = detail.type
         instance.typeText = detail.typeText
         instance.identityAuth = detail.isIdentityAuth
-        instance.deposit = detail.isDeposit
+        instance.deposit = detail.deposit
         instance.balance = detail.balance
         instance.bankCardNum = detail.bankCardNum
         instance.couponNum = detail.couponNum
@@ -47,6 +46,7 @@ class User private constructor() : UserBase() {
         instance.birthday = detail.birthday
         instance.city = detail.city
         instance.score = detail.score
+        instance.isDeposited = detail.isDeposit
     }
 
     /**
@@ -170,7 +170,6 @@ class User private constructor() : UserBase() {
             instance.type = dis.type
             instance.typeText = dis.typeText
             instance.identityAuth = dis.identityAuth
-            instance.identityAuth = dis.identityAuth
             instance.balance = dis.balance
             instance.scope = dis.scope
             instance.bankCardNum = dis.bankCardNum
@@ -183,6 +182,8 @@ class User private constructor() : UserBase() {
             instance.birthday = dis.birthday
             instance.city = dis.city
             instance.score = dis.score
+            instance.deposit = dis.deposit
+            instance.isDeposited = dis.isDeposited
         }
 
     }

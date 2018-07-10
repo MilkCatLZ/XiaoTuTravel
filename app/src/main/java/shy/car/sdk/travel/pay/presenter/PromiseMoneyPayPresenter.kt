@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
+import android.databinding.ObservableDouble
 import android.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager
@@ -23,44 +24,44 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
     var carSelect = ObservableField<CarSelectInfo>()
 
     interface CallBack {
-        fun onGetPromiseMoneySuccess(t: Double)
-        fun getPromiseMoneyError(e: Throwable)
+        //        fun onGetPromiseMoneySuccess(t: Double)
+//        fun getPromiseMoneyError(e: Throwable)
         fun onCreatePaySuccess(t: JsonObject)
     }
 
 
-    var amount: Double = 0.0
+    var needPayAmount = ObservableDouble(0.0)
 
-    fun getPromiseMoney() {
-        ProgressDialog.showLoadingView(context)
-        val observable = ApiManager.getInstance()
-                .api.getPromiseMoney()
-        val observer = object : Observer<JsonObject> {
-            override fun onComplete() {
-            }
-
-            override fun onSubscribe(d: Disposable) {
-            }
-
-            override fun onNext(t: JsonObject) {
-                ProgressDialog.hideLoadingView(context)
-                var s = t.get("amount")
-                        .asString
-//                amount = s.toDouble()
-                callBack.onGetPromiseMoneySuccess(amount)
-
-            }
-
-            override fun onError(e: Throwable) {
-                ProgressDialog.hideLoadingView(context)
-                ErrorManager.managerError(context, e, "获取保证金失败")
-                callBack.getPromiseMoneyError(e)
-            }
-
-        }
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
-    }
+//    fun getPromiseMoney() {
+//        ProgressDialog.showLoadingView(context)
+//        val observable = ApiManager.getInstance()
+//                .api.getPromiseMoney()
+//        val observer = object : Observer<JsonObject> {
+//            override fun onComplete() {
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//            }
+//
+//            override fun onNext(t: JsonObject) {
+//                ProgressDialog.hideLoadingView(context)
+//                var s = t.get("needPayAmount")
+//                        .asString
+//
+//                callBack.onGetPromiseMoneySuccess(s.toDouble())
+//
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                ProgressDialog.hideLoadingView(context)
+//                ErrorManager.managerError(context, e, "获取保证金失败")
+//                callBack.getPromiseMoneyError(e)
+//            }
+//
+//        }
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
+//    }
 
     fun createPay() {
         when {
@@ -72,7 +73,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
                 ToastManager.showShortToast(context, "请选择车辆类型")
                 return
             }
-            amount <= 0 -> {
+            needPayAmount.get() <= 0 -> {
                 ToastManager.showShortToast(context, "无需支付保证金")
                 return
             }
@@ -88,7 +89,7 @@ class PromiseMoneyPayPresenter(context: Context, var callBack: CallBack) : BaseP
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         val observable = ApiManager.getInstance()
-                .api.createDeposits(User.instance.phone, if (User.instance.getIsDeposit()) "" else carSelect.get()?.id!!, payMethod?.id.toString(), if (amount > 0.0) amount.toString() else null)
+                .api.createDeposits(User.instance.phone, if (User.instance.getIsDeposit()) null else carSelect.get()?.id!!, payMethod?.id.toString(), if (needPayAmount.get() > 0.0) needPayAmount.get().toString() else null)
         val observer = object : Observer<JsonObject> {
             override fun onComplete() {
 

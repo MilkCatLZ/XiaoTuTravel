@@ -1,6 +1,7 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -65,12 +66,16 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     var dispose: Disposable? = null
     var countdown: CountDownThread? = null
+    val isCountDown = ObservableBoolean(true)
     private fun startCountDown() {
         if (binding.detail?.billingTime!! > 0) {
             countdown = CountDownThread(binding.detail, binding.detail?.billingTime!!)
+            countdown?.setFinishListener {
+                isCountDown.set(false)
+            }
             countdown?.start(txt_count_down)
         } else {
-
+            isCountDown.set(false)
         }
 
     }

@@ -156,7 +156,7 @@
                     android:drawableStart="@drawable/enable_common"
                     android:enabled="@{user.isDeposit}"
                     android:gravity="center_vertical"
-                    android:text="@{user.deposit==UserState.UserDeposit.Deposited?@string/str_user_deposit:@string/str_user_un_deposit}"
+                    android:text="@{user.isDeposit?@string/str_user_deposit:@string/str_user_un_deposit}"
                     android:textColor="@drawable/color_user_verify_text_color_detail" />
 
 

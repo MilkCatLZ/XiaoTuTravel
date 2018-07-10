@@ -17,6 +17,7 @@ import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.Int1
 import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.eventbus.PaySuccess
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentMoneyVerifyPayBinding
 import shy.car.sdk.travel.pay.WXPayUtil
@@ -39,24 +40,14 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         }
     }
 
-    override fun getPromiseMoneyError(e: Throwable) {
-
-    }
-
-    override fun onGetPromiseMoneySuccess(t: Double) {
-
-        if (t == 0.0) {
-            if (presenter.carSelect.get() != null)
-                btnText.set("支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!!)}元")
-            else {
-                btnText.set("支付保证金0.0元")
-            }
-
-        } else if (presenter.carSelect.get() != null && presenter.carSelect.get()?.promiseMoneyPrice!! > t) {
-            btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!! - t)}元")
-        }
-        promiseMoney.set(LNTextUtil.getPriceText(if (t < 0) 0.0 else t))
-    }
+//    override fun getPromiseMoneyError(e: Throwable) {
+//
+//    }
+//
+//    override fun onGetPromiseMoneySuccess(t: Double) {
+//
+//
+//    }
 
     lateinit var presenter: PromiseMoneyPayPresenter
     lateinit var binding: FragmentMoneyVerifyPayBinding
@@ -87,7 +78,12 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         register(this)
-        presenter.getPromiseMoney()
+        if (User.instance.deposit == 0.0) {
+            btnText.set("已支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!!)}元")
+        } else {
+            btnText.set("支付保证金0.0元")
+        }
+        promiseMoney.set(LNTextUtil.getPriceText(User.instance.deposit))
     }
 
     var dialog: PayMethodSelectDialog? = null
@@ -113,8 +109,26 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     @Subscribe
     fun onCarReceive(carSelectInfo: CarSelectInfo) {
         presenter.carSelect.set(carSelectInfo)
-        onGetPromiseMoneySuccess(presenter.amount)
+        checkNeedPayAmount()
+    }
 
+    private fun checkNeedPayAmount() {
+        if (User.instance.deposit == 0.0) {
+            if (presenter.carSelect.get() != null) {
+                presenter.needPayAmount.set(presenter.carSelect.get()?.promiseMoneyPrice!!)
+                btnText.set("支付保证金${LNTextUtil.getPriceText(presenter.needPayAmount.get())}元")
+            } else {
+                presenter.needPayAmount.set(0.0)
+                btnText.set("支付保证金0.0元")
+            }
+
+        } else if (presenter.carSelect.get() != null && presenter.carSelect.get()?.promiseMoneyPrice!! > User.instance.deposit) {
+            presenter.needPayAmount.set(presenter.carSelect.get()?.promiseMoneyPrice!! - User.instance.deposit)
+            btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.needPayAmount.get())}元")
+        }else{
+            presenter.needPayAmount.set(0.0)
+            btnText.set("还需支付保证金0.0元")
+        }
     }
 
     fun gotoPromiseMoneyDetail() {
@@ -132,6 +146,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         ARouter.getInstance()
                 .build(RouteMap.PaySuccess)
                 .navigation()
+        eventBusDefault.post(RefreshUserInfo())
         finish()
     }
 }

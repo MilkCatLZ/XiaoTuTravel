@@ -146,11 +146,11 @@ open class UserBase : BaseObservable() {
     }
 
     /**
-     * 保证金（0未缴 1已缴）
+     * 保证金
      */
-    @SerializedName("is_deposit")
+    @SerializedName("deposit")
     @get:Bindable
-    var deposit: Int = 0
+    var deposit: Double = 0.0
         set(value) {
             field = value
             notifyPropertyChanged(BR.deposit)
@@ -158,10 +158,27 @@ open class UserBase : BaseObservable() {
             notifyPropertyChanged(BR.isDeposit)
         }
 
+    /**
+     * 保证金（0未缴 1已缴）
+     */
+    @SerializedName("is_deposit")
+
+    var isDeposited: Int = 0
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.deposit)
+            notifyPropertyChanged(BR.isIdentityAuth)
+            notifyPropertyChanged(BR.isDeposit)
+        }
+
+    /**
+     * 保证金（0未缴 1已缴）
+     */
     @Bindable
     fun getIsDeposit(): Boolean {
-        return deposit == 1
+        return isDeposited == 1
     }
+
 
     /**
      * 账户余额
@@ -225,7 +242,7 @@ open class UserBase : BaseObservable() {
         }
     @SerializedName(City)
     @get:Bindable
-    var city:  String? = null
+    var city: String? = null
         set(city) {
             field = city
             notifyPropertyChanged(BR.city)
