@@ -9,9 +9,8 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.amap.api.maps.CoordinateConverter
-import kotlinx.android.synthetic.main.dialog_map_select.*
 import com.base.location.R
+import kotlinx.android.synthetic.main.dialog_map_select.*
 
 
 class MapSelectDialogFragment : DialogFragment() {
@@ -55,7 +54,7 @@ class MapSelectDialogFragment : DialogFragment() {
                 val endLatLong = gaoDeToBaidu(endLatitude, endLongitude)
 
                 val i1 = Intent()
-                i1.data = Uri.parse("baidumap://map/direction?&origin=${startLatLong[0]},${startLatLong[1]}&destination=latlng:${endLatLong[0]},${endLatLong[1]}&mode=driving")
+                i1.data = Uri.parse("baidumap://map/direction?&origin=${startLatLong[0]},${startLatLong[1]}&destination=${endLatLong[0]},${endLatLong[1]}&mode=driving")
                 startActivity(i1)
             }
         } else {

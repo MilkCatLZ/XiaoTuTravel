@@ -34,10 +34,10 @@ import shy.car.sdk.travel.pay.presenter.OrderPayPresenter
 class OrderPayFragment : XTBaseFragment(),
         OrderPayPresenter.CallBack {
     override fun paySuccess() {
-        ARouter.getInstance()
-                .build(RouteMap.RentCarPaySuccess)
-                .withObject(Object1, binding.detail)
-                .navigation()
+//        ARouter.getInstance()
+//                .build(RouteMap.RentCarPaySuccess)
+//                .withObject(Object1, binding.detail)
+//                .navigation()
         eventBusDefault.post(PaySuccess())
         finish()
     }

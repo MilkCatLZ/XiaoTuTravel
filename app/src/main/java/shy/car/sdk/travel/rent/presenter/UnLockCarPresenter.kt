@@ -192,6 +192,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     fun uploadImage(body: MultipartBody, key: String, progress: ObservableInt) {
+        progress.set(0)
         val observable = ApiManager.getInstance()
                 .api.uploadPhoto(convertToRequestBody("1"), convertToRequestBody("1"), body.parts())
         val observer = object : Observer<JsonObject> {
@@ -227,16 +228,17 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
-        val left = UploadFileRequestBody(cache, object : UploadFileRequestBody.ProgressListener {
+//        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val left = UploadFileRequestBody(file, object : UploadFileRequestBody.ProgressListener {
             override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
                 val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 99.0).toInt()
                 Log.d("onProgress-----------------", "progress============$progress")
+                Log.d("onProgress-----------------", "hasWrittenLen============$hasWrittenLen")
+                Log.d("onProgress-----------------", "totalLen============$totalLen")
                 progressObservable.set(progress)
             }
 
         })
-
         builder.addFormDataPart("photo", file.name, left)
         return builder.build()
     }

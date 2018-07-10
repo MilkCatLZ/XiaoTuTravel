@@ -100,5 +100,6 @@ public class ParamsConstant {
     public static final String Orders = "orders";
     public static final String UploadStatus = "upload_status";
     public static final String Images = "images";
+    public static final String Photo = "photo";
 
 }

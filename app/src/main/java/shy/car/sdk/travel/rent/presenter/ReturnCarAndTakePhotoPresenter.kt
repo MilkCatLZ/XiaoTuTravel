@@ -199,6 +199,7 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
     }
 
     fun uploadImage(body: MultipartBody, key: String, progress: ObservableInt) {
+        progress.set(0)
         val observable = ApiManager.getInstance()
                 .api.uploadPhoto(convertToRequestBody("2"), convertToRequestBody("1"), body.parts())
         val observer = object : Observer<JsonObject> {
@@ -234,16 +235,16 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
-        val left = UploadFileRequestBody(cache, object : UploadFileRequestBody.ProgressListener {
+//        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val left = UploadFileRequestBody(file, object : UploadFileRequestBody.ProgressListener {
             override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
                 val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 99.0).toInt()
-                Log.d("onProgress-----------------", "progress============$progress")
+                Log.d("onProgress-----------------", "progress============$progress${System.currentTimeMillis()}")
                 progressObservable.set(progress)
             }
 
         })
-
+//        return left
         builder.addFormDataPart("photo", file.name, left)
         return builder.build()
     }

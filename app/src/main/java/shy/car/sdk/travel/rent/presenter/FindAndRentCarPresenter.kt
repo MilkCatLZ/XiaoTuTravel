@@ -26,7 +26,7 @@ import shy.car.sdk.travel.order.net.OrderManager
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     var oid: String = ""
-    lateinit var detail: RentOrderDetail
+     var detail: RentOrderDetail? = null
 
     interface CallBack {
         fun onRingError(e: Throwable)
@@ -78,7 +78,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
 
         val observableUnLock = ApiManager.getInstance()
                 //固定传3
-                .api.orderUnLockCarAndStart(detail.orderId!!/*, image = null*/)
+                .api.orderUnLockCarAndStart(detail?.orderId!!/*, image = null*/)
 
 
         observableShouldTakePhoto.subscribeOn(Schedulers.io())
@@ -87,7 +87,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                     if (it.get("whether").asInt == 1) {
                         ARouter.getInstance()
                                 .build(RouteMap.UnLockCar)
-                                .withString(String1, detail.orderId)
+                                .withString(String1, detail?.orderId)
                                 .navigation()
                     }
                 }
@@ -133,7 +133,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
         ApiManager.getInstance()
-                .api.cancelRentOrder(detail.orderId!!)
+                .api.cancelRentOrder(detail?.orderId!!)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

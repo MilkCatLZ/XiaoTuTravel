@@ -17,7 +17,7 @@ import com.amap.api.services.core.LatLonPoint
 import com.amap.api.services.route.*
 import com.base.base.ProgressDialog
 import com.base.overlay.DrivingRouteOverlay
-import com.base.util.DialogManager
+import com.base.util.MapSelectDialogFragment
 import com.base.util.StringUtils
 import com.base.util.ToastManager
 import io.reactivex.Observable
@@ -88,7 +88,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
 //            ProgressDialog.showLoadingView(it)
 //        }
         activity?.let {
-            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(presenter.detail.car?.lat!!, presenter.detail.car?.lng!!), 2, object : MapUtil.GetDetailListener {
+            MapUtil.getDriveTimeAndDistance(it, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(presenter.detail?.car?.lat!!, presenter.detail?.car?.lng!!), 2, object : MapUtil.GetDetailListener {
                 override fun calculateSuccess(allLength: Int?, allTime: Int?) {
                     activity?.let {
                         ProgressDialog.hideLoadingView(it)
@@ -313,13 +313,16 @@ class FindAndRentCarFragment : XTBaseFragment(),
     }
 
     fun ringCar() {
-        var ring = RingCarDialogFragment()
-        ring.carid = presenter.detail.car?.carID!!
-        ring.show(childFragmentManager, "fragment_ring")
+        if (presenter.detail != null) {
+            var ring = RingCarDialogFragment()
+            ring.carid = presenter.detail?.car?.carID!!
+            ring.show(childFragmentManager, "fragment_ring")
+        }
     }
 
     fun unLockCar() {
-        presenter.unLockCar()
+        if (presenter.detail != null)
+            presenter.unLockCar()
     }
 
     fun cancelOrder() {
@@ -330,8 +333,18 @@ class FindAndRentCarFragment : XTBaseFragment(),
                         override fun onConfirmClick() {
                             presenter.cancelOrder()
                         }
-                    }).show()
+                    })
+                    .show()
         }
+    }
+
+    fun naviTo() {
+        val dialog = MapSelectDialogFragment()
+        dialog.startLatitude = app.location.lat
+        dialog.startLongitude = app.location.lng
+        dialog.endLatitude = presenter.detail?.car?.lat!!
+        dialog.endLongitude = presenter.detail?.car?.lng!!
+        dialog.show(childFragmentManager, "fragment_navi_select")
     }
 
     private fun moveCameraAndShowLocation(latLng: LatLng) {

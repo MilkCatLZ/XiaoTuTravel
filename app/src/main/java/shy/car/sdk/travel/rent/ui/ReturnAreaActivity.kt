@@ -85,17 +85,15 @@ class ReturnAreaActivity : XTBaseActivity(),
 
 
         binding.mapView.map.setInfoWindowAdapter(NearInfoWindowAdapter(this))
-        binding.mapView.map.setOnMarkerClickListener(
-                {
-                    ProgressDialog.showLoadingView(this@ReturnAreaActivity)
-                    it.showInfoWindow()
+        binding.mapView.map.setOnMarkerClickListener {
+            ProgressDialog.showLoadingView(this@ReturnAreaActivity)
+            it.showInfoWindow()
 
-                    network.set(findCarPoint(it.position))
-                    getNaviDetail()
-                    calculateRoute()
-                    true
-                }
-        )
+            network.set(findCarPoint(it.position))
+            getNaviDetail()
+            calculateRoute()
+            true
+        }
 
 
         val myLocationStyle = MyLocationStyle()
@@ -109,9 +107,12 @@ class ReturnAreaActivity : XTBaseActivity(),
     }
 
     fun naviToNetWork() {
-        var dialog = MapSelectDialogFragment()
-        dialog.startLatitude = network.get()?.lat!!
-        dialog.startLongitude = network.get()?.lng!!
+        val dialog = MapSelectDialogFragment()
+        dialog.startLatitude = app.location.lat
+        dialog.startLongitude = app.location.lng
+        dialog.endLatitude = network.get()?.lng!!
+        dialog.endLongitude = network.get()?.lng!!
+        dialog.show(supportFragmentManager,"fragment_navi_select")
     }
 
     var drivingRouteOverlay: DrivingRouteOverlay? = null

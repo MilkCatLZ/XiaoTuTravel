@@ -113,6 +113,7 @@
                         android:drawablePadding="5dp"
                         android:drawableTop="@drawable/icon_path"
                         android:text="导航"
+                        android:onClick="@{()->fragment.naviTo()}"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="@dimen/text_second_primary_12dp" />
 
