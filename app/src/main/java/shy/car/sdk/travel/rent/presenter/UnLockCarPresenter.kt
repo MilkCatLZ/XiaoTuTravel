@@ -67,7 +67,6 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     fun uploadPicAndUnlockCar() {
         if (checkSelect()) {
-            ProgressDialog.showLoadingView(context)
             io.reactivex.Observable.create<String> {
                 while (photoList.size < 2) {
                     Thread.sleep(100)
@@ -143,13 +142,6 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     }
 
-    private fun getPhotoParamsString(): RequestBody {
-        val list = ArrayList<String>()
-        photoList.map {
-            list.add(it.value)
-        }
-        return convertToRequestBody(Gson().toJson(list))
-    }
 
     private fun checkSelect(): Boolean {
         if (StringUtils.isEmpty(leftImage.get())) {
@@ -163,21 +155,28 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
         return true
     }
 
-    private fun createImageParams(): MultipartBody {
-        val leftFile = File(leftImage.get())
-        val rightFile = File(rightImage.get())
-
-        val builder = MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-
-        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
-        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
-
-        builder.addFormDataPart("photo1", leftFile.name, drive)
-        builder.addFormDataPart("photo2", rightFile.name, idCard)
-        return builder.build()
-
+    private fun getPhotoParamsString(): RequestBody {
+        val list = ArrayList<String>()
+        photoList.map {
+            list.add(it.value)
+        }
+        return convertToRequestBody(Gson().toJson(list))
     }
+//    private fun createImageParams(): MultipartBody {
+//        val leftFile = File(leftImage.get())
+//        val rightFile = File(rightImage.get())
+//
+//        val builder = MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//
+//        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
+//        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
+//
+//        builder.addFormDataPart("photo1", leftFile.name, drive)
+//        builder.addFormDataPart("photo2", rightFile.name, idCard)
+//        return builder.build()
+//
+//    }
 
     val disposableList = ArrayList<Disposable>()
     val photoList = HashMap<String, String>()

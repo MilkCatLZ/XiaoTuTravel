@@ -125,6 +125,7 @@ class UnLockCarActivity : XTBaseActivity(),
                                 }
                                 else -> {
                                     presenter.rightImage.set(it)
+                                    presenter.uploadRightCarImage()
                                 }
                             }
                             ProgressDialog.hideLoadingView(this)

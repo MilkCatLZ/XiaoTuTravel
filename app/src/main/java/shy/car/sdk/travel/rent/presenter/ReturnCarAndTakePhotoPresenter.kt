@@ -2,9 +2,13 @@ package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import com.base.base.ProgressDialog
+import com.base.network.retrofit.UploadFileRequestBody
+import com.base.util.Log
 import com.base.util.StringUtils
 import com.base.util.ToastManager
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -33,6 +37,11 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
     val rightImage = ObservableField<String>()
     val driveRoom = ObservableField<String>()
     val backRoom = ObservableField<String>()
+
+    val leftProgress = ObservableInt(0)
+    val rightProgress = ObservableInt(0)
+    val driveProgress = ObservableInt(0)
+    val backProgress = ObservableInt(0)
 
     var detail: RentOrderDetail? = null
     var netWorkID: String = ""
@@ -78,23 +87,23 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
             val observableUpload = ApiManager.getInstance()
                     .api.uploadCarPic(detail?.orderId!!, detail?.orderId!!,
                     ApiManager.toRequestBody("2")!!,
-                    createImageParams().parts())//type=2 还车拍照
+                    getPhotoParamsString())//type=2 还车拍照
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
 
             observableUnLock.observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())
-                    .doOnSubscribe({
+                    .doOnSubscribe {
                         disposable = it
-                    })
-                    .doOnError({
+                    }
+                    .doOnError {
                         ProgressDialog.hideLoadingView(context)
                         disposable?.dispose()
-                    })
+                    }
                     .subscribeOn(Schedulers.io())
-                    .flatMap({
+                    .flatMap {
                         observableUpload
-                    })
+                    }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Observer<JsonObject> {
                         override fun onComplete() {
@@ -143,31 +152,113 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
         return true
     }
 
-    private fun createImageParams(): MultipartBody {
-        val leftFile = File(leftImage.get())
-        val rightFile = File(rightImage.get())
-        val driveRoomFile = File(driveRoom.get())
-        val backRoomFile = File(backRoom.get())
+    private fun getPhotoParamsString(): RequestBody {
+        val list = ArrayList<String>()
+        photoList.map {
+            list.add(it.value)
+        }
+        return convertToRequestBody(Gson().toJson(list))
+    }
+//    private fun createImageParams(): MultipartBody {
+//        val leftFile = File(leftImage.get())
+//        val rightFile = File(rightImage.get())
+//
+//        val builder = MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//
+//        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
+//        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
+//
+//        builder.addFormDataPart("photo1", leftFile.name, drive)
+//        builder.addFormDataPart("photo2", rightFile.name, idCard)
+//        return builder.build()
+//
+//    }
+
+    val disposableList = ArrayList<Disposable>()
+    val photoList = HashMap<String, String>()
+
+    fun uploadLeftCarImage() {
+        val body = getImageParts(leftImage.get()!!, leftProgress)
+        uploadImage(body, "left")
+    }
+
+    fun uploadRightCarImage() {
+        val body = getImageParts(rightImage.get()!!, rightProgress)
+        uploadImage(body, "right")
+    }
+
+    fun uploadDriveRoomImage() {
+        val body = getImageParts(driveRoom.get()!!, driveProgress)
+        uploadImage(body, "left")
+    }
+
+    fun uploadBackRoomImage() {
+        val body = getImageParts(backRoom.get()!!, backProgress)
+        uploadImage(body, "right")
+    }
+
+    fun uploadImage(body: MultipartBody, key: String) {
+        val observable = ApiManager.getInstance()
+                .api.uploadPhoto(convertToRequestBody("1"), convertToRequestBody("1"), body.parts())
+        val observer = object : Observer<JsonObject> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                disposableList.add(d)
+            }
+
+            override fun onNext(t: JsonObject) {
+                photoList[key] = t.get("id")
+                        .asString
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+    }
+
+    private fun getImageParts(photoPath: String, progressObservable: ObservableInt): MultipartBody {
+
+        val file = File(photoPath)
 
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
-        val idCard = RequestBody.create(MediaType.parse("image/jpeg"), rightFile)
-        val driveRoom = RequestBody.create(MediaType.parse("image/jpeg"), driveRoomFile)
-        val backRoom = RequestBody.create(MediaType.parse("image/jpeg"), backRoomFile)
+        val cache = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val left = UploadFileRequestBody(cache, object : UploadFileRequestBody.ProgressListener {
+            override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
+                val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 100.0).toInt()
+                Log.d("onProgress-----------------", "progress============$progress")
+                progressObservable.set(progress)
+            }
 
-        builder.addFormDataPart("photo1", leftFile.name, drive)
-        builder.addFormDataPart("photo2", rightFile.name, idCard)
-        builder.addFormDataPart("photo3", driveRoomFile.name, driveRoom)
-        builder.addFormDataPart("photo4", backRoomFile.name, backRoom)
+        })
 
+        builder.addFormDataPart("photo", file.name, left)
         return builder.build()
-
     }
+
 
     private fun convertToRequestBody(param: String?): RequestBody {
         return RequestBody.create(MediaType.parse("text/plain"), param)
+    }
+
+    override fun destroy() {
+        disposableList.map {
+            try {
+                it.dispose()
+            } catch (e: Exception) {
+            }
+        }
+        super.destroy()
     }
 
 }

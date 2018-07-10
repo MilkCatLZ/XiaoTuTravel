@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -67,7 +68,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:imageURL="@{presenter.leftImage}"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#88000000"
+                        android:visibleOrGone="@{presenter.leftProgress>0}">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text='@{""+presenter.leftProgress+@string/str_percent}'
+                            android:textColor="@color/_foreground_material_light"
+                            tools:text="99%"/>
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -94,6 +108,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:imageURL="@{presenter.rightImage}"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#88000000"
+                        android:visibleOrGone="@{presenter.rightProgress>0}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text='@{""+presenter.rightProgress+@string/str_percent}'
+                            android:textColor="@color/_foreground_material_light"
+                            tools:text="99%"/>
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -128,7 +156,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:imageURL="@{presenter.driveRoom}"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#88000000"
+                        android:visibleOrGone="@{presenter.driveProgress>0}">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text='@{""+presenter.driveProgress+@string/str_percent}'
+                            android:textColor="@color/_foreground_material_light"
+                            tools:text="99%"/>
+                    </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -162,6 +203,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:imageURL="@{presenter.backRoom}"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#88000000"
+                        android:visibleOrGone="@{presenter.backProgress>0}">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text='@{""+presenter.backProgress+@string/str_percent}'
+                            android:textColor="@color/_foreground_material_light"
+                            tools:text="99%"/>
+                    </RelativeLayout>
 
                 </RelativeLayout>
 

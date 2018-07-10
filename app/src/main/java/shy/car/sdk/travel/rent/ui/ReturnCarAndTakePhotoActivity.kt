@@ -139,15 +139,19 @@ class ReturnCarAndTakePhotoActivity : XTBaseActivity(),
                             when {
                                 left -> {
                                     presenter.leftImage.set(it)
+                                    presenter.uploadLeftCarImage()
                                 }
                                 right -> {
                                     presenter.rightImage.set(it)
+                                    presenter.uploadRightCarImage()
                                 }
                                 driveRoom -> {
                                     presenter.driveRoom.set(it)
+                                    presenter.uploadDriveRoomImage()
                                 }
                                 backRoom -> {
                                     presenter.backRoom.set(it)
+                                    presenter.uploadBackRoomImage()
                                 }
                             }
                             ProgressDialog.hideLoadingView(this)
