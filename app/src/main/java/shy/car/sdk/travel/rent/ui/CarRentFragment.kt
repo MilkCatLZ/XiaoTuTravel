@@ -626,7 +626,11 @@ class CarRentFragment : XTBaseFragment() {
     private fun checkPromiseMoneyPay() {
         //已交保证金
         if (User.instance.getIsDeposit() && User.instance.getIsIdentityAuth()) {
-            showConfirmDialog()
+            if (currentSelectedCarInfo.get()?.netWork == null) {
+                currentSelectedCarInfo.get()
+                        ?.netWork = carPointList[0]
+            }
+            carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
         } else {
             //提示未交保证金
             if (userVisibleHint) {
