@@ -164,6 +164,7 @@
 
         <activity
             android:name="shy.car.sdk.travel.rent.ui.FindAndRentCarActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity

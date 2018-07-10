@@ -47,6 +47,13 @@ class UploadFileRequestBody : RequestBody {
 
     @Throws(IOException::class)
     override fun writeTo(sink: BufferedSink) {
+        //解决进度突然100%的问题！！
+        if (sink is Buffer) {
+            // Log Interceptor
+            mRequestBody?.writeTo(sink)
+            return
+        }
+
         if (bufferedSink == null) {
             //包装
             bufferedSink = Okio.buffer(sink(sink))
