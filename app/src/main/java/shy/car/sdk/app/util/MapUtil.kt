@@ -145,6 +145,11 @@ class MapUtil {
 
         var callBack: GetDetailListener? = null
 
+        /**
+         * 计算两点的距离和时间
+         * type=1 驾车
+         * type=0 步行
+         */
          fun getDriveTimeAndDistance(applicationContext: Context, startPoint: NaviLatLng, endPoint: NaviLatLng, type: Int, callBack: GetDetailListener) {
             startList.clear()
             endList.clear()
