@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《小兔出行用户协议》"
-                android:onClick="@{ac.userAgreeMent()}"
+                android:onClick="@{()->ac.userAgreeMent()}"
                 android:textColor="@color/main_color_green"
                 android:textSize="@dimen/text_second_primary_12dp" />
 
