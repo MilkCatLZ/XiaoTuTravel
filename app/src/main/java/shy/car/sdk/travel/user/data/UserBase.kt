@@ -41,6 +41,13 @@ open class UserBase : BaseObservable() {
     var refreshToken: String = ""
 
 
+    @SerializedName("max_cancel_num")
+    @get:Bindable
+    var maxCancelNum: Int = 5
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.maxCancelNum)
+        }
     @SerializedName(Name)
     @get:Bindable
     var name: String = ""

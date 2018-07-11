@@ -184,6 +184,7 @@ class User private constructor() : UserBase() {
             instance.score = dis.score
             instance.deposit = dis.deposit
             instance.isDeposited = dis.isDeposited
+            instance.maxCancelNum = dis.maxCancelNum
         }
 
     }

@@ -40,6 +40,7 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
+import shy.car.sdk.travel.user.data.User
 
 /**
  * create by lz at 2018/06/05
@@ -328,7 +329,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     fun cancelOrder() {
         activity?.let {
             HintDialog.with(it, childFragmentManager)
-                    .message("当日取消订单5次将无法租车")
+                    .message("当日取消订单${User.instance.maxCancelNum}次将无法继续租车，确定取消订单？")
                     .listener(object : HintDialog.OnDissmiss {
                         override fun onConfirmClick() {
                             presenter.cancelOrder()

@@ -20,6 +20,7 @@ import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.order.net.OrderManager
+import shy.car.sdk.travel.user.data.User
 
 /**
  * 找车取车
@@ -27,7 +28,7 @@ import shy.car.sdk.travel.order.net.OrderManager
 class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
 
     var oid: String = ""
-     var detail: RentOrderDetail? = null
+    var detail: RentOrderDetail? = null
 
     interface CallBack {
         fun onRingError(e: Throwable)
@@ -138,7 +139,7 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Log.d("Delete Body--------------------",it.toString())
+                    //                    Log.d("Delete Body--------------------",it.toString())
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelSuccess()
 //                    ApiManager.getInstance()
@@ -146,6 +147,10 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                     RefreshOrderList.refreshOrderList()
                     EventBus.getDefault()
                             .post(RentOrderCanceled())
+                    User.instance.maxCancelNum = it.get("day_max_cancel_num")
+                            .asInt
+                    User.saveUserState(context)
+
                 }, {
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelError(it)
