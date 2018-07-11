@@ -3,6 +3,7 @@ package shy.car.sdk.travel.setting.data
 import android.databinding.BaseObservable
 
 import com.google.gson.annotations.SerializedName
+import shy.car.sdk.travel.bank.data.BankType
 
 class Setting : BaseObservable() {
 
@@ -18,7 +19,7 @@ class Setting : BaseObservable() {
     @SerializedName("system")
     var system: SystemBean? = null
     @SerializedName("banks")
-    var banks: List<BanksBean>? = null
+    var banks: List<BankType>? = null
 
     class OrderBean {
         /**
@@ -41,18 +42,4 @@ class Setting : BaseObservable() {
         var kfEmail: String? = null
     }
 
-    class BanksBean {
-        /**
-         * id : 1
-         * name : 中国银行
-         * logo : http://47.106.88.148/assets/img/bank/bc.png
-         */
-
-        @SerializedName("id")
-        var id: String? = null
-        @SerializedName("name")
-        var name: String? = null
-        @SerializedName("logo")
-        var logo: String? = null
-    }
 }

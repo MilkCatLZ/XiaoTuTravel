@@ -5,13 +5,27 @@ import android.databinding.Bindable;
 import android.databinding.Observable;
 import android.databinding.PropertyChangeRegistry;
 
+import com.google.gson.annotations.SerializedName;
+
 import shy.car.sdk.BR;
 
 public class QAList extends BaseObservable implements Observable {
 
+    @SerializedName("id")
     private String id = "";
+    @SerializedName("title")
     private String text = "";
+    @SerializedName("created_at")
+    private String createAt = "";
     private transient PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
 
     @Bindable
     public String getId() {

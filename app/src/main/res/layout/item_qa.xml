@@ -4,9 +4,9 @@
 
     <data>
 
-       <variable
+        <variable
             name="click"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
 
         <variable
             name="list"
@@ -15,11 +15,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:onClick="@{click}"
-        android:tag="@{list}"
+        android:layout_height="55dp"
         android:background="@color/_foreground_material_light"
-        android:orientation="vertical">
+        android:onClick="@{click}"
+        android:orientation="vertical"
+        android:tag="@{list}">
 
         <TextView
             android:layout_width="match_parent"
@@ -32,6 +32,7 @@
             android:textSize="@dimen/text_title_16dp"
             tools:text="问题1" />
 
+        <View style="@style/line_horizontal" />
     </LinearLayout>
 
 </layout>

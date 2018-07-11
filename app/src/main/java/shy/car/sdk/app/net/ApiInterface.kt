@@ -537,11 +537,11 @@ interface ApiInterface {
     @GET("config/invitation")
     fun getShareDetail(): Observable<ShareDetail>
 
-    @GET("qa")
+    @GET("questions")
     fun getQAList(): Observable<List<QAList>>
 
-    @GET("qa/detail")
-    fun getQADetail(@Query(ParamsConstant.ID) id: String): Observable<JsonObject>
+//    @GET("qa/detail")
+//    fun getQADetail(@Query(ParamsConstant.ID) id: String): Observable<JsonObject>
 
     @GET("config")
     fun getAPPSetting(): Observable<Setting>
