@@ -61,11 +61,11 @@ class Application : BaseApplication() {
     lateinit var api: IWXAPI
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG)
-            CrashHandler.getInstance()
-                    .init(this, CrashHandler.CrashCallBack {
-                        it.printStackTrace()
-                    })
+//        if (BuildConfig.DEBUG)
+        CrashHandler.getInstance()
+                .init(this, CrashHandler.CrashCallBack {
+                    it.printStackTrace()
+                })
         initNetWork()
         initRouter()
         initPinYin()
@@ -95,7 +95,7 @@ class Application : BaseApplication() {
                     PlatformConfig.setWeixin("wx8e279dc5392e19c2", "e5b5f46c2671209f9a75d0ae28c71303")
                     val id = DeviceConfig.getAndroidID(this@Application)
                     Log.d("LNDeliveryApplication", id)
-                },{})
+                }, {})
 
     }
 
@@ -279,8 +279,8 @@ class Application : BaseApplication() {
                 User.logout(this@Application)
                 EventBus.getDefault()
                         .post(UserLogout())
-//                ApiManager.getInstance()
-//                        .clearCache()
+                ApiManager.getInstance()
+                        .clearCache()
             }
 
             override fun onError(e: Throwable) {

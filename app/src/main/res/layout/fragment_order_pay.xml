@@ -22,10 +22,6 @@
             type="shy.car.sdk.travel.pay.presenter.OrderPayPresenter" />
     </data>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -38,290 +34,300 @@
 
             <View style="@style/style_shadow" />
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/_foreground_material_light"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    style="@style/style_car"
-                    android:layout_marginTop="20dp"
-                    android:imageURL="@{detail.car.modelImg}"
-                    android:src="@drawable/img_car" />
-
-                <TextView
-                    android:id="@+id/txt_car_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@{detail.carInfo()}"
-                    android:textColor="@color/text_primary_333333"
-                    android:textSize="@dimen/text_primary_14dp"
-                    tools:text="桂DJF565 | EQ1 | 白色" />
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="12dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="共"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="@dimen/text_second_primary_12dp" />
+                        android:layout_marginTop="10dp"
+                        android:background="@color/_foreground_material_light"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            style="@style/style_car"
+                            android:layout_marginTop="20dp"
+                            android:imageURL="@{detail.car.modelImg}"
+                            android:src="@drawable/img_car" />
+
+                        <TextView
+                            android:id="@+id/txt_car_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@{detail.carInfo()}"
+                            android:textColor="@color/text_primary_333333"
+                            android:textSize="@dimen/text_primary_14dp"
+                            tools:text="桂DJF565 | EQ1 | 白色" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="共"
+                                android:textColor="@color/text_primary_333333"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{util.getPriceText(detail.realpayMoney)}"
+                                android:textColor="@color/text_primary_333333"
+                                android:textSize="32dp"
+                                tools:text="99.99" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="元"
+                                android:textColor="@color/text_primary_333333"
+                                android:textSize="@dimen/text_second_primary_12dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{util.getPriceText(detail.realpayMoney)}"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="32dp"
-                        tools:text="99.99" />
+                        android:background="@color/_foreground_material_light"
+                        android:gravity="center"
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <View
+                            style="@style/line_horizontal"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="费用详情"
+                            android:textColor="@color/text_third_primary_999999"
+                            android:textSize="@dimen/text_second_primary_12dp" />
+
+                        <View
+                            style="@style/line_horizontal"
+                            android:layout_marginStart="15dp"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="元"
-                        android:textColor="@color/text_primary_333333"
-                        android:textSize="@dimen/text_second_primary_12dp" />
+                        android:background="@color/_foreground_material_light"
+                        android:orientation="vertical"
+                        android:paddingBottom="20dp"
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingTop="5dp">
 
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车时长" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{detail.duration}"
+                                tools:text="00:02:30" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车里程" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.mileage)+@string/str_km}"
+                                tools:text="32km" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="用车时段" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{detail.useCarTime}"
+                                tools:text="15:00 ~ 19:00" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="按时计费" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.durationFee)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="里程费用" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.mileageFee)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="最低消费" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.car.cost.minimum)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView_order_car_discount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:layout_weight="1"
+                                android:text="实付金额" />
+
+                            <TextView
+                                style="@style/style_ww.text_14_666"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{util.getPriceText(detail.realpayMoney)}"
+                                tools:text="￥20" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/style_setting_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/_foreground_material_light"
+                        android:onClick="@{()->fragment.selectCoupon()}"
+                        android:paddingStart="13dp">
+
+                        <TextView
+                            style="@style/style_setting_nav_title"
+                            android:drawableStart="@drawable/icon_wallet_payment"
+                            android:text="优惠券" />
+
+
+                        <TextView style="@style/style_setting_nav_hint" />
+
+                        <ImageView
+                            style="@style/style_setting_nav_arrow"
+                            android:src="@drawable/login_return" />
+
+                    </LinearLayout>
+
+                    <View style="@style/line_horizontal" />
+
+                    <LinearLayout
+                        style="@style/style_setting_content"
+                        android:background="@color/_foreground_material_light"
+                        android:onClick="@{()->fragment.selectPayMethod()}"
+                        android:paddingStart="13dp">
+
+                        <TextView
+                            style="@style/style_setting_nav_title"
+                            android:drawableStart="@drawable/icon_wallet_payment"
+                            android:text="支付方式" />
+
+
+                        <TextView
+                            style="@style/style_setting_nav_hint"
+                            android:text="@{util.isEmpty(presenter.payMethod.name)?@string/str_select_pay:presenter.payMethod.name}" />
+
+                        <ImageView
+                            style="@style/style_setting_nav_arrow"
+                            android:src="@drawable/login_return" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txt_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="49dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/back_button_main_green_corner"
+                        android:gravity="center"
+                        android:onClick="@{()->fragment.pay()}"
+                        android:text="立即支付"
+                        android:textColor="@color/_foreground_material_light"
+                        android:textSize="16sp" />
                 </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/_foreground_material_light"
-                android:gravity="center"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp">
-
-                <View
-                    style="@style/line_horizontal"
-                    android:layout_marginEnd="15dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="费用详情"
-                    android:textColor="@color/text_third_primary_999999"
-                    android:textSize="@dimen/text_second_primary_12dp" />
-
-                <View
-                    style="@style/line_horizontal"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/_foreground_material_light"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="5dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="用车时长" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{detail.duration}"
-                        tools:text="00:02:30" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="用车里程" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{util.getPriceText(detail.mileage)+@string/str_km}"
-                        tools:text="32km" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="用车时段" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{detail.useCarTime}"
-                        tools:text="15:00 ~ 19:00" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="按时计费" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{util.getPriceText(detail.durationFee)}"
-                        tools:text="￥20" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="里程费用" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{util.getPriceText(detail.mileageFee)}"
-                        tools:text="￥20" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="最低消费" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{util.getPriceText(detail.car.cost.minimum)}"
-                        tools:text="￥20" />
-                </LinearLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView_order_car_discount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:layout_weight="1"
-                        android:text="实付金额" />
-
-                    <TextView
-                        style="@style/style_ww.text_14_666"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@{util.getPriceText(detail.realpayMoney)}"
-                        tools:text="￥20" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/style_setting_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/_foreground_material_light"
-                android:onClick="@{()->fragment.selectCoupon()}"
-                android:paddingStart="13dp">
-
-                <TextView
-                    style="@style/style_setting_nav_title"
-                    android:drawableStart="@drawable/icon_wallet_payment"
-                    android:text="优惠券" />
-
-
-                <TextView style="@style/style_setting_nav_hint" />
-
-                <ImageView
-                    style="@style/style_setting_nav_arrow"
-                    android:src="@drawable/login_return" />
-
-            </LinearLayout>
-
-            <View style="@style/line_horizontal" />
-
-            <LinearLayout
-                style="@style/style_setting_content"
-                android:background="@color/_foreground_material_light"
-                android:onClick="@{()->fragment.selectPayMethod()}"
-                android:paddingStart="13dp">
-
-                <TextView
-                    style="@style/style_setting_nav_title"
-                    android:drawableStart="@drawable/icon_wallet_payment"
-                    android:text="支付方式" />
-
-
-                <TextView
-                    style="@style/style_setting_nav_hint"
-                    android:text="@{util.isEmpty(presenter.payMethod.name)?@string/str_select_pay:presenter.payMethod.name}" />
-
-                <ImageView
-                    style="@style/style_setting_nav_arrow"
-                    android:src="@drawable/login_return" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txt_button"
-                android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/back_button_main_green_corner"
-                android:gravity="center"
-                android:onClick="@{()->fragment.pay()}"
-                android:text="立即支付"
-                android:textColor="@color/_foreground_material_light"
-                android:textSize="16sp" />
+            </ScrollView>
         </LinearLayout>
-    </ScrollView>
 </layout>

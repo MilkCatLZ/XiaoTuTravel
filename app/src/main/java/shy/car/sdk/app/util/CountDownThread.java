@@ -25,7 +25,7 @@ public class CountDownThread {
         this.finishListener = finishListener;
     }
 
-    interface FinishListener {
+    public interface FinishListener {
         void countDownFinish();
     }
 

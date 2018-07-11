@@ -74,7 +74,11 @@ class FindAndRentCarFragment : XTBaseFragment(),
         if (binding.detail?.billingTime!! > 0) {
             countdown = CountDownThread(binding.detail, binding.detail?.billingTime!!)
             countdown?.setFinishListener {
-                isCountDown.set(false)
+                Observable.just("")
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ isCountDown.set(false) }, {})
+
             }
             countdown?.start(txt_count_down)
         } else {

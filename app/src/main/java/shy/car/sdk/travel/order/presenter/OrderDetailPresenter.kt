@@ -152,16 +152,16 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
             override fun onNext(t: JsonObject) {
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "订单已取消")
-//                ApiManager.getInstance()
-//                        .clearCache()
+                ApiManager.getInstance()
+                        .clearCache()
                 callBack.cancelOrderSuccess()
             }
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
                 ErrorManager.managerError(context, e, "取消失败")
-//                ApiManager.getInstance()
-//                        .clearCache()
+                ApiManager.getInstance()
+                        .clearCache()
                 getOrderDetail()
 
             }
