@@ -54,7 +54,7 @@ class BankCarManagerFragment : XTBaseFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bank_card_manager, null, false)
-        binding.recyclerViewBankCardManage.layoutManager = FullLinearLayoutManager(activity)
+//        binding.recyclerViewBankCardManage.layoutManager = FullLinearLayoutManager(activity)
         binding.fragment = this
         binding.presenter = presenter
         binding.swipeRefresh.setOnRefreshListener {
