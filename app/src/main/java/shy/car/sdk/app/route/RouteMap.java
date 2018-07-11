@@ -415,4 +415,8 @@ public class RouteMap {
      * 常见问题详情
      */
     public static final String QADetail = "/setting/qa_detail";
+    /**
+     * 用户协议
+     */
+    public static final String UserAgreeMent = "/setting/user_agree_ment";
 }

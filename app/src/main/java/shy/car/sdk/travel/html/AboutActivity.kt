@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.Phone
 import com.base.util.Version
 import shy.car.sdk.R
@@ -35,5 +36,11 @@ class AboutActivity : XTBaseActivity() {
 
     fun call() {
         Phone.call(this, servicePhone.get())
+    }
+
+    fun userAgreeMent() {
+        ARouter.getInstance()
+                .build(RouteMap.UserAgreeMent)
+                .navigation()
     }
 }

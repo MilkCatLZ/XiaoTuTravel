@@ -73,8 +73,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/main_color_green"
                 android:text="@{ac.email}"
+                android:textColor="@color/main_color_green"
                 android:textSize="@dimen/text_title_16dp"
                 tools:text="xxxx@xx.com" />
 
@@ -104,6 +104,35 @@
 
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《小兔出行用户协议》"
+                android:onClick="@{ac.userAgreeMent()}"
+                android:textColor="@color/main_color_green"
+                android:textSize="@dimen/text_second_primary_12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="CopyRight @ 小图出行 2015 - 2018"
+                android:textColor="@color/text_third_primary_999999"
+                android:textSize="@dimen/text_second_primary_12dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

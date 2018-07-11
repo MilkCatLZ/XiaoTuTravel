@@ -23,59 +23,61 @@ import shy.car.sdk.R;
  * Created by Syokora on 2016/8/27.
  */
 public class DataBindingAdapter extends BindingAdapter {
-    
+
     @android.databinding.BindingAdapter("android:imageURL")
     public static void setUrlImage(@NonNull ImageView imageView, String url) {
         try {
             if (!url.contains("http") && !url.contains("storage")) {
-                url = BuildConfig.Host + url;
+                String version = ((Application) imageView.getContext().getApplicationContext()).getInterfaceVersion();
+                url = BuildConfig.Host + version + url;
             }
             if (ImageUtil.hasImage(url)) {
                 Glide.with(imageView.getContext())
-                     .load(url)
-                     .error(imageView.getDrawable())
-                     .crossFade()
-                     .centerCrop()
-                     .into(imageView);
+                        .load(url)
+                        .error(imageView.getDrawable())
+                        .crossFade()
+                        .centerCrop()
+                        .into(imageView);
             } else {
                 Glide.with(imageView.getContext())
-                     .load(-1)
-                     .error(imageView.getDrawable())
-                     .into(imageView);
+                        .load(-1)
+                        .error(imageView.getDrawable())
+                        .into(imageView);
             }
         } catch (Exception ignored) {
-        
+
         }
     }
-    
-    
+
+
     @android.databinding.BindingAdapter("android:appAvatarURL")
     public static void setRoundImage(@NonNull ImageView imageView, @Nullable String url) {
         try {
             if (!url.contains(BuildConfig.Host) && !url.contains("storage")) {
-                url = BuildConfig.Host + url;
+                String version = ((Application) imageView.getContext().getApplicationContext()).getInterfaceVersion();
+                url = BuildConfig.Host + version + url;
             }
             if (ImageUtil.hasImage(url)) {
                 Glide.with(imageView.getContext())
-                     .load(url)
-                     .crossFade()
-                     .error(R.drawable.icon_pre_header)
-                     .transform(new GlideRoundTransform(imageView.getContext(), 120))
-                     .into(imageView);
+                        .load(url)
+                        .crossFade()
+                        .error(R.drawable.icon_pre_header)
+                        .transform(new GlideRoundTransform(imageView.getContext(), 120))
+                        .into(imageView);
             } else {
                 Glide.with(imageView.getContext())
-                     .load(R.drawable.icon_pre_header)
-                     .transform(new GlideRoundTransform(imageView.getContext(), 120))
-                     .into(imageView);
+                        .load(R.drawable.icon_pre_header)
+                        .transform(new GlideRoundTransform(imageView.getContext(), 120))
+                        .into(imageView);
             }
         } catch (Exception ignored) {
-        
+
         }
         Log.d("LNDataBindingAdapter", "setRoundImage");
     }
-    
+
     static final int duration = 120;
-    
+
     /**
      * 动画从左到右消失，消失时为圆形
      *
@@ -102,7 +104,7 @@ public class DataBindingAdapter extends BindingAdapter {
         }
         Log.d("LNDataBindingAdapter", "setViewVisiblesOrGoneLeftToRightNormal");
     }
-    
+
     /**
      * 动画从左到右消失，消失时为圆形
      *
@@ -129,7 +131,7 @@ public class DataBindingAdapter extends BindingAdapter {
         }
         Log.d("LNDataBindingAdapter", "setViewVisiblesOrGoneLeftToRightFull");
     }
-    
+
     /**
      * 动画右到左消失，消失时为圆形
      *
@@ -156,7 +158,7 @@ public class DataBindingAdapter extends BindingAdapter {
         }
         Log.d("LNDataBindingAdapter", "setViewVisiblesOrGoneRightToLeftNormal");
     }
-    
+
     /**
      * 动画从右到左消失，消失时为圆形
      *
@@ -183,7 +185,7 @@ public class DataBindingAdapter extends BindingAdapter {
         }
         Log.d("LNDataBindingAdapter", "setViewVisiblesOrGoneRightToLeftFull");
     }
-    
+
     /**
      * 动画从右到左消失，消失时为圆形
      *
@@ -194,10 +196,10 @@ public class DataBindingAdapter extends BindingAdapter {
     public static void setBackgroundAlpha(@NonNull final View view, @NonNull int alpha) {
         if (alpha >= 0 && alpha <= 255) {
             view.getBackground()
-                .setAlpha(alpha);
+                    .setAlpha(alpha);
         }
         Log.d("LNDataBindingAdapter", "setBackgroundAlpha");
     }
-    
-    
+
+
 }

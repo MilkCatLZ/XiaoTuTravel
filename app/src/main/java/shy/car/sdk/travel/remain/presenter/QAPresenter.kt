@@ -28,7 +28,7 @@ class QAPresenter(context: Context) : BasePresenter(context) {
         val list = it.tag as QAList
         ARouter.getInstance()
                 .build(RouteMap.QADetail)
-                .withString(String1, BuildConfig.Host+"questions/${list.id}")
+                .withString(String1, BuildConfig.Host + app.InterfaceVersion + "/questions/${list.id}")
                 .navigation()
 //        getQADetail(list.id)
     }

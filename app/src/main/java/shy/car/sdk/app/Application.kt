@@ -56,6 +56,7 @@ import java.util.concurrent.TimeUnit
 
 class Application : BaseApplication() {
 
+    val InterfaceVersion = "v1"
     var servicePhone = "400-056-5317"
     var device_token: String = ""
     var location: CurrentLocation = CurrentLocation()
@@ -174,7 +175,6 @@ class Application : BaseApplication() {
         ARouter.init(this)
     }
 
-    private val InterfaceVersion = "v1"
 
     /**
      * 初始化网络
