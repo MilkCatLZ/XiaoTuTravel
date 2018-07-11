@@ -15,6 +15,7 @@ import com.base.util.SPCache
 import com.base.util.crash.CrashHandler
 import com.github.promeg.pinyinhelper.Pinyin
 import com.github.promeg.tinypinyin.lexicons.android.cncity.CnCityDict
+import com.google.gson.JsonObject
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.umeng.socialize.Config
@@ -265,7 +266,7 @@ class Application : BaseApplication() {
         val observable = ApiManager.getInstance()
                 .api.logout()
 
-        var observer = object : Observer<Response<Void>> {
+        var observer = object : Observer<JsonObject> {
             override fun onComplete() {
 
             }
@@ -274,12 +275,12 @@ class Application : BaseApplication() {
                 disposable = d
             }
 
-            override fun onNext(t: Response<Void>) {
+            override fun onNext(t: JsonObject) {
                 User.logout(this@Application)
                 EventBus.getDefault()
                         .post(UserLogout())
-                ApiManager.getInstance()
-                        .clearCache()
+//                ApiManager.getInstance()
+//                        .clearCache()
             }
 
             override fun onError(e: Throwable) {

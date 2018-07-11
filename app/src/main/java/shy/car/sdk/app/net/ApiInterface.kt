@@ -93,7 +93,7 @@ interface ApiInterface {
      */
     @DELETE("oauth/access_token")
 //    @HTTP(method = "DELETE", path = "oauth/access_token", hasBody = true)
-    fun logout(): Observable<Response<Void>>
+    fun logout(): Observable<JsonObject>
 
     /**
      * 获取用户详情
@@ -392,7 +392,7 @@ interface ApiInterface {
 
     @DELETE("orders/{order_id}")
     fun cancelRentOrder(@Path(ParamsConstant.OrderId) order_id: String,
-                        @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<Response<Void>>
+                        @Query(ParamsConstant.OrderId) oid: String = order_id): Observable<JsonObject>
 
     @GET("orders/freights/car")
     fun getCarTypeList(): Observable<List<shy.car.sdk.travel.send.data.CarInfo>>
@@ -433,7 +433,7 @@ interface ApiInterface {
 
 
     @DELETE("orders/freights/{freight_id}")
-    fun cancelOrder(@Path(ParamsConstant.FreightID) freight_id: String): Observable<Response<Void>>
+    fun cancelOrder(@Path(ParamsConstant.FreightID) freight_id: String): Observable<JsonObject>
 
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")

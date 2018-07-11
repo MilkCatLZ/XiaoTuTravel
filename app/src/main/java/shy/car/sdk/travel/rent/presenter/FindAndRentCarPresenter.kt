@@ -3,6 +3,7 @@ package shy.car.sdk.travel.rent.presenter
 import android.content.Context
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
+import com.base.util.Log
 import com.base.util.ToastManager
 import com.google.gson.JsonObject
 import io.reactivex.Observer
@@ -137,10 +138,11 @@ class FindAndRentCarPresenter(context: Context, var callBack: CallBack) : BasePr
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
+                    Log.d("Delete Body--------------------",it.toString())
                     ProgressDialog.hideLoadingView(context)
                     callBack.onCancelSuccess()
-                    ApiManager.getInstance()
-                            .clearCache()
+//                    ApiManager.getInstance()
+//                            .clearCache()
                     RefreshOrderList.refreshOrderList()
                     EventBus.getDefault()
                             .post(RentOrderCanceled())
