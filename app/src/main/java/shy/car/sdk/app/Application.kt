@@ -103,7 +103,7 @@ class Application : BaseApplication() {
             }
 
             override fun onNext(t: Setting) {
-                servicePhone = t.system.kfTel
+                servicePhone = t.system?.kfTel!!
                 this@Application.setting = t
             }
 
