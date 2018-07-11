@@ -19,6 +19,7 @@ import shy.car.sdk.databinding.ActivityAboutBinding
 class AboutActivity : XTBaseActivity() {
 
     var servicePhone = ObservableField<String>()
+    var email = ObservableField<String>()
     var version = ObservableField<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,7 @@ class AboutActivity : XTBaseActivity() {
         binding.ac = this
         version.set("v" + Version.getVersion(this))
         servicePhone.set(app.servicePhone)
+        email.set(app.setting?.system?.kfEmail)
 //        webView_register_agreement.settings.domStorageEnabled = true
 //        webView_register_agreement.loadUrl(BuildConfig.Host + "html/about.html")
     }

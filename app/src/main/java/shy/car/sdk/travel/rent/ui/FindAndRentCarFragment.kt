@@ -333,7 +333,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
     fun cancelOrder() {
         activity?.let {
             HintDialog.with(it, childFragmentManager)
-                    .message("当日取消订单${User.instance.maxCancelNum}次将无法继续租车")
+                    .message("当日取消订单${app.setting?.order?.dayMaxCancelNum}次将无法继续租车")
                     .leftButtonText("继续租车")
                     .rightButtonText("取消订单")
                     .listener(object : HintDialog.OnDissmiss {

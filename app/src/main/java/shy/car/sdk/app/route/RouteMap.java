@@ -64,10 +64,10 @@ public class RouteMap {
      * shy.car.sdk.travel.wallet.ui.WalletActivity
      */
     public static final String Wallet = "/wallet/main";
-    
+
     @NotNull
     public static final String UserDetail = "/user/detail";
-    
+
     /**
      * shy.car.sdk.travel.setting.ui.SettingActivity
      */
@@ -121,14 +121,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarPointDetail = "/rent/car_point_detail";
-    
+
     /**
      * 租车详情
      * params:  withString(ParamsConstant.String1,orderID)
      */
     @NotNull
     public static final String RentCarDetail = "/rent/rent_car_detail";
-    
+
     /**
      * 支付方式选择
      * {@link * shy.car.sdk.travel.pay.dialog.PayMethodSelectDialog}
@@ -162,14 +162,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String OrderDetail = "/take/take_order_detail";
-    
+
     /**
      * 接单详情fragment
      * {@link shy.car.sdk.travel.order.ui.OrderDetailFragment}
      */
     @NotNull
     public static final String OrderTakeDetailFragment = "/take/take_order_detail_fragment";
-    
+
     /**
      * 整车发货 填写发货信息
      * {@link SendHoleCarActivity}
@@ -238,27 +238,27 @@ public class RouteMap {
      */
     @NotNull
     public static final String AddBankCard = "/bank/add";
-    
+
     /**
      * 支付保证金成功
      * {@link PromiseMoneyPaySuccessActivity}
      */
     @NotNull
     public static final String PaySuccess = "/pay/success";
-    
+
     /**
      * {@link UnLockCarActivity}
      */
     @NotNull
     public static final String UnLockCar = "/car/unlock";
-    
+
     /**
      * {@link OrderPayActivity}
      * withString(String1,oid)
      */
     @NotNull
     public static final String OrderPay = "/pay/order";
-    
+
     /**
      * {@link DrivingActivity}
      * 行程中
@@ -266,14 +266,14 @@ public class RouteMap {
      */
     @NotNull
     public static final String Driving = "/rent/driving";
-    
+
     /**
      * {@link TiXianActivity}
      * 提现
      */
     @NotNull
     public static final String TiXian = "/remain/tixian";
-    
+
     /**
      * {@link ReturnCarActivity}
      * 还车
@@ -281,7 +281,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnCar = "/rent/return";
-    
+
     /**
      * {@link ReturnCarFragment}
      * 还车并拍照
@@ -289,7 +289,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String ReturnCarUploadPhoto = "/rent/return_upload";
-    
+
     /**
      * {@link TiXianActivity}
      * 提现
@@ -298,35 +298,35 @@ public class RouteMap {
      */
     @NotNull
     public static final String TiXianSuccess = "/remain/tixian_success";
-    
+
     /**
      * {@link ReturnAreaActivity}
      * 还车区域
      */
     @NotNull
     public static final String ReturnArea = "/car/return_are";
-    
+
     /**
      * {@link CouPonActivity}
      * 优惠券
      */
     @NotNull
     public static final String Coupon = "/coupon/list";
-    
+
     /**
      * {@link PromiseMoneyReturnActivity}
      * 退还保证金
      */
     @NotNull
     public static final String ReturnPromiseMoney = "/pay/return_promise_money";
-    
+
     /**
      * {@link RentPaySuccessActivity}
      * 租车支付成功
      */
     @NotNull
     public static final String RentCarPaySuccess = "/pay/rent_car_success";
-    
+
     /**
      * {@link CarBrokeUploadActivity}
      * 故障上报
@@ -334,7 +334,7 @@ public class RouteMap {
      */
     @NotNull
     public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
-    
+
     public static final String RegisterAgree = "/html/register_agree";
     public static final String ReturnCarAgree = "/html/return_car_agree";
     public static final String About = "/html/about";
@@ -363,39 +363,39 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.user.ui.VipActivity}
      */
     public static final String Vip = "/user/vip";
-    
+
     /**
      * 发票列表
      * {@link shy.car.sdk.travel.invoice.ui.InvoiceListActivity}
      */
     public static final String InvoiceList = "/invoice/list";
-    
+
     /**
      * 提交开票申请
      * {@link shy.car.sdk.travel.invoice.ui.InvoicePostActivity}
      * withObject1（Object1,ArrayList<InvoiceList.Orders>）
      */
     public static final String InvoicePost = "/invoice/post";
-    
+
     /**
      * 反馈
      * {@link FeedBackActivity
      */
     public static final String FeedBack = "/setting/feedback";
-    
+
     /**
      * 开票历史
      * {@link shy.car.sdk.travel.invoice.data.InvoiceHistory}
      */
     public static final String InvoiceHistory = "/invoice/history";
-    
+
     /**
      * 开票详情
      * {@link shy.car.sdk.travel.invoice.data.InvoiceDetail}
      * withString(String1,id)
      */
     public static final String InvoiceDetail = "/invoice/detail";
-    
+
     /**
      * 分享
      * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
@@ -407,4 +407,12 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
      */
     public static final String SendAgreeMent = "/send/agree_ment";
+    /**
+     * 常见问题
+     */
+    public static final String QA = "/setting/qa";
+    /**
+     * 常见问题详情
+     */
+    public static final String QADetail = "/setting/qa_detail";
 }

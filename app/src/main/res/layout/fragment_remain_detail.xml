@@ -68,6 +68,7 @@
                         android:drawablePadding="5dp"
                         android:drawableStart="@drawable/iocn_question"
                         android:text="常见问题"
+                        android:onClick="@{()->fragment.gotoQA()}"
                         android:textColor="@color/_foreground_material_light"
                         android:textSize="@dimen/text_second_primary_12dp"/>
                 </LinearLayout>

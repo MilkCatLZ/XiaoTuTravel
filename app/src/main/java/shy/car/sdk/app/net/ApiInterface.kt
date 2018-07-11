@@ -24,6 +24,7 @@ import shy.car.sdk.travel.pay.data.CarSelectInfo
 import shy.car.sdk.travel.pay.data.PayAmount
 import shy.car.sdk.travel.pay.data.PayMethod
 import shy.car.sdk.travel.pay.data.PromiseMoneyDetail
+import shy.car.sdk.travel.remain.data.QAList
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.rent.data.BrokeType
 import shy.car.sdk.travel.rent.data.CarCategory
@@ -32,6 +33,7 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.send.data.CarUserTime
 import shy.car.sdk.travel.send.data.OrderSendList
 import shy.car.sdk.travel.setting.data.FeedBack
+import shy.car.sdk.travel.setting.data.Setting
 import shy.car.sdk.travel.setting.data.ShareDetail
 import shy.car.sdk.travel.take.data.DeliveryOrderList
 import shy.car.sdk.travel.user.data.Rank
@@ -413,7 +415,9 @@ interface ApiInterface {
     fun uploadCarPic(@Path("oid") order_id: String,
                      @Query(ParamsConstant.OrderId) oid: String,
                      @Part(ParamsConstant.Type) type: RequestBody,
-                     @Part image: List<MultipartBody.Part>): Observable<JsonObject> /**
+                     @Part image: List<MultipartBody.Part>): Observable<JsonObject>
+
+    /**
      * 提交身份认证
      */
     @Multipart
@@ -533,13 +537,22 @@ interface ApiInterface {
     @GET("config/invitation")
     fun getShareDetail(): Observable<ShareDetail>
 
+    @GET("qa")
+    fun getQAList(): Observable<List<QAList>>
+
+    @GET("qa/detail")
+    fun getQADetail(@Query(ParamsConstant.ID) id: String): Observable<JsonObject>
+
+    @GET("config")
+    fun getAPPSetting(): Observable<Setting>
+
     /**
      * 修改用户头像
      */
     @Multipart
     @POST("upload/images")
     fun uploadPhoto(
-                       @Part(ParamsConstant.Type) type: RequestBody? = null,
-                       @Part(ParamsConstant.UploadStatus) upload_status: RequestBody? = null,
-                       @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
+            @Part(ParamsConstant.Type) type: RequestBody? = null,
+            @Part(ParamsConstant.UploadStatus) upload_status: RequestBody? = null,
+            @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 }

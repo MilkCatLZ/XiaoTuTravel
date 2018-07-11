@@ -50,6 +50,7 @@ import shy.car.sdk.travel.interfaces.onLoginDismiss
 import shy.car.sdk.travel.location.data.CurrentLocation
 import shy.car.sdk.travel.login.ui.LoginDialogFragment
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment
+import shy.car.sdk.travel.setting.data.Setting
 import shy.car.sdk.travel.user.data.User
 import java.util.concurrent.TimeUnit
 
@@ -72,16 +73,52 @@ class Application : BaseApplication() {
         initAmap()
         initUserCache()
         initShare()
+        initPay()
+        initAppSetting()
         EventBus.builder()
                 .build()
         EventBus.getDefault()
                 .register(this)
 
 
-        initPay()
+        //支付宝沙箱环境
         if (BuildConfig.DEBUG) {
             EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX)
         }
+    }
+
+    var setting: Setting? = null
+
+    private fun initAppSetting() {
+
+        val observable = ApiManager.getInstance()
+                .api.getAPPSetting()
+        val observer = object : Observer<Setting> {
+            override fun onComplete() {
+
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: Setting) {
+                servicePhone = t.system.kfTel
+                this@Application.setting = t
+            }
+
+            override fun onError(e: Throwable) {
+                Observable.timer(5, TimeUnit.SECONDS)
+                        .subscribe({
+                            initAppSetting()
+                        }, {})
+            }
+
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
     }
 
     private fun initShare() {
@@ -119,12 +156,6 @@ class Application : BaseApplication() {
     private fun initAmap() {
         AmapLocationManager.getInstance()
                 .init(this)
-//        AmapLocationManager.instance.getLocation(object : AmapOnLocationReceiveListener {
-//            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-//                Log.d("获取位置成功", "经纬度={${location.startLatitude},${location.startLongitude}}")
-//                this@Application.location = location
-//            }
-//        })
     }
 
     private fun initPinYin() {

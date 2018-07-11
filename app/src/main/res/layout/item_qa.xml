@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+       <variable
+            name="click"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="list"
+            type="shy.car.sdk.travel.remain.data.QAList" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:onClick="@{click}"
+        android:tag="@{list}"
+        android:background="@color/_foreground_material_light"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:text="@{list.text}"
+            android:textColor="@color/text_primary_333333"
+            android:textSize="@dimen/text_title_16dp"
+            tools:text="问题1" />
+
+    </LinearLayout>
+
+</layout>

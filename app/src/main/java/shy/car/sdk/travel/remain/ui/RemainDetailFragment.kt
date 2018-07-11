@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.widget.UltimateRecyclerView
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.base.XTBaseUltimateRecyclerViewFragment
 import shy.car.sdk.app.presenter.BasePresenter
+import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentRemainDetailBinding
 import shy.car.sdk.travel.remain.data.RemainList
 import shy.car.sdk.travel.remain.presenter.RemainDetailPresenter
@@ -88,5 +90,10 @@ class RemainDetailFragment : XTBaseUltimateRecyclerViewFragment(),
         return presenter.adapter
     }
 
+    fun gotoQA() {
+        ARouter.getInstance()
+                .build(RouteMap.QA)
+                .navigation()
+    }
 
 }
