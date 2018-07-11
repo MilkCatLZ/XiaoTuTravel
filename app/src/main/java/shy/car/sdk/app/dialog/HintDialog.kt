@@ -33,6 +33,8 @@ class HintDialog : XTBaseDialogFragment() {
 
     lateinit var binding: DialogCancelHintBinding
     var message: String = ""
+    var leftButtonText: String = "取消"
+    var rightButtonText: String = "确定"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,6 +55,16 @@ class HintDialog : XTBaseDialogFragment() {
         return this
     }
 
+    fun leftButtonText(m: String): HintDialog {
+        this.leftButtonText = m
+        return this
+    }
+
+    fun rightButtonText(m: String): HintDialog {
+        this.rightButtonText = m
+        return this
+    }
+
     fun show(): HintDialog {
         try {
             show(manager, LNCUSTOM_DIALOG_DIALOG)
@@ -64,11 +76,17 @@ class HintDialog : XTBaseDialogFragment() {
 
 
     interface OnDissmiss {
-        fun onConfirmClick()
+        fun onLeftClick()
+        fun onRightClick()
     }
 
-    fun closeDialog() {
-        listener?.onConfirmClick()
+    fun leftButtonClick() {
+        listener?.onLeftClick()
+
+        dismissAllowingStateLoss()
+    }
+    fun rightButtonClick() {
+        listener?.onRightClick()
 
         dismissAllowingStateLoss()
     }

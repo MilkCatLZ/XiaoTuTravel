@@ -401,4 +401,10 @@ public class RouteMap {
      * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
      */
     public static final String Share = "/setting/share";
+
+    /**
+     * 发货协议
+     * {@link shy.car.sdk.travel.setting.ui.ShareActivity}
+     */
+    public static final String SendAgreeMent = "/send/agree_ment";
 }

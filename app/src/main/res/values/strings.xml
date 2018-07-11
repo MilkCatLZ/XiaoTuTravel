@@ -61,7 +61,7 @@
     <string name="str_locating">正在获取您的位置...</string>
     <string name="str_return_area">还车区域</string>
     <string name="str_return_car_photo">还车拍照</string>
-    <string name="str_register_agree_ment">注册协议</string>
+    <string name="str_register_agree_ment">契约条款</string>
     <string name="str_car_broke">故障申报</string>
     <string name="str_return_car_agree">还车协议</string>
     <string name="str_recharge_agree_ment">充值协议</string>

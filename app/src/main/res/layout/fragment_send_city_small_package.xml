@@ -295,6 +295,7 @@
                     <TextView
                         style="@style/style_ww.text_12_999"
                         android:text="《小兔出行运单契约条款》"
+                        android:onClick="@{()->fragment.gotoAgreeMent()}"
                         android:textColor="@color/main_color_red" />
 
                 </LinearLayout>

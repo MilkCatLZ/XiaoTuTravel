@@ -147,4 +147,10 @@ class SendCitySmallPackageFragment : XTBaseFragment(),
         isEnd = false
 
     }
+
+    fun gotoAgreeMent() {
+        ARouter.getInstance()
+                .build(RouteMap.SendAgreeMent)
+                .navigation()
+    }
 }

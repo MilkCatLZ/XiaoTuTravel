@@ -195,6 +195,11 @@ class SendHoleCarFragment : XTBaseFragment(),
 
     }
 
+    fun gotoAgreeMent() {
+        ARouter.getInstance()
+                .build(RouteMap.SendAgreeMent)
+                .navigation()
+    }
 }
 
 
