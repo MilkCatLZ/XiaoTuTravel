@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -22,7 +23,9 @@
                   android:background="@color/main_back"
                   android:orientation="vertical">
 
-        <include layout="@layout/layout_title"/>
+        <include layout="@layout/layout_title"
+            app:title="@{@string/str_tixian}"
+            />
 
         <View style="@style/style_shadow"/>
 

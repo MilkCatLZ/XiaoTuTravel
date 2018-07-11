@@ -55,6 +55,7 @@
     <string name="str_wait_pay">待支付</string>
     <string name="str_select_bank_card">请选择银行卡</string>
     <string name="str_tixian_success">提现结果</string>
+    <string name="str_tixian">提现</string>
     <string name="str_coupon">优惠券</string>
     <string name="str_driving">行程中</string>
     <string name="str_return_car">还车</string>
