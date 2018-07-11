@@ -10,10 +10,12 @@ import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.eventbus.PayCancel
 import shy.car.sdk.app.eventbus.PaySuccess
+import shy.car.sdk.travel.pay.data.PayMethod
 
 
 class WXPayEntryActivity : XTBaseActivity(),
@@ -27,11 +29,12 @@ class WXPayEntryActivity : XTBaseActivity(),
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
         api = WXAPIFactory.createWXAPI(this, BuildConfig.WXAppID, false)
         api?.handleIntent(intent, this)
+        register(this)
     }
 
     // 微信发送请求到第三方应用时，会回调到该方法
     override fun onReq(req: BaseReq) {
-        Log.d("WXPAY------------------",req.openId)
+        Log.d("WXPAY------------------", req.openId)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -48,8 +51,11 @@ class WXPayEntryActivity : XTBaseActivity(),
 
         result = when (resp.errCode) {
             BaseResp.ErrCode.ERR_OK -> {
+                val success = PaySuccess()
+                success.payMethod = PayMethod(2, "微信支付", "")
+                success.price = info?.price.toString()
                 EventBus.getDefault()
-                        .post(PaySuccess())
+                        .post(success)
                 "微信支付成功"
             }
             BaseResp.ErrCode.ERR_USER_CANCEL -> {
@@ -66,5 +72,13 @@ class WXPayEntryActivity : XTBaseActivity(),
 
         Log.e("微信支付-----------------------", result)
         finish()
+    }
+
+    private var info: PayInfo? = null
+
+    @Subscribe(sticky = true)
+    fun onPayInfo(info: PayInfo) {
+        eventBusDefault.removeStickyEvent(info)
+        this.info = info
     }
 }

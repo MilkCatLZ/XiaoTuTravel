@@ -12,21 +12,24 @@ import shy.car.sdk.app.eventbus.PayCancel
 import shy.car.sdk.app.eventbus.PaySuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.travel.pay.data.PayMethod
+import shy.car.sdk.wxapi.PayInfo
 
 class WXPayUtil {
     companion object {
         /**
          * @return true:第三方支付  false:余额支付
          */
-        fun pay(activity: XTBaseActivity, payMethod: PayMethod, results: JsonObject): Boolean {
+        fun pay(activity: XTBaseActivity, payMethod: PayMethod, price: Double, results: JsonObject): Boolean {
             when {
                 payMethod.id == 1 -> {
                     Alipay.getInstance()
                             .pay(activity, results.get("pay_info").asString, object : Alipay.OnPayCallBack {
                                 override fun onPaySuccess(payResult: PayResult?) {
-
+                                    val success = PaySuccess()
+                                    success.payMethod = PayMethod(1, "支付宝支付", "")
+                                    success.price = payResult?.result?.alipayTradeAppPayResponse?.totalAmount
                                     EventBus.getDefault()
-                                            .post(PaySuccess())
+                                            .post(success)
                                 }
 
                                 override fun onPayFailed(payResult: PayResult?) {
@@ -45,6 +48,13 @@ class WXPayUtil {
                     return true
                 }
                 payMethod.id == 2 -> {
+
+                    //这里的目的是给WXPayEntryActivity传递参数，获取价格，还未测试
+                    val info = PayInfo()
+                    info.price = price
+                    EventBus.getDefault()
+                            .postSticky(info)
+
                     val req = PayReq()
                     var result = results.getAsJsonObject("pay_info")
 

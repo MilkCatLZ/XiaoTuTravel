@@ -36,7 +36,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         PromiseMoneyPayPresenter.CallBack {
     override fun onCreatePaySuccess(t: JsonObject) {
         activity?.let {
-            WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod!!, t)
+            WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod!!, presenter.needPayAmount.get(), t)
         }
     }
 
@@ -78,8 +78,8 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         register(this)
-        if (User.instance.deposit == 0.0) {
-            btnText.set("已支付保证金${LNTextUtil.getPriceText(presenter.carSelect.get()?.promiseMoneyPrice!!)}元")
+        if (User.instance.deposit > 0.0) {
+            btnText.set("已支付保证金${LNTextUtil.getPriceText(User.instance.deposit)}元")
         } else {
             btnText.set("支付保证金0.0元")
         }
@@ -125,7 +125,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
         } else if (presenter.carSelect.get() != null && presenter.carSelect.get()?.promiseMoneyPrice!! > User.instance.deposit) {
             presenter.needPayAmount.set(presenter.carSelect.get()?.promiseMoneyPrice!! - User.instance.deposit)
             btnText.set("还需支付保证金${LNTextUtil.getPriceText(presenter.needPayAmount.get())}元")
-        }else{
+        } else {
             presenter.needPayAmount.set(0.0)
             btnText.set("还需支付保证金0.0元")
         }
@@ -145,6 +145,7 @@ class PromiseMoneyPayFragment : XTBaseFragment(),
     fun paySuccess(success: PaySuccess) {
         ARouter.getInstance()
                 .build(RouteMap.PaySuccess)
+                .withObject(Object1, success)
                 .navigation()
         eventBusDefault.post(RefreshUserInfo())
         finish()

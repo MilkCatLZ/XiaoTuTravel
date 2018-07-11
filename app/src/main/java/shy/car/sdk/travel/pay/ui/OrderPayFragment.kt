@@ -44,7 +44,7 @@ class OrderPayFragment : XTBaseFragment(),
 
     override fun getPayStringSuccess(json: JsonObject) {
         activity?.let {
-            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, json)) {
+            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, binding.detail?.realpayMoney!!, json)) {
 
             }
         }

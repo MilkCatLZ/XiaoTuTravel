@@ -49,7 +49,7 @@ class OrderDetailFragment : XTBaseFragment(),
 
     override fun onCreatePaySuccess(t: JsonObject) {
         activity?.let {
-            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, t)) {
+            if (!WXPayUtil.pay(it as XTBaseActivity, presenter.payMethod.get()!!, binding.detail?.freight?.toDouble()!!, t)) {
 
             }
         }

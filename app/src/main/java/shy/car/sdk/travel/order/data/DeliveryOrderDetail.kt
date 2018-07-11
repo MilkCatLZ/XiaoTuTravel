@@ -95,7 +95,7 @@ open class DeliveryOrderDetail : BaseObservable() {
         }
     @SerializedName("freight")
     @get:Bindable
-    var freight: String? = null
+    var freight: String = "0.0"
         set(freight) {
             field = freight
             notifyChange(BR.freight)
