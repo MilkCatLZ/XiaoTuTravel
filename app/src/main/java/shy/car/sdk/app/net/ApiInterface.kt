@@ -93,7 +93,7 @@ interface ApiInterface {
      */
     @DELETE("oauth/access_token")
 //    @HTTP(method = "DELETE", path = "oauth/access_token", hasBody = true)
-    fun logout(): Observable<JsonObject>
+    fun logout(): Observable<Response<Void>>
 
     /**
      * 获取用户详情

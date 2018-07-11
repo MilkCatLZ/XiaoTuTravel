@@ -266,7 +266,7 @@ class Application : BaseApplication() {
         val observable = ApiManager.getInstance()
                 .api.logout()
 
-        var observer = object : Observer<JsonObject> {
+        var observer = object : Observer<Response<Void>> {
             override fun onComplete() {
 
             }
@@ -275,7 +275,7 @@ class Application : BaseApplication() {
                 disposable = d
             }
 
-            override fun onNext(t: JsonObject) {
+            override fun onNext(t: Response<Void>) {
                 User.logout(this@Application)
                 EventBus.getDefault()
                         .post(UserLogout())
