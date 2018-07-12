@@ -2,7 +2,6 @@ package shy.car.sdk.app.dialog
 
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
@@ -35,6 +34,7 @@ class HintDialog : XTBaseDialogFragment() {
     var message: String = ""
     var leftButtonText: String = "取消"
     var rightButtonText: String = "确定"
+    var leftBottomVisible = true
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,6 +64,10 @@ class HintDialog : XTBaseDialogFragment() {
         this.rightButtonText = m
         return this
     }
+    fun leftBottomVisible(m: Boolean): HintDialog {
+        this.leftBottomVisible = m
+        return this
+    }
 
     fun show(): HintDialog {
         try {
@@ -85,6 +89,7 @@ class HintDialog : XTBaseDialogFragment() {
 
         dismissAllowingStateLoss()
     }
+
     fun rightButtonClick() {
         listener?.onRightClick()
 

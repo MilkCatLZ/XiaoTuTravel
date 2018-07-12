@@ -41,7 +41,7 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
-import shy.car.sdk.travel.user.data.User
+import java.util.concurrent.TimeUnit
 
 /**
  * create by lz at 2018/06/05
@@ -72,6 +72,10 @@ class FindAndRentCarFragment : XTBaseFragment(),
     var countdown: CountDownThread? = null
     var countUP: CountUpThread? = null
     val isCountDown = ObservableBoolean(true)
+    /**
+     * 取车时间倒计时
+     * 时间内未取车降自动开始计费
+     */
     private fun startCountDown() {
         if (binding.detail?.billingTime!! > 0) {
             countdown = CountDownThread(binding.detail, binding.detail?.billingTime!!)
@@ -81,16 +85,55 @@ class FindAndRentCarFragment : XTBaseFragment(),
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             isCountDown.set(false)
+                            binding.detail!!.billingTime = 0
+                            startCountUp()
                         }, {})
 
             }
             countdown?.start(txt_count_down)
         } else {
             isCountDown.set(false)
+            startCountUp()
         }
 
     }
 
+    var disposeRefresh: Disposable? = null
+
+    /**
+     * 计时计费时间累加
+     */
+    private fun startCountUp() {
+        countUP?.cancel()
+        countUP = CountUpThread(binding.detail, binding.detail?.durations!! * 60 + 1)//接口给的是按秒的
+        countUP?.start(txt_count_up)
+
+        Observable.interval(10, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Long> {
+                    override fun onComplete() {
+                        disposeRefresh
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                        disposeRefresh = d
+                    }
+
+                    override fun onNext(t: Long) {
+                        presenter.getOrderDetail()
+                    }
+
+                    override fun onError(e: Throwable) {
+
+                    }
+
+                })
+    }
+
+    /**
+     * 计算时间和路程
+     */
     private fun calTimeAndDistances() {
 
 //        activity?.let {
@@ -276,6 +319,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
         binding.mapView.map.isMyLocationEnabled = true
         binding.mapView.map.setOnMyLocationChangeListener {
+            //防止oid为null
             if (isFirstInit) {
 
                 Observable.create<String> {
@@ -302,17 +346,23 @@ class FindAndRentCarFragment : XTBaseFragment(),
     override fun onResume() {
         super.onResume()
         binding.mapView.onResume()
+        if (!isFirstInit) {
+            presenter.getOrderDetail()
+        }
     }
 
     override fun onPause() {
         super.onPause()
         binding.mapView.onPause()
+        disposeRefresh?.dispose()
     }
 
     override fun onDestroy() {
         binding.mapView.onDestroy()
         dispose?.dispose()
+        disposeRefresh?.dispose()
         countdown?.cancel()
+        countUP?.cancel()
         super.onDestroy()
     }
 
@@ -336,21 +386,41 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     fun cancelOrder() {
         activity?.let {
-            HintDialog.with(it, childFragmentManager)
-                    .message("当日取消订单${app.setting?.order?.dayMaxCancelNum}次将无法继续租车")
-                    .leftButtonText("继续租车")
-                    .rightButtonText("取消订单")
-                    .listener(object : HintDialog.OnDissmiss {
-                        override fun onLeftClick() {
+            if (binding.detail?.billingTime!! > 0) {
+                HintDialog.with(it, childFragmentManager)
+                        .message("当日取消订单${app.setting?.order?.dayMaxCancelNum}次将无法继续租车")
+                        .leftButtonText("继续租车")
+                        .rightButtonText("取消订单")
+                        .listener(object : HintDialog.OnDissmiss {
+                            override fun onLeftClick() {
 
-                        }
+                            }
 
-                        override fun onRightClick() {
-                            presenter.cancelOrder()
-                        }
+                            override fun onRightClick() {
+                                presenter.cancelOrder()
+                            }
 
-                    })
-                    .show()
+                        })
+                        .show()
+            } else {
+                HintDialog.with(it, childFragmentManager)
+                        .message("取消订单您还需要支付超时费用")
+                        .leftBottomVisible(false)
+                        .rightButtonText("取消订单")
+                        .listener(object : HintDialog.OnDissmiss {
+                            override fun onLeftClick() {
+
+                            }
+
+                            override fun onRightClick() {
+                                presenter.cancelOrder()
+                            }
+
+                        })
+                        .show()
+
+            }
+
         }
     }
 

@@ -6,7 +6,6 @@ import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
 import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.app.LNTextUtil
 
 class RentOrderDetail : BaseObservable() {
@@ -110,6 +109,13 @@ class RentOrderDetail : BaseObservable() {
     @SerializedName("duration")
     @get:Bindable
     var duration: String? = null
+        set(duration) {
+            field = duration
+            notifyChange(BR.duration)
+        }
+    @SerializedName("durations")
+    @get:Bindable
+    var durations: Long = 0
         set(duration) {
             field = duration
             notifyChange(BR.duration)

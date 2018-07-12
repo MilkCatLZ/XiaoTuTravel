@@ -32,7 +32,7 @@
             android:layout_height="46dp"
             android:background="@color/_foreground_material_light"
             android:gravity="center_vertical"
-            android:paddingEnd="15dp"
+
             android:paddingStart="13dp">
 
             <!--<TextView-->
@@ -77,9 +77,11 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
                 android:onClick="@{()->fragment.onCancel()}"
                 android:text="取消"
+                android:gravity="center"
+                android:paddingEnd="15dp"
                 android:textColor="@color/text_third_primary_999999"
                 android:textSize="@dimen/text_primary_14dp"/>
 

@@ -6,17 +6,17 @@
 
         <variable
             name="dialog"
-            type="shy.car.sdk.app.dialog.HintDialog" />
+            type="shy.car.sdk.app.dialog.HintDialog"/>
 
 
     </data>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:gravity="center">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@android:color/transparent"
+                  android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             <ImageView
                 android:layout_width="54dp"
                 android:layout_height="54dp"
-                android:src="@drawable/icon_warn" />
+                android:src="@drawable/icon_warn"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,11 +41,11 @@
                 android:text="@{dialog.message}"
                 android:textColor="@color/text_second_primary_666666"
                 android:textSize="@dimen/text_primary_14dp"
-                tools:text="当日取消订单5次将无法租车" />
+                tools:text="当日取消订单5次将无法租车"/>
 
             <View
                 style="@style/line_horizontal"
-                android:layout_marginTop="18dp" />
+                android:layout_marginTop="18dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,14 +59,15 @@
                     android:gravity="center"
                     android:minHeight="50dp"
                     android:onClick="@{()->dialog.leftButtonClick()}"
-
                     android:text="@{dialog.leftButtonText}"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="@dimen/text_title_16dp" />
+                    android:textSize="@dimen/text_title_16dp"
+                    android:visibleOrGone="@{dialog.leftBottomVisible}"/>
 
                 <View
                     style="@style/line_vertical"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:visibleOrGone="@{dialog.leftBottomVisible}"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,7 +78,7 @@
                     android:onClick="@{()->dialog.rightButtonClick()}"
                     android:text="@{dialog.rightButtonText}"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="@dimen/text_title_16dp" />
+                    android:textSize="@dimen/text_title_16dp"/>
 
             </LinearLayout>
         </LinearLayout>
