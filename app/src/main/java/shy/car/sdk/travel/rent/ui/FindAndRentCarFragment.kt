@@ -405,9 +405,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
                         .show()
             } else {
                 HintDialog.with(it, childFragmentManager)
-                        .message("取消订单您还需要支付超时费用")
+                        .message("您还需要支付超时费用")
                         .leftBottomVisible(false)
-                        .rightButtonText("取消订单")
+                        .rightButtonText("确定取消")
                         .listener(object : HintDialog.OnDissmiss {
                             override fun onLeftClick() {
 
