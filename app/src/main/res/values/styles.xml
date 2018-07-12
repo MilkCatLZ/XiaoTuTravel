@@ -163,4 +163,10 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/_foreground_material_light</item>
     </style>
+
+    <style name="stars" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/stars</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+    </style>
 </resources>

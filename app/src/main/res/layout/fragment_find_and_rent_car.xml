@@ -112,8 +112,8 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
                         android:drawableTop="@drawable/icon_path"
-                        android:text="导航"
                         android:onClick="@{()->fragment.naviTo()}"
+                        android:text="导航"
                         android:textColor="@color/text_primary_333333"
                         android:textSize="@dimen/text_second_primary_12dp" />
 
@@ -129,45 +129,52 @@
                     android:paddingEnd="14dp"
                     android:paddingStart="12dp">
 
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="5dp"
-                        android:drawableStart="@drawable/icon_send_time"
-                        android:gravity="center_vertical"
-                        android:text="请尽快到达取车点"
-                        android:textColor="@color/text_second_primary_666666"
-                        android:textSize="@dimen/text_second_primary_12dp"
-                        android:visibleOrGone="@{fragment.isCountDown}" />
+                        android:visibleOrGone="@{fragment.isCountDown}">
 
-                    <TextView
-                        android:id="@+id/txt_count_down"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/main_color_red"
-                        android:textSize="@dimen/text_second_primary_12dp"
-                        android:visibleOrGone="@{fragment.isCountDown}"
-                        tools:text="30分50秒" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:drawableStart="@drawable/icon_send_time"
+                            android:gravity="center_vertical"
+                            android:text="请尽快到达取车点"
+                            android:textColor="@color/text_second_primary_666666"
+                            android:textSize="@dimen/text_second_primary_12dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="后开始计费"
-                        android:textColor="@color/text_second_primary_666666"
-                        android:textSize="@dimen/text_second_primary_12dp"
-                        android:visibleOrGone="@{fragment.isCountDown}" />
+                        <TextView
+                            android:id="@+id/txt_count_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/main_color_red"
+                            android:textSize="@dimen/text_second_primary_12dp"
+                            tools:text="30分50秒" />
 
-                    <TextView
-                        android:id="@+id/txt_already_take_money"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="后开始计费"
+                            android:textColor="@color/text_second_primary_666666"
+                            android:textSize="@dimen/text_second_primary_12dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="5dp"
-                        android:drawableStart="@drawable/icon_send_time"
-                        android:text="订单已开始计费，请尽快取车"
-                        android:textColor="@color/text_second_primary_666666"
-                        android:textSize="@dimen/text_second_primary_12dp"
-                        android:visibleOrGone="@{!fragment.isCountDown}" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_already_take_money"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:drawableStart="@drawable/icon_send_time"
+                            android:text="订单已开始计费，请尽快取车"
+                            android:textColor="@color/text_second_primary_666666"
+                            android:textSize="@dimen/text_second_primary_12dp"
+                            android:visibleOrGone="@{!fragment.isCountDown}" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

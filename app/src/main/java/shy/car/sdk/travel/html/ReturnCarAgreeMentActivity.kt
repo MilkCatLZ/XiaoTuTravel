@@ -18,6 +18,7 @@ class ReturnCarAgreeMentActivity : XTBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_return_car_agreement)
         webView_register_agreement.settings.domStorageEnabled = true
-        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/return_car.html")
+//        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/return_car.html")
+        webView_register_agreement.loadUrl(app.setting?.htmls?.returnCarAgreement)
     }
 }

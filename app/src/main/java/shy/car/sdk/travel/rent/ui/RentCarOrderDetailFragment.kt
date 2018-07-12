@@ -17,6 +17,7 @@ import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentRentCarOrderDetailBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
+import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.presenter.RentCarOrderDetailPresenter
 
 /**
@@ -74,10 +75,11 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
     }
 
     fun gotuCommentProcess() {
-        ARouter.getInstance()
-                .build(RouteMap.RentComment)
-                .withObject(Object1, binding.detail)
-                .navigation()
+        if (binding.detail?.status == RentOrderState.Finish)
+            ARouter.getInstance()
+                    .build(RouteMap.RentComment)
+                    .withObject(Object1, binding.detail)
+                    .navigation()
     }
 
     fun gotuInsuranceProcess() {
@@ -86,4 +88,11 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
                 .navigation()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (orderID.isNotEmpty()) {
+            presenter.getRentOrderDetail(orderID)
+        }
+    }
 }

@@ -95,7 +95,7 @@ class DrivingFragment : XTBaseFragment(),
             }
                     .subscribeOn(Schedulers.io())
                     .flatMap {
-                        Observable.interval(0, 30, TimeUnit.SECONDS)
+                        Observable.interval(0, 10, TimeUnit.SECONDS)
                     }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

@@ -31,6 +31,7 @@ public class ParamsConstant {
     public static final String KeyWord = "keyword";
     public static final String UID = "user_id";
     public static final String OrderId = "order_id";
+    public static final String Level = "level";
     public static final String Verify = "verify";
     public static final String UserName = "username";
     public static final String ClientID = "client_id";

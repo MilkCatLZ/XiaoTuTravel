@@ -21,7 +21,7 @@
             name="detail"
             type="shy.car.sdk.travel.order.data.RentOrderDetail" />
 
-        <import type="shy.car.sdk.travel.rent.data.RentOrderState"/>
+        <import type="shy.car.sdk.travel.rent.data.RentOrderState" />
     </data>
 
     <LinearLayout
@@ -286,9 +286,9 @@
                     android:layout_height="wrap_content"
                     android:background="@color/_foreground_material_light"
                     android:orientation="vertical"
-                    android:visibleOrGone="@{detail.status==RentOrderState.Return||detail.status==RentOrderState.Finish}"
+                    android:paddingBottom="20dp"
                     android:paddingTop="10dp"
-                    android:paddingBottom="20dp">
+                    android:visibleOrGone="@{detail.status==RentOrderState.Return||detail.status==RentOrderState.Finish}">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -313,6 +313,7 @@
                             android:layout_marginStart="5dp"
                             android:layout_weight="1" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -497,7 +498,20 @@
 
                         <TextView
                             style="@style/style_order_detail_title"
-                            android:text="使用服务" />
+                            android:text="订单编号" />
+
+                        <TextView
+                            style="@style/style_order_detail_text"
+                            android:text="@{detail.orderId}"
+                            tools:text="20180505" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/style_order_detail_money_detail_content">
+
+                        <TextView
+                            style="@style/style_order_detail_title"
+                            android:text="使用车辆" />
 
                         <TextView
                             style="@style/style_order_detail_text"
@@ -508,31 +522,6 @@
 
                     </LinearLayout>
 
-                    <LinearLayout style="@style/style_order_detail_money_detail_content">
-
-                        <TextView
-                            style="@style/style_order_detail_title"
-                            android:text="支付方式" />
-
-                        <TextView
-                            style="@style/style_order_detail_text"
-                            android:text="微信支付"
-                            tools:text="@{detail.payMethod}" />
-
-                    </LinearLayout>
-
-                    <LinearLayout style="@style/style_order_detail_money_detail_content">
-
-                        <TextView
-                            style="@style/style_order_detail_title"
-                            android:text="付款时间" />
-
-                        <TextView
-                            style="@style/style_order_detail_text"
-                            android:text="@{detail.finishAt}"
-                            tools:text="04-10 15:00" />
-
-                    </LinearLayout>
 
                     <LinearLayout style="@style/style_order_detail_money_detail_content">
 
@@ -564,14 +553,29 @@
 
                         <TextView
                             style="@style/style_order_detail_title"
-                            android:text="订单编号" />
+                            android:text="付款时间" />
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="@{detail.orderId}"
-                            tools:text="20180505" />
+                            android:text="@{detail.finishAt}"
+                            tools:text="04-10 15:00" />
 
                     </LinearLayout>
+
+                    <LinearLayout style="@style/style_order_detail_money_detail_content">
+
+                        <TextView
+                            style="@style/style_order_detail_title"
+                            android:text="支付方式" />
+
+                        <TextView
+                            style="@style/style_order_detail_text"
+                            android:text="微信支付"
+                            tools:text="@{detail.payMethod}" />
+
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <Space

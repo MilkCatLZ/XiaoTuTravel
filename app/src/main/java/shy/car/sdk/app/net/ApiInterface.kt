@@ -485,7 +485,7 @@ interface ApiInterface {
 
 
     /**
-     * 修改用户头像
+     * 提交车辆故障
      */
     @Multipart
     @POST("cars/notice")
@@ -493,6 +493,17 @@ interface ApiInterface {
                        @Part(ParamsConstant.Type) type: RequestBody? = null,
                        @Part(ParamsConstant.Content) content: RequestBody? = null,
                        @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
+
+    /**
+     * 修改用户头像
+     */
+    @Multipart
+    @POST("comments")
+    fun uploadComment(
+            @Part(ParamsConstant.OrderId) oid: RequestBody? = null,
+            @Part(ParamsConstant.Level) level: RequestBody? = null,
+            @Part(ParamsConstant.Content) content: RequestBody? = null,
+            @Part image: List<MultipartBody.Part>? = null): Observable<JsonObject>
 
 
     /**

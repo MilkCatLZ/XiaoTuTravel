@@ -167,6 +167,7 @@ dependencies {
         exclude module: 'support-annotations'
     }
     implementation 'com.alibaba:arouter-api:1.3.1'
+    implementation 'com.github.CB-ysx:CBRatingBar:3.0.0'
     kapt 'com.alibaba:arouter-compiler:1.1.4'
 
     testImplementation 'junit:junit:4.12'

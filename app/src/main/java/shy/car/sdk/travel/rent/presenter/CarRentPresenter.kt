@@ -41,7 +41,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
     var carCategoryListAdapter: DataBindingItemClickAdapter<CarCategory> = DataBindingItemClickAdapter(R.layout.item_car_title, BR.car, BR.click, View.OnClickListener {
         val carCategory = it.tag as CarCategory
         selectedCarCaterogyID.set(carCategory.id)
-        getUsableCarList(null)
+        getNetWorkList(carCategory.id)
     }, DataBindingAdapter.CallBack { holder, position ->
         holder.binding.setVariable(BR.presenter, this@CarRentPresenter)
     })
@@ -89,7 +89,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
 
     var carPoint: NearCarPoint? = null
     fun getUsableCarList(carPoint: NearCarPoint?) {
-        if (carPoint !== null)
+        if (carPoint != null)
             this.carPoint = carPoint
         var watching = Observable.create<String> {
             var isCarModelSelected = false
@@ -190,7 +190,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
             400101 -> {
                 //TODO 400101
             }
-            400102->{
+            400102 -> {
                 //TODO 400102
                 ToastManager.showShortToast(context, "请先支付未完成的订单")
             }
@@ -205,14 +205,18 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
         }
     }
 
-
     fun getNetWorkList() {
+        getNetWorkList(null)
+    }
+
+
+    fun getNetWorkList(id: String?) {
 
         Observable.create<String> {
             while (StringUtils.isEmpty(app.location.cityCode)) {
                 try {
                     Thread.sleep(100)
-                } catch (_: Exception){
+                } catch (_: Exception) {
 
                 }
             }
@@ -223,7 +227,7 @@ class CarRentPresenter(context: Context, var callBack: CallBack) : BasePresenter
                 .subscribe({
 
                     val observable = ApiManager.getInstance()
-                            .api.getNearList(it, car = selectedCarCaterogyID.get())
+                            .api.getNearList(it, car = id)
                     val observer = object : Observer<ArrayList<NearCarPoint>> {
                         override fun onComplete() {
 

@@ -18,6 +18,7 @@ class RechargeAgreeMentActivity : XTBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recharge_agreement)
         webView_register_agreement.settings.domStorageEnabled = true
-        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/charge.html")
+        webView_register_agreement.loadUrl(app.setting?.htmls?.chargeAgreement)
+//        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/charge.html")
     }
 }

@@ -142,7 +142,7 @@ class CarRentFragment : XTBaseFragment() {
                 currentSelectedNetWork.set(t[0])
                 this@CarRentFragment.carPointList.clear()
                 this@CarRentFragment.carPointList.addAll(t)
-                showMarkers(zoomLevel)
+//                showMarkers(zoomLevel)
             }
 
         }
@@ -397,10 +397,11 @@ class CarRentFragment : XTBaseFragment() {
                 carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
                 it.showInfoWindow()
             } else {
-                val carPoint = findCarPoint(it.position)
-                currentSelectedNetWork.set(carPoint)
-                carRentPresenter.getUsableCarList(carPoint)
-                it.hideInfoWindow()
+                val netWork = findCarPoint(it.position)
+                currentSelectedNetWork.set(netWork)
+                findRoutToCar(it.position.latitude, it.position.longitude)
+//                carRentPresenter.getUsableCarList(null)
+//                it.hideInfoWindow()
             }
 
             true
@@ -411,8 +412,10 @@ class CarRentFragment : XTBaseFragment() {
         binding.map.map.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
             override fun onCameraChangeFinish(cameraPosition: CameraPosition?) {
 
-                if (zoomLevel != cameraPosition?.zoom)
+                if (zoomLevel != cameraPosition?.zoom) {
                     showMarkers(cameraPosition?.zoom!!)
+                    findRoutToMarker(cameraPosition?.zoom!!)
+                }
                 zoomLevel = cameraPosition.zoom
             }
 
@@ -465,15 +468,23 @@ class CarRentFragment : XTBaseFragment() {
             }
         } else {
             showNetWork()
-//            if (currentSelectedNetWork.get() != null) {
-//                val marker = findMarker(LatLng(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!), netWorkMarkerList)
-//                marker?.showInfoWindow()
-//            }
         }
 
         carPointList.map {
             drawPointAngel(it)
         }
+    }
+
+    private fun findRoutToMarker(zoomLevel: Float) {
+
+        if (zoomLevel >= MaxZoom) {
+            if (currentSelectedCarInfo.get() != null)
+                findRoutToCar(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)
+        } else {
+            if (currentSelectedNetWork.get() != null)
+                findRoutToCar(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!)
+        }
+
     }
 
     private fun showNetWork() {
@@ -678,8 +689,8 @@ class CarRentFragment : XTBaseFragment() {
     private fun addNetWorkMarkersToMap(point: NearCarPoint) {
         activity?.let {
             val markerBinding = DataBindingUtil.inflate<ItemNetworkBinding>(LayoutInflater.from(it), R.layout.item_network, null, false)
-            val txt=markerBinding.root.findViewById(R.id.txt_car_num) as TextView
-            txt.text="${point.usableCarsNum}辆"
+            val txt = markerBinding.root.findViewById(R.id.txt_car_num) as TextView
+            txt.text = "${point.usableCarsNum}辆"
             val marker = binding.map.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromView(markerBinding.root))
                     .anchor(0.5f, 1.0f)
                     .title(point.name)
@@ -799,7 +810,7 @@ class CarRentFragment : XTBaseFragment() {
         netWorkMarkerList.map {
             if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
                 it.showInfoWindow()
-                carRentPresenter.getUsableCarModel()
+//                carRentPresenter.getUsableCarModel()
                 carRentPresenter.getUsableCarList(nearCar)
             }
         }

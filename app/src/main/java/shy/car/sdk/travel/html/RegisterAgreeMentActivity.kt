@@ -18,6 +18,7 @@ class RegisterAgreeMentActivity : XTBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_agreement)
         webView_register_agreement.settings.domStorageEnabled = true
-        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/register.html")
+        webView_register_agreement.loadUrl(app.setting?.htmls?.registerAgreement)
+//        webView_register_agreement.loadUrl(BuildConfig.Host + app.InterfaceVersion + "/html/agreement/register.html")
     }
 }

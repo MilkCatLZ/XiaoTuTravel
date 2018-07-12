@@ -34,6 +34,7 @@ import shy.car.sdk.app.dialog.HintDialog
 import shy.car.sdk.app.eventbus.TakeCarSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.CountDownThread
+import shy.car.sdk.app.util.CountUpThread
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentFindAndRentCarBinding
 import shy.car.sdk.travel.order.data.RentOrderDetail
@@ -69,6 +70,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     var dispose: Disposable? = null
     var countdown: CountDownThread? = null
+    var countUP: CountUpThread? = null
     val isCountDown = ObservableBoolean(true)
     private fun startCountDown() {
         if (binding.detail?.billingTime!! > 0) {
@@ -77,7 +79,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
                 Observable.just("")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ isCountDown.set(false) }, {})
+                        .subscribe({
+                            isCountDown.set(false)
+                        }, {})
 
             }
             countdown?.start(txt_count_down)
