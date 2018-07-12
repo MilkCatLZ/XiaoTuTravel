@@ -108,7 +108,7 @@ class FindAndRentCarFragment : XTBaseFragment(),
         countUP = CountUpThread(binding.detail, binding.detail?.durations!! * 60 + 1)//接口给的是按秒的
         countUP?.start(txt_count_up)
         disposeRefresh?.dispose()
-        
+
         Observable.interval(10, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
