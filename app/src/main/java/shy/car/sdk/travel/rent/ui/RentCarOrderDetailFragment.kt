@@ -9,6 +9,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.base.databinding.DataBindingAdapter
 import com.base.util.Phone
 import com.base.widget.FullLinearLayoutManager
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_rent_car_order_detail.*
 import shy.car.sdk.BR
 import shy.car.sdk.R
@@ -31,10 +34,6 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
     lateinit var binding: FragmentRentCarOrderDetailBinding
     lateinit var presenter: RentCarOrderDetailPresenter
     var orderID = ""
-        set(value) {
-            field = value
-            presenter.getRentOrderDetail(value)
-        }
 
     override fun getDetailSuccess(t: RentOrderDetail) {
         binding.detail = t
@@ -91,8 +90,17 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
 
     override fun onResume() {
         super.onResume()
-        if (orderID.isNotEmpty()) {
-            presenter.getRentOrderDetail(orderID)
+        Observable.create<String> {
+            while (orderID.isNullOrEmpty()) {
+                Thread.sleep(200)
+            }
+            it.onNext(orderID)
         }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    presenter.getRentOrderDetail(orderID)
+                }, {})
+
     }
 }
