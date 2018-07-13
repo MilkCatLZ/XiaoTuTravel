@@ -113,12 +113,12 @@ class RentOrderDetail : BaseObservable() {
             field = duration
             notifyChange(BR.duration)
         }
-    @SerializedName("durations")
+    @SerializedName("start_billing_time")
     @get:Bindable
-    var durations: Long = 0
+    var startBillingTime: Long = 0
         set(duration) {
             field = duration
-            notifyChange(BR.duration)
+            notifyChange(BR.startBillingTime)
         }
     @SerializedName("status")
     @get:Bindable

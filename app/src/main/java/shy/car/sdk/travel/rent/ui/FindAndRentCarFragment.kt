@@ -41,6 +41,7 @@ import shy.car.sdk.travel.order.data.RentOrderDetail
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.dialog.RingCarDialogFragment
 import shy.car.sdk.travel.rent.presenter.FindAndRentCarPresenter
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
@@ -105,7 +106,9 @@ class FindAndRentCarFragment : XTBaseFragment(),
      */
     private fun startCountUp() {
         countUP?.cancel()
-        countUP = CountUpThread(binding.detail, binding.detail?.durations!! * 60 + 1)//接口给的是按秒的
+        var second = (System.currentTimeMillis() / 1000 - binding.detail?.startBillingTime!!)
+
+        countUP = CountUpThread(binding.detail, second + 1)//接口给的是按秒的
         countUP?.start(txt_count_up)
         disposeRefresh?.dispose()
 
