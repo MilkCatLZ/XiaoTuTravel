@@ -24,8 +24,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:animateLayoutChanges="true"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:background="@android:color/transparent"
         android:orientation="vertical"
         android:paddingEnd="8dp"
@@ -36,9 +36,9 @@
         <com.dd.ShadowLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit||!user.isIdentityAuth)}"
             app:sl_shadowColor="#dcdcdc"
             app:sl_shadowRadius="5dp"
-            android:visibleOrGone="@{user.login &amp;&amp;(!user.isDeposit||!user.isIdentityAuth)}"
             tools:background="@color/_foreground_material_light">
 
             <LinearLayout
@@ -177,7 +177,8 @@
 
         <com.dd.ShadowLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="wrap_content"
+            android:minHeight="160dp"
             app:sl_shadowColor="#dcdcdc"
             app:sl_shadowRadius="5dp"
             tools:background="@color/_foreground_material_light">
@@ -225,7 +226,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
 
                     <TextView
                         android:layout_width="0dp"

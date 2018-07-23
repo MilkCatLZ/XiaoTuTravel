@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.AMap
+import com.amap.api.maps.CameraUpdate
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
@@ -113,11 +114,11 @@ class CarRentFragment : XTBaseFragment() {
      * false:无可用车辆，不现实
      */
     val hasUsableCar = ObservableBoolean(true)
-
+    var walkRouteOverlay: WalkRouteOverlay? = null
     var isRefershSuccess = false
 
     lateinit var carListViewPager: ViewPager
-
+    val MaxZoom = 15f
     /**
      * 定位默认图标
      */
@@ -126,7 +127,7 @@ class CarRentFragment : XTBaseFragment() {
     /**
      * 记录当前缩放等级,用于判断是显示车辆还是网点
      */
-    private var zoomLevel: Float = 14f
+    private var zoomLevel: Float = 15f
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
             eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
@@ -160,7 +161,7 @@ class CarRentFragment : XTBaseFragment() {
                 currentSelectedCarInfo.set(t[0])
                 setupCurrentCarInfo(t[0])
                 calDistanceAndTimeInfo()
-                findRoutToCar(t[0].lat, t[0].lng)
+                findRoutToPosition(t[0].lat, t[0].lng)
                 hasUsableCar.set(true)
             } else {
                 hasUsableCar.set(false)
@@ -176,8 +177,7 @@ class CarRentFragment : XTBaseFragment() {
     }
 
 
-    var walkRouteOverlay: WalkRouteOverlay? = null
-    private fun findRoutToCar(lat: Double, lng: Double) {
+    private fun findRoutToPosition(lat: Double, lng: Double) {
 
         val routeSearch = RouteSearch(activity)
 
@@ -339,7 +339,9 @@ class CarRentFragment : XTBaseFragment() {
                 val carInfo = carRentPresenter.carListAdapter.items[position]
                 setupCurrentCarInfo(carInfo)
                 calDistanceAndTimeInfo()
-                findRoutToCar(carInfo.lat, carInfo.lng)
+                findRoutToPosition(carInfo.lat, carInfo.lng)
+                binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(carInfo.lat, carInfo.lng)))
+                binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(MaxZoom), 200, null)
 
             }
         })
@@ -399,9 +401,12 @@ class CarRentFragment : XTBaseFragment() {
             } else {
                 val netWork = findCarPoint(it.position)
                 currentSelectedNetWork.set(netWork)
-                findRoutToCar(it.position.latitude, it.position.longitude)
-//                carRentPresenter.getUsableCarList(null)
-//                it.hideInfoWindow()
+                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0)
+                    findRoutToPosition(it.position.latitude, it.position.longitude)
+                else {
+                    walkRouteOverlay?.removeFromMap()
+                    ToastManager.showShortToast(activity, "该网点没有可用车辆")
+                }
             }
 
             true
@@ -414,7 +419,7 @@ class CarRentFragment : XTBaseFragment() {
 
                 if (zoomLevel != cameraPosition?.zoom) {
                     showMarkers(cameraPosition?.zoom!!)
-                    findRoutToMarker(cameraPosition?.zoom!!)
+                    findRoutToMarker(cameraPosition.zoom)
                 }
                 zoomLevel = cameraPosition.zoom
             }
@@ -457,7 +462,7 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
-    val MaxZoom = 14f
+
     private fun showMarkers(zoomLevel: Float) {
 
         if (zoomLevel >= MaxZoom) {
@@ -465,6 +470,8 @@ class CarRentFragment : XTBaseFragment() {
             if (currentSelectedCarInfo.get() != null) {
                 val marker = findMarker(LatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), carMarkerList)
                 marker?.showInfoWindow()
+            } else {
+                walkRouteOverlay?.removeFromMap()
             }
         } else {
             showNetWork()
@@ -475,17 +482,6 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
-    private fun findRoutToMarker(zoomLevel: Float) {
-
-        if (zoomLevel >= MaxZoom) {
-            if (currentSelectedCarInfo.get() != null)
-                findRoutToCar(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)
-        } else {
-            if (currentSelectedNetWork.get() != null)
-                findRoutToCar(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!)
-        }
-
-    }
 
     private fun showNetWork() {
         binding.map.map.clear()
@@ -519,6 +515,29 @@ class CarRentFragment : XTBaseFragment() {
             }
         }
         return null
+    }
+
+
+    private fun findRoutToMarker(zoomLevel: Float) {
+
+        if (zoomLevel >= MaxZoom) {
+            if (currentSelectedCarInfo.get() != null) {
+                findRoutToPosition(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)
+            } else {
+                walkRouteOverlay?.removeFromMap()
+            }
+        } else {
+            if (currentSelectedNetWork.get() != null) {
+                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0)
+                    findRoutToPosition(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!)
+                else {
+                    walkRouteOverlay?.removeFromMap()
+                }
+            } else {
+                walkRouteOverlay?.removeFromMap()
+            }
+        }
+
     }
 
     private fun findCar(position: LatLng): CarInfo? {

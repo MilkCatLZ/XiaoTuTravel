@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="ac"
-            type="shy.car.sdk.travel.setting.ui.SettingActivity"/>
+            type="shy.car.sdk.travel.setting.ui.SettingActivity" />
 
         <variable
             name="user"
-            type="shy.car.sdk.travel.user.data.User"/>
+            type="shy.car.sdk.travel.user.data.User" />
+
+        <import type="com.base.util.Phone" />
     </data>
 
     <LinearLayout
@@ -26,48 +28,47 @@
 
         <include
             layout="@layout/layout_title"
-            app:title="@{@string/str_setting}"/>
+            app:title="@{@string/str_setting}" />
 
-        <View
-            style="@style/style_shadow"/>
+        <View style="@style/style_shadow" />
 
 
         <LinearLayout
             android:id="@+id/layout_account"
             style="@style/style_setting_content"
-            android:onClick="@{()->ac.changeMobile()}"
-            android:layout_marginTop="7dp">
+            android:layout_marginTop="7dp"
+            android:onClick="@{()->ac.changeMobile()}">
 
             <TextView
                 style="@style/style_setting_nav_title"
-                android:text="我的账号"/>
+                android:text="我的账号" />
 
             <TextView
                 style="@style/style_setting_nav_hint"
-                android:text="@{user.phone}"/>
+                android:text="@{Phone.phoneEncode(user.phone)}" />
 
             <ImageView
                 style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return"/>
+                android:src="@drawable/login_return" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_feed_back"
             style="@style/style_setting_content"
-            android:onClick="@{()->ac.feedBack()}"
-            android:layout_marginTop="7dp">
+            android:layout_marginTop="7dp"
+            android:onClick="@{()->ac.feedBack()}">
 
             <TextView
                 style="@style/style_setting_nav_title"
-                android:text="意见反馈"/>
+                android:text="意见反馈" />
 
 
             <ImageView
                 style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return"/>
+                android:src="@drawable/login_return" />
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
         <LinearLayout
             android:id="@+id/layout_cache"
@@ -76,21 +77,21 @@
 
             <TextView
                 style="@style/style_setting_nav_title"
-                android:text="清楚缓存"/>
+                android:text="清楚缓存" />
 
 
             <TextView
                 android:id="@+id/txtSettingCache"
                 style="@style/style_setting_nav_hint"
-                android:text="3MB"/>
+                android:text="3MB" />
 
             <ImageView
                 style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return"/>
+                android:src="@drawable/login_return" />
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
         <LinearLayout
             android:id="@+id/layout_version"
@@ -99,33 +100,33 @@
 
             <TextView
                 style="@style/style_setting_nav_title"
-                android:text="版本更新"/>
+                android:text="版本更新" />
 
 
             <TextView
                 style="@style/style_setting_nav_hint"
-                android:text="@{ac.version}"/>
+                android:text="@{ac.version}" />
 
             <ImageView
                 style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return"/>
+                android:src="@drawable/login_return" />
 
         </LinearLayout>
 
-        <View style="@style/line_horizontal"/>
+        <View style="@style/line_horizontal" />
 
         <LinearLayout
             android:id="@+id/layout_about"
-            android:onClick="@{()->ac.about()}"
-            style="@style/style_setting_content">
+            style="@style/style_setting_content"
+            android:onClick="@{()->ac.about()}">
 
             <TextView
                 style="@style/style_setting_nav_title"
-                android:text="关于小兔 "/>
+                android:text="关于小兔 " />
 
             <ImageView
                 style="@style/style_setting_nav_arrow"
-                android:src="@drawable/login_return"/>
+                android:src="@drawable/login_return" />
 
         </LinearLayout>
 
@@ -136,11 +137,11 @@
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
-            android:onClick="@{()->ac.logout()}"
             android:background="@drawable/back_button_main_green_corner"
             android:gravity="center"
+            android:onClick="@{()->ac.logout()}"
             android:text="退出登录"
             android:textColor="@color/_foreground_material_light"
-            android:textSize="@dimen/text_title_16dp"/>
+            android:textSize="@dimen/text_title_16dp" />
     </LinearLayout>
 </layout>
