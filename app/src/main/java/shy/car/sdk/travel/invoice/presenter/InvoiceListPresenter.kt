@@ -3,9 +3,10 @@ package shy.car.sdk.travel.invoice.presenter
 import android.content.Context
 import android.databinding.*
 import android.support.v7.widget.RecyclerView
-import android.widget.CheckBox
+import android.view.View
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.ItemViewHolder
+import com.base.util.DoubleUtil
 import com.base.widget.FullLinearLayoutManager
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -22,10 +23,15 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
     val selectAllChecked = ObservableBoolean(false)
     private val invoiceList = ArrayList<InvoiceList>()
 
-    var totalInvoiceCount = 0
+
+    var totalInvoicePrice = ObservableDouble(0.0)
     var pageSize = 10
     var pageIndex = 1
-    val invoiceCount = ObservableField<String>()
+    val invoiceCount = ObservableField<String>("0")
+    /**
+     * 保存列表中所有发票的总数，用于判断是否全选
+     */
+    private var totalInvoiceCount: Int = 0
 
     val allChecked = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
@@ -46,7 +52,8 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
 
     private fun setupInvoice(holder: ItemViewHolder<*>, position: Int) {
 
-        val orderAdapter = DataBindingItemClickAdapter<InvoiceList.Orders>(R.layout.item_invoice_list_detail, BR.orders, BR.click, {}, { holder, position ->
+        val orderAdapter = DataBindingItemClickAdapter<InvoiceList.Orders>(R.layout.item_invoice_list_detail, BR.orders, BR.click, {
+        }, { holder, position ->
             setupOrders(holder, position)
         })
         orderAdapter.setItems(invoiceList[position].orders, 1)
@@ -57,31 +64,38 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
     }
 
     private fun setupOrders(holder: ItemViewHolder<*>, position: Int) {
-        val checkBox = holder.binding.root.findViewById<CheckBox>(R.id.check_order)
-        checkBox.setOnClickListener {
-            val check = it as CheckBox
-            if (check.isChecked) {
-                if (!checkList.contains(checkBox.tag))
-                    checkList.add(checkBox.tag as InvoiceList.Orders)
-                if (checkList.size == totalInvoiceCount) {
-                    selectAllChecked.set(true)
-                }
-            } else {
-                checkList.remove(checkBox.tag)
-                if (selectAllChecked.get()) {
-                    selectAllChecked.removeOnPropertyChangedCallback(allChecked)
-                    selectAllChecked.set(false)
-                    selectAllChecked.addOnPropertyChangedCallback(allChecked)
-                }
-
-            }
-            invoiceCount.set(checkList.size.toString())
-        }
-
-//        checkBox.setOnCheckedChangeListener { p0, p1 ->
+//        val checkBox = holder.binding.root.findViewById<CheckBox>(R.id.check_order)
+//        checkBox.setOnClickListener {
+//            val check = it as CheckBox
+//            if (check.isChecked) {
+//                if (!checkList.contains(checkBox.tag))
+//                    checkList.add(checkBox.tag as InvoiceList.Orders)
+//                if (checkList.size == invoiceCount.get()?.toInt()) {
+//                    selectAllChecked.set(true)
+//                }
+//            } else {
+//                checkList.remove(checkBox.tag)
+//                if (selectAllChecked.get()) {
+//                    selectAllChecked.removeOnPropertyChangedCallback(allChecked)
+//                    selectAllChecked.set(false)
+//                    selectAllChecked.addOnPropertyChangedCallback(allChecked)
+//                }
 //
+//            }
+//            invoiceCount.set(checkList.size.toString())
 //        }
+
         holder.binding.setVariable(BR.presenter, this@InvoiceListPresenter)
+        holder.binding.setVariable(BR.click, View.OnClickListener {
+            val orders = it.tag as InvoiceList.Orders
+            if (checkList.contains(orders)) {
+                checkList.remove(orders)
+
+            } else {
+                checkList.add(orders)
+            }
+        })
+
     }
 
     init {
@@ -100,25 +114,48 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
         checkList.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableArrayList<InvoiceList.Orders>>() {
             override fun onChanged(sender: ObservableArrayList<InvoiceList.Orders>?) {
                 invoiceCount.set(sender?.size.toString())
+                countTotal()
             }
 
             override fun onItemRangeRemoved(sender: ObservableArrayList<InvoiceList.Orders>?, positionStart: Int, itemCount: Int) {
                 invoiceCount.set(sender?.size.toString())
+                countTotal()
             }
 
             override fun onItemRangeMoved(sender: ObservableArrayList<InvoiceList.Orders>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
                 invoiceCount.set(sender?.size.toString())
+                countTotal()
             }
 
             override fun onItemRangeInserted(sender: ObservableArrayList<InvoiceList.Orders>?, positionStart: Int, itemCount: Int) {
                 invoiceCount.set(sender?.size.toString())
+                countTotal()
             }
 
             override fun onItemRangeChanged(sender: ObservableArrayList<InvoiceList.Orders>?, positionStart: Int, itemCount: Int) {
                 invoiceCount.set(sender?.size.toString())
+                countTotal()
             }
 
         })
+    }
+
+    private fun countTotal() {
+        var price = 0.0
+        checkList.map {
+            price = DoubleUtil.add(price, it.money)
+        }
+        totalInvoicePrice.set(price)
+
+        if (selectAllChecked.get()) {
+            if (checkList.size < totalInvoiceCount) {
+                selectAllChecked.removeOnPropertyChangedCallback(allChecked)
+                selectAllChecked.set(false)
+                selectAllChecked.addOnPropertyChangedCallback(allChecked)
+            }
+        } else if (checkList.size == totalInvoiceCount) {
+            selectAllChecked.set(true)
+        }
     }
 
     private fun initData() {
@@ -137,6 +174,7 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
 //        }
     }
 
+
     private fun getInvoiceList() {
         val observable = ApiManager.getInstance()
                 .api.getInvoiceList(offset = (pageIndex - 1) * pageSize, limit = pageSize)
@@ -150,20 +188,11 @@ class InvoiceListPresenter(context: Context, var callBack: CommonCallBack<List<I
             }
 
             override fun onNext(t: List<InvoiceList>) {
-//                if (t.isEmpty() || BuildConfig.DEBUG) {
-//                    for (i in 1..3) {
-//                        val invoice = InvoiceList()
-//                        invoice.month = i
-//                        invoiceList.add(invoice)
-//                    }
-//                    invoiceList.map {
-//                        totalInvoiceCount += it.orders!!.size
-//                    }
-//                } else {
-                    invoiceList.clear()
-                    invoiceList.addAll(t)
-//                }
+                invoiceList.clear()
+                invoiceList.addAll(t)
+
                 adapter.setItems(invoiceList, pageIndex)
+
                 totalInvoiceCount = 0
                 invoiceList.map {
                     totalInvoiceCount += it.orders!!.size

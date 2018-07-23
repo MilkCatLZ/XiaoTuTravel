@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="shy.car.sdk.app.LNTextUtil"/>
+
         <variable
             name="fragment"
             type="shy.car.sdk.travel.invoice.ui.InvoiceListFragment"/>
@@ -100,6 +102,7 @@
                     <TextView
                         style="@style/style_ww.text_14_333"
                         android:textColor="@color/main_color_red"
+                        android:text="@{LNTextUtil.getPriceText(presenter.totalInvoicePrice)}"
                         tools:text="100"/>
 
                     <TextView

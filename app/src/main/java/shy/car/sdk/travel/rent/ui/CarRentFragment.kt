@@ -530,9 +530,9 @@ class CarRentFragment : XTBaseFragment() {
             if (currentSelectedNetWork.get() != null) {
                 if (currentSelectedNetWork.get()?.usableCarsNum!! > 0)
                     findRoutToPosition(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!)
-                else {
-                    walkRouteOverlay?.removeFromMap()
-                }
+//                else {
+//                    walkRouteOverlay?.removeFromMap()
+//                }
             } else {
                 walkRouteOverlay?.removeFromMap()
             }

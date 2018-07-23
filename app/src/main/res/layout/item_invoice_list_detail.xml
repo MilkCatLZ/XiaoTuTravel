@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="shy.car.sdk.app.LNTextUtil"/>
+        <import type="shy.car.sdk.app.LNTextUtil" />
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener" />
 
         <variable
             name="orders"
-            type="shy.car.sdk.travel.invoice.data.InvoiceList.Orders"/>
-
-        <variable
-            name="adapter"
-            type="com.base.databinding.DataBindingItemClickAdapter"/>
+            type="shy.car.sdk.travel.invoice.data.InvoiceList.Orders" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter"/>
+            type="shy.car.sdk.travel.invoice.presenter.InvoiceListPresenter" />
     </data>
 
 
@@ -25,9 +25,11 @@
         android:layout_height="79dp"
         android:background="@color/_foreground_material_light"
         android:gravity="center_vertical"
+        android:onClick="@{click}"
         android:orientation="horizontal"
         android:paddingEnd="15dp"
-        android:paddingStart="15dp">
+        android:paddingStart="15dp"
+        android:tag="@{orders}">
 
         <CheckBox
             android:id="@+id/check_order"
@@ -35,7 +37,7 @@
             android:layout_height="wrap_content"
             android:button="@drawable/back_invoice_checked_list"
             android:checked="@{presenter.checkList.contains(orders)}"
-            android:tag="@{orders}"/>
+            android:tag="@{orders}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,8 +49,7 @@
             <TextView
                 style="@style/style_ww.text_12_999"
                 android:text="@{orders.createdAt}"
-                tools:text="2018.7.7 12：12"
-                />
+                tools:text="2018.7.7 12：12" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -57,8 +58,7 @@
                 android:text="@{orders.carInfo}"
                 android:textColor="#4b4b4b"
                 android:textSize="16sp"
-                tools:text="EQ | 桂A737579"
-                />
+                tools:text="EQ | 桂A737579" />
 
         </LinearLayout>
 
@@ -72,14 +72,14 @@
                 android:text="@{LNTextUtil.getPriceText(orders.money)}"
                 android:textColor="@color/main_color_red"
                 android:textSize="15sp"
-                tools:text="55"/>
+                tools:text="55" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="元"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 
