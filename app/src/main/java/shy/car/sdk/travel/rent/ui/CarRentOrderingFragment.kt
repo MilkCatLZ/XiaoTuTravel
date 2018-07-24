@@ -647,4 +647,23 @@ class CarRentOrderingFragment : XTBaseFragment() {
         }
         getOrderDetail()
     }
+
+    override fun onHiddenChanged(hidd: Boolean) {
+        try {
+            if (hidd) {
+                binding.map.visibility = View.GONE
+            } else {
+                binding.map.visibility = View.VISIBLE
+            }
+        } catch (e: UninitializedPropertyAccessException) {
+
+        }
+    }
+
+    override fun onRealResume() {
+        super.onRealResume()
+        if (detail != null && naviInfo.get().isNullOrEmpty()) {
+            calDistanceAndTimeInfo(detail?.car?.lat!!, detail?.car?.lng!!)
+        }
+    }
 }

@@ -835,4 +835,16 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
+    override fun onHiddenChanged(hidd: Boolean) {
+        try {
+            if (hidd) {
+                binding.map.visibility = View.GONE
+            } else {
+                binding.map.visibility = View.VISIBLE
+            }
+        } catch (e: UninitializedPropertyAccessException) {
+
+        }
+    }
+
 }

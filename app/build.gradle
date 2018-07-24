@@ -67,13 +67,11 @@ android {
                 CancelAction: CANCEL_ACTIVITY_ACTION_MANIFEST,
         ]
 
-        flavorDimensions "debug"
-
         splits {
             abi {
                 enable true
                 reset()
-                include 'armeabi'
+                include "armeabi-v7a"
                 //只打包armeabi平台的，就算有其他文件夹也不管
 //                include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
             }
@@ -81,8 +79,11 @@ android {
 
 //        ndk {
 //            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-//            abiFilters "armeabi"/*, 'armeabi-v7a'*/
+//            abiFilters "armeabi"
 //        }
+
+        flavorDimensions "debug"
+
     }
 
     buildTypes {

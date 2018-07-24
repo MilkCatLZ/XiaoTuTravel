@@ -62,6 +62,10 @@ class MainActivity : NearCarOpenListener,
     var isNearVisible = ObservableBoolean(false)
     var isCitySelectVisible = ObservableBoolean(false)
 
+    private var RentOrdering: String = "fragment_ordering"
+    private var Delivery: String = "fragment_delivery"
+    private var dilivery = false
+
     lateinit var binding: ActivityMainBinding
 
     private val carRentFragment = CarRentFragment()
@@ -116,7 +120,6 @@ class MainActivity : NearCarOpenListener,
 
     }
 
-    private var RentOrdering: String = "fragment_ordering"
 
     /**
      * 获取已预约订单
@@ -239,8 +242,7 @@ class MainActivity : NearCarOpenListener,
         onResume()
     }
 
-    private var Delivery: String = "fragment_delivery"
-    var dilivery = false
+
     fun changeToDelivery() {
         dilivery = true
         changeFragment(deliveryFragment, Delivery)
