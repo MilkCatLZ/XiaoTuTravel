@@ -5,10 +5,11 @@
     <dimen name="text_primary_14dp">14sp</dimen>
     <dimen name="text_second_primary_12dp">12sp</dimen>
     <dimen name="_210dp">190dp</dimen>
-    <dimen name="_260dp">240dp</dimen>4
+    <dimen name="_260dp">240dp</dimen>
     <dimen name="_400dp">400dp</dimen>
     <dimen name="_450dp">450dp</dimen>
     <dimen name="title_height">46dp</dimen>
+    <dimen name="height_offset">132dp</dimen>
 
 
 </resources>

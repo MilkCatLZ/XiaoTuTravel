@@ -1,5 +1,6 @@
 package shy.car.sdk.travel.rent.ui
 
+import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
@@ -11,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
@@ -19,7 +21,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.amap.api.location.AMapLocation
 import com.amap.api.maps.AMap
-import com.amap.api.maps.CameraUpdate
 import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.model.*
 import com.amap.api.navi.model.NaviLatLng
@@ -30,9 +31,12 @@ import com.base.databinding.DataBindingAdapter
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.overlay.WalkRouteOverlay
+import com.base.util.Device
 import com.base.util.DialogManager
 import com.base.util.StringUtils
 import com.base.util.ToastManager
+import com.nineoldandroids.animation.Animator
+import com.nineoldandroids.animation.ValueAnimator
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -93,12 +97,12 @@ class CarRentFragment : XTBaseFragment() {
     /**
      * 在地图上展出的网点的marker列表
      */
-    var netWorkMarkerList = ArrayList<Marker>()
+    private var netWorkMarkerList = ArrayList<Marker>()
 
     /**
      * 在地图上展出的网点的marker列表
      */
-    var carMarkerList = ArrayList<Marker>()
+    private var carMarkerList = ArrayList<Marker>()
     /**
      * 当前可用的网点列表
      */
@@ -107,27 +111,38 @@ class CarRentFragment : XTBaseFragment() {
      * 当前选中的车辆的定位信息，距离，时间
      */
     val naviInfo = ObservableField<String>("")
-
+    /**
+     * 是否处在一件租车模式
+     */
+    val oneKeyOpen = ObservableBoolean(false)
     /**
      * 用来确定车辆列表是否显示
      * true:有可用车辆，显示
      * false:无可用车辆，不现实
      */
     val hasUsableCar = ObservableBoolean(true)
-    var walkRouteOverlay: WalkRouteOverlay? = null
-    var isRefershSuccess = false
+    /**
+     * 标记车辆列表当前是否可见true:可见：false不可见
+     */
+    private var isCarListOpen: Boolean = false
 
-    lateinit var carListViewPager: ViewPager
+    var walkRouteOverlay: WalkRouteOverlay? = null
+    var isRefreshSuccess = false
+
+    private lateinit var carListViewPager: ViewPager
+
+
     val MaxZoom = 13.5f
     /**
      * 定位默认图标
      */
-    lateinit var bitmap: BitmapDescriptor
+    private lateinit var bitmap: BitmapDescriptor
 
     /**
      * 记录当前缩放等级,用于判断是显示车辆还是网点
      */
     private var zoomLevel: Float = 12f
+
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
             eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
@@ -159,21 +174,26 @@ class CarRentFragment : XTBaseFragment() {
         override fun onGetCarSuccess(t: List<CarInfo>) {
             currentSelectedCarInfo.set(null)
             if (t.isNotEmpty()) {
-//                currentSelectedCarInfo.set(t[0])
                 setupCurrentCarInfo(t[0])
                 calDistanceAndTimeInfo(t[0])
-//                findRoutToPosition(t[0].lat, t[0].lng)
                 hasUsableCar.set(true)
+                if (oneKeyOpen.get()) {
+                    animateRentOpen()
+                    moveToCar()
+                }
             } else {
                 hasUsableCar.set(false)
-                ToastManager.showShortToast(activity, "该网点没有该车型车辆，请选择其他车型")
+                if (oneKeyOpen.get()) {
+                    animateRentClose(false)
+                    showNoUsableCar()
+                }
                 naviInfo.set("")
                 walkRouteOverlay?.removeFromMap()
             }
 
             circle_indicator.setViewPager(viewPager_car_list)
             showMarkers(zoomLevel)
-            isRefershSuccess = true
+            isRefreshSuccess = true
         }
     }
 
@@ -304,6 +324,123 @@ class CarRentFragment : XTBaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { carRentPresenter = CarRentPresenter(it, callBack) }
+        oneKeyOpen.addOnPropertyChangedCallback(object : android.databinding.Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: android.databinding.Observable?, propertyId: Int) {
+                if (sender is ObservableBoolean) {
+                    when (sender.get()) {
+                        true -> {
+                            animateRentOpen()
+                        }
+                        else -> {
+                            animateRentClose()
+                        }
+                    }
+                }
+
+            }
+        })
+    }
+
+    /**
+     * 租车关闭动画
+     */
+    fun animateRentClose(changeMode: Boolean = true) {
+        if (oneKeyOpen.get() && isCarListOpen) {
+            activity?.let {
+                val height = resources.getDimensionPixelOffset(R.dimen._260dp)
+                val screen = Device.getScreenHeight(it)
+                        .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
+                val anim = ValueAnimator.ofFloat(screen - height, screen)
+                anim.duration = 200
+                anim.interpolator = AccelerateDecelerateInterpolator()
+                anim.addUpdateListener {
+                    val y = it.animatedValue as Float
+                    binding.viewBottomSheet.y = y
+//                    Log.d("addUpdateListener", y.toString())
+                }
+                anim.addListener(object : Animator.AnimatorListener {
+                    override fun onAnimationRepeat(animation: Animator?) {
+
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        if (changeMode)
+                            exitOneKeyRent()
+                        isCarListOpen = false
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+
+                    }
+
+                    override fun onAnimationStart(animation: Animator?) {
+
+                    }
+                })
+                anim.start()
+            }
+        } else {
+            if (changeMode) {
+                exitOneKeyRent()
+                if (!hasUsableCar.get())
+                    showNoUsableCar()
+            }
+        }
+    }
+
+    private fun exitOneKeyRent() {
+        oneKeyOpen.set(false)
+        walkRouteOverlay?.removeFromMap()
+        currentSelectedCarInfo.set(null)
+    }
+
+
+    /**
+     * 租车弹出动画
+     */
+    fun animateRentOpen() {
+        if (hasUsableCar.get()) {
+            if (!isCarListOpen) {
+                activity?.let {
+                    val height = resources.getDimensionPixelOffset(R.dimen._260dp)
+                    val screen = Device.getScreenHeight(it)
+                            .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
+                    val anim = ValueAnimator.ofFloat(screen, screen - height)
+
+                    anim.duration = 200
+                    anim.interpolator = AccelerateDecelerateInterpolator()
+                    anim.addUpdateListener {
+                        val y = it.animatedValue as Float
+                        binding.viewBottomSheet.y = y
+                    }
+                    anim.addListener(object : Animator.AnimatorListener {
+                        override fun onAnimationRepeat(animation: Animator?) {
+
+                        }
+
+                        override fun onAnimationEnd(animation: Animator?) {
+
+                            isCarListOpen = true
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+
+                        }
+
+                        override fun onAnimationStart(animation: Animator?) {
+
+                        }
+                    })
+                    anim.start()
+                }
+            }
+        } else {
+            activity?.let {
+                binding.viewBottomSheet.y = Device.getScreenHeight(it).toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
+            }
+
+        }
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -406,15 +543,21 @@ class CarRentFragment : XTBaseFragment() {
                 carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
                 findRoutToPosition(it.position.latitude, it.position.longitude)
                 it.showInfoWindow()
+                if (!oneKeyOpen.get()) {
+                    oneKeyOpen.set(true)
+                }
             } else {
                 val netWork = findCarPoint(it.position)
                 currentSelectedNetWork.set(netWork)
-                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0)
-                    findRoutToPosition(it.position.latitude, it.position.longitude)
-                else {
+                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0) {
+                    if (oneKeyOpen.get())
+                        findRoutToPosition(it.position.latitude, it.position.longitude)
+                } else {
                     walkRouteOverlay?.removeFromMap()
-                    ToastManager.showShortToast(activity, "该网点没有可用车辆")
+                    if (oneKeyOpen.get())
+                        showNoUsableCar()
                 }
+
             }
 
             true
@@ -500,7 +643,7 @@ class CarRentFragment : XTBaseFragment() {
         }
 //        if (carMarkerList.isNotEmpty())
 //            carMarkerList[0].showInfoWindow()
-        if (binding.detail == null)
+        if (binding.detail == null && oneKeyOpen.get())
             walkRouteOverlay?.addToMap()
         addUserLocationMarker()
     }
@@ -511,7 +654,7 @@ class CarRentFragment : XTBaseFragment() {
         carRentPresenter.carListAdapter.items.map {
             addCarMarkersToMap(it.carModel, it.plateNumber, it.lat, it.lng)
         }
-        if (binding.detail == null)
+        if (binding.detail == null && oneKeyOpen.get() && hasUsableCar.get())
             walkRouteOverlay?.addToMap()
         addUserLocationMarker()
     }
@@ -525,11 +668,14 @@ class CarRentFragment : XTBaseFragment() {
         return null
     }
 
-
+    /**
+     * 根据当前缩放等级 计算路劲
+     * 在切换缩放等级时用到这个方法
+     */
     private fun findRoutToMarker(zoomLevel: Float) {
 
         if (zoomLevel >= MaxZoom) {
-            if (currentSelectedCarInfo.get() != null) {
+            if (currentSelectedCarInfo.get() != null && oneKeyOpen.get()) {
                 findRoutToPosition(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)
             } else {
                 walkRouteOverlay?.removeFromMap()
@@ -681,30 +827,30 @@ class CarRentFragment : XTBaseFragment() {
         }
     }
 
-    private fun showConfirmDialog() {
-
-        if (currentSelectedCarInfo.get() != null) {
-            activity?.let {
-                if (userVisibleHint) {
-                    DialogManager.with(it, childFragmentManager)
-                            .title("提示")
-                            .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
-                            .leftButtonText("取消")
-                            .rightButtonText("确定")
-                            .onRightClick { dialog, witch ->
-                                if (currentSelectedCarInfo.get()?.netWork == null) {
-                                    currentSelectedCarInfo.get()
-                                            ?.netWork = carPointList[0]
-                                }
-                                carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
-                            }
-                            .show()
-                }
-            }
-        } else {
-            ToastManager.showShortToast(activity, "当前没有可用车辆")
-        }
-    }
+//    private fun showConfirmDialog() {
+//
+//        if (currentSelectedCarInfo.get() != null) {
+//            activity?.let {
+//                if (userVisibleHint) {
+//                    DialogManager.with(it, childFragmentManager)
+//                            .title("提示")
+//                            .message("确定租用该车辆？\n车型：${currentSelectedCarInfo.get()?.carModel}\n车牌：${currentSelectedCarInfo.get()?.plateNumber}\n颜色：${currentSelectedCarInfo.get()?.color}")
+//                            .leftButtonText("取消")
+//                            .rightButtonText("确定")
+//                            .onRightClick { dialog, witch ->
+//                                if (currentSelectedCarInfo.get()?.netWork == null) {
+//                                    currentSelectedCarInfo.get()
+//                                            ?.netWork = carPointList[0]
+//                                }
+//                                carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
+//                            }
+//                            .show()
+//                }
+//            }
+//        } else {
+//            ToastManager.showShortToast(activity, "当前没有可用车辆")
+//        }
+//    }
 
     fun changeZoom() {
         binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
@@ -713,6 +859,7 @@ class CarRentFragment : XTBaseFragment() {
     /**
      * 在地图上添加marker
      */
+    @SuppressLint("SetTextI18n")
     private fun addNetWorkMarkersToMap(point: NearCarPoint) {
         activity?.let {
             val markerBinding = DataBindingUtil.inflate<ItemNetworkBinding>(LayoutInflater.from(it), R.layout.item_network, null, false)
@@ -768,6 +915,27 @@ class CarRentFragment : XTBaseFragment() {
         nearCarListener?.onNearCarClick()
     }
 
+    fun oneKeyOpenCilck() {
+        oneKeyOpen.set(true)
+        moveToCar()
+        if (!hasUsableCar.get()) {
+            showNoUsableCar()
+        }
+    }
+
+    private fun showNoUsableCar() {
+        ToastManager.showShortToast(activity, "没有可用车辆，请选择其他车型")
+    }
+
+    fun moveToCar() {
+        if (carRentPresenter.carListAdapter.items.isNotEmpty()) {
+            currentSelectedCarInfo.set(carRentPresenter.carListAdapter.items[0])
+            binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)))
+            binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(MaxZoom), 200, null)
+            findRoutToPosition(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!)
+        }
+    }
+
     fun gotoVerify() {
         if (User.instance.login) {
             if (!User.instance.getIsIdentityAuth()) {
@@ -784,7 +952,7 @@ class CarRentFragment : XTBaseFragment() {
 
 
     fun refreshAll() {
-        isRefershSuccess = false
+        isRefreshSuccess = false
         activity?.let {
             val operatingAnim: Animation = AnimationUtils.loadAnimation(it, R.anim.rotate)
             val lin = LinearInterpolator()
@@ -792,7 +960,7 @@ class CarRentFragment : XTBaseFragment() {
 
             operatingAnim.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationEnd(p0: Animation?) {
-                    if (!isRefershSuccess) {
+                    if (!isRefreshSuccess) {
                         binding.refresh.startAnimation(operatingAnim)
                     }
                 }

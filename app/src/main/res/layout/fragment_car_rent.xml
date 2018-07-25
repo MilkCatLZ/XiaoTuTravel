@@ -70,6 +70,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:animateLayoutChanges="true"
                 android:layout_height="match_parent">
 
                 <com.amap.api.maps.MapView
@@ -132,6 +133,20 @@
                         android:text="修改缩放级别" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/main_color_green"
+                    android:gravity="center"
+                    android:animateLayoutChanges="true"
+                    android:visibleOrGone="@{!fragment.oneKeyOpen}"
+                    android:onClick="@{()->fragment.oneKeyOpenCilck()}"
+                    android:text="一键用车"
+                    android:textColor="@color/_foreground_material_light"
+                    android:textSize="@dimen/text_title_16dp" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -150,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:visibleOrGone="@{fragment.hasUsableCar}"
+            android:visibleOrGone="@{fragment.oneKeyOpen}"
             app:behavior_peekHeight="@dimen/_260dp"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="visible">
@@ -161,11 +176,6 @@
                 app:presenter="@{p}"
                 app:user="@{user}" />
 
-            <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="onClick"-->
-            <!--android:text="点击跳转" />-->
         </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>

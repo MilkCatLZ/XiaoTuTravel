@@ -302,6 +302,9 @@ class MainActivity : NearCarOpenListener,
             binding.drawer.isDrawerOpen(Gravity.START) -> {
                 binding.drawer.closeDrawer(Gravity.START)
             }
+            carRentFragment.oneKeyOpen.get() -> {
+                carRentFragment.animateRentClose()
+            }
             else -> {
 
                 if (isBackPress) {
