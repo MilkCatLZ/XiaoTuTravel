@@ -118,7 +118,7 @@ class CarRentFragment : XTBaseFragment() {
     var isRefershSuccess = false
 
     lateinit var carListViewPager: ViewPager
-    val MaxZoom = 15f
+    val MaxZoom = 13.5f
     /**
      * 定位默认图标
      */
@@ -127,7 +127,7 @@ class CarRentFragment : XTBaseFragment() {
     /**
      * 记录当前缩放等级,用于判断是显示车辆还是网点
      */
-    private var zoomLevel: Float = 15f
+    private var zoomLevel: Float = 12f
     private val callBack = object : CarRentPresenter.CallBack {
         override fun createSuccess(orderMineList: OrderMineList) {
             eventBusDefault.post(CreateRentCarOrderSuccess(orderMineList.id))
@@ -157,19 +157,20 @@ class CarRentFragment : XTBaseFragment() {
         }
 
         override fun onGetCarSuccess(t: List<CarInfo>) {
+            currentSelectedCarInfo.set(null)
             if (t.isNotEmpty()) {
-                currentSelectedCarInfo.set(t[0])
+//                currentSelectedCarInfo.set(t[0])
                 setupCurrentCarInfo(t[0])
-                calDistanceAndTimeInfo()
-                findRoutToPosition(t[0].lat, t[0].lng)
+                calDistanceAndTimeInfo(t[0])
+//                findRoutToPosition(t[0].lat, t[0].lng)
                 hasUsableCar.set(true)
             } else {
                 hasUsableCar.set(false)
                 ToastManager.showShortToast(activity, "该网点没有该车型车辆，请选择其他车型")
-                currentSelectedCarInfo.set(null)
                 naviInfo.set("")
                 walkRouteOverlay?.removeFromMap()
             }
+
             circle_indicator.setViewPager(viewPager_car_list)
             showMarkers(zoomLevel)
             isRefershSuccess = true
@@ -259,9 +260,9 @@ class CarRentFragment : XTBaseFragment() {
 
     }
 
-    private fun calDistanceAndTimeInfo() {
+    private fun calDistanceAndTimeInfo(carInfo: CarInfo) {
         activity?.let {
-            getNaviInfo()
+            getNaviInfo(carInfo.lat, carInfo.lng)
             Observable.create<Boolean> {
                 while (StringUtils.isEmpty(naviInfo.get())) {
                     try {
@@ -277,15 +278,15 @@ class CarRentFragment : XTBaseFragment() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        getNaviInfo()
+                        getNaviInfo(carInfo.lat, carInfo.lng)
                     }, {})
 
 
         }
     }
 
-    private fun getNaviInfo() {
-        MapUtil.getDriveTimeAndDistance(app, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(currentSelectedCarInfo.get()?.lat!!, currentSelectedCarInfo.get()?.lng!!), 2, object : MapUtil.GetDetailListener {
+    private fun getNaviInfo(lat: Double, lng: Double) {
+        MapUtil.getDriveTimeAndDistance(app, NaviLatLng(app.location.lat, app.location.lng), NaviLatLng(lat, lng), 2, object : MapUtil.GetDetailListener {
             override fun calculateSuccess(allLength: Int?, allTime: Int?) {
 
                 if (allLength != null && allTime != null) {
@@ -337,12 +338,17 @@ class CarRentFragment : XTBaseFragment() {
 
             override fun onPageSelected(position: Int) {
                 val carInfo = carRentPresenter.carListAdapter.items[position]
+                currentSelectedCarInfo.set(carInfo)
                 setupCurrentCarInfo(carInfo)
-                calDistanceAndTimeInfo()
+                calDistanceAndTimeInfo(carInfo)
                 findRoutToPosition(carInfo.lat, carInfo.lng)
-                binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(carInfo.lat, carInfo.lng)))
-                binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(MaxZoom), 200, null)
+                if (zoomLevel >= MaxZoom) {
+                    binding.map.map.animateCamera(CameraUpdateFactory.changeLatLng(LatLng(carInfo.lat, carInfo.lng)))
+                } else {
+                    binding.map.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(carInfo.lat, carInfo.lng)))
+                    binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(MaxZoom), 200, null)
 
+                }
             }
         })
     }
@@ -351,7 +357,6 @@ class CarRentFragment : XTBaseFragment() {
         val adapter = DataBindingAdapter<CarInfo.DiscountsBean.DurationBean>(R.layout.item_car_discount, BR.discount, null)
         adapter.setItems(carInfo.discounts?.duration, 1)
         recyclerView_car_discount.adapter = adapter
-        currentSelectedCarInfo.set(carInfo)
         findMarker(LatLng(carInfo.lat, carInfo.lng), carMarkerList)?.showInfoWindow()
     }
 
@@ -368,7 +373,9 @@ class CarRentFragment : XTBaseFragment() {
         binding.recyclerViewCarCategory.layoutManager = layoutManager
     }
 
-    lateinit var carBottomSheet: BottomSheetBehavior<View>
+    lateinit
+    var carBottomSheet: BottomSheetBehavior<View>
+
     private fun initBottomSheet() {
         carBottomSheet = BottomSheetBehavior.from(binding.viewBottomSheet)
         carBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -397,6 +404,7 @@ class CarRentFragment : XTBaseFragment() {
                 val car = findCar(it.position)
                 currentSelectedCarInfo.set(car)
                 carListViewPager.currentItem = carRentPresenter.carListAdapter.items.indexOf(car)
+                findRoutToPosition(it.position.latitude, it.position.longitude)
                 it.showInfoWindow()
             } else {
                 val netWork = findCarPoint(it.position)
