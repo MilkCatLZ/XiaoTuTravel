@@ -17,6 +17,7 @@ class StartActivity : XTBaseActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     startActivity(MainActivity::class.java)
+                    finish()
                 }, {})
     }
 }
