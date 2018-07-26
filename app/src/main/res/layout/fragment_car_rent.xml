@@ -136,23 +136,22 @@
 
                 <com.skyfishjy.library.RippleBackground
                     android:id="@+id/content"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     app:rb_color="#00B38A"
                     app:rb_duration="5000"
                     android:layout_marginBottom="40dp"
-                    app:rb_radius="120dp"
-                    app:rb_rippleAmount="1"
+                    app:rb_radius="84dp"
+                    app:rb_rippleAmount="5"
                     app:rb_scale="6">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
                         android:layout_alignParentBottom="true"
                         android:layout_centerHorizontal="true"
-
                         android:animateLayoutChanges="true"
                         android:gravity="center"
                         android:onClick="@{()->fragment.oneKeyOpenCilck()}"

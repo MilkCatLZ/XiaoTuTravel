@@ -446,6 +446,7 @@ class CarRentFragment : XTBaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
         binding.map.onCreate(savedInstanceState)
+        binding.content.startRippleAnimation()
         setBinding()
         return binding.root
     }
@@ -758,6 +759,7 @@ class CarRentFragment : XTBaseFragment() {
 
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
+        binding.content.stopRippleAnimation()
         binding.map.onDestroy()
         nearCarListener = null
         super.onDestroy()
