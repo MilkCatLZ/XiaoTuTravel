@@ -41,9 +41,9 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
         Observable.intervalRange(1, 100, 0, 100, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe({
+                .doOnSubscribe {
                     dis = it
-                })
+                }
                 .subscribe({
                     if (!isActionFinish)
                         determinate.setProgress(it.toFloat())

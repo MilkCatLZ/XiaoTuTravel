@@ -110,7 +110,7 @@ class ReturnAreaActivity : XTBaseActivity(),
         val dialog = MapSelectDialogFragment()
         dialog.startLatitude = app.location.lat
         dialog.startLongitude = app.location.lng
-        dialog.endLatitude = network.get()?.lng!!
+        dialog.endLatitude = network.get()?.lat!!
         dialog.endLongitude = network.get()?.lng!!
         dialog.show(supportFragmentManager,"fragment_navi_select")
     }
