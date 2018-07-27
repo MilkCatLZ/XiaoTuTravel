@@ -446,7 +446,6 @@ class CarRentFragment : XTBaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_car_rent, null, false)
         binding.map.onCreate(savedInstanceState)
-        binding.diffuseView.start()
         setBinding()
         return binding.root
     }
@@ -460,6 +459,8 @@ class CarRentFragment : XTBaseFragment() {
         initData()
         refreshLocation()
         carRentPresenter.getUsableCarModel()
+        binding.diffuseView.start()
+//        binding.diffuseView.invalidate()
     }
 
 

@@ -74,9 +74,9 @@ public class DiffuseView extends View {
 
     @Override
     public void invalidate() {
-        if(hasWindowFocus()){
+//        if(hasWindowFocus()){
             super.invalidate();
-        }
+//        }
     }
 
     @Override
