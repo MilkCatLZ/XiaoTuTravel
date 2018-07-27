@@ -3,6 +3,8 @@
 
     <color name="grey500">#9e9e9e</color>
     <color name="grey900">#212121</color>
+    <color name="colorAccent">#ff6a6a</color>
+    <color name="colorPrimary">#62d8ff</color>
 
     <color name="_foreground_material_light">#ffffff</color>
 </resources>
