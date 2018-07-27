@@ -174,7 +174,35 @@
                 <!--android:text="一键用车"-->
                 <!--android:textColor="@color/_foreground_material_light"-->
                 <!--android:textSize="@dimen/text_title_16dp"-->
-                />
+                <!--</RelativeLayout>-->
+                <!--</com.skyfishjy.library.RippleBackground>-->
+
+                <!--<com.skyfishjy.library.RippleBackground-->
+                <!--android:id="@+id/content"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--app:rb_color="#3300b38a"-->
+                <!--app:rb_duration="3000"-->
+                <!--android:layout_marginBottom="40dp"-->
+                <!--app:rb_radius="84dp"-->
+                <!--app:rb_rippleAmount="4"-->
+                <!--app:rb_scale="6">-->
+
+                <!--<ImageView-->
+                <!--android:layout_width="84dp"-->
+                <!--android:layout_height="84dp"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:animateLayoutChanges="true"-->
+                <!--android:gravity="center"-->
+
+                <!--android:onClick="@{()->fragment.oneKeyOpenCilck()}"-->
+                <!--android:src="@drawable/icon_start_rent"-->
+                <!--android:text="一键用车"-->
+                <!--android:textColor="@color/_foreground_material_light"-->
+                <!--android:textSize="@dimen/text_title_16dp"-->
+                <!--android:visibleOrGone="@{!fragment.oneKeyOpen}" />-->
                 <!--</com.skyfishjy.library.RippleBackground>-->
             </RelativeLayout>
 
