@@ -55,6 +55,7 @@ import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.eventbus.CreateRentCarOrderSuccess
 import shy.car.sdk.app.eventbus.RefreshCity
 import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
+import shy.car.sdk.app.eventbus.UserLogout
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
 import shy.car.sdk.databinding.FragmentCarRentBinding
@@ -459,7 +460,7 @@ class CarRentFragment : XTBaseFragment() {
         initData()
         refreshLocation()
         carRentPresenter.getUsableCarModel()
-        binding.diffuseView.start()
+//        binding.diffuseView.start()
 //        binding.diffuseView.invalidate()
     }
 
@@ -760,7 +761,7 @@ class CarRentFragment : XTBaseFragment() {
 
     override fun onDestroy() {
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
-        binding.diffuseView.stop()
+//        binding.diffuseView.stop()
         binding.map.onDestroy()
         nearCarListener = null
         super.onDestroy()
@@ -996,8 +997,8 @@ class CarRentFragment : XTBaseFragment() {
      * 定位成功 监听
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoginSuccess(refresh: RefreshUserInfoSuccess) {
-        binding.user = User.instance
+    fun onLoginSuccess(logout: UserLogout) {
+
     }
 
     /**
@@ -1011,6 +1012,16 @@ class CarRentFragment : XTBaseFragment() {
 //                carRentPresenter.getUsableCarModel()
                 carRentPresenter.getUsableCarList(nearCar)
             }
+        }
+    }
+
+    /**
+     * 附近网点列表 点击监听
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun logoutEvent(nearCar: UserLogout) {
+        if (oneKeyOpen.get()) {
+            animateRentClose()
         }
     }
 

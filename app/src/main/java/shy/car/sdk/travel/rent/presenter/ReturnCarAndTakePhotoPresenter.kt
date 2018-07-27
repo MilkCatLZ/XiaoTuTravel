@@ -142,7 +142,7 @@ class ReturnCarAndTakePhotoPresenter(context: Context, var callBack: CallBack) :
             return false
         }
         if (StringUtils.isEmpty(driveRoom.get())) {
-            ToastManager.showShortToast(context, "请拍摄车辆驾驶室找")
+            ToastManager.showShortToast(context, "请拍摄车辆驾驶室照片")
             return false
         }
         if (StringUtils.isEmpty(backRoom.get())) {

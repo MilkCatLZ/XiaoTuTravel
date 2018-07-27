@@ -146,34 +146,39 @@
                 <!--app:rb_radius="120dp"-->
                 <!--app:rb_rippleAmount="5"-->
                 <!--app:rb_scale="6">-->
-                <FrameLayout
+                <!--<FrameLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentBottom="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:visibleOrGone="@{!fragment.oneKeyOpen}">-->
+
+                <!--<com.base.widget.DiffuseView-->
+                <!--android:id="@+id/diffuseView"-->
+                <!--android:layout_width="300dp"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--app:diffuse_color="@color/main_color_green"-->
+                <!--app:diffuse_coreColor="@color/main_color_green"-->
+                <!--app:diffuse_coreImage="@drawable/icon_start_rent"-->
+                <!--app:diffuse_coreRadius="84"-->
+                <!--app:diffuse_maxWidth="300"-->
+                <!--app:diffuse_width="4" />-->
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:visibleOrGone="@{!fragment.oneKeyOpen}">
-
-                    <com.base.widget.DiffuseView
-                        android:id="@+id/diffuseView"
-                        android:layout_width="300dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
-                        app:diffuse_color="@color/main_color_green"
-                        app:diffuse_coreColor="@color/main_color_green"
-                        app:diffuse_coreImage="@drawable/icon_start_rent"
-                        app:diffuse_coreRadius="84"
-                        app:diffuse_maxWidth="300"
-                        app:diffuse_width="4" />
-
-                    <ImageView
-                        android:layout_width="84dp"
-                        android:layout_height="84dp"
-                        android:layout_gravity="center"
-                        android:animateLayoutChanges="true"
-                        android:gravity="center"
-                        android:onClick="@{()->fragment.oneKeyOpenCilck()}"
-                        android:src="@drawable/icon_start_rent" />
-                </FrameLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="60dp"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/icon_start_rent"
+                    android:gravity="center"
+                    android:onClick="@{()->fragment.oneKeyOpenCilck()}"
+                    android:text="开始用车"
+                    android:textColor="@color/_foreground_material_light" />
+                <!--</FrameLayout>-->
                 <!--<ImageView-->
                 <!--android:layout_width="84dp"-->
                 <!--android:layout_height="84dp"-->
