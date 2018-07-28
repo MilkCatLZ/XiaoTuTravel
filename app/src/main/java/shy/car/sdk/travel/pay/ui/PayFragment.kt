@@ -106,8 +106,7 @@ class PayFragment : XTBaseFragment(),
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun paySuccess(success: PaySuccess) {
         success.payMethod = presenter.payMethod.get()
-        success.price = presenter.amount.get()
-                .toString()
+        success.price = presenter.price
         ARouter.getInstance()
                 .build(RouteMap.PaySuccess)
                 .withObject(Object1, success)

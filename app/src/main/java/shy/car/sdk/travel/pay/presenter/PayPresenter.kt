@@ -12,6 +12,7 @@ import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
+import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
@@ -74,7 +75,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
     }
-
+    var price = "0.01"
     fun pay() {
         if (payMethod.get() == null) {
             ToastManager.showShortToast(context, "请选择支付方式")
@@ -86,14 +87,16 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         }
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        var price: String = if (amount.get() > 0.0) {
-            amount.get()
-                    .toString()
-        } else {
-            selectedPayAmount.get()
-                    ?.realPrice.toString()
-        }
 
+        if (!BuildConfig.DEBUG) {
+            price = if (amount.get() > 0.0) {
+                amount.get()
+                        .toString()
+            } else {
+                selectedPayAmount.get()
+                        ?.realPrice.toString()
+            }
+        }
         val observable = ApiManager.getInstance()
                 .api.createRecharge(price, payMethod.get()?.id.toString())
         val observer = object : Observer<JsonObject> {
