@@ -12,7 +12,6 @@ import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import shy.car.sdk.BR
-import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
@@ -30,7 +29,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     }
 
     var selectedPayAmount = ObservableField<PayAmount>()
-    var amount = ObservableDouble(0.0)
+    var amount = ObservableDouble(0.00)
     var payMethod = ObservableField<PayMethod>()
 
     val adapter = DataBindingItemClickAdapter<PayAmount>(R.layout.item_pay_amount, BR.pay, BR.click, View.OnClickListener {
