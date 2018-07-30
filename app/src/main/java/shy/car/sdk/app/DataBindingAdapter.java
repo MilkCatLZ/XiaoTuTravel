@@ -53,7 +53,7 @@ public class DataBindingAdapter extends BindingAdapter {
     @android.databinding.BindingAdapter("android:appAvatarURL")
     public static void setRoundImage(@NonNull ImageView imageView, @Nullable String url) {
         try {
-            if (!url.contains(BuildConfig.Host) && !url.contains("storage")) {
+            if (!url.contains("http") && !url.contains("storage")) {
                 String version = ((Application) imageView.getContext().getApplicationContext()).getInterfaceVersion();
                 url = BuildConfig.Host + version + url;
             }

@@ -59,15 +59,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="余额:0.00"
+                android:text="@{remain.getRemainText()}"
+                tools:text="余额:0.00"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="@dimen/text_second_primary_12dp"
-                tools:text="余额" />
+                android:textSize="@dimen/text_second_primary_12dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{util.getPriceText(remain.money)}"
+                android:text="@{remain.getMoneyText()}"
                 android:textColor="@color/text_primary_333333"
                 android:textSize="15sp"
                 tools:text="7.5" />

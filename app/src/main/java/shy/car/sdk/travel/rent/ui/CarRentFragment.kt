@@ -7,6 +7,7 @@ import android.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetBehavior.STATE_COLLAPSED
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -161,7 +162,7 @@ class CarRentFragment : XTBaseFragment() {
                 this@CarRentFragment.carPointList.addAll(t)
 //                showMarkers(zoomLevel)
             }
-
+            isRefreshSuccess = true
         }
 
         override fun onGetCarModelSuccess(t: List<CarCategory>) {
@@ -348,7 +349,7 @@ class CarRentFragment : XTBaseFragment() {
     fun animateRentClose(changeMode: Boolean = true) {
         if (oneKeyOpen.get() && isCarListOpen) {
             activity?.let {
-                val height = resources.getDimensionPixelOffset(R.dimen._260dp)
+                val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen._260dp)
                 val screen = Device.getScreenHeight(it)
                         .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
                 val anim = ValueAnimator.ofFloat(screen - height, screen)
@@ -368,6 +369,7 @@ class CarRentFragment : XTBaseFragment() {
                         if (changeMode)
                             exitOneKeyRent()
                         isCarListOpen = false
+                        carBottomSheet.state = STATE_COLLAPSED
                     }
 
                     override fun onAnimationCancel(animation: Animator?) {
@@ -387,6 +389,7 @@ class CarRentFragment : XTBaseFragment() {
                     showNoUsableCar()
             }
         }
+
     }
 
     private fun exitOneKeyRent() {
@@ -403,7 +406,7 @@ class CarRentFragment : XTBaseFragment() {
         if (hasUsableCar.get()) {
             if (!isCarListOpen) {
                 activity?.let {
-                    val height = resources.getDimensionPixelOffset(R.dimen._260dp)
+                    val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen._260dp)
                     val screen = Device.getScreenHeight(it)
                             .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
                     val anim = ValueAnimator.ofFloat(screen, screen - height)

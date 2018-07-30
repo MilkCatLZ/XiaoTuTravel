@@ -50,6 +50,7 @@ class UserDetailPresenter(context: Context, var listener: UserEditListener? = nu
         sexText.set(sexAdapter.items[sex].key)
         city = User.instance.city
         job.set(User.instance.profession)
+        birthDay.set(User.instance.birthday)
     }
 
 
