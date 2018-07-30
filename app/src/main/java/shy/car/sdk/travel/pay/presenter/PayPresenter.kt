@@ -30,7 +30,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
     }
 
     var selectedPayAmount = ObservableField<PayAmount>()
-    var amount = ObservableDouble(0.0)
+    var amount = ObservableDouble(0.00)
     var payMethod = ObservableField<PayMethod>()
 
     val adapter = DataBindingItemClickAdapter<PayAmount>(R.layout.item_pay_amount, BR.pay, BR.click, View.OnClickListener {
@@ -75,7 +75,7 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         ApiManager.getInstance()
                 .toSubscribe(observable, observer)
     }
-
+    var price = "0.01"
     fun pay() {
         if (payMethod.get() == null) {
             ToastManager.showShortToast(context, "请选择支付方式")
@@ -87,14 +87,16 @@ class PayPresenter(context: Context, var callBack: CallBack) : BasePresenter(con
         }
         ProgressDialog.showLoadingView(context)
         disposable?.dispose()
-        var price: String = if (amount.get() > 0.0) {
-            amount.get()
-                    .toString()
-        } else {
-            selectedPayAmount.get()
-                    ?.realPrice.toString()
-        }
 
+        if (!BuildConfig.DEBUG) {
+            price = if (amount.get() > 0.0) {
+                amount.get()
+                        .toString()
+            } else {
+                selectedPayAmount.get()
+                        ?.realPrice.toString()
+            }
+        }
         val observable = ApiManager.getInstance()
                 .api.createRecharge(price, payMethod.get()?.id.toString())
         val observer = object : Observer<JsonObject> {
