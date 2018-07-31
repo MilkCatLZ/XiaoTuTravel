@@ -218,6 +218,7 @@ class Application : BaseApplication() {
             dialogFragment.listener = listener
             dialogFragment.show(activityList[0].supportFragmentManager, "fragment_login_dialog")
         } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -39,7 +39,7 @@ public class RouteMap {
      */
     public static final String Home = "/app/homeActivity";
     /**
-     * {@link * shy.car.sdk.travel.login.ui.LoginDialogFragment}
+     * {@link shy.car.sdk.travel.login.ui.LoginDialogFragment}
      */
     public static final String Login = "/user/login";
     /**

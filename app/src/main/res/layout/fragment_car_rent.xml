@@ -112,59 +112,6 @@
                         android:src="@drawable/icon_refresh" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <EditText
-                        android:id="@+id/edt_zoom"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="number"
-                        android:text="10" />
-
-                    <Button
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:onClick="@{()->fragment.changeZoom()}"
-                        android:text="修改缩放级别" />
-
-                </LinearLayout>
-
-                <!--<com.skyfishjy.library.RippleBackground-->
-                <!--android:id="@+id/content"-->
-                <!--android:layout_width="120dp"-->
-                <!--android:layout_height="120dp"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--app:rb_color="#00B38A"-->
-                <!--app:rb_duration="5000"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--app:rb_radius="120dp"-->
-                <!--app:rb_rippleAmount="5"-->
-                <!--app:rb_scale="6">-->
-                <!--<FrameLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:visibleOrGone="@{!fragment.oneKeyOpen}">-->
-
-                <!--<com.base.widget.DiffuseView-->
-                <!--android:id="@+id/diffuseView"-->
-                <!--android:layout_width="300dp"-->
-                <!--android:layout_height="200dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--app:diffuse_color="@color/main_color_green"-->
-                <!--app:diffuse_coreColor="@color/main_color_green"-->
-                <!--app:diffuse_coreImage="@drawable/icon_start_rent"-->
-                <!--app:diffuse_coreRadius="84"-->
-                <!--app:diffuse_maxWidth="300"-->
-                <!--app:diffuse_width="4" />-->
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -178,49 +125,7 @@
                     android:onClick="@{()->fragment.oneKeyOpenCilck()}"
                     android:text="开始用车"
                     android:textColor="@color/_foreground_material_light" />
-                <!--</FrameLayout>-->
-                <!--<ImageView-->
-                <!--android:layout_width="84dp"-->
-                <!--android:layout_height="84dp"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:animateLayoutChanges="true"-->
-                <!--android:gravity="center"-->
-                <!---->
-                <!--android:src="@drawable/icon_start_rent"-->
-                <!--android:text="一键用车"-->
-                <!--android:textColor="@color/_foreground_material_light"-->
-                <!--android:textSize="@dimen/text_title_16dp"-->
-                <!--</RelativeLayout>-->
-                <!--</com.skyfishjy.library.RippleBackground>-->
 
-                <!--<com.skyfishjy.library.RippleBackground-->
-                <!--android:id="@+id/content"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentBottom="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--app:rb_color="#3300b38a"-->
-                <!--app:rb_duration="3000"-->
-                <!--android:layout_marginBottom="40dp"-->
-                <!--app:rb_radius="84dp"-->
-                <!--app:rb_rippleAmount="4"-->
-                <!--app:rb_scale="6">-->
-
-                <!--<ImageView-->
-                <!--android:layout_width="84dp"-->
-                <!--android:layout_height="84dp"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:animateLayoutChanges="true"-->
-                <!--android:gravity="center"-->
-
-                <!--android:onClick="@{()->fragment.oneKeyOpenCilck()}"-->
-                <!--android:src="@drawable/icon_start_rent"-->
-                <!--android:text="一键用车"-->
-                <!--android:textColor="@color/_foreground_material_light"-->
-                <!--android:textSize="@dimen/text_title_16dp"-->
-                <!--android:visibleOrGone="@{!fragment.oneKeyOpen}" />-->
-                <!--</com.skyfishjy.library.RippleBackground>-->
             </RelativeLayout>
 
         </LinearLayout>

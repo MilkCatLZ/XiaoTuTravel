@@ -71,7 +71,7 @@ android {
             abi {
                 enable true
                 reset()
-                include "armeabi-v7a"
+                include "armeabi-v7a", "x86"
                 //只打包armeabi平台的，就算有其他文件夹也不管
 //                include 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'mips', 'x86', 'x86_64'
             }
@@ -160,7 +160,7 @@ dependencies {
     implementation project(':Lib_Map')
     implementation project(':Lib_UmengShare')
     implementation project(':Alipay')
-    implementation  'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
     implementation 'mbanje.kurt:fabbutton:1.2.4@aar'
     implementation('com.contrarywind:wheelview:4.0.5') {
         exclude module: 'appcompat-v7'

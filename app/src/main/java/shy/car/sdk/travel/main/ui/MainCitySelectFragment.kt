@@ -50,6 +50,7 @@ class MainCitySelectFragment : XTBaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         currentCity = app.location.copy()
+        register(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -138,29 +139,32 @@ class MainCitySelectFragment : XTBaseFragment() {
     private fun addCityInfo(list: List<CurrentLocation>) {
         //添加城市列表
         activity?.let {
-            binding.indexableLayout.setLayoutManager(LinearLayoutManager(it))
-            val adapter = CityIndexAdapter(it)
-            binding.indexableLayout.setAdapter(adapter)
-            adapter.setDatas(list)
-            adapter.setOnItemContentClickListener { _, _, _, entity ->
-                //                ToastManager.showShortToast(it, entity.cityName)
-                listener?.onCitySelected(entity)
+            try {
+                binding.indexableLayout.setLayoutManager(LinearLayoutManager(it))
+                val adapter = CityIndexAdapter(it)
+                binding.indexableLayout.setAdapter(adapter)
+                adapter.setDatas(list)
+                adapter.setOnItemContentClickListener { _, _, _, entity ->
+                    //                ToastManager.showShortToast(it, entity.cityName)
+                    listener?.onCitySelected(entity)
+                }
+
+                //----------------------添加热门城市
+                val hotCity = ArrayList<CurrentLocation>()
+                hotCity.addAll(list)
+
+                //添加头部
+                val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)
+                binding.indexableLayout.addHeaderAdapter(headerAdapter)
+
+                binding.indexableLayout.setCompareMode(IndexableLayout.MODE_FAST)
+                var filterList = ArrayList<CurrentLocation>()
+                filterList.addAll(list)
+                filterList.addAll(hotCity)
+
+                searchResultFragment.bindDatas(filterList)
+            } catch (e: Exception) {
             }
-
-            //----------------------添加热门城市
-            val hotCity = ArrayList<CurrentLocation>()
-            hotCity.addAll(list)
-
-            //添加头部
-            val headerAdapter = SimpleHeaderAdapter<CurrentLocation>(adapter, "热", "热门城市", hotCity)
-            binding.indexableLayout.addHeaderAdapter(headerAdapter)
-
-            binding.indexableLayout.setCompareMode(IndexableLayout.MODE_FAST)
-            var filterList = ArrayList<CurrentLocation>()
-            filterList.addAll(list)
-            filterList.addAll(hotCity)
-
-            searchResultFragment.bindDatas(filterList)
         }
 
 
@@ -193,8 +197,8 @@ class MainCitySelectFragment : XTBaseFragment() {
         getLocation()
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshCity(refresh: RefreshCity){
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun refreshCity(refresh: RefreshCity) {
         locationPresenter.getCity()
     }
 }

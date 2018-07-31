@@ -368,8 +368,7 @@ class CarRentFragment : XTBaseFragment() {
                     override fun onAnimationEnd(animation: Animator?) {
                         if (changeMode)
                             exitOneKeyRent()
-                        isCarListOpen = false
-                        carBottomSheet.state = STATE_COLLAPSED
+
                     }
 
                     override fun onAnimationCancel(animation: Animator?) {
@@ -381,6 +380,8 @@ class CarRentFragment : XTBaseFragment() {
                     }
                 })
                 anim.start()
+                isCarListOpen = false
+                carBottomSheet.state = STATE_COLLAPSED
             }
         } else {
             if (changeMode) {
@@ -560,8 +561,10 @@ class CarRentFragment : XTBaseFragment() {
                         findRoutToPosition(it.position.latitude, it.position.longitude)
                 } else {
                     walkRouteOverlay?.removeFromMap()
-                    if (oneKeyOpen.get())
+                    if (oneKeyOpen.get()) {
                         showNoUsableCar()
+                        animateRentClose(false)
+                    }
                 }
 
             }
@@ -688,11 +691,8 @@ class CarRentFragment : XTBaseFragment() {
             }
         } else {
             if (currentSelectedNetWork.get() != null) {
-                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0)
+                if (currentSelectedNetWork.get()?.usableCarsNum!! > 0 && oneKeyOpen.get())
                     findRoutToPosition(currentSelectedNetWork.get()?.lat!!, currentSelectedNetWork.get()?.lng!!)
-//                else {
-//                    walkRouteOverlay?.removeFromMap()
-//                }
             } else {
                 walkRouteOverlay?.removeFromMap()
             }
@@ -817,11 +817,13 @@ class CarRentFragment : XTBaseFragment() {
     private fun checkPromiseMoneyPay() {
         //已交保证金
         if (User.instance.getIsDeposit() && User.instance.getIsIdentityAuth()) {
-            if (currentSelectedCarInfo.get()?.netWork == null) {
-                currentSelectedCarInfo.get()
-                        ?.netWork = carPointList[0]
-            }
-            carRentPresenter.createRentCarOrder(currentSelectedCarInfo.get()?.carId!!, currentSelectedCarInfo.get()?.netWork?.id!!)
+            currentSelectedCarInfo.get()
+                    ?.let { carInfo ->
+                        carInfo.netWork?.let {
+                            carInfo.netWork = carPointList[0]
+                        }
+                        carRentPresenter.createRentCarOrder(carInfo.carId, carInfo.netWork?.id!!)
+                    }
         } else {
             //提示未交保证金
             if (userVisibleHint) {
@@ -859,9 +861,9 @@ class CarRentFragment : XTBaseFragment() {
 //        }
 //    }
 
-    fun changeZoom() {
-        binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
-    }
+//    fun changeZoom() {
+//        binding.edtZoom.text?.let { binding.map.map.animateCamera(CameraUpdateFactory.zoomTo(it.toString().toFloat()), 1000, null) }
+//    }
 
     /**
      * 在地图上添加marker
@@ -983,7 +985,8 @@ class CarRentFragment : XTBaseFragment() {
             })
             binding.refresh.startAnimation(operatingAnim)
         }
-        eventBusDefault.post(RefreshCity())
+        eventBusDefault.postSticky(RefreshCity())
+        carRentPresenter.getUsableCarModel()
         carRentPresenter.getNetWorkList()
     }
 
@@ -1012,9 +1015,10 @@ class CarRentFragment : XTBaseFragment() {
         netWorkMarkerList.map {
             if (it.position.latitude == nearCar.lat && it.position.longitude == nearCar.lng) {
                 it.showInfoWindow()
-//                carRentPresenter.getUsableCarModel()
                 carRentPresenter.getUsableCarList(nearCar)
             }
+            oneKeyOpen.set(true)
+            carRentPresenter.selectedCarCaterogyID.set(carRentPresenter.carCategoryListAdapter.items[0].id)
         }
     }
 

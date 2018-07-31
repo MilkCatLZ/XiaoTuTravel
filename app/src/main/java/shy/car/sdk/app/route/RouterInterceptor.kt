@@ -21,8 +21,11 @@ open class RouterInterceptor : IInterceptor {
         if (User.instance.login) {
             callback.onContinue(postcard)
         } else {
-            Observable.just("").observeOn(AndroidSchedulers.mainThread()).subscribe({ ToastManager.showShortToast(app, "请先登录...") })
+            Observable.just("")
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { ToastManager.showShortToast(app, "请先登录...") }
             app.startLoginDialog(postcard, callback)
+            callback.onInterrupt(Exception("未登录"))
         }
         // 觉得有问题，中断路由流程
         // callback.onInterrupt(new RuntimeException("我觉得有点异常"));
