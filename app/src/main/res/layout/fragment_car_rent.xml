@@ -86,12 +86,12 @@
                     android:layout_marginBottom="270dp"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="15dp"
-                        android:onClick="@{()->fragment.onNearCarClick()}"
-                        android:src="@drawable/icon_site" />
+                    <!--<ImageView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="40dp"-->
+                        <!--android:layout_marginEnd="15dp"-->
+                        <!--android:onClick="@{()->fragment.onNearCarClick()}"-->
+                        <!--android:src="@drawable/icon_site" />-->
 
 
                     <ImageView
@@ -118,13 +118,46 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="60dp"
+                    android:layout_marginBottom="90dp"
                     android:animateLayoutChanges="true"
                     android:background="@drawable/icon_start_rent"
                     android:gravity="center"
                     android:onClick="@{()->fragment.oneKeyOpenCilck()}"
                     android:text="开始用车"
+                    android:visibleOrGone="@{!fragment.oneKeyOpen}"
                     android:textColor="@color/_foreground_material_light" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                    android:animateLayoutChanges="true"
+                    android:background="#ddffffff"
+                    android:gravity="center_vertical"
+                    android:onClick="@{()->fragment.onNearCarClick()}"
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp"
+                    android:visibleOrGone="@{!fragment.oneKeyOpen}">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_location_on_main_green_24dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="查看附近有车网点"
+                        android:textColor="@color/main_color_green"
+                        android:textSize="@dimen/text_primary_14dp" />
+
+                    <ImageView
+                        style="@style/style_setting_nav_arrow"
+                        android:src="@drawable/login_return" />
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -145,7 +178,7 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:visibleOrGone="@{fragment.oneKeyOpen}"
-            app:behavior_peekHeight="@dimen/_260dp"
+            app:behavior_peekHeight="@dimen/rent_car_bottom_sheet_peek_height"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             tools:visibility="visible">
 

@@ -33,7 +33,6 @@ import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.overlay.WalkRouteOverlay
 import com.base.util.Device
-import com.base.util.DialogManager
 import com.base.util.StringUtils
 import com.base.util.ToastManager
 import com.nineoldandroids.animation.Animator
@@ -55,7 +54,6 @@ import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.eventbus.CreateRentCarOrderSuccess
 import shy.car.sdk.app.eventbus.RefreshCity
-import shy.car.sdk.app.eventbus.RefreshUserInfoSuccess
 import shy.car.sdk.app.eventbus.UserLogout
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.app.util.MapUtil
@@ -349,7 +347,7 @@ class CarRentFragment : XTBaseFragment() {
     fun animateRentClose(changeMode: Boolean = true) {
         if (oneKeyOpen.get() && isCarListOpen) {
             activity?.let {
-                val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen._260dp)
+                val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen.rent_car_bottom_sheet_peek_height)
                 val screen = Device.getScreenHeight(it)
                         .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
                 val anim = ValueAnimator.ofFloat(screen - height, screen)
@@ -407,7 +405,7 @@ class CarRentFragment : XTBaseFragment() {
         if (hasUsableCar.get()) {
             if (!isCarListOpen) {
                 activity?.let {
-                    val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen._260dp)
+                    val height = if (view_back.alpha == 1f) binding.viewBottomSheet.height else resources.getDimensionPixelOffset(R.dimen.rent_car_bottom_sheet_peek_height)
                     val screen = Device.getScreenHeight(it)
                             .toFloat() - resources.getDimensionPixelOffset(R.dimen.height_offset)
                     val anim = ValueAnimator.ofFloat(screen, screen - height)

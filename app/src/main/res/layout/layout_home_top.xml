@@ -5,16 +5,15 @@
 
         <import
             alias="util"
-            type="com.base.util.StringUtils"/>
+            type="com.base.util.StringUtils" />
 
         <variable
             name="ac"
-            type="shy.car.sdk.MainActivity"/>
+            type="shy.car.sdk.MainActivity" />
     </data>
 
 
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,12 +23,14 @@
             android:id="@+id/img_user_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:onClick="@{()->ac.onAvatarClick()}"
+            android:paddingBottom="10dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
             android:src="@drawable/icon_pre"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_city"
@@ -42,7 +43,7 @@
             android:textColor="@color/text_second_primary_666666"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/txt_msg"
@@ -52,7 +53,7 @@
             android:padding="16dp"
             android:src="@drawable/icon_infor"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/group_radio"
@@ -63,32 +64,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_city">
+
             <RadioButton
                 android:id="@+id/radio_car_rent"
                 style="@style/style_mm.gcw1.home_page_title"
                 android:onClick="@{()->ac.changeToCarRentFragment()}"
-                android:text="租车"/>
+                android:text="租车" />
 
             <RadioButton
                 android:id="@+id/radio_order_take"
                 style="@style/style_mm.gcw1.home_page_title"
                 android:checked="true"
                 android:onClick="@{()->ac.changeToDelivery()}"
-                android:text="货运"/>
+                android:text="货运" />
 
             <!--<RadioButton-->
-                <!--android:freightId="@+freightId/radio_car_rent"-->
-                <!--style="@style/style_mm.gcw1.home_page_title"-->
-                <!--android:onClick="@{()->ac.changeToDelivery()}"-->
-                <!--android:text="租车"/>-->
-
+            <!--android:freightId="@+freightId/radio_car_rent"-->
+            <!--style="@style/style_mm.gcw1.home_page_title"-->
+            <!--android:onClick="@{()->ac.changeToDelivery()}"-->
+            <!--android:text="租车"/>-->
 
 
             <!--<RadioButton-->
-                <!--android:freightId="@+freightId/radio_order_send"-->
-                <!--style="@style/style_mm.gcw1.home_page_title"-->
-                <!--android:onClick="@{()->ac.changeToOrderSendFragment()}"-->
-                <!--android:text="发货"/>-->
+            <!--android:freightId="@+freightId/radio_order_send"-->
+            <!--style="@style/style_mm.gcw1.home_page_title"-->
+            <!--android:onClick="@{()->ac.changeToOrderSendFragment()}"-->
+            <!--android:text="发货"/>-->
 
         </RadioGroup>
 
