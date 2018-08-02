@@ -56,7 +56,7 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
 
                 })
         determinate.listener = FabButton.OnAnimCompleteListener {
-            txt_lock.text = "车辆已解锁"
+            txt_lock.text = "车辆已上锁"
             Observable.timer(2500, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.io())

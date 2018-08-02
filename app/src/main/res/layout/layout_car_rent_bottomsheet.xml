@@ -149,7 +149,7 @@
                             android:layout_marginTop="5dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="广西南宁市西乡塘区鲁班路83号"
+                            android:text="@{fragment.currentSelectedCarInfo.netWork.address}"
                             android:textColor="@color/text_third_primary_999999"
                             android:textSize="10sp" />
                     </LinearLayout>
