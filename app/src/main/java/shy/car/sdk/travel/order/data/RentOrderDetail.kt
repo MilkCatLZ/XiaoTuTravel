@@ -7,6 +7,7 @@ import android.databinding.PropertyChangeRegistry
 import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
 import shy.car.sdk.app.LNTextUtil
+import shy.car.sdk.travel.take.data.OrderState
 
 class RentOrderDetail : BaseObservable() {
 
@@ -256,6 +257,17 @@ class RentOrderDetail : BaseObservable() {
         return "计费标准： ￥${car?.cost?.minutePrice}/分钟+￥${car?.cost?.kmPrice}/公里；最低消费：${LNTextUtil.getPriceText(car?.cost?.minimum!!)}元"
     }
 
+    fun getCommentText(): String {
+        return if (status == OrderState.StateFinish) {
+            if ("0" == commentId) {
+                "待评价"
+            } else {
+                "已评价"
+            }
+        } else {
+            return ""
+        }
+    }
 
     /**
      * 优惠信息

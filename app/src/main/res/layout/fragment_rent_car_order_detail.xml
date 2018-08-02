@@ -531,8 +531,8 @@
 
                         <TextView
                             style="@style/style_order_detail_text"
-                            android:text="04-10 15:00"
-                            tools:text="@{detail.createdAt}" />
+                            android:text="@{detail.createdAt}"
+                            tools:text="04-10 15:00" />
 
                     </LinearLayout>
 
@@ -713,7 +713,7 @@
 
                     <TextView
                         style="@style/style_setting_nav_hint"
-                        android:text="待评价" />
+                        android:text="@{detail.getCommentText()}" />
 
                     <ImageView
                         style="@style/style_setting_nav_arrow"

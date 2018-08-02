@@ -74,7 +74,7 @@ class RentCarOrderDetailFragment : XTBaseFragment(),
     }
 
     fun gotuCommentProcess() {
-        if (binding.detail?.status == RentOrderState.Finish)
+        if ("0" == binding.detail?.commentId)
             ARouter.getInstance()
                     .build(RouteMap.RentComment)
                     .withObject(Object1, binding.detail)
