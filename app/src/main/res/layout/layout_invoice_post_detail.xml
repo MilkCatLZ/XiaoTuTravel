@@ -176,7 +176,7 @@
 
             <TextView
                 style="@style/style_invoice_post_input_title"
-                android:text="身份证号" />
+                android:text="发票内容" />
 
             <TextView
                 android:layout_width="match_parent"
