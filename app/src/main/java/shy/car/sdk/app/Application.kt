@@ -58,6 +58,7 @@ class Application : BaseApplication() {
 
     val InterfaceVersion = "v1"
     var servicePhone = "400-056-5317"
+    var AreaAphla = 155
     var device_token: String = ""
     var location: CurrentLocation = CurrentLocation()
     lateinit var api: IWXAPI

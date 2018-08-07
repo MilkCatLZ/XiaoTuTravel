@@ -91,8 +91,9 @@ class UnLockCarActivity : XTBaseActivity(),
 
     var unlockAnim = UnLockCarDialogFragment()
     fun submitAndUnLock() {
-        presenter.uploadPicAndUnlockCar()
-        unlockAnim.show(supportFragmentManager, "fragment_unlock_dialog")
+        if (presenter.uploadPicAndUnlockCar()) {
+            unlockAnim.show(supportFragmentManager, "fragment_unlock_dialog")
+        }
     }
 
     fun leftPhotoClick() {

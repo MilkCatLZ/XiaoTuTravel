@@ -64,8 +64,8 @@
         </LinearLayout>
 
         <CheckBox
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_marginEnd="15dp"
             android:checked="@{presenter.checkPayID==pay.id}"
             android:background="@drawable/check_pay_action"

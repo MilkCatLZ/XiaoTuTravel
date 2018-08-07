@@ -65,7 +65,7 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
 
     private var ieUnLockError: Boolean = false
 
-    fun uploadPicAndUnlockCar() {
+    fun uploadPicAndUnlockCar(): Boolean {
         if (checkSelect()) {
             io.reactivex.Observable.create<String> {
                 while (photoList.size < 2) {
@@ -79,7 +79,9 @@ class UnLockCarPresenter(context: Context, var callBack: CallBack) : BasePresent
                         submit()
                     }, {})
 
-
+            return true
+        } else {
+            return false
         }
 
     }

@@ -529,7 +529,7 @@ class CarRentOrderingFragment : XTBaseFragment() {
         // 添加 多边形的每个顶点（顺序添加）
         polygonOptions.strokeWidth(1f) // 多边形的边框
                 .strokeColor(Color.argb(0, 0, 0, 0)) // 边框颜色
-                .fillColor(Color.argb(70, 0, 179, 138))   // 多边形的填充色
+                .fillColor(Color.argb(app.AreaAphla, 0, 179, 138))   // 多边形的填充色
         binding.map.map.addPolygon(polygonOptions)
     }
 

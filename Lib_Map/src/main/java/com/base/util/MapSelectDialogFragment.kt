@@ -39,7 +39,7 @@ class MapSelectDialogFragment : DialogFragment() {
     private fun gotoGaoDe() {
         if (isPackageInstalled("com.autonavi.minimap")) {
             val i1 = Intent()
-            i1.data = Uri.parse("amapuri://route/plan/?slat=$startLatitude&slon=$startLongitude&dlat=$endLatitude&dlon=$endLongitude&dev=0&t=0")
+            i1.data = Uri.parse("amapuri://route/plan/?sourceApplication=lnapp&slat=$startLatitude&slon=$startLongitude&dlat=$endLatitude&dlon=$endLongitude&dname=$address&&dev=0&t=0")
             startActivity(i1)
         } else {
             activity?.let { ToastManager.showShortToast(it, "请先安装高德地图") }

@@ -85,7 +85,7 @@ class ReturnCarFragment : XTBaseFragment(),
                     val location: Location = Location()
                     location.latitude = detail.car?.lat!!
                     location.longitude = detail.car?.lng!!
-                    location.address =  it.regeocodeAddress.formatAddress
+                    location.address = it.regeocodeAddress.formatAddress
                     location.city = it.regeocodeAddress.city
                     location.district = it.regeocodeAddress.district
                     presenter.location.set(location)
@@ -263,7 +263,7 @@ class ReturnCarFragment : XTBaseFragment(),
                 .navigation()
     }
 
-    fun returnCarAgree(){
+    fun returnCarAgree() {
         ARouter.getInstance()
                 .build(RouteMap.ReturnCarAgree)
                 .navigation()
