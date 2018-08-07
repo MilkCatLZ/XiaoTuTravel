@@ -71,7 +71,7 @@ class CarInfo : BaseObservable() {
         }
     @SerializedName("volume")
     @get:Bindable
-    var volume: Int = 0
+    var volume: String = ""
         set(volume) {
             field = volume
             notifyChange(BR.volume)
@@ -104,6 +104,10 @@ class CarInfo : BaseObservable() {
     }
 
     fun info(): String {
-        return "载重${weight}kg / 长宽高:$longX*$wide*${height}m³ / 载货体积${volume}m³"
+        return "载重${weight}kg / 长宽高:$longX*$wide*${height}m³"
+    }
+
+    fun info1(): String {
+        return "载货体积${volume}m³"
     }
 }

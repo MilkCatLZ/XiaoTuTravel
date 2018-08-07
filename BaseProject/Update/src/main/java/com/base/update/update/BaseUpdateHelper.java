@@ -344,7 +344,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
                     SPCache.saveObject(context, HAS_NEW_VERSION, false);
                 }
             } else {
-                if ((nowVersion.compareTo(info.getVersion()) < 0)) {
+                if (checkHasNewVersion(nowVersion, info.getVersion())) {
                     showUpdateConfirmDialog();
                     SPCache.saveObject(context, HAS_NEW_VERSION, true);
                     SPCache.saveObject(context, Version.NewVersion, info.getVersion());
