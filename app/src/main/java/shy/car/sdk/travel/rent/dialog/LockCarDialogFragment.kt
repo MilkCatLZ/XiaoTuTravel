@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * create by Sharon at 2018/06/28
- * 鸣笛
+ * 锁车
  */
 class LockCarDialogFragment : XTBaseDialogFragment() {
 

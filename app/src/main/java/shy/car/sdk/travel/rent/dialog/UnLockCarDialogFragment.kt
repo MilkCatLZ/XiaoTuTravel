@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * create by Sharon at 2018/06/28
- * 鸣笛
+ * 解锁车门
  */
 class UnLockCarDialogFragment : XTBaseDialogFragment() {
 
