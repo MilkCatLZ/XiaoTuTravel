@@ -35,6 +35,12 @@ class BankType : BaseObservable(),
             field = logo
             notifyChange(BR.logo)
         }
+    @get:Bindable
+    var icon: String? = null
+        set(icon) {
+            field = icon
+            notifyChange(BR.icon)
+        }
     @Transient
     private var propertyChangeRegistry: PropertyChangeRegistry? = PropertyChangeRegistry()
 
