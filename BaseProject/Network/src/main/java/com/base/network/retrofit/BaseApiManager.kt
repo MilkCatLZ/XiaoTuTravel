@@ -21,11 +21,15 @@ open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseIntercept
     var api: T
     var builder = OkHttpClient.Builder()
 
-    var client: OkHttpClient
-    var retrofit: Retrofit
+    private lateinit var client: OkHttpClient
+    lateinit var retrofit: Retrofit
     var cookieJar: CookieJar? = null
 
     init {
+        api = initOKHttp()
+    }
+
+    private fun initOKHttp(): T {
         //初始化拦截器
         builder.connectTimeout(90, TimeUnit.SECONDS)
                 .readTimeout(90, TimeUnit.SECONDS)
@@ -48,30 +52,11 @@ open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseIntercept
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         //生成api
-        api = retrofit.create(c)
+        return retrofit.create(c)
     }
 
     open fun clearCache() {
-        builder = OkHttpClient.Builder()
-        if (interceptor != null) {
-            builder.addInterceptor(interceptor)
-        }
-        builder.addInterceptor(HttpLoggingInterceptor())
-        if (cookieJar != null) {
-            builder.cookieJar(cookieJar)
-        }
-        client = builder.build()
-
-
-        //初始化retrofit
-        retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        //生成api
-        api = retrofit.create(c)
+        api = initOKHttp()
     }
 
     protected fun getApiService(): T {

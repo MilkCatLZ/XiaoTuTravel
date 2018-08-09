@@ -30,7 +30,7 @@ class UnLockCarDialogFragment : XTBaseDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        LockCar()
-        Observable.intervalRange(1, 100, 0, 250, TimeUnit.MILLISECONDS)
+        Observable.intervalRange(1, 100, 0, 400, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe({

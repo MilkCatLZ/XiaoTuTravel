@@ -19,11 +19,11 @@ class BankTypeSelectPresenter(context: Context, var callBack: CallBack) : BasePr
 
     }
 
-    val adapter = DataBindingItemClickAdapter<BankType>(R.layout.item_bank_type, BR.type, BR.click, {
+    val adapter = DataBindingItemClickAdapter<BankType>(R.layout.item_bank_type, BR.type, BR.click) {
         val bankType=it.tag as BankType
 
         callBack.onItemClick(bankType)
-    })
+    }
 
     fun getBankTypeList() {
         val observable = ApiManager.getInstance()
