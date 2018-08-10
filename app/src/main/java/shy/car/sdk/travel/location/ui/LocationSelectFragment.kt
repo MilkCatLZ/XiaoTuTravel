@@ -136,7 +136,7 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
         binding.mapLocationSelect.map.mapScreenMarkers.clear()
         val marker = binding.mapLocationSelect.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
                 .anchor(0.5f, 1.0f)
-                .snippet("当前位置")
+                .title("当前位置")
                 .snippet(location.address)
                 .position(LatLng(location.lat, location.lng))
                 .draggable(false))
