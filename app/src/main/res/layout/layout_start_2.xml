@@ -12,7 +12,7 @@
         android:layout_marginTop="80dp"
         android:text="一件发货，送货无忧"
         android:textColor="@color/text_primary_333333"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/text_18sp"/>
 
     <ImageView
         android:layout_width="wrap_content"

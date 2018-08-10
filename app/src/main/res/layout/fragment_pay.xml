@@ -57,14 +57,14 @@
                         android:layout_height="wrap_content"
                         android:text="@{@string/str_yuan + user.balance}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="45sp" />
+                        android:textSize="@dimen/text_45sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="账户余额"
                         android:textColor="@color/text_third_primary_999999"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/text_12sp" />
 
                 </LinearLayout>
 

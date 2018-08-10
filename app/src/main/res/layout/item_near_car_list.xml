@@ -57,7 +57,7 @@
                     android:maxLines="1"
                     android:text="@{near.name}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_15sp"
                     tools:text="小兔科技" />
 
                 <TextView

@@ -30,7 +30,7 @@
             android:maxLines="2"
             android:text="@{message.createdAt}"
             android:textColor="@color/text_third_primary_999999"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_10sp"
             tools:text="2018.02.06 11:02" />
 
         <com.dd.ShadowLayout
@@ -74,7 +74,7 @@
                     android:maxLines="2"
                     android:text="@{message.createdAt}"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="10sp"
+                    android:textSize="@dimen/text_10sp"
                     tools:text="2018.02.06 11:02" />
 
                 <TextView

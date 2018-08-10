@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:text="@{detail.txt}"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{detail.amount}"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_15sp" />
         </LinearLayout>
 
         <View style="@style/line_horizontal" />

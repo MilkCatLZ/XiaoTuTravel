@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:text="@{detail.user.name}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_15sp"
                         tools:text="王羲之" />
 
 

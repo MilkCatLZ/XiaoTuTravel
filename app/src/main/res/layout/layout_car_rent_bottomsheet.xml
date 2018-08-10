@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{fragment.naviInfo}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="13sp"
+                            android:textSize="@dimen/text_13sp"
                             tools:text="距3.5km 步行3小时38分钟" />
 
                         <TextView
@@ -151,7 +151,7 @@
                             android:singleLine="true"
                             android:text="@{fragment.currentSelectedCarInfo.netWork.address}"
                             android:textColor="@color/text_third_primary_999999"
-                            android:textSize="10sp" />
+                            android:textSize="@dimen/text_10sp" />
                     </LinearLayout>
 
                     <RelativeLayout
@@ -200,7 +200,7 @@
                     android:gravity="center"
                     android:text="@{fragment.currentSelectedCarInfo.costText()}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="11sp"
+                    android:textSize="@dimen/text_11sp"
                     tools:text="￥0.2/分钟+￥0.88/公里" />
 
                 <TextView

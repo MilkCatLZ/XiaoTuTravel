@@ -150,7 +150,7 @@
                             android:layout_marginStart="5dp"
                             android:text="@{detail.duration}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/text_18sp"
                             tools:text="00:30:35"/>
 
                     </LinearLayout>
@@ -175,7 +175,7 @@
                             android:layout_marginStart="5dp"
                             android:text="@{LNTextUtil.getPriceText(detail.mileage)}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="18sp"
+                            android:textSize="@dimen/text_18sp"
                             tools:text="50.5"/>
 
                         <TextView

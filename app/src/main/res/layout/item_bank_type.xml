@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{type.name}"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_title_16dp" />
 
         </LinearLayout>
 

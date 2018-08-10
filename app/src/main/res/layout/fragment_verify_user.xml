@@ -127,7 +127,7 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传身份证正面照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp" />
+                                android:textSize="@dimen/text_10sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -170,7 +170,7 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传手持身份证照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp" />
+                                android:textSize="@dimen/text_10sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -232,7 +232,7 @@
                                 android:layout_marginTop="10dp"
                                 android:text="点击上传驾驶证照片"
                                 android:textColor="@color/text_second_primary_666666"
-                                android:textSize="10sp" />
+                                android:textSize="@dimen/text_10sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -277,7 +277,7 @@
                 android:onClick="@{()->fragment.onSubmitClick()}"
                 android:text="提交认证"
                 android:textColor="@color/_foreground_material_light"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_title_16dp" />
         </LinearLayout>
 
     </ScrollView>

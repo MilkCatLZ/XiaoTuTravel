@@ -105,7 +105,7 @@
                             android:layout_weight="1"
                             android:text="@{user.rankText}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="17sp"
+                            android:textSize="@dimen/text_title_17dp"
                             tools:text="积分会员" />
 
                         <TextView
@@ -212,7 +212,7 @@
                             android:layout_weight="1"
                             android:text="@{user.rankText}"
                             android:textColor="@color/text_primary_333333"
-                            android:textSize="17sp"
+                            android:textSize="@dimen/text_title_17dp"
                             tools:text="晋升规则" />
 
                         <TextView

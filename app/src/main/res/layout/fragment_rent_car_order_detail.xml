@@ -87,7 +87,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{detail.duration}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp"
+                                android:textSize="@dimen/text_15sp"
                                 tools:text="01:48" />
 
 
@@ -113,7 +113,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{util.getPriceText(detail.mileage)}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp"
+                                android:textSize="@dimen/text_15sp"
                                 tools:text="55km" />
 
 
@@ -139,7 +139,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{util.getPriceText(detail.money)}"
                                 android:textColor="#4a4c5b"
-                                android:textSize="15sp"
+                                android:textSize="@dimen/text_15sp"
                                 tools:text="￥55元" />
 
 
@@ -199,7 +199,7 @@
                         android:gravity="center"
                         android:text="@{detail.costInfo()}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="11sp"
+                        android:textSize="@dimen/text_11sp"
                         tools:text="￥0.2/分钟+￥0.88/公里" />
 
                     <TextView
@@ -235,14 +235,14 @@
                     <!--android:drawableStart="@drawable/icon_night"-->
                     <!--android:text="￥88"-->
                     <!--android:textColor="@color/text_primary_333333"-->
-                    <!--android:textSize="11sp" />-->
+                    <!--android:textSize="@dimen/text_11sp" />-->
 
                     <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:text="20:00-次日8:00"-->
                     <!--android:textColor="@color/text_primary_333333"-->
-                    <!--android:textSize="11sp" />-->
+                    <!--android:textSize="@dimen/text_11sp" />-->
 
                     <!--</LinearLayout>-->
 
@@ -259,14 +259,14 @@
                     <!--android:drawableStart="@drawable/icon_24"-->
                     <!--android:text="￥88"-->
                     <!--android:textColor="@color/text_primary_333333"-->
-                    <!--android:textSize="11sp" />-->
+                    <!--android:textSize="@dimen/text_11sp" />-->
 
                     <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:text="24小时整日租"-->
                     <!--android:textColor="@color/text_primary_333333"-->
-                    <!--android:textSize="11sp" />-->
+                    <!--android:textSize="@dimen/text_11sp" />-->
 
                     <!--</LinearLayout>-->
 

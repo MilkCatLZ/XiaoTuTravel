@@ -33,7 +33,7 @@
             android:layout_marginStart="10dp"
             android:text="@{@string/str_yuan+discount.price}"
             android:textColor="@color/text_primary_333333"
-            android:textSize="11sp"
+            android:textSize="@dimen/text_11sp"
             tools:text="￥98" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:text="@{discount.time}"
             android:textColor="@color/text_primary_333333"
             tools:text="20:00-次日8:00"
-            android:textSize="11sp" />
+            android:textSize="@dimen/text_11sp" />
 
     </LinearLayout>
 

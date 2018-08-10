@@ -33,7 +33,7 @@
                 android:layout_weight="1"
                 android:text="@{remain.typeText}"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_15sp"
                 tools:text="在线支付" />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{remain.getMoneyText()}"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_15sp"
                 tools:text="7.5" />
         </LinearLayout>
 

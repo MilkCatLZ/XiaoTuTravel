@@ -28,7 +28,7 @@
             android:paddingBottom="6dp"
             android:paddingTop="6dp"
             android:textColor="@color/text_second_primary_666666"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_14sp"
             tools:text="03月"
             android:text="@{invoice.monthText}"
             />

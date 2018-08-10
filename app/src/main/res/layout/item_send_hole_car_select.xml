@@ -31,13 +31,13 @@
             style="@style/style_ww.text_12_999"
             android:layout_marginTop="5dp"
             android:text="@{car.info()}"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_10sp"
             tools:text="载重500kg/长宽高:4*16.15立m³/载货体积5.3方" />
         <TextView
             style="@style/style_ww.text_12_999"
             android:layout_marginTop="5dp"
             android:text="@{car.info1()}"
-            android:textSize="10sp"
+            android:textSize="@dimen/text_10sp"
             tools:text="载货体积5.3方" />
 
         <ImageView

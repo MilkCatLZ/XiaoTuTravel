@@ -50,7 +50,7 @@
             android:layout_marginTop="20dp"
             android:text="@{user.name}"
             android:textColor="@color/text_primary_333333"
-            android:textSize="24sp"
+            android:textSize="@dimen/text_24sp"
             tools:text="小兔用户" />
 
         <TextView

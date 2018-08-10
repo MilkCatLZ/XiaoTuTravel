@@ -53,7 +53,7 @@
                     android:layout_weight="1"
                     android:text="@{order.typeName}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="15sp" />
+                    android:textSize="@dimen/text_15sp" />
 
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:layout_marginEnd="5dp"
                     android:text="@{order.statusName}"
                     android:textColor="@color/main_color_green"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/text_13sp" />
 
                 <ImageView
 

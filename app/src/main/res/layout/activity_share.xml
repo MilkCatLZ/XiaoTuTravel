@@ -32,7 +32,7 @@
             style="@style/style_ww.text_16_333"
             android:layout_marginTop="40dp"
             android:text="邀请好友，认证成功"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/text_18sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,13 +42,13 @@
             <TextView
                 style="@style/style_ww.text_16_333"
                 android:text="各获得"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/text_18sp"/>
 
             <TextView
                 style="@style/style_ww.text_16_333"
                 android:text="@{detail.getCouponText()}"
                 tools:text="10元减免优惠券一张"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/text_18sp"/>
 
         </LinearLayout>
 
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_color_green"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_24sp"
                 android:text="@{detail.code}"
                 tools:text="6597845645"/>
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="专用邀请码"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/text_15sp"/>
         </LinearLayout>
 
         <LinearLayout

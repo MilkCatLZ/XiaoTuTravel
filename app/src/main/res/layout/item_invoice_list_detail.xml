@@ -57,7 +57,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@{orders.carInfo}"
                 android:textColor="#4b4b4b"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_title_16dp"
                 tools:text="EQ | 桂A737579" />
 
         </LinearLayout>
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{LNTextUtil.getPriceText(orders.money)}"
                 android:textColor="@color/main_color_red"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_15sp"
                 tools:text="55" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="元"
                 android:textColor="@color/text_third_primary_999999"
-                android:textSize="15sp" />
+                android:textSize="@dimen/text_15sp" />
         </LinearLayout>
     </LinearLayout>
 

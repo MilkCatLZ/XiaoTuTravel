@@ -32,7 +32,8 @@ import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
  * create by LZ at 2018/05/28
  * 选择地址
  */
-class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBack {
+class LocationSelectFragment : XTBaseFragment(),
+        LocationSelectPresenter.CallBack {
     override fun getPoiListSuccess() {
         isResultVisible.set(true)
     }
@@ -100,20 +101,27 @@ class LocationSelectFragment : XTBaseFragment(), LocationSelectPresenter.CallBac
      */
     private fun refreshLocation() {
         Observable.create<CurrentLocation> {
-            AmapLocationManager.getInstance()
-                    .getLocation(object : AmapOnLocationReceiveListener {
-                        override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
-                            this@LocationSelectFragment.location.copy(location)
-                            it.onNext(this@LocationSelectFragment.location)
-                        }
-                    })
+            while (this.location.lat == 0.0) {
+                AmapLocationManager.getInstance()
+                        .getLocation(object : AmapOnLocationReceiveListener {
+                            override fun onLocationReceive(ampLocation: AMapLocation, location: Location) {
+                                this@LocationSelectFragment.location.copy(location)
+                                it.onNext(this@LocationSelectFragment.location)
+                            }
+                        })
+                Thread.sleep(3000)
+            }
+
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     moveCameraAndShowLocation(location)
                     addMarkersToMap()
-                }
+                }, {
+
+                })
+
 
     }
 

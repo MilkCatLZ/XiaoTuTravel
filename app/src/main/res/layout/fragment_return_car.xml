@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:text="车辆当前位置"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="13sp"/>
+                    android:textSize="@dimen/text_13sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                     android:layout_marginTop="2dp"
                     android:text="@{presenter.location==null?@string/str_locating:presenter.location.address}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_13sp"
                     tools:text="南宁市西乡塘区鲁班路83号"/>
 
             </LinearLayout>
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:text="车辆停放位置"
                     android:textColor="@color/text_third_primary_999999"
-                    android:textSize="13sp"/>
+                    android:textSize="@dimen/text_13sp"/>
 
                 <TextView
                     android:id="@+id/txt_address"
@@ -163,7 +163,7 @@
                     android:layout_marginTop="2dp"
                     android:text="@{presenter.locationCheckText}"
                     android:textColor="@color/main_color_red"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_13sp"
                     tools:text="未到小兔出行科技停放点"/>
 
             </LinearLayout>

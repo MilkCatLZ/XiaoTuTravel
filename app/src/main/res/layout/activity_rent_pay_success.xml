@@ -41,7 +41,7 @@
             android:layout_marginTop="20dp"
             android:text="支付成功"
             android:textColor="@color/text_primary_333333"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_18sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
                     android:layout_marginStart="5dp"
                     android:text="@{detail.duration}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_15sp"
                     tools:text="00:30:35" />
 
                 <TextView
@@ -102,7 +102,7 @@
                         android:layout_marginStart="5dp"
                         android:text="@{LNTextUtil.getPriceText(detail.mileage)}"
                         android:textColor="@color/text_primary_333333"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/text_15sp"
                         tools:text="50.5" />
 
                     <TextView
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{LNTextUtil.getPriceText(detail.realpayMoney)+@string/str_yuan_c}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/text_18sp"
                     tools:text="00:30:35" />
 
                 <TextView

@@ -35,7 +35,7 @@
             android:layout_marginTop="20dp"
             android:text="申请成功"
             android:textColor="@color/text_primary_333333"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_18sp" />
 
 
         <TextView

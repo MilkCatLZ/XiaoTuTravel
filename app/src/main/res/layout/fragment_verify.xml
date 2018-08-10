@@ -164,7 +164,7 @@
                         android:animateLayoutChanges="true"
                         android:text="登录成功"
                         android:textColor="@color/text_second_primary_666666"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_14sp"
                         android:visibleOrGone="@{fragment.isLoginSuccess}" />
 
                     <TextView
@@ -175,7 +175,7 @@
                         android:animateLayoutChanges="true"
                         android:text="登录失败，请重试"
                         android:textColor="@color/text_second_primary_666666"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_14sp"
                         android:visibleOrGone="@{fragment.isLoginFailed}" />
 
                     <EditText

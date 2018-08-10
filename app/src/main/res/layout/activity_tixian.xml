@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:text="￥"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="24sp"/>
+                    android:textSize="@dimen/text_24sp"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:maxLines="1"
                     android:text="@={presenter.amount}"
                     android:textColor="@color/text_primary_333333"
-                    android:textSize="24sp"/>
+                    android:textSize="@dimen/text_24sp"/>
             </LinearLayout>
 
             <View

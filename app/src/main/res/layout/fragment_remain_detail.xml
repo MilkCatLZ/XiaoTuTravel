@@ -114,7 +114,7 @@
                 android:gravity="center_vertical"
                 android:text="余额明细"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/text_15sp"/>
 
             <View style="@style/line_horizontal"/>
 

@@ -112,7 +112,7 @@
                     android:onClick="@{()->fragment.onButtonClick()}"
                     android:text="@{btnText}"
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/text_title_16dp"
                     android:visibleOrGone="@{fragment.btnVisible}" />
             </LinearLayout>
         </ScrollView>

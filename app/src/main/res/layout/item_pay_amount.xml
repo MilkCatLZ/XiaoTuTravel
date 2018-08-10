@@ -44,7 +44,7 @@
                 android:enabled="@{presenter.amount==0.0?presenter.selectedPayAmount.price==pay.price:presenter.amount==pay.price}"
                 android:text="@{LNTextUtil.getPriceText(pay.price)+@string/str_yuan_c}"
                 android:textColor="@drawable/color_333_whie_enable"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_18sp"
                 tools:text="100元"/>
 
             <TextView

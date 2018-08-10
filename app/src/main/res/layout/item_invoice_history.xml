@@ -82,7 +82,7 @@
                     android:layout_weight="1"
                     android:text="@{history.title}"
                     android:textColor="@color/text_second_primary_666666"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/text_13sp"
                     tools:text="抬头"/>
 
                 <TextView

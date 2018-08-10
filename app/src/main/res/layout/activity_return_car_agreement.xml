@@ -32,7 +32,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/str_register_agree_ment"
                 android:textColor="@color/text_primary_333333"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_title_16dp" />
         </RelativeLayout>
 
         <View style="@style/style_shadow"/>

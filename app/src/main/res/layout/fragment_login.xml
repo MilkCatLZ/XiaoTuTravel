@@ -86,7 +86,7 @@
                             android:inputType="phone"
                             android:text="@={p.phone}"
                             android:maxLength="11"
-                            android:textSize="15sp"/>
+                            android:textSize="@dimen/text_15sp"/>
                     </LinearLayout>
 
                     <View

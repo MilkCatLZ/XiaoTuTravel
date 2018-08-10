@@ -69,7 +69,7 @@
             android:paddingStart="15dp"
             android:text="常见问题"
             android:textColor="@color/text_primary_333333"
-            android:textSize="15sp" />
+            android:textSize="@dimen/text_15sp" />
 
         <View style="@style/line_horizontal" />
 

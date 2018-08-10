@@ -72,7 +72,7 @@
                         android:gravity="center_vertical"
                         android:text="用车时间"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <TextView
                         android:id="@+id/txt_use_time"
@@ -102,7 +102,7 @@
                         android:gravity="center_vertical"
                         android:text="出发地点"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -133,7 +133,7 @@
                         android:gravity="center_vertical"
                         android:text="到达地点"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -164,7 +164,7 @@
                         android:gravity="center_vertical"
                         android:text="货物类型"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
@@ -195,7 +195,7 @@
                         android:gravity="center_vertical"
                         android:text="货物重量"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <EditText
                         android:id="@+id/edt_weight"
@@ -231,7 +231,7 @@
                         android:gravity="center_vertical"
                         android:text="货物体积"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <EditText
                         android:id="@+id/edt_volume"
@@ -266,7 +266,7 @@
                         android:gravity="center_vertical"
                         android:text="运费金额"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <EditText
                         android:id="@+id/edt_price"
@@ -302,7 +302,7 @@
                         android:gravity="center_vertical"
                         android:text="备注信息"
                         android:textColor="#4b4b4b"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/text_14sp" />
 
                     <EditText
                         style="@style/style_ww.text_12_999"
@@ -356,7 +356,7 @@
                     android:onClick="@{()->fragment.onConfirmClick()}"
                     android:text="确认发布  "
                     android:textColor="@color/_foreground_material_light"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_title_16dp" />
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
