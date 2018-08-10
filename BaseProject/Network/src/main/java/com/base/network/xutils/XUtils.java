@@ -26,7 +26,11 @@ public class XUtils {
     public static final int MAX_RETRY_COUNT = 1;
     private static XUtilsInterface xutilsInterface = null;
     static Application application;
+    private static boolean init = false;
 
+    public static boolean isInit() {
+        return init;
+    }
 
     /**
      * @param context
@@ -36,12 +40,12 @@ public class XUtils {
         x.Ext.setDebug(BuildConfig.DEBUG); // 是否输出debug日志, 开启debug会影响性能.
         application = (Application) context;
         XUtils.xutilsInterface = xutilsInterface;
+        init = true;
     }
 
     /**
      * @param entity
      * @param callback
-     *
      * @return
      */
     @NonNull
@@ -56,10 +60,10 @@ public class XUtils {
         return x.http()
                 .get(entity, new XUtilsCallBack(callback, xutilsInterface));
     }
+
     /**
      * @param entity
      * @param callback
-     *
      * @return
      */
     @NonNull
@@ -81,7 +85,6 @@ public class XUtils {
      *
      * @param entity
      * @param callback
-     *
      * @return
      */
     @NonNull
@@ -101,7 +104,6 @@ public class XUtils {
     /**
      * @param entity
      * @param callback
-     *
      * @return
      */
     @NonNull
@@ -121,7 +123,6 @@ public class XUtils {
      * @param entity
      * @param callback
      * @param <T>
-     *
      * @return
      */
     @NonNull
@@ -140,7 +141,6 @@ public class XUtils {
     /**
      * @param entity
      * @param callback
-     *
      * @return
      */
     @NonNull

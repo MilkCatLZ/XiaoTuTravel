@@ -1,6 +1,9 @@
 package com.base.update.update;
 
 
+import android.app.Application;
+import android.app.DownloadManager;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -43,6 +46,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import okhttp3.Request;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
+
 
 /**
  * Created by LZ on 2016/8/16.
@@ -67,19 +74,20 @@ import java.util.Locale;
  * CancelAction      : CANCEL_ACTIVITY_ACTION_MANIFEST,
  */
 public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
-    
+
     private final OnCheckCompleteListener listener;
-    
-    
+
+
     /**
      * 检查更新完成后，调用这个回调
      */
     public interface OnCheckCompleteListener<Update extends BaseUpdate> {
         void onCheckComplete(Update info);
+
         void onCheckError(Throwable ex);
     }
-    
-    
+
+
     public static final String APK_PATH = "apk_path";
     private static final String APK_SIZE = "apk_length";
     public static final String CANCEL_ACTIVITY = "CancelActivity";
@@ -88,7 +96,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
      */
     public final String CANCEL_ACTION;
     public static final String HAS_NEW_VERSION = "BaseUpdateHelper:hasNewVersion";
-    
+
     public final int NOTIFICATION_DOWNLOAD_ID = 32;
     private final String url;
     /**
@@ -103,26 +111,27 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
      * 每秒刷新一次进度用的
      */
     private boolean canChangeProgress = true;
-    
+
     private boolean silenceDownLoad;
-    
+
     public static final int FORCE_UPDATE = 1;
     final String compulsion = "BaseUpdateHelper:compulsion";
     private String nowVersion;
     private String nowString;
     protected Context context;
-    
-    
+    String id = "xiaotuchuxing-v";
+    String name = "小兔出行云";
+
     private Update info;
     private Update todayInfo;
-    
-    
+
+
     private Callback.Cancelable downLoadCancelable;
-    
+
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder = null;
     private int logo;
-    
+
     /**
      * 这里配置的sting会被主项目的覆盖，所以这里的不算数。
      * 需要在主项目的string.xml中配置：
@@ -132,7 +141,6 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
      *
      * @param context
      * @param fieldName
-     *
      * @return
      */
     private static Object getBuildConfigValue(Context context, String fieldName) {
@@ -149,7 +157,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         }
         return null;
     }
-    
+
     /**
      * @param context
      * @param url          检查更新的完整地址
@@ -162,10 +170,15 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         EventBus.getDefault()
                 .register(this);
         notificationManager = (NotificationManager) context
-            .getSystemService(Context.NOTIFICATION_SERVICE);
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(mChannel);
+        }
         nowString = new SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            .format(Calendar.getInstance()
-                            .getTime());
+                .format(Calendar.getInstance()
+                        .getTime());
         todayInfo = getTodayInfo(nowString);
 //        todayInfo = SPCache.getObject(context, nowString, UpdateInfo.class);
         nowVersion = Version.getVersion(context);
@@ -177,7 +190,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         this.listener = listener;
         Log.d(compulsion, nowString);
     }
-    
+
     /**
      * @param context
      * @param url          检查更新的完整地址
@@ -188,7 +201,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
     public BaseUpdateHelper(@NonNull Context context, String url, int logo, boolean isAutoUpdate, boolean needMessage) {
         this(context, url, logo, isAutoUpdate, needMessage, null);
     }
-    
+
     /**
      * @param context
      * @param logo         默认logo
@@ -198,20 +211,19 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
     public BaseUpdateHelper(@NonNull Context context, int logo, boolean isAutoUpdate, boolean needMessage) {
         this(context, null, logo, isAutoUpdate, needMessage, null);
     }
-    
+
     /**
      * @param result 原始json字符串
-     *
      * @return 返回最新的版本信息
      */
     protected abstract Update getNewUpdateInfo(String result);
+
     /**
      * @param nowString 日期，格式为"yyyy-MM-dd"
-     *
      * @return 当天的自动更新信息, 如果当天第一次打开，则会返回null
      */
     protected abstract Update getTodayInfo(String nowString);
-    
+
     public void checkUpdate() {
         RequestParams params = new RequestParams(url);
 //        params.addParameter("b", "b");
@@ -220,22 +232,21 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
 //        params.addParameter("a", "a");
         Callback.Cancelable cancelable = XUtils.get(params, checkUpdateCallback);
     }
-    
+
     public void checkUpdate(String result) {
         info = getNewUpdateInfo(result);
         manageResult(info);
     }
-    
-    
+
+
     /**
      * 开始下载
      */
     private void startDownLoad() {
         if (info != null) {
             if (!StringUtils.isEmpty(info.getDownloadUrl()) && info.getDownloadUrl()
-                                                                   .contains("apk")) {
+                    .contains("apk")) {
 
-//
 //                DownloadManager downloadManager = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
 //                DownloadManager.Request request = new Request(Uri.parse(info.getDownloadUrl()));
 //                request.setDestinationInExternalPublicDir("Lianni",getAppName()+info.getVersion());
@@ -246,19 +257,21 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
 //                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 //
 //                long downloadId = downloadManager.enqueue(request);
-                
+
                 RequestParams params = new RequestParams(info.getDownloadUrl());
                 params.setSaveFilePath(FileManager.getDirectory(context) + FileManager
-                    .convertUrlToFileName(info.getDownloadUrl()));
+                        .convertUrlToFileName(info.getDownloadUrl()));
+                if (!XUtils.isInit())
+                    XUtils.init((Application) context.getApplicationContext(), null);
                 downLoadCancelable = XUtils.get(params, progressCallback, "");
             }
             //用来取消
             EventBus.getDefault()
                     .postSticky(this);
         }
-        
+
     }
-    
+
     /**
      * 取消：在取消的Activity中，使用如下代码：
      *
@@ -275,12 +288,12 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             downLoadCancelable.cancel();
         }
     }
-    
+
     interface CheckUpdateListener {
-    
+
     }
-    
-    
+
+
     /**
      * 检查更新回调
      */
@@ -291,28 +304,28 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             info = getNewUpdateInfo(result);
             manageResult(info);
         }
-        
+
         @Override
         public void onError(Throwable ex, boolean isOnCallback) {
             if (listener != null) {
                 listener.onCheckError(ex);
             }
         }
-        
+
         @Override
         public void onCancelled(CancelledException cex) {
-        
+
         }
-        
+
         @Override
         public void onFinished() {
-        
+
         }
     };
-    
+
     private void manageResult(Update info) {
         boolean forceUpdate = info.getCompulsion() == FORCE_UPDATE && ((nowVersion.compareTo(
-            info.getVersion()) < 0));
+                info.getVersion()) < 0));
         //强制更新,isAutoUpdate=true就是自动，否则就是手动检查更新
         if (forceUpdate && isAutoUpdate) {
             if (nowVersion.compareTo(info.getVersion()) < 0) {
@@ -360,24 +373,23 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             listener.onCheckComplete(info);
         }
     }
-    
+
     /**
      * @param nowVersion
      * @param newVersion
-     *
      * @return true:有新版本，false：没有新版本
      */
     protected abstract boolean checkHasNewVersion(String nowVersion, String newVersion);
-    
+
     /**
      * @return 当前已是最新版本
      */
     protected abstract String getAlreadyNewMessage();
-    
+
     private boolean needMessage() {
         return !isAutoUpdate && needMessage;
     }
-    
+
     /**
      * 弹出提示窗口
      */
@@ -385,21 +397,21 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         if (context instanceof AppCompatActivity) {
             AppCompatActivity appCompatActivity = (AppCompatActivity) context;
             DialogManager.with(appCompatActivity, appCompatActivity.getSupportFragmentManager())
-                         .title(R.string.str_find_new_version)
-                         .message(info.getContent())
-                         .rightButtonText(R.string.str_update)
-                         .onRightClick(new OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialog, int which) {
-                                 startDownLoad();
-                                 ToastManager.showShortToast(context, context
-                                     .getString(R.string.str_start_update));
-                             }
-                         })
-                         .show();
+                    .title(R.string.str_find_new_version)
+                    .message(info.getContent())
+                    .rightButtonText(R.string.str_update)
+                    .onRightClick(new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startDownLoad();
+                            ToastManager.showShortToast(context, context
+                                    .getString(R.string.str_start_update));
+                        }
+                    })
+                    .show();
         }
     }
-    
+
     /**
      * 检查今天是否已经检查过更新
      *
@@ -413,12 +425,12 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         if (info != null) {
             //今天检查过了，而且新的版本和今天的相同
             if (todayInfo.getVersion()
-                         .equals(info.getVersion())) {
+                    .equals(info.getVersion())) {
                 return true;
             } else {
                 //今天检查过，但是新版本比今天检查过的跟更新，所以要重新提示
                 if (todayInfo.getVersion()
-                             .compareTo(info.getVersion()) < 0) {
+                        .compareTo(info.getVersion()) < 0) {
                     return false;
                 } else {
                     return true;
@@ -427,7 +439,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         }
         return false;
     }
-    
+
     /**
      * 刷新通知
      */
@@ -440,76 +452,76 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             startInstall(result);
             EventBus.getDefault()
                     .removeStickyEvent(BaseUpdateHelper.class);
-            
+
             Intent installIntent = new Intent(context, InstallActivity.class);
             installIntent.putExtra(InstallActivity.APK_URL, result.getAbsolutePath());
             installIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, installIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            
-            
+
+
             notifyChange(builder
-                             .setContentIntent(pendingIntent)
-                             .setContentInfo(context.getString(R.string.str_down_load_success))
-                             .setTicker(context.getString(R.string.str_down_load_success))
-                             .setProgress(0, 0, false)
-                             .setAutoCancel(true)
-                             .setOngoing(false));
+                    .setContentIntent(pendingIntent)
+                    .setContentInfo(context.getString(R.string.str_down_load_success))
+                    .setTicker(context.getString(R.string.str_down_load_success))
+                    .setProgress(0, 0, false)
+                    .setAutoCancel(true)
+                    .setOngoing(false));
         }
-        
+
         @Override
         public void onError(Throwable ex, boolean isOnCallback) {
             canChangeProgress = true;
             notifyChange(builder
-                             .setContentInfo(context.getString(R.string.str_down_load_failed))
-                             .setTicker(context.getString(R.string.str_down_load_failed))
-                             .setProgress(0, 0, false)
-                             .setAutoCancel(true)
-                             .setOngoing(false));
+                    .setContentInfo(context.getString(R.string.str_down_load_failed))
+                    .setTicker(context.getString(R.string.str_down_load_failed))
+                    .setProgress(0, 0, false)
+                    .setAutoCancel(true)
+                    .setOngoing(false));
             EventBus.getDefault()
                     .removeStickyEvent(BaseUpdateHelper.class);
         }
-        
+
         @Override
         public void onCancelled(CancelledException cex) {
             canChangeProgress = true;
             notifyChange(builder
-                             .setContentInfo(context.getString(R.string.str_down_load_cancel))
-                             .setTicker(context.getString(R.string.str_down_load_cancel))
-                             .setProgress(0, 0, false)
-                             .setAutoCancel(true)
-                             .setOngoing(false));
+                    .setContentInfo(context.getString(R.string.str_down_load_cancel))
+                    .setTicker(context.getString(R.string.str_down_load_cancel))
+                    .setProgress(0, 0, false)
+                    .setAutoCancel(true)
+                    .setOngoing(false));
             EventBus.getDefault()
                     .removeStickyEvent(BaseUpdateHelper.class);
         }
-        
+
         @Override
         public void onFinished() {
             canChangeProgress = true;
         }
-        
+
         @Override
         public void onWaiting() {
-            
+
         }
-        
+
         @Override
         public void onStarted() {
             updateProgress(0, 0);
         }
-        
+
         @Override
         public void onLoading(long total, long current, boolean isDownloading) {
             if (canChangeProgress)
                 updateProgress(total, current);
         }
-        
+
         private void updateProgress(long total, long current) {
             EventBus.getDefault()
                     .post(new Progress(total, current));
         }
-        
+
     };
-    
+
     /**
      * 安装
      *
@@ -518,18 +530,18 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
     public void startInstall(File result) {
         openFile(result, context);
     }
-    
+
     static class Progress {
         long total;
         long current;
-        
+
         Progress(long total, long current) {
             this.total = total;
             this.current = current;
         }
     }
-    
-    
+
+
     /**
      * 更新进度
      *
@@ -538,31 +550,31 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateDownLoadProgress(Progress progress) {
         canChangeProgress = false;
-        
+
         Log.d("updateProgress", "total=" + progress.total + "/current=" + progress.current);
-        
+
         int pro = (int) (progress.total == 0 ? 0 : progress.current * 100 / progress.total);
-        
+
         if (builder == null)
             builder = new Builder(context);
-        
+
         //Intent
         Intent intent = new Intent(CANCEL_ACTION);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        
+
         //PendingIntent
         PendingIntent pendingIntent = PendingIntent
-            .getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        
+                .getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         builder.setContentIntent(pendingIntent)
-               .setContentTitle(getAppName() + info.getVersion())
-               .setTicker("开始下载")
-               .setSmallIcon(logo)
-               .setContentInfo("正在准备下载")
-               .setAutoCancel(true)
-               .setOngoing(true)
-               .setProgress(100, pro, false);
-        
+                .setContentTitle(getAppName() + info.getVersion())
+                .setTicker("开始下载")
+                .setSmallIcon(logo)
+                .setContentInfo("正在准备下载")
+                .setAutoCancel(true)
+                .setOngoing(true)
+                .setProgress(100, pro, false);
+
         notifyChange(builder);
         new Thread() {
             @Override
@@ -571,38 +583,40 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    
+
                 }
                 canChangeProgress = true;
             }
         }.start();
     }
-    
+
     protected abstract String getAppName();
-    
+
     private void notifyChange(NotificationCompat.Builder builder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder.setChannelId(id);
+        }
+
         //后台静默下载
         if (!silenceDownLoad)
             notificationManager
-                .notify(getClass().getSimpleName(), NOTIFICATION_DOWNLOAD_ID, builder.build());
+                    .notify(getClass().getSimpleName(), NOTIFICATION_DOWNLOAD_ID, builder.build());
     }
-    
+
     /**
      * 是否有新版
      *
      * @param context
-     *
      * @return
      */
     public static boolean hasNewVersion(Context context) {
         return SPCache.getObject(context, HAS_NEW_VERSION, Boolean.class, false);
     }
-    
+
     /**
      * 是否已经下载好新版
      *
      * @param context
-     *
      * @return
      */
     public static boolean hasNewVersionApk(Context context) {
@@ -617,9 +631,9 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
         } else {
             return false;
         }
-        
+
     }
-    
+
     public static void openFile(File var0, Context var1) {
         Intent var2 = new Intent();
         var2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -637,7 +651,7 @@ public abstract class BaseUpdateHelper<Update extends BaseUpdate> {
             var5.printStackTrace();
         }
     }
-    
+
     public static String getMIMEType(File var0) {
         String var1 = "";
         String var2 = var0.getName();

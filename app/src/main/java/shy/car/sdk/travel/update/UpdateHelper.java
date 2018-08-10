@@ -66,6 +66,6 @@ public class UpdateHelper extends BaseUpdateHelper<UpdateInfo> {
 
     @Override
     protected String getAppName() {
-        return "连你配送-";
+        return "小兔出行云-";
     }
 }
