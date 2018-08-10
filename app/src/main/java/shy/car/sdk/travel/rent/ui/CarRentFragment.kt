@@ -68,6 +68,7 @@ import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
 import shy.car.sdk.travel.rent.data.CarCategory
 import shy.car.sdk.travel.rent.data.CarInfo
 import shy.car.sdk.travel.rent.data.NearCarPoint
+import shy.car.sdk.travel.rent.dialog.CarRentConfirmDialog
 import shy.car.sdk.travel.rent.presenter.CarRentPresenter
 import shy.car.sdk.travel.user.data.User
 
@@ -820,7 +821,7 @@ class CarRentFragment : XTBaseFragment() {
                         carInfo.netWork?.let {
                             carInfo.netWork = carPointList[0]
                         }
-                        carRentPresenter.createRentCarOrder(carInfo.carId, carInfo.netWork?.id!!)
+                        showRentConfirmDialog(carInfo)
                     }
         } else {
             //提示未交保证金
@@ -832,6 +833,17 @@ class CarRentFragment : XTBaseFragment() {
             }
 
         }
+    }
+
+    private fun showRentConfirmDialog(carInfo: CarInfo) {
+        val dialog = CarRentConfirmDialog()
+        dialog.carinfo=carInfo
+        dialog.listener=object: CarRentConfirmDialog.OnConfirmListener{
+            override fun confirm() {
+                carRentPresenter.createRentCarOrder(carInfo.carId, carInfo.netWork?.id!!)
+            }
+        }
+        dialog.show(childFragmentManager,"dialog_rent_confirm")
     }
 
 //    private fun showConfirmDialog() {

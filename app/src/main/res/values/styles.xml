@@ -123,8 +123,9 @@
     </style>
 
     <style name="style_car">
+
         <item name="android:layout_width">150dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_height">70dp</item>
         <item name="android:padding">3dp</item>
         <item name="android:scaleType">fitCenter</item>
     </style>

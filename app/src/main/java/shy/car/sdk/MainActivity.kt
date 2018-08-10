@@ -263,7 +263,7 @@ class MainActivity : NearCarOpenListener,
     private fun changeFragment(fragment: Fragment, tag: String) {
         val transaction = supportFragmentManager.beginTransaction()
 
-        if (supportFragmentManager.fragments.isEmpty() || !supportFragmentManager.fragments.contains(fragment))
+        if (supportFragmentManager.fragments.isEmpty() || !supportFragmentManager.fragments.contains(fragment) && !fragment.isAdded)
             transaction.add(R.id.frame_fragment_content, fragment, tag)
 
         transaction.hide(carRentFragment)

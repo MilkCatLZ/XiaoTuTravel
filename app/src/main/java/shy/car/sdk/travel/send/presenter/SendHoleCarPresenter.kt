@@ -99,7 +99,7 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
                     endLocation.get()?.lng.toString(),
                     endLocation.get()?.lat.toString(),
                     "2",//type=2整车发货
-                    goodsType.get()?.goodsType.toString(),
+                    goodsType.get()?.goodsType,
                     goodsType.get()?.goodsTypeName!!,
                     price.get()!!,
                     weight.get()!!,

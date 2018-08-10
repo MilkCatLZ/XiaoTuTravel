@@ -99,7 +99,8 @@
                 android:textSize="@dimen/text_second_primary_12dp"
                 android:background="@android:color/transparent"
                 android:layout_marginStart="10dp"
-                android:maxLines="4"
+                android:maxLength="4"
+                android:maxLines="1"
                 android:textColor="@color/text_primary_333333"
                 android:layout_height="match_parent"/>
         </LinearLayout>

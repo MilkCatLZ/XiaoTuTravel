@@ -116,7 +116,7 @@ class SendHoleCarFragment : XTBaseFragment(),
     }
 
     //    var timeSelectDialogFragment: SendTimeSelectDialogFragment = SendTimeSelectDialogFragment()
-    val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
+    private val goodsDialog = ARouter.getInstance().build(RouteMap.GoodsTypeSelect).navigation() as GoodsTypeSelectDialogFragment
 
     fun openTimeSelect() {
         activity?.let {
@@ -147,26 +147,6 @@ class SendHoleCarFragment : XTBaseFragment(),
             }, RouteMap.SendTimeSelect, childFragmentManager.beginTransaction(), "dialog_time_select")
         }
 
-//
-//
-//        timeSelectDialogFragment.listener =
-//                object : SendTimeSelectDialogFragment.OnItemSelectedListener {
-//                    @SuppressLint("SetTextI18n")
-//                    override fun onTimeSelect(date: CommonWheelItem, time: CommonWheelItem) {
-//                        binding.txtUseTime.text = "${date.name}     ${time.name}"
-//                        if (time.name.contains("-")) {
-//                            var arr = time.name.split("-")
-//                            presenter.startTime = arr[0].trim()
-//                            presenter.endTime = arr[1].trim()
-//                        } else {
-//                            presenter.startTime = date.name + " 00:00:00"
-//                            presenter.endTime = "0"
-//                        }
-//                    }
-//
-//                }
-//        timeSelectDialogFragment.isCancelable = false
-//        timeSelectDialogFragment.show(childFragmentManager, "fragment_date_select")
     }
 
     fun onSelectGoodsTypeClick() {

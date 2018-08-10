@@ -43,7 +43,7 @@
         <ImageView
             android:id="@+id/img_car"
             style="@style/style_car"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:imageURL="@{car.img}"
             android:src="@drawable/img_car" />
     </LinearLayout>

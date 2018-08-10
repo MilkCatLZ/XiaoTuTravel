@@ -68,6 +68,7 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
             override fun afterTextChanged(p0: Editable?) {
                 if (p0 != null && StringUtils.isNotEmpty(p0.toString())) {
                     presenter.checkID.set("0")
+                    presenter.checkedGoodsType = null
                 }
             }
 
@@ -90,7 +91,7 @@ class GoodsTypeSelectDialogFragment : BottomSheetDialogFragment(),
     }
 
     fun onConfirm() {
-        listener?.onTimeSelect(presenter.getCheckedGoodsType(binding.edtGoodsType.toString()))
+        listener?.onTimeSelect(presenter.getCheckedGoodsType(binding.edtGoodsType.text.toString()))
         dismiss()
     }
 
