@@ -20,10 +20,12 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.layout_home_top.*
+import okhttp3.ResponseBody
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.String1
+import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.data.LoginSuccess
 import shy.car.sdk.app.data.ReturnCarSuccess
 import shy.car.sdk.app.eventbus.*
@@ -42,6 +44,7 @@ import shy.car.sdk.travel.rent.data.NearCarPoint
 import shy.car.sdk.travel.rent.data.RentOrderState
 import shy.car.sdk.travel.rent.ui.CarRentFragment
 import shy.car.sdk.travel.rent.ui.CarRentOrderingFragment
+import shy.car.sdk.travel.update.UpdateHelper
 import shy.car.sdk.travel.user.data.User
 import shy.car.sdk.travel.user.ui.UserCenterFragment
 import java.util.concurrent.TimeUnit
@@ -113,9 +116,38 @@ class MainActivity : NearCarOpenListener,
         initPageFragment()
         checkPermissi()
         checkOrderState()
+        checkUpdate()
         register(this)
     }
+    fun checkUpdate() {
 
+        ProgressDialog.showLoadingView(this)
+        val observable = ApiManager.getInstance()
+                .api.getUpdateInfo()
+        val observer = object : Observer<ResponseBody> {
+            override fun onComplete() {
+                ProgressDialog.hideLoadingView(this@MainActivity)
+            }
+
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(t: ResponseBody) {
+                UpdateHelper(this@MainActivity, R.mipmap.ic_launcher, false, true).checkUpdate(String(t.bytes()))
+            }
+
+            override fun onError(e: Throwable) {
+                ErrorManager.managerError(this@MainActivity, e, "更新失败，请稍后再试")
+                ProgressDialog.hideLoadingView(this@MainActivity)
+            }
+        }
+
+        ApiManager.getInstance()
+                .toSubscribe(observable, observer)
+
+
+    }
     private fun checkOrderState() {
 
     }
