@@ -419,4 +419,8 @@ public class RouteMap {
      * 用户协议
      */
     public static final String UserAgreeMent = "/setting/user_agree_ment";
+    /**
+     * 引导页
+     */
+    public static final String Guild = "/app/guild";
 }

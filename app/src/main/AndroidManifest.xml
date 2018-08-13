@@ -76,13 +76,14 @@
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_MAP_KEY}"
             tools:replace="android:value" />
-        <activity android:name="com.base.update.InstallActivity"/>
+
+        <activity android:name="com.base.update.InstallActivity" />
 
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|locale"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".travel.wallet.ui.WalletActivity"
@@ -429,6 +430,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".travel.home.ui.GuildActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

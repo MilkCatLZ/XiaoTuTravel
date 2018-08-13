@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/_foreground_material_light"
-    android:layout_height="match_parent">
+<layout>
 
-    <ImageView
+    <data>
+
+        <variable
+            name="ac"
+            type="shy.car.sdk.travel.home.ui.StartActivity" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/image_start" />
-</RelativeLayout>
+        android:background="@color/_foreground_material_light">
+
+
+        <ImageView
+            android:id="@+id/imageStart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_start" />
+
+        <TextView
+            android:id="@+id/txtAdCountDown"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/back_ad_count_down"
+            android:gravity="center"
+            android:visibility="gone"
+            android:onClick="@{()->ac.skip()}"
+            android:textColor="@color/_foreground_material_light"
+            android:textSize="@dimen/text_13sp"
+            tools:text="跳过5" />
+    </RelativeLayout>
+</layout>

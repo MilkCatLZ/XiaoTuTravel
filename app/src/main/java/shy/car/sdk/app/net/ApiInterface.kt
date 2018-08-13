@@ -12,6 +12,7 @@ import shy.car.sdk.travel.bank.data.BankCard
 import shy.car.sdk.travel.bank.data.BankType
 import shy.car.sdk.travel.common.data.GoodsType
 import shy.car.sdk.travel.coupon.data.Coupon
+import shy.car.sdk.travel.home.data.StartInfo
 import shy.car.sdk.travel.invoice.data.InvoiceDetail
 import shy.car.sdk.travel.invoice.data.InvoiceHistory
 import shy.car.sdk.travel.invoice.data.InvoiceList
@@ -556,6 +557,9 @@ interface ApiInterface {
 
     @GET("config")
     fun getAPPSetting(): Observable<Setting>
+
+    @GET("ad")
+    fun getStartInfo(): Observable<StartInfo>
 
     /**
      * 修改用户头像
