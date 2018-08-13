@@ -134,7 +134,7 @@ class MainActivity : NearCarOpenListener,
             }
 
             override fun onNext(t: ResponseBody) {
-                UpdateHelper(this@MainActivity, R.mipmap.ic_launcher, false, true).checkUpdate(String(t.bytes()))
+                UpdateHelper(this@MainActivity, R.mipmap.ic_launcher, true, true).checkUpdate(String(t.bytes()))
             }
 
             override fun onError(e: Throwable) {
