@@ -390,41 +390,42 @@ class FindAndRentCarFragment : XTBaseFragment(),
 
     fun cancelOrder() {
         activity?.let {
-            if (binding.detail?.billingTime!! > 0) {
-                HintDialog.with(it, childFragmentManager)
-                        .message("当日取消订单${app.setting?.order?.dayMaxCancelNum}次将无法继续租车")
-                        .leftButtonText("继续租车")
-                        .rightButtonText("取消订单")
-                        .listener(object : HintDialog.OnDissmiss {
-                            override fun onLeftClick() {
+            if (binding.detail != null) {
+                if (binding.detail?.billingTime!! > 0) {
+                    HintDialog.with(it, childFragmentManager)
+                            .message("当日取消订单${app.setting?.order?.dayMaxCancelNum}次将无法继续租车")
+                            .leftButtonText("继续租车")
+                            .rightButtonText("取消订单")
+                            .listener(object : HintDialog.OnDissmiss {
+                                override fun onLeftClick() {
 
-                            }
+                                }
 
-                            override fun onRightClick() {
-                                presenter.cancelOrder()
-                            }
+                                override fun onRightClick() {
+                                    presenter.cancelOrder()
+                                }
 
-                        })
-                        .show()
-            } else {
-                HintDialog.with(it, childFragmentManager)
-                        .message("您还需要支付超时费用")
-                        .leftBottomVisible(false)
-                        .rightButtonText("确定取消")
-                        .listener(object : HintDialog.OnDissmiss {
-                            override fun onLeftClick() {
+                            })
+                            .show()
+                } else {
+                    HintDialog.with(it, childFragmentManager)
+                            .message("您还需要支付超时费用")
+                            .leftBottomVisible(false)
+                            .rightButtonText("确定取消")
+                            .listener(object : HintDialog.OnDissmiss {
+                                override fun onLeftClick() {
 
-                            }
+                                }
 
-                            override fun onRightClick() {
-                                presenter.cancelOrder()
-                            }
+                                override fun onRightClick() {
+                                    presenter.cancelOrder()
+                                }
 
-                        })
-                        .show()
+                            })
+                            .show()
 
+                }
             }
-
         }
     }
 
