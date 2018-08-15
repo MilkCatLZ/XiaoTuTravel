@@ -138,7 +138,7 @@ class MainActivity : NearCarOpenListener,
             }
 
             override fun onError(e: Throwable) {
-                ErrorManager.managerError(this@MainActivity, e, "更新失败，请稍后再试")
+                ErrorManager.managerError(this@MainActivity, e, null)
                 ProgressDialog.hideLoadingView(this@MainActivity)
             }
         }

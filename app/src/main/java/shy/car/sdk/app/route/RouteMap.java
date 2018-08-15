@@ -336,6 +336,7 @@ public class RouteMap {
     public static final String CarBrokeUpLoad = "/rent/car_broke_upload";
 
     public static final String RegisterAgree = "/html/register_agree";
+    public static final String DeliveryPrice = "/html/delivery_price";
     public static final String ReturnCarAgree = "/html/return_car_agree";
     public static final String About = "/html/about";
     /**

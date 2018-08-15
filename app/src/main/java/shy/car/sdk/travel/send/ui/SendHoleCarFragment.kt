@@ -93,6 +93,11 @@ class SendHoleCarFragment : XTBaseFragment(),
             }
         })
     }
+    fun gotoRules(){
+        ARouter.getInstance()
+                .build(RouteMap.DeliveryPrice)
+                .navigation()
+    }
 
     fun onConfirmClick() {
         presenter.submit()

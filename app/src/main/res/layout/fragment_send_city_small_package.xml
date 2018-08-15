@@ -22,9 +22,26 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/layout_title"
-            app:title="@{@string/str_send_hole_car}" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_height">
+
+            <include
+                layout="@layout/layout_title"
+                app:title="@{@string/str_send_hole_car}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="收费标准"
+                android:layout_alignParentEnd="true"
+                android:paddingStart="5dp"
+                android:paddingEnd="15dp"
+                android:textSize="@dimen/text_second_primary_12dp"
+                android:textColor="@color/main_color_green"
+                android:onClick="@{()->fragment.gotoRules()}"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
 
         <View style="@style/style_shadow" />
 
@@ -286,16 +303,16 @@
                     <CheckBox
                         style="@style/style_ww.text_12_999"
                         android:button="@null"
+                        android:checked="@={presenter.agree}"
                         android:drawablePadding="10dp"
                         android:drawableStart="@drawable/check_rule"
-                        android:textColor="@drawable/color_agree_check_999_main_red"
-                        android:checked="@={presenter.agree}"
-                        android:text="确认表示同意" />
+                        android:text="确认表示同意"
+                        android:textColor="@drawable/color_agree_check_999_main_red" />
 
                     <TextView
                         style="@style/style_ww.text_12_999"
-                        android:text="《小兔出行运单契约条款》"
                         android:onClick="@{()->fragment.gotoAgreeMent()}"
+                        android:text="《小兔出行运单契约条款》"
                         android:textColor="@color/main_color_red" />
 
                 </LinearLayout>

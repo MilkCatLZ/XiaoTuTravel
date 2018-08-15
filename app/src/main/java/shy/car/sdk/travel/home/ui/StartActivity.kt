@@ -29,6 +29,9 @@ import java.util.concurrent.TimeUnit
 
 class StartActivity : XTBaseActivity(),
         StartPresenter.AdListener {
+    override fun getAdError() {
+        normalMode()
+    }
 
     lateinit var presenter: StartPresenter
     lateinit var binding: ActivityStartBinding
@@ -78,6 +81,7 @@ class StartActivity : XTBaseActivity(),
                 }, {})
     }
 
+    var dispose: Disposable? = null
     private fun adMode(startInfo: StartInfo) {
         Glide.with(this)
                 .load(startInfo.adUrl)
@@ -105,7 +109,7 @@ class StartActivity : XTBaseActivity(),
                                     }
 
                                     override fun onSubscribe(d: Disposable) {
-
+                                        dispose = d
                                     }
 
                                     override fun onNext(t: Long) {
@@ -131,5 +135,10 @@ class StartActivity : XTBaseActivity(),
             startActivity(MainActivity::class.java)
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        dispose?.dispose()
+        super.onDestroy()
     }
 }

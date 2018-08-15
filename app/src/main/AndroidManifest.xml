@@ -434,6 +434,10 @@
             android:name=".travel.home.ui.GuildActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".travel.html.DeliveryPriceActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

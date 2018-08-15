@@ -3,9 +3,7 @@ package shy.car.sdk.travel.send.ui
 import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.ToastManager
 import org.greenrobot.eventbus.Subscribe
@@ -57,6 +55,7 @@ class SendCitySmallPackageFragment : XTBaseFragment(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { presenter = SendCitySmallPackagePresenter(it, this) }
+        setHasOptionsMenu(true)
         register(this)
     }
 
@@ -75,6 +74,13 @@ class SendCitySmallPackageFragment : XTBaseFragment(),
     fun onConfirmClick() {
         presenter.submit()
     }
+
+    fun gotoRules(){
+        ARouter.getInstance()
+                .build(RouteMap.DeliveryPrice)
+                .navigation()
+    }
+
 
     fun onSelectStartLocationclick() {
         ARouter.getInstance()

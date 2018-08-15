@@ -67,6 +67,8 @@ class Setting : BaseObservable() {
         var returnCarAgreement: String? = null
         @SerializedName("register_agreement")
         var registerAgreement: String? = null
+        @SerializedName("freight_price")
+        var freight_price: String? = null
     }
 
 

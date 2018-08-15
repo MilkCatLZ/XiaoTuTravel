@@ -12,6 +12,7 @@ class StartPresenter(context: Context,var adListener:AdListener?=null) : BasePre
 
     interface AdListener{
         fun getAdSuccess(startInfo: StartInfo)
+        fun getAdError()
     }
 
     fun getStartInfo() {
@@ -33,6 +34,8 @@ class StartPresenter(context: Context,var adListener:AdListener?=null) : BasePre
             override fun onError(e: Throwable) {
                 if(BuildConfig.DEBUG){
                     adListener?.getAdSuccess(StartInfo())
+                }else {
+                    adListener?.getAdError()
                 }
             }
         }
