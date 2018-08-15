@@ -57,6 +57,7 @@ class GuildActivity : XTBaseActivity() {
             }
         }, DataBindingPagerAdapter.CallBack { container, position, binding -> })
         adapter.items.addAll(items)
+        viewPagerGuild.adapter = adapter
     }
 
 

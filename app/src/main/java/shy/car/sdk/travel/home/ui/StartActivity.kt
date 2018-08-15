@@ -55,6 +55,7 @@ class StartActivity : XTBaseActivity(),
                             ARouter.getInstance()
                                     .build(RouteMap.Guild)
                                     .navigation()
+                            finish()
                         }, {})
 
             } else if (startInfo.needAD() && !isDestroyed) {
