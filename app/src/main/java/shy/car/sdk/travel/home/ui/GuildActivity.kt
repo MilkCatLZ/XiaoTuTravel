@@ -45,13 +45,13 @@ class GuildActivity : XTBaseActivity() {
             }
         })
 
-        adapter = DataBindingPagerAdapter(this, R.layout.item_guild, BR.url, IntArray(BR.click), Array(1) {
+        adapter = DataBindingPagerAdapter(this, R.layout.item_guild, BR.url, IntArray(1){BR.click}, Array(1) {
             View.OnClickListener {
                 if (currentPage == items.size - 1) {
                     ARouter.getInstance()
                             .build("/app/homeActivity")
                             .navigation()
-                    Version.firstInstallComplete(this@GuildActivity)
+
                     finish()
                 }
             }
@@ -60,5 +60,9 @@ class GuildActivity : XTBaseActivity() {
         viewPagerGuild.adapter = adapter
     }
 
+    override fun onDestroy() {
+        Version.firstInstallComplete(this@GuildActivity)
+        super.onDestroy()
+    }
 
 }

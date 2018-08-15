@@ -14,7 +14,7 @@ import shy.car.sdk.databinding.ActivityAboutBinding
 
 /**
  * create by Sharon at 2018/07/02
- * 注册协议
+ * 关于
  */
 @Route(path = RouteMap.About)
 class AboutActivity : XTBaseActivity() {
