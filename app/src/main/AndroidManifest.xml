@@ -438,6 +438,10 @@
             android:name=".travel.html.DeliveryPriceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".travel.order.ui.OrderSendedAndTakePhotoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

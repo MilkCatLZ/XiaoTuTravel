@@ -12,6 +12,7 @@ import shy.car.sdk.travel.location.ui.LocationSelectActivity;
 import shy.car.sdk.travel.login.ui.VerifyDialogFragment;
 import shy.car.sdk.travel.order.data.OrderMineList;
 import shy.car.sdk.travel.order.ui.OrderDetailActivity;
+import shy.car.sdk.travel.order.ui.OrderSendedAndTakePhotoActivity;
 import shy.car.sdk.travel.pay.ui.CarTypeSelectActivity;
 import shy.car.sdk.travel.pay.ui.OrderPayActivity;
 import shy.car.sdk.travel.pay.ui.PromiseMoneyDetailActivity;
@@ -424,4 +425,9 @@ public class RouteMap {
      * 引导页
      */
     public static final String Guild = "/app/guild";
+    /**
+     * 送达拍照
+     * {@link OrderSendedAndTakePhotoActivity}
+     */
+    public static final String OrderSendedPhoto = "/order/order_sended_photo";
 }

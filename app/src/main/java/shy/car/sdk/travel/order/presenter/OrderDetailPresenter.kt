@@ -62,10 +62,6 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 .toSubscribe(observable, observer)
     }
 
-    private fun convertToRequestBody(param: String?): RequestBody {
-        return RequestBody.create(MediaType.parse("text/plain"), param)
-    }
-
     /**
      * 接单
      */
@@ -100,7 +96,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
     }
 
     /**
-     * 确认收货
+     * 确认收货(托运人签收)
      */
     fun orderDeliveryFinish() {
         ProgressDialog.showLoadingView(context)

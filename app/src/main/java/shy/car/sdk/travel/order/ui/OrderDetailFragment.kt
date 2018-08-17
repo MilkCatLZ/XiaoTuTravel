@@ -83,9 +83,17 @@ class OrderDetailFragment : XTBaseFragment(),
                 "确认支付"
             }
             OrderState.StateSending -> {
-                isBtnVisible.set(User.instance.phone == binding.detail?.user?.phone)
-                canCancel.set(false)
-                "确认签收"
+                if(User.instance.phone == binding.detail?.user?.phone) {
+                    isBtnVisible.set(true)
+                    canCancel.set(false)
+                    "确认签收"
+                }else if(User.instance.phone == binding.detail?.carrier?.phone) {
+                    isBtnVisible.set(true)
+                    canCancel.set(false)
+                    "已送达"
+                }else{
+                    ""
+                }
             }
             else -> {
                 isBtnVisible.set(false)

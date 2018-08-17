@@ -83,4 +83,5 @@
     <string name="str_share">分享有礼</string>
     <string name="str_percent">%</string>
     <string name="str_qa">常见问题</string>
+    <string name="str_already_send">已送达</string>
 </resources>

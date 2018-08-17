@@ -519,6 +519,24 @@ interface ApiInterface {
             @Part(ParamsConstant.OrderId) oid: RequestBody? = null
     ): Observable<JsonObject>
 
+    /**
+     * 货运送达拍照
+     */
+    @Multipart
+    @POST("orders/{order_id}/photos")
+    fun orderSendedPhoto(
+            @Path(ParamsConstant.OrderId) order_id: String? = null,
+            @Part(ParamsConstant.Type) type: RequestBody? = null,
+            @Part image: List<MultipartBody.Part>? = null
+    ): Observable<JsonObject>
+
+    /**
+     * 充值
+     */
+    @FormUrlEncoded
+    @PATCH("orders/freights/{freight_id}")
+    fun orderSended(@Path(ParamsConstant.FreightID) freight_id: String, @Field(ParamsConstant.FreightStatus) freightStatus: String = "5", lat: Double, lng: Double): Observable<JsonObject>
+
     @GET("users/rank")
     fun getRankList(): Observable<List<Rank>>
 
