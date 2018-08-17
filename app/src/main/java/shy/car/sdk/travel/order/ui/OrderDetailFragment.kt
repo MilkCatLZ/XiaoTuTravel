@@ -66,6 +66,10 @@ class OrderDetailFragment : XTBaseFragment(),
         binding.detail = t
         setBtnText()
 
+        if (User.instance.phone == t.user?.phone)
+            if (t.status != OrderState.StateWaitTake && t.status != OrderState.Close) {
+                sendingState.set(true)
+            }
     }
 
     private fun setBtnText() {
@@ -83,15 +87,15 @@ class OrderDetailFragment : XTBaseFragment(),
                 "确认支付"
             }
             OrderState.StateSending -> {
-                if(User.instance.phone == binding.detail?.user?.phone) {
+                if (User.instance.phone == binding.detail?.user?.phone) {
                     isBtnVisible.set(true)
                     canCancel.set(false)
                     "确认签收"
-                }else if(User.instance.phone == binding.detail?.carrier?.phone) {
+                } else if (User.instance.phone == binding.detail?.carrier?.phone) {
                     isBtnVisible.set(true)
                     canCancel.set(false)
                     "已送达"
-                }else{
+                } else {
                     ""
                 }
             }
@@ -122,6 +126,8 @@ class OrderDetailFragment : XTBaseFragment(),
 
     val isBtnVisible = ObservableBoolean(true)
     val canCancel = ObservableBoolean(false)
+    val sendingState = ObservableBoolean(false)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -179,7 +185,11 @@ class OrderDetailFragment : XTBaseFragment(),
 
     fun callUser() {
         activity?.let {
-            Phone.call(it, binding.detail?.user?.phone)
+            if (binding.detail?.user?.phone == User.instance.phone) {
+                Phone.call(it, binding.detail?.carrier?.phone)
+            } else {
+                Phone.call(it, binding.detail?.user?.phone)
+            }
         }
     }
 

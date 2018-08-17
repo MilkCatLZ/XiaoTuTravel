@@ -53,6 +53,9 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
                 .inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_sended_take_photo)
         presenter = OrderSendedPresenter(this, this)
+
+        binding.ac = this
+        binding.presenter = presenter
     }
 
     fun upload() {

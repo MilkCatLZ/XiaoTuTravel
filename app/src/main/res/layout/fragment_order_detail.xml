@@ -46,8 +46,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
-                android:text="取消订单"
                 android:onClick="@{()->fragment.cancelOrder()}"
+                android:text="取消订单"
                 android:visibleOrGone="@{fragment.canCancel}" />
         </RelativeLayout>
 
@@ -74,8 +74,8 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:visibleOrGone="@{detail.type==2}"
-                    android:layout_height="10dp" />
+                    android:layout_height="10dp"
+                    android:visibleOrGone="@{detail.type==2}" />
 
                 <include
                     layout="@layout/layout_order_take_detail_car_need_info"
@@ -93,11 +93,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
 
-                <include
-                    layout="@layout/layout_order_take_detail_send_user_info"
-                    app:detail="@{detail}"
-                    app:fragment="@{fragment}" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:visibleOrGone="@{!fragment.sendingState}"
+                    android:layout_height="wrap_content">
 
+                    <include
+                        layout="@layout/layout_order_take_detail_send_user_info"
+                        app:detail="@{detail}"
+                        app:fragment="@{fragment}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:visibleOrGone="@{fragment.sendingState}"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        layout="@layout/layout_order_take_detail_take_user_info"
+                        app:detail="@{detail}"
+                        app:fragment="@{fragment}" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txt_button"
