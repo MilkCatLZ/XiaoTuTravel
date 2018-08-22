@@ -6,11 +6,11 @@
 
         <variable
             name="ac"
-            type="shy.car.sdk.travel.order.ui.OrderSendedAndTakePhotoActivity" />
+            type="shy.car.sdk.travel.take.ui.VerifyDeliverActivity" />
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.order.presenter.OrderSendedPresenter" />
+            type="shy.car.sdk.travel.take.presenter.VerifyDeliverPresenter" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -24,9 +24,17 @@
 
         <View style="@style/line_horizontal" />
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="上传货运资格证(盖章页)" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="250dp"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
@@ -37,10 +45,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawablePadding="10dp"
+                android:drawablePadding="5dp"
                 android:drawableTop="@drawable/icon_photo_add"
-                android:textColor="@color/text_primary_333333"
-                android:text="点击拍摄目的地"
+                android:text="点击上传货运资格证照片"
                 android:textSize="@dimen/text_primary_14dp" />
 
             <ImageView

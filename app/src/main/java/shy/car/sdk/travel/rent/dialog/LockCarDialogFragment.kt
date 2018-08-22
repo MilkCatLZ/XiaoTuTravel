@@ -29,8 +29,7 @@ class LockCarDialogFragment : XTBaseDialogFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.dialog_lock_car, null, false)
-        return view
+        return inflater.inflate(R.layout.dialog_lock_car, null, false)
     }
 
     var isActionFinish = false

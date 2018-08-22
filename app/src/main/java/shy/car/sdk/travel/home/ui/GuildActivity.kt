@@ -50,6 +50,7 @@ class GuildActivity : XTBaseActivity() {
                 if (currentPage == items.size - 1) {
                     ARouter.getInstance()
                             .build("/app/homeActivity")
+                            .greenChannel()
                             .navigation()
 
                     finish()

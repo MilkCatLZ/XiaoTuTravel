@@ -529,6 +529,14 @@ interface ApiInterface {
             @Part(ParamsConstant.Type) type: RequestBody? = null,
             @Part image: List<MultipartBody.Part>? = null
     ): Observable<JsonObject>
+    /**
+     * 货运送达拍照
+     */
+    @Multipart
+    @POST("users/identity")
+    fun uploadVerifyDiliver(
+            @Part image: List<MultipartBody.Part>? = null
+    ): Observable<JsonObject>
 
     /**
      * 充值

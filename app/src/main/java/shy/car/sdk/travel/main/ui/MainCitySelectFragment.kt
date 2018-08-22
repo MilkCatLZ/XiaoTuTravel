@@ -36,7 +36,6 @@ class MainCitySelectFragment : XTBaseFragment() {
 
     }
 
-    var listener: CitySelectListener? = null
 
     private val LOCATING = "正在定位..."
     //搜索栏 显示的当前城市
@@ -44,8 +43,14 @@ class MainCitySelectFragment : XTBaseFragment() {
     lateinit var binding: LayoutCitySelectBinding
     var currentCity = CurrentLocation()
 
-    lateinit var locationPresenter: LocationPresenter
+    private lateinit var locationPresenter: LocationPresenter
+
     val searchResultFragment = SearchFragment()
+    var listener: CitySelectListener? = null
+        set(value) {
+            field = value
+            searchResultFragment.listener = value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,7 +107,7 @@ class MainCitySelectFragment : XTBaseFragment() {
 
 
         try {
-            searchEditText = binding.searchView.findViewById<TextView>(R.id.search_src_text)
+            searchEditText = binding.searchView.findViewById(R.id.search_src_text)
             searchEditText?.setTextColor(resources.getColor(R.color.main_color_green))//字体颜色
 
             searchEditText?.textSize = 14f//字体、提示字体大小
@@ -158,7 +163,7 @@ class MainCitySelectFragment : XTBaseFragment() {
                 binding.indexableLayout.addHeaderAdapter(headerAdapter)
 
                 binding.indexableLayout.setCompareMode(IndexableLayout.MODE_FAST)
-                var filterList = ArrayList<CurrentLocation>()
+                val filterList = ArrayList<CurrentLocation>()
                 filterList.addAll(list)
                 filterList.addAll(hotCity)
 

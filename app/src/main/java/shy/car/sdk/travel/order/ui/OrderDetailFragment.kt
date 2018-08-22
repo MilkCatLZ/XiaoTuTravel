@@ -20,6 +20,7 @@ import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.base.XTBaseFragment
 import shy.car.sdk.app.constant.ParamsConstant
+import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.eventbus.PaySuccess
@@ -94,7 +95,7 @@ class OrderDetailFragment : XTBaseFragment(),
                 } else if (User.instance.phone == binding.detail?.carrier?.phone) {
                     isBtnVisible.set(true)
                     canCancel.set(false)
-                    "已送达"
+                    "确认送达"
                 } else {
                     ""
                 }
@@ -170,12 +171,20 @@ class OrderDetailFragment : XTBaseFragment(),
                 selectPayMethod()
             }
             OrderState.StateSending -> {
-                DialogManager.with(activity, childFragmentManager)
-                        .leftButtonText("取消")
-                        .rightButtonText("确定")
-                        .message("请确认货物已经送达目的地后，确认收货？")
-                        .onRightClick { _, _ -> presenter.orderDeliveryFinish() }
-                        .show()
+                if (User.instance.phone == binding.detail?.carrier?.phone) {
+                    ARouter.getInstance()
+                            .build(RouteMap.OrderSendedPhoto)
+                            .withObject(Object1, binding.detail)
+                            .navigation()
+                } else if (User.instance.phone == binding.detail?.user?.phone) {
+                    DialogManager.with(activity, childFragmentManager)
+                            .leftButtonText("取消")
+                            .rightButtonText("确定")
+                            .message("请确认货物已经送达目的地后，确认收货？")
+                            .onRightClick { _, _ -> presenter.orderDeliveryFinish() }
+                            .show()
+                }
+
             }
             else -> {
 

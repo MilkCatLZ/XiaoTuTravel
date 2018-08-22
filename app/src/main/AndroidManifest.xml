@@ -81,6 +81,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTop"
             android:configChanges="orientation|keyboardHidden|locale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />

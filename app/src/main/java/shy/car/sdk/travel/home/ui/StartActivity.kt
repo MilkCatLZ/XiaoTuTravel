@@ -54,6 +54,7 @@ class StartActivity : XTBaseActivity(),
                         .subscribe({
                             ARouter.getInstance()
                                     .build(RouteMap.Guild)
+                                    .greenChannel()
                                     .navigation()
                             finish()
                         }, {})

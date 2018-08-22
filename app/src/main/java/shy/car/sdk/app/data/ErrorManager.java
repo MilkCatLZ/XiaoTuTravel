@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
 import com.base.util.JsonManager;
+import com.base.util.Log;
 import com.base.util.StringUtils;
 import com.base.util.ToastManager;
 import com.google.gson.Gson;
@@ -129,8 +130,10 @@ public class ErrorManager {
                         if (StringUtils.isNotEmpty(err.getError())) {
                             ToastManager.showShortToast(context, err.getError());
                         } else {
-                            if (StringUtils.isNotEmpty(defaultMessage))
+                            if (StringUtils.isNotEmpty(defaultMessage)) {
                                 ToastManager.showShortToast(context, defaultMessage);
+                                Log.e("ManagerError--------", "error message is empty\n", ex);
+                            }
                         }
                     }
                 }

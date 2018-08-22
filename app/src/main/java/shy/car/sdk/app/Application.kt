@@ -320,6 +320,8 @@ class Application : BaseApplication() {
                 e.printStackTrace()
                 disposable?.dispose()
                 User.logout(this@Application)
+                ApiManager.getInstance()
+                        .clearCache()
             }
 
         }
