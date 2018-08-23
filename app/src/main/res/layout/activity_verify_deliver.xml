@@ -6,7 +6,7 @@
 
         <variable
             name="ac"
-            type="shy.car.sdk.travel.take.ui.VerifyDeliverActivity" />
+            type="shy.car.sdk.travel.user.ui.VerifyDeliverActivity" />
 
         <variable
             name="presenter"

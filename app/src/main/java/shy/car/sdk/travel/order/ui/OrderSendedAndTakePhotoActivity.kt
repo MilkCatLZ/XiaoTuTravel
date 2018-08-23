@@ -25,6 +25,8 @@ import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
 import shy.car.sdk.app.constant.ParamsConstant.Object1
+import shy.car.sdk.app.eventbus.RefreshOrderList
+import shy.car.sdk.app.eventbus.SendSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityOrderSendedTakePhotoBinding
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
@@ -40,9 +42,12 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
     @Autowired(name = Object1)
     @JvmField
     var detail: DeliveryOrderDetail? = null
-
+    private var photoID = 0
     override fun upLoadSuccess(t: JsonObject) {
-
+        ToastManager.showShortToast(this, "提交成功")
+        eventBusDefault.post(SendSuccess())
+        eventBusDefault.post(RefreshOrderList())
+        finish()
     }
 
     lateinit var binding: ActivityOrderSendedTakePhotoBinding
@@ -53,7 +58,7 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
                 .inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_sended_take_photo)
         presenter = OrderSendedPresenter(this, this)
-
+        presenter.detail = detail
         binding.ac = this
         binding.presenter = presenter
     }
@@ -62,7 +67,8 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
         presenter.upload()
     }
 
-    fun goAlbum() {
+    fun goAlbum(photoID: Int) {
+        this.photoID = photoID
         val per = RxPermissions(this)
         per.request(Manifest.permission.CAMERA)
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -106,7 +112,17 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            presenter.photo.set(it)
+                            when (photoID) {
+                                1 -> {
+                                    presenter.photo1.set(it)
+                                    presenter.uploadPhoto1()
+                                }
+                                2 -> {
+                                    presenter.photo2.set(it)
+                                    presenter.uploadPhoto2()
+                                }
+                            }
+
                             ProgressDialog.hideLoadingView(this)
                         }, {
                             ProgressDialog.hideLoadingView(this)
@@ -116,5 +132,13 @@ class OrderSendedAndTakePhotoActivity : XTBaseActivity(),
 
             }
         }
+    }
+
+    fun retryPhoto1Upload() {
+        presenter.uploadPhoto1()
+    }
+
+    fun retryPhoto2Upload() {
+        presenter.uploadPhoto2()
     }
 }

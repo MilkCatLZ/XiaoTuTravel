@@ -21,7 +21,7 @@ import java.util.List;
 public class SPCache {
     public static final String SETTINGS = "shy.car.sdk";
     private static final String tag = "SPCache";
-    
+
     /**
      * 缓存信息
      *
@@ -30,14 +30,14 @@ public class SPCache {
      * @param obj       对象
      */
     public static void saveObject(@Nullable Context context, @NonNull String cacheName, @Nullable
-        Object obj) {
+            Object obj) {
         if (context == null) return;
         Editor e = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE).edit();
         String json = new Gson().toJson(obj);
         e.putString(cacheName, json);
         e.commit();
     }
-    
+
     /**
      * 读取缓存信息
      *
@@ -50,7 +50,7 @@ public class SPCache {
     public static <T> T getObject(Context context, String cacheName, Class classes) {
         return getObject(context, cacheName, classes, null);
     }
-    
+
     /**
      * 读取缓存信息
      *
@@ -60,9 +60,9 @@ public class SPCache {
      * @param classes      对象类型
      * @param defaultValue 默认参数
      */
-    @NonNull
+    @Nullable
     public static <T> T getObject(@Nullable Context context, @NonNull String cacheName, @NonNull
-        Class classes, T defaultValue) {
+            Class classes, T defaultValue) {
         if (context == null) return defaultValue;
         SharedPreferences s = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         String jsonString = s.getString(cacheName, "");
@@ -70,7 +70,7 @@ public class SPCache {
 //            T o = (T) new Gson().fromJson(jsonString, classes);
             T o = null;
             try {
-                o = new Gson().fromJson(jsonString, new TypeToken<T>() {}.getType());
+                o = new Gson().fromJson(jsonString, new ParameterizedTypeImpl(classes, new Class[]{classes}));
                 if (o == null) {
                     return defaultValue;
                 }
@@ -113,13 +113,12 @@ public class SPCache {
 //        }
 //        return defaultValue;
 //    }
-    
+
     /**
      * @param context
      * @param cacheName
      * @param cls
      * @param <T>
-     *
      * @return
      */
     @Nullable
@@ -130,7 +129,8 @@ public class SPCache {
         if (!"".equals(jsonString)) {
             List<T> o = null;
             try {
-                o = new Gson().fromJson(jsonString, new TypeToken<List<T>>() {}.getType());
+                o = new Gson().fromJson(jsonString, new TypeToken<List<T>>() {
+                }.getType());
             } catch (Exception e) {
                 Log.e(tag, "parse Object list failed", e);
             }
@@ -138,8 +138,8 @@ public class SPCache {
         }
         return null;
     }
-    
-    
+
+
     /**
      * 删除信息
      *
@@ -150,5 +150,5 @@ public class SPCache {
         SharedPreferences s = context.getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
         s.edit().remove(cacheName).apply();
     }
-    
+
 }

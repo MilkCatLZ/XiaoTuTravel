@@ -295,39 +295,39 @@ class Application : BaseApplication() {
 
     var disposable: Disposable? = null
     fun logout() {
-//        User.logout(this@Application)
-        val observable = ApiManager.getInstance()
-                .api.logout()
-
-        var observer = object : Observer<Response<Void>> {
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-                disposable = d
-            }
-
-            override fun onNext(t: Response<Void>) {
-                User.logout(this@Application)
-                EventBus.getDefault()
-                        .post(UserLogout())
-                ApiManager.getInstance()
-                        .clearCache()
-            }
-
-            override fun onError(e: Throwable) {
-                e.printStackTrace()
-                disposable?.dispose()
-                User.logout(this@Application)
-                ApiManager.getInstance()
-                        .clearCache()
-            }
-
-        }
-
-        ApiManager.getInstance()
-                .toSubscribe(observable, observer)
+        User.logout(this@Application)
+//        val observable = ApiManager.getInstance()
+//                .api.logout()
+//
+//        var observer = object : Observer<Response<Void>> {
+//            override fun onComplete() {
+//
+//            }
+//
+//            override fun onSubscribe(d: Disposable) {
+//                disposable = d
+//            }
+//
+//            override fun onNext(t: Response<Void>) {
+//                User.logout(this@Application)
+//                EventBus.getDefault()
+//                        .post(UserLogout())
+//                ApiManager.getInstance()
+//                        .clearCache()
+//            }
+//
+//            override fun onError(e: Throwable) {
+//                e.printStackTrace()
+//                disposable?.dispose()
+//                User.logout(this@Application)
+//                ApiManager.getInstance()
+//                        .clearCache()
+//            }
+//
+//        }
+//
+//        ApiManager.getInstance()
+//                .toSubscribe(observable, observer)
     }
 
     fun goHome() {

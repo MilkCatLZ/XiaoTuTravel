@@ -19,9 +19,6 @@ class VerifyDeliverPresenter(context: Context, var callBack: CallBack) : BasePre
     interface CallBack {
         fun upLoadSuccess(t: JsonObject)
     }
-
-    var detail: DeliveryOrderDetail? = null
-
     val content = ObservableField<String>()
     val photo = ObservableField<String>()
 

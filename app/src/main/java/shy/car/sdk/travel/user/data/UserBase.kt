@@ -144,8 +144,22 @@ open class UserBase : BaseObservable() {
             notifyPropertyChanged(BR.identityAuth)
             notifyPropertyChanged(BR.isIdentityAuth)
             notifyPropertyChanged(BR.isDeposit)
-
         }
+    /**
+     * 认证状态（0未认证 1认证中 2已认证）
+     */
+    @SerializedName("is_driver_auth")
+    @get:Bindable
+    var driverAuth: Int = 0
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.isDriverAuth)
+        }
+
+    @Bindable
+    fun getIsDriverAuth(): Boolean {
+        return driverAuth == 2
+    }
 
     @Bindable
     fun getIsIdentityAuth(): Boolean {

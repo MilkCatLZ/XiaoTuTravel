@@ -34,6 +34,9 @@
     <string name="str_user_detail_edit">编辑资料</string>
     <string name="str_user_un_deposit">未缴纳</string>
     <string name="str_user_deposit">已缴纳</string>
+    <string name="str_drive_verify_success">已认证</string>
+    <string name="str_drive_verify_ing">认证中</string>
+    <string name="str_drive_verify_no">未认证</string>
     <string name="str_verifing">认证中</string>
     <string name="str_my_remain">余额</string>
     <string name="str_line"> | </string>

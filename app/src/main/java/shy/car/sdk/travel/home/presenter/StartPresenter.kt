@@ -11,8 +11,8 @@ import shy.car.sdk.travel.home.data.StartInfo
 class StartPresenter(context: Context,var adListener:AdListener?=null) : BasePresenter(context) {
 
     interface AdListener{
-        fun getAdSuccess(startInfo: StartInfo)
-        fun getAdError()
+        fun onSuccess(startInfo: StartInfo)
+        fun onError()
     }
 
     fun getStartInfo() {
@@ -28,15 +28,15 @@ class StartPresenter(context: Context,var adListener:AdListener?=null) : BasePre
             }
 
             override fun onNext(t: StartInfo) {
-                adListener?.getAdSuccess(t)
+                adListener?.onSuccess(t)
             }
 
             override fun onError(e: Throwable) {
-                if(BuildConfig.DEBUG){
-                    adListener?.getAdSuccess(StartInfo())
-                }else {
-                    adListener?.getAdError()
-                }
+//                if(BuildConfig.DEBUG){
+//                    adListener?.onSuccess(StartInfo())
+//                }else {
+                    adListener?.onError()
+//                }
             }
         }
 

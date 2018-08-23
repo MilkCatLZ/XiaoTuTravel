@@ -1,9 +1,58 @@
 package shy.car.sdk.travel.home.data
 
-class StartInfo {
-    var adUrl: String = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534753065&di=d779429db8b2e4a8f79dfee72de9d661&imgtype=jpg&er=1&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180331%2F0860b3aa6a7c49d5afb8150bb28cd7aa.jpeg"
+import com.google.gson.annotations.SerializedName
 
+class StartInfo {
     fun needAD(): Boolean {
-        return true
+        if (ad != null && !ad?.img.isNullOrEmpty()) {
+            return true
+        }
+        return false
+    }
+
+    /**
+     * start : {"id":1,"title":"启动也","img":"http://img.abc.com/ad/5b712b6adfe2c.jpg","url":""}
+     * ad : {"id":4,"title":"呜呜呜","img":"http://img.abc.com/ad/5b75338842ce9.jpg","url":""}
+     */
+
+    @SerializedName("start")
+    var start: StartBean? = null
+    @SerializedName("ad")
+    var ad: AdBean? = null
+
+    open class StartBean {
+        /**
+         * id : 1
+         * title : 启动也
+         * img : http://img.abc.com/ad/5b712b6adfe2c.jpg
+         * url :
+         */
+
+        @SerializedName("id")
+        var id: String? = null
+        @SerializedName("title")
+        var title: String? = null
+        @SerializedName("img")
+        var img: String? = null
+        @SerializedName("url")
+        var url: String? = null
+    }
+
+    open class AdBean {
+        /**
+         * id : 4
+         * title : 呜呜呜
+         * img : http://img.abc.com/ad/5b75338842ce9.jpg
+         * url :
+         */
+
+        @SerializedName("id")
+        var id: String? = null
+        @SerializedName("title")
+        var title: String? = null
+        @SerializedName("img")
+        var img: String? = null
+        @SerializedName("url")
+        var url: String? = null
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -24,30 +25,112 @@
 
         <View style="@style/line_horizontal" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="为保证您的权益以免货物产生争议请严格拍摄并保证清晰"
+            android:textColor="@color/main_color_red"
+            android:textSize="@dimen/text_13sp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="200dp"
             android:layout_marginEnd="15dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/back_white_coner_2dp_dash"
-            android:onClick="@{()->ac.goAlbum()}">
+            android:onClick="@{()->ac.goAlbum(1)}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:drawablePadding="10dp"
-                android:drawableTop="@drawable/icon_photo_add"
-                android:textColor="@color/text_primary_333333"
+                android:drawableTop="@drawable/icon_camera"
                 android:text="点击拍摄目的地"
+                android:textColor="@color/text_primary_333333"
                 android:textSize="@dimen/text_primary_14dp" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:imageURL="@{presenter.photo}" />
+                android:imageURL="@{presenter.photo1}" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000"
+                android:onClick="@{()->ac.retryPhoto1Upload()}"
+                android:visibleOrGone="@{presenter.photo1Progress>0||presenter.photo1Progress==-1}">
+
+                <TextView
+                    tools:text="99%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text='@{""+presenter.photo1Progress+@string/str_percent}'
+                    android:textColor="@color/_foreground_material_light"
+                    android:visibleOrGone="@{presenter.photo1Progress>0}" />
+
+                <TextView
+                    style="@style/style_upload_retry"
+                    tools:text="99%"
+                    android:text="上传失败，点击重试"
+                    android:textColor="@color/_foreground_material_light"
+                    android:visibleOrGone="@{presenter.photo1Progress==-1}" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/back_white_coner_2dp_dash"
+            android:onClick="@{()->ac.goAlbum(2)}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/icon_camera"
+                android:text="点击拍摄货物"
+                android:textColor="@color/text_primary_333333"
+                android:textSize="@dimen/text_primary_14dp" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:imageURL="@{presenter.photo2}" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000"
+                android:onClick="@{()->ac.retryPhoto2Upload()}"
+                android:visibleOrGone="@{presenter.photo2Progress>0||presenter.photo2Progress==-1}">
+
+                <TextView
+                    tools:text="99%"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text='@{""+presenter.photo2Progress+@string/str_percent}'
+                    android:textColor="@color/_foreground_material_light"
+                    android:visibleOrGone="@{presenter.photo2Progress>0}" />
+
+                <TextView
+                    style="@style/style_upload_retry"
+                    tools:text="99%"
+                    android:text="上传失败，点击重试"
+                    android:textColor="@color/_foreground_material_light"
+                    android:visibleOrGone="@{presenter.photo2Progress==-1}" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <TextView

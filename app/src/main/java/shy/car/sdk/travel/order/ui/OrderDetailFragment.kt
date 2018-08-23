@@ -24,9 +24,11 @@ import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.constant.ParamsConstant.String1
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.eventbus.PaySuccess
+import shy.car.sdk.app.eventbus.SendSuccess
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.FragmentOrderDetailBinding
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
+import shy.car.sdk.travel.order.dialog.DriverVerifyHintFragment
 import shy.car.sdk.travel.order.presenter.OrderDetailPresenter
 import shy.car.sdk.travel.pay.WXPayUtil
 import shy.car.sdk.travel.pay.data.PayMethod
@@ -88,15 +90,22 @@ class OrderDetailFragment : XTBaseFragment(),
                 "确认支付"
             }
             OrderState.StateSending -> {
-                if (User.instance.phone == binding.detail?.user?.phone) {
-                    isBtnVisible.set(true)
-                    canCancel.set(false)
-                    "确认签收"
-                } else if (User.instance.phone == binding.detail?.carrier?.phone) {
+                if (User.instance.phone == binding.detail?.carrier?.phone) {
                     isBtnVisible.set(true)
                     canCancel.set(false)
                     "确认送达"
                 } else {
+                    ""
+                }
+            }
+            OrderState.StateSended -> {
+                if (User.instance.phone == binding.detail?.user?.phone) {
+                    isBtnVisible.set(true)
+                    canCancel.set(false)
+                    "确认签收"
+                } else {
+                    isBtnVisible.set(false)
+                    canCancel.set(false)
                     ""
                 }
             }
@@ -159,12 +168,17 @@ class OrderDetailFragment : XTBaseFragment(),
                 if (User.instance.phone == binding.detail?.user?.phone) {
                     cancelOrder()
                 } else {
-                    DialogManager.with(activity, childFragmentManager)
-                            .leftButtonText("取消")
-                            .rightButtonText("确定")
-                            .message("确认接单？")
-                            .onRightClick { _, _ -> presenter.postTakeOrder() }
-                            .show()
+                    if (User.instance.getIsDriverAuth()) {
+                        DialogManager.with(activity, childFragmentManager)
+                                .leftButtonText("取消")
+                                .rightButtonText("确定")
+                                .message("确认接单？")
+                                .onRightClick { _, _ -> presenter.postTakeOrder() }
+                                .show()
+                    } else {
+                        val hintDialog = DriverVerifyHintFragment()
+                        hintDialog.show(childFragmentManager, "dialog-driver-verify-hint")
+                    }
                 }
             }
             OrderState.StateWaitPay -> {
@@ -176,11 +190,14 @@ class OrderDetailFragment : XTBaseFragment(),
                             .build(RouteMap.OrderSendedPhoto)
                             .withObject(Object1, binding.detail)
                             .navigation()
-                } else if (User.instance.phone == binding.detail?.user?.phone) {
+                }
+            }
+            OrderState.StateSended -> {
+                if (User.instance.phone == binding.detail?.user?.phone) {
                     DialogManager.with(activity, childFragmentManager)
                             .leftButtonText("取消")
                             .rightButtonText("确定")
-                            .message("请确认货物已经送达目的地后，确认收货？")
+                            .message("请确认货物已经送达目的地后，确认签收？")
                             .onRightClick { _, _ -> presenter.orderDeliveryFinish() }
                             .show()
                 }
@@ -240,6 +257,11 @@ class OrderDetailFragment : XTBaseFragment(),
         activity?.let {
             ToastManager.showShortToast(it, "支付成功")
         }
+        presenter.getOrderDetail()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun sendSuccess(success: SendSuccess) {
         presenter.getOrderDetail()
     }
 }

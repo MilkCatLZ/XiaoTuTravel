@@ -527,13 +527,14 @@ interface ApiInterface {
     fun orderSendedPhoto(
             @Path(ParamsConstant.OrderId) order_id: String? = null,
             @Part(ParamsConstant.Type) type: RequestBody? = null,
-            @Part image: List<MultipartBody.Part>? = null
+            @Part(ParamsConstant.Images) images: RequestBody? = null
     ): Observable<JsonObject>
+
     /**
      * 货运送达拍照
      */
     @Multipart
-    @POST("users/identity")
+    @POST("driver/auth")
     fun uploadVerifyDiliver(
             @Part image: List<MultipartBody.Part>? = null
     ): Observable<JsonObject>
@@ -543,7 +544,10 @@ interface ApiInterface {
      */
     @FormUrlEncoded
     @PATCH("orders/freights/{freight_id}")
-    fun orderSended(@Path(ParamsConstant.FreightID) freight_id: String, @Field(ParamsConstant.FreightStatus) freightStatus: String = "5", lat: Double, lng: Double): Observable<JsonObject>
+    fun orderSended(@Path(ParamsConstant.FreightID) freight_id: String,
+                    @Field(ParamsConstant.FreightStatus) freightStatus: String = "5",
+                    @Field(ParamsConstant.Lat) lat: Double,
+                    @Field(ParamsConstant.Lng) lng: Double): Observable<JsonObject>
 
     @GET("users/rank")
     fun getRankList(): Observable<List<Rank>>
@@ -584,8 +588,9 @@ interface ApiInterface {
     @GET("config")
     fun getAPPSetting(): Observable<Setting>
 
-    @GET("ad")
-    fun getStartInfo(): Observable<StartInfo>
+    @FormUrlEncoded
+    @POST("advertisement")
+    fun getStartInfo(@Field(ParamsConstant.Type) type: String = "1"): Observable<StartInfo>
 
     /**
      * 修改用户头像

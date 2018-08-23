@@ -443,6 +443,10 @@
             android:name=".travel.order.ui.OrderSendedAndTakePhotoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".travel.user.ui.VerifyDeliverActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

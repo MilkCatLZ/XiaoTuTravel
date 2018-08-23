@@ -32,6 +32,7 @@ import shy.car.sdk.travel.send.ui.SendCitySmallPackageActivity;
 import shy.car.sdk.travel.send.ui.SendHoleCarActivity;
 import shy.car.sdk.travel.setting.ui.FeedBackActivity;
 import shy.car.sdk.travel.user.ui.UserInfoEditActivity;
+import shy.car.sdk.travel.user.ui.VerifyDeliverActivity;
 
 
 public class RouteMap {
@@ -430,4 +431,9 @@ public class RouteMap {
      * {@link OrderSendedAndTakePhotoActivity}
      */
     public static final String OrderSendedPhoto = "/order/order_sended_photo";
+    /**
+     * 送达拍照
+     * {@link VerifyDeliverActivity}
+     */
+    public static final String DriveVerify = "/send/user_verify";
 }

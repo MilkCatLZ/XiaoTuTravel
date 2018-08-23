@@ -149,6 +149,49 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/style_order_take_state"
+                    android:background="@{detail.status==OrderState.StateSended?@drawable/icon_jiedan:@drawable/white}"
+                    android:text="已送达"
+                    android:textColor="@{detail.status>OrderState.StateSended?@color/main_color_green:detail.status==OrderState.StateSended?@color/_foreground_material_light:@color/text_third_primary_999999}"
+                    tools:enabled="false" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/style_order_take_indicator_line"
+                        android:layout_toStartOf="@+id/img_state_4"
+                        android:enabled="@{detail.status>OrderState.StateSending}"
+                        tools:enabled="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/img_state_4"
+                        style="@style/style_order_take_indicator_out">
+
+                        <TextView
+                            style="@style/style_order_take_indicator_in"
+                            android:enabled="@{detail.status>=OrderState.StateSended}"
+                            tools:enabled="false" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        style="@style/style_order_take_indicator_line"
+                        android:layout_toEndOf="@+id/img_state_4"
+                        android:enabled="@{detail.status>OrderState.StateSended}"
+                        tools:enabled="false" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.7"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -166,12 +209,12 @@
 
                     <TextView
                         style="@style/style_order_take_indicator_line"
-                        android:layout_toStartOf="@+id/img_state_4"
+                        android:layout_toStartOf="@+id/img_state_5"
                         android:enabled="@{detail.status==OrderState.StateFinish}"
                         tools:enabled="false" />
 
                     <RelativeLayout
-                        android:id="@+id/img_state_4"
+                        android:id="@+id/img_state_5"
                         style="@style/style_order_take_indicator_out">
 
                         <TextView

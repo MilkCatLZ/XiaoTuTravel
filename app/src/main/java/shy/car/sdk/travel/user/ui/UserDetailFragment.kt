@@ -42,9 +42,9 @@ class UserDetailFragment : XTBaseFragment() {
     }
 
     fun goVipHomeClick() {
-            ARouter.getInstance()
-                    .build(RouteMap.Vip)
-                    .navigation()
+        ARouter.getInstance()
+                .build(RouteMap.Vip)
+                .navigation()
     }
 
     fun goUserVerifyClick() {
@@ -64,6 +64,14 @@ class UserDetailFragment : XTBaseFragment() {
         ARouter.getInstance()
                 .build(RouteMap.UserInfoEdit)
                 .navigation()
+    }
+
+    fun goDriveAuth() {
+        if (!User.instance.getIsDriverAuth()) {
+            ARouter.getInstance()
+                    .build(RouteMap.DriveVerify)
+                    .navigation()
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.util.Device
+import com.base.util.SPCache
 import com.base.util.Version
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.animation.GlideAnimation
@@ -29,10 +30,11 @@ import java.util.concurrent.TimeUnit
 
 class StartActivity : XTBaseActivity(),
         StartPresenter.AdListener {
-    override fun getAdError() {
+    override fun onError() {
         normalMode()
     }
 
+    private val StartInfo = "xtapp:startInfo"
     lateinit var presenter: StartPresenter
     lateinit var binding: ActivityStartBinding
 
@@ -41,12 +43,28 @@ class StartActivity : XTBaseActivity(),
         binding = DataBindingUtil.setContentView(this, R.layout.activity_start)
         binding.ac = this
         initPresenter()
-
+        try {
+            val cacheInfo = SPCache.getObject<StartInfo>(this, StartInfo, shy.car.sdk.travel.home.data.StartInfo::class.java,null)
+            if (cacheInfo?.start != null && !cacheInfo.start?.url.isNullOrEmpty()) {
+                Glide.with(this)
+                        .load(cacheInfo.start?.url)
+                        .into(binding.imageStart)
+            }else{
+                Glide.with(this)
+                        .load(R.drawable.image_start)
+                        .into(binding.imageStart)
+            }
+        } catch (e: Exception) {
+            Glide.with(this)
+                    .load(R.drawable.image_start)
+                    .into(binding.imageStart)
+        }
         presenter.getStartInfo()
     }
 
-    override fun getAdSuccess(startInfo: StartInfo) {
+    override fun onSuccess(startInfo: StartInfo) {
         try {
+            SPCache.saveObject(this, StartInfo, startInfo)
             if (Version.isFirstInstall(this)) {
                 Observable.timer(2, TimeUnit.SECONDS)
                         .subscribeOn(Schedulers.io())
@@ -86,7 +104,7 @@ class StartActivity : XTBaseActivity(),
     var dispose: Disposable? = null
     private fun adMode(startInfo: StartInfo) {
         Glide.with(this)
-                .load(startInfo.adUrl)
+                .load(startInfo.ad?.img)
                 .asBitmap()
                 .into(object : SimpleTarget<Bitmap>() {
                     override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {

@@ -1,14 +1,13 @@
-package shy.car.sdk.travel.take.ui
+package shy.car.sdk.travel.user.ui
 
 import android.Manifest
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.BitmapFactory
-import android.os.Binder
 import android.os.Bundle
 import android.os.Environment
-import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
@@ -24,26 +23,25 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
-import shy.car.sdk.app.constant.ParamsConstant.Object1
 import shy.car.sdk.app.route.RouteMap
-import shy.car.sdk.databinding.ActivityOrderSendedTakePhotoBinding
 import shy.car.sdk.databinding.ActivityVerifyDeliverBinding
-import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import shy.car.sdk.travel.take.presenter.VerifyDeliverPresenter
 
 /**
- * 拍照已送达
+ * 认证司机资格证
  */
-@Route(path = RouteMap.OrderSendedPhoto)
+@Route(path = RouteMap.DriveVerify)
 class VerifyDeliverActivity : XTBaseActivity(),
-        VerifyDeliverPresenter.CallBack {
-
-    @Autowired(name = Object1)
-    @JvmField
-    var detail: DeliveryOrderDetail? = null
+        VerifyDeliverPresenter.CallBack,
+        DialogInterface.OnDismissListener {
+    override fun onDismiss(dialog: DialogInterface?) {
+        finish()
+    }
 
     override fun upLoadSuccess(t: JsonObject) {
-
+        var dialog = UserVerifySubmitSuccessDialogFragment()
+        dialog.listener = this
+        dialog.show(supportFragmentManager, "dialog_user_verify_success")
     }
 
     lateinit var binding: ActivityVerifyDeliverBinding

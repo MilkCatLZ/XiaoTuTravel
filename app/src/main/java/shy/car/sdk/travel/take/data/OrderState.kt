@@ -11,6 +11,7 @@ open class OrderState {
         const val StateWaitTake = 1
         const val StateWaitPay = 10
         const val StateSending = 20
-        const val StateFinish = 30
+        const val StateSended = 30
+        const val StateFinish = 40
     }
 }
