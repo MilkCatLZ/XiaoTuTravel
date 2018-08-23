@@ -154,6 +154,7 @@ open class UserBase : BaseObservable() {
         set(value) {
             field = value
             notifyPropertyChanged(BR.isDriverAuth)
+            notifyPropertyChanged(BR.driverAuth)
         }
 
     @Bindable

@@ -12,6 +12,7 @@ data class UserDetailCache(
         @SerializedName("type_text") var typeText: String,
         @SerializedName("is_identity_auth") var isIdentityAuth: Int,
         @SerializedName("is_deposit") var isDeposit: Int,
+        @SerializedName("is_driver_auth") var driverAuth: Int,
         @SerializedName("balance") var balance: Double,
         @SerializedName("score") var score: Int,
         @SerializedName("phone") var phone: String,

@@ -32,6 +32,7 @@ class DriverVerifyHintFragment : XTBaseDialogFragment() {
                     .build(RouteMap.DriveVerify)
                     .navigation()
         }
+        dismissAllowingStateLoss()
     }
 
 }

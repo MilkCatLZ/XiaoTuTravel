@@ -47,6 +47,7 @@ class User private constructor() : UserBase() {
         instance.city = detail.city
         instance.score = detail.score
         instance.isDeposited = detail.isDeposit
+        instance.driverAuth = detail.driverAuth
     }
 
     /**
@@ -185,6 +186,7 @@ class User private constructor() : UserBase() {
             instance.deposit = dis.deposit
             instance.isDeposited = dis.isDeposited
             instance.maxCancelNum = dis.maxCancelNum
+            instance.driverAuth = dis.driverAuth
         }
 
     }
