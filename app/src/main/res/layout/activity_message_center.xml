@@ -10,6 +10,10 @@
         <variable
             name="ac"
             type="shy.car.sdk.travel.message.ui.MessageCenterActivity"/>
+        
+        <variable
+            name="info"
+            type="shy.car.sdk.travel.message.data.MessageInfo"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,11 +62,11 @@
 
                 <TextView
                     style="@style/style_message_center_title"
-                    android:text="活动消息"/>
+                    android:text="@{info.activity.name}"/>
 
                 <TextView
                     style="@style/style_message_center_detail"
-                    android:text="您的地球日优惠来啦"/>
+                    android:text="@{info.activity.lastnew}"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -82,11 +86,11 @@
 
                 <TextView
                     style="@style/style_message_center_title"
-                    android:text="服务消息"/>
+                    android:text="@{info.service.name}"/>
 
                 <TextView
                     style="@style/style_message_center_detail"
-                    android:text="您有一张优惠券到账了"/>
+                    android:text="@{info.service.lastnew}"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -106,11 +110,11 @@
 
                 <TextView
                     style="@style/style_message_center_title"
-                    android:text="系统消息"/>
+                    android:text="@{info.system.name}"/>
 
                 <TextView
                     style="@style/style_message_center_detail"
-                    android:text="1.0.8版本更新了"/>
+                    android:text="@{info.system.lastnew}"/>
             </LinearLayout>
 
         </LinearLayout>

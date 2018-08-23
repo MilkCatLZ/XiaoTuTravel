@@ -17,6 +17,7 @@ import shy.car.sdk.travel.invoice.data.InvoiceDetail
 import shy.car.sdk.travel.invoice.data.InvoiceHistory
 import shy.car.sdk.travel.invoice.data.InvoiceList
 import shy.car.sdk.travel.location.data.CurrentLocation
+import shy.car.sdk.travel.message.data.MessageInfo
 import shy.car.sdk.travel.message.data.MessageList
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import shy.car.sdk.travel.order.data.OrderMineList
@@ -185,8 +186,14 @@ interface ApiInterface {
     @GET("users/messages")
     fun getMessageList(
             @Query(ParamsConstant.Type) type: Int,
-            @Query(ParamsConstant.Offset) offset: Int,
-            @Query(ParamsConstant.Limit) limit: Int): Observable<ArrayList<MessageList>>
+            @Query(ParamsConstant.Offset) offset: Int = 0,
+            @Query(ParamsConstant.Limit) limit: Int = 10): Observable<ArrayList<MessageList>>    /**
+     * 获取发货列表
+     *
+     */
+    @GET("users/messages")
+    fun getMessageInfo(
+            @Query(ParamsConstant.Type) type: Int=0): Observable<MessageInfo>
 
     /**
      * 附近网点列表
@@ -587,6 +594,9 @@ interface ApiInterface {
 
     @GET("config")
     fun getAPPSetting(): Observable<Setting>
+
+    @GET("config")
+    fun getMessageInfo(): Observable<Setting>
 
     @FormUrlEncoded
     @POST("advertisement")
