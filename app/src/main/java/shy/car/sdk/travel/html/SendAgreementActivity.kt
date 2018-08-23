@@ -3,7 +3,6 @@ package shy.car.sdk.travel.html
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import kotlinx.android.synthetic.main.activity_return_car_agreement.*
-import kotlinx.android.synthetic.main.layout_title.*
 import shy.car.sdk.BuildConfig
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
