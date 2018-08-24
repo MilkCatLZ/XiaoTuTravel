@@ -4,6 +4,7 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import android.databinding.Observable
 import android.databinding.PropertyChangeRegistry
+import com.base.util.StringUtils
 import com.google.gson.annotations.SerializedName
 import shy.car.sdk.BR
 
@@ -109,7 +110,16 @@ class OrderMineList : BaseObservable() {
         }
 
     fun carInfo(): String {
-        return "${car?.plateNumber} | ${car?.modelName}"
+        var info = ""
+        if (StringUtils.isNotEmpty(car?.plateNumber)) {
+            info += car?.plateNumber!!
+            if (StringUtils.isNotEmpty(car?.modelName)) {
+                info += " | ${car?.modelName}"
+            }
+        } else if (StringUtils.isNotEmpty(car?.modelName)) {
+            info += "${car?.modelName}"
+        }
+        return info
     }
 
     @Transient
