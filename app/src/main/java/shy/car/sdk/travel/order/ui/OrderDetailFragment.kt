@@ -79,8 +79,12 @@ class OrderDetailFragment : XTBaseFragment(),
         binding.btnText = when (binding.detail?.status) {
             OrderState.StateWaitTake -> {
                 if (User.instance.phone == binding.detail?.user?.phone) {
+                    isBtnVisible.set(true)
+                    canCancel.set(true)
                     "取消订单"
                 } else {
+                    isBtnVisible.set(true)
+                    canCancel.set(false)
                     "确认接单"
                 }
             }
@@ -95,6 +99,8 @@ class OrderDetailFragment : XTBaseFragment(),
                     canCancel.set(false)
                     "确认送达"
                 } else {
+                    isBtnVisible.set(false)
+                    canCancel.set(false)
                     ""
                 }
             }

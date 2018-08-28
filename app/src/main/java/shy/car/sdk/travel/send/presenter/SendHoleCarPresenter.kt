@@ -37,7 +37,7 @@ class SendHoleCarPresenter(context: Context, var callBack: CallBack) : BasePrese
     var price = ObservableField<String>()
     var remark = ObservableField<String>()
     var volume = ObservableField<String>()
-    var agree = ObservableBoolean(false)
+    var agree = ObservableBoolean(true)
     var startTime: String = ""
     var endTime: String = ""
     var carID: String = ""

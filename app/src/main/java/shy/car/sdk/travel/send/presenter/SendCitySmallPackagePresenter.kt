@@ -33,7 +33,7 @@ class SendCitySmallPackagePresenter(context: Context, var callBack: CallBack) : 
     var weight = ObservableField<String>()
     var price = ObservableField<String>()
     var remark = ObservableField<String>()
-    var agree = ObservableBoolean(false)
+    var agree = ObservableBoolean(true)
     var startTime: String = ""
     var endTime: String = ""
 

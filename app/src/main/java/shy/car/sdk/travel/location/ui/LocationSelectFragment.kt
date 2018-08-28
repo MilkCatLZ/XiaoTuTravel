@@ -2,6 +2,7 @@ package shy.car.sdk.travel.location.ui
 
 import android.databinding.DataBindingUtil
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,17 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amap.api.location.AMapLocation
+import com.amap.api.maps.AMap
 import com.amap.api.maps.CameraUpdateFactory
-import com.amap.api.maps.model.BitmapDescriptor
-import com.amap.api.maps.model.BitmapDescriptorFactory
-import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MarkerOptions
+import com.amap.api.maps.model.*
 import com.amap.api.services.core.PoiItem
 import com.base.location.AmapLocationManager
 import com.base.location.AmapOnLocationReceiveListener
 import com.base.location.Location
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseFragment
@@ -34,6 +34,14 @@ import shy.car.sdk.travel.rent.adapter.NearInfoWindowAdapter
  */
 class LocationSelectFragment : XTBaseFragment(),
         LocationSelectPresenter.CallBack {
+
+    lateinit var binding: FragmentLocationSelectBinding
+
+    lateinit var presenter: LocationSelectPresenter
+    val isResultVisible = ObservableBoolean(false)
+    val address = ObservableField<String>("")
+    var location = CurrentLocation()
+
     override fun getPoiListSuccess() {
         isResultVisible.set(true)
     }
@@ -42,14 +50,6 @@ class LocationSelectFragment : XTBaseFragment(),
         moveCameraAndShowLocation(poiItem)
         isResultVisible.set(false)
     }
-
-    lateinit var binding: FragmentLocationSelectBinding
-    lateinit var bitmap: BitmapDescriptor
-    var location = CurrentLocation()
-
-
-    lateinit var presenter: LocationSelectPresenter
-    val isResultVisible = ObservableBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,9 +91,40 @@ class LocationSelectFragment : XTBaseFragment(),
         })
     }
 
+    var disposable: Disposable? = null
     private fun initMap() {
         binding.mapLocationSelect.map.animateCamera(CameraUpdateFactory.zoomTo(14f), 1000, null)
         activity?.let { binding.mapLocationSelect.map.setInfoWindowAdapter(NearInfoWindowAdapter(it)) }
+        binding.mapLocationSelect.map.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
+            override fun onCameraChangeFinish(p0: CameraPosition?) {
+                getAddresss(p0?.target?.latitude, p0?.target?.longitude)
+            }
+
+            override fun onCameraChange(p0: CameraPosition?) {
+
+            }
+        })
+    }
+
+    private fun getAddresss(latitude: Double?, longitude: Double?) {
+        AmapLocationManager.getInstance()
+                .getAddress(latitude!!, longitude!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    disposable?.dispose()
+                    disposable = it
+                }
+                .subscribe({
+                    val location = Location()
+                    location.latitude = it.regeocodeQuery.point.latitude
+                    location.longitude = it.regeocodeQuery.point.longitude
+                    location.address = it.regeocodeAddress.formatAddress
+                    location.city = it.regeocodeAddress.city
+                    location.district = it.regeocodeAddress.district
+                    this@LocationSelectFragment.location.copy(location)
+                    this@LocationSelectFragment.address.set(this@LocationSelectFragment.location.address)
+                }, {})
     }
 
     /**
@@ -117,7 +148,7 @@ class LocationSelectFragment : XTBaseFragment(),
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     moveCameraAndShowLocation(location)
-                    addMarkersToMap()
+                    getAddresss(location.lat, location.lng)
                 }, {
 
                 })
@@ -131,26 +162,26 @@ class LocationSelectFragment : XTBaseFragment(),
             is Location -> this.location.copy(it)
         }
         binding.mapLocationSelect.map.moveCamera(CameraUpdateFactory.changeLatLng(LatLng(location.lat, location.lng)))
-        addMarkersToMap()
+        this.address.set(this.location.address)
     }
 
-    /**
-     * 在地图上添加marker
-     */
-    private fun addMarkersToMap() {
-        binding.mapLocationSelect.map.mapScreenMarkers.map {
-            it.remove()
-        }
-        binding.mapLocationSelect.map.mapScreenMarkers.clear()
-        val marker = binding.mapLocationSelect.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
-                .anchor(0.5f, 1.0f)
-                .title("当前位置")
-                .snippet(location.address)
-                .position(LatLng(location.lat, location.lng))
-                .draggable(false))
-        marker.showInfoWindow()
-
-    }
+//    /**
+//     * 在地图上添加marker
+//     */
+//    private fun addMarkersToMap() {
+//        binding.mapLocationSelect.map.mapScreenMarkers.map {
+//            it.remove()
+//        }
+//        binding.mapLocationSelect.map.mapScreenMarkers.clear()
+//        val marker = binding.mapLocationSelect.map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_defaul_label))
+//                .anchor(0.5f, 1.0f)
+//                .title("当前位置")
+//                .snippet(location.address)
+//                .position(LatLng(location.lat, location.lng))
+//                .draggable(false))
+//        marker.showInfoWindow()
+//
+//    }
 
     fun onConfirmClick() {
         eventBusDefault.post(location)

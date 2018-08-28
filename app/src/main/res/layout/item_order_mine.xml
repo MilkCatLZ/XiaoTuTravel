@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/back_dialog_corner_2dp"
             android:minHeight="125dp"
+            android:paddingBottom="15dp"
             android:orientation="vertical"
             android:paddingEnd="15dp"
             android:paddingStart="14dp">

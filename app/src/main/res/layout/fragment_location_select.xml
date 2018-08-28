@@ -33,11 +33,42 @@
 
         </LinearLayout>
 
-        <com.amap.api.maps.MapView
-            android:id="@+id/map_location_select"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/title" />
+            android:layout_below="@+id/title">
+
+            <com.amap.api.maps.MapView
+                android:id="@+id/map_location_select"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/img_location"
+                android:layout_centerInParent="true"
+                android:background="@drawable/icon_shape"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/white"
+                    android:gravity="center"
+                    android:text="@{fragment.address}"
+                    android:textColor="@color/text_primary_333333"
+                    android:textSize="@dimen/text_second_primary_12dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/img_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/icon_defaul_label" />
+        </RelativeLayout>
 
         <View
             style="@style/style_shadow"
@@ -86,9 +117,9 @@
                 android:layout_marginBottom="74dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
-                android:visibleOrGone="@{fragment.isResultVisible}"
                 android:layout_marginTop="-5dp"
                 android:bindAdapter="@{presenter.adapter}"
+                android:visibleOrGone="@{fragment.isResultVisible}"
                 app:recyclerviewDefaultSwipeColor="@array/google_colors"
                 app:recyclerviewEmptyView="@layout/view_list_empty"
                 app:recyclerviewScrollbars="vertical" />

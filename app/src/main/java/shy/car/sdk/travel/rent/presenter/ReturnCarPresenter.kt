@@ -34,7 +34,7 @@ class ReturnCarPresenter(context: Context, var callBack: CallBack) : BasePresent
     }
 
     val location = ObservableField<Location>()
-    val agree = ObservableBoolean(false)
+    val agree = ObservableBoolean(true)
     val locationCheckText = ObservableField<String>("")
     var isInNetWork: Boolean = false
     var oid: String = ""

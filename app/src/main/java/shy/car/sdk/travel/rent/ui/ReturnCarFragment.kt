@@ -82,7 +82,7 @@ class ReturnCarFragment : XTBaseFragment(),
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     activity?.let { ProgressDialog.hideLoadingView(it) }
-                    val location: Location = Location()
+                    val location = Location()
                     location.latitude = detail.car?.lat!!
                     location.longitude = detail.car?.lng!!
                     location.address = it.regeocodeAddress.formatAddress
