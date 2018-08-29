@@ -2,6 +2,10 @@ package shy.car.sdk.app.data;
 
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -11,6 +15,18 @@ import com.base.util.Log;
 import com.base.util.StringUtils;
 import com.base.util.ToastManager;
 import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import retrofit2.HttpException;
 
@@ -132,6 +148,7 @@ public class ErrorManager {
                         } else {
                             if (StringUtils.isNotEmpty(defaultMessage)) {
                                 ToastManager.showShortToast(context, defaultMessage);
+                                handleException(context, ex);
                                 Log.e("ManagerError--------", "error message is empty\n", ex);
                             }
                         }
@@ -204,4 +221,128 @@ public class ErrorManager {
     public void setError_code(int error_code) {
         this.error_code = error_code;
     }
+
+
+    static String CrashDir = "/XTCrashFile/";
+    static Map<String, String> infos = new HashMap<String, String>();
+
+    /**
+     * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
+     *
+     * @param ex
+     * @return true:如果处理了该异常信息;否则返回false.
+     */
+    private static boolean handleException(final Context mContext, Throwable ex) {
+        String className = "";
+        try {
+            className = ex.getStackTrace()[0].getClassName();
+        } catch (Exception e) {
+
+        }
+        final String fileName = "接口错误日志-" + getNowDate() + "-" + className + ".log";
+        if (ex == null) {
+            return false;
+        }
+        // 收集设备参数信息
+        collectDeviceInfo(mContext);
+        // 保存日志文件
+        ex.printStackTrace();
+        saveCrashInfo2File(ex, fileName);
+        return true;
+    }
+
+    public static String getNowDate() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.CHINA);
+        String dateString = formatter.format(currentTime);
+        // ParsePosition pos = new ParsePosition(8);
+        // Date currentTime_2 = formatter.parse(dateString, pos);
+        return dateString;
+    }
+
+    /**
+     * 收集设备参数信息
+     *
+     * @param ctx
+     */
+    static void collectDeviceInfo(Context ctx) {
+        try {
+            PackageManager pm = ctx.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (pi != null) {
+                String versionName = pi.versionName == null ? "null" : pi.versionName;
+                String versionCode = pi.versionCode + "";
+                infos.put("versionName", versionName);
+                infos.put("versionCode", versionCode);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "an error occured when collect package info", e);
+        }
+        Field[] fields = Build.class.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                field.setAccessible(true);
+                infos.put(field.getName(), field.get(null)
+                        .toString());
+                Log.d(TAG, field.getName() + " : " + field.get(null));
+            } catch (Exception e) {
+                Log.e(TAG, "an error occured when collect crash info", e);
+            }
+        }
+    }
+
+    /**
+     * 保存错误信息到文件中
+     *
+     * @param ex
+     * @return 返回错误信息字符串，传给服务器
+     */
+    static String saveCrashInfo2File(Throwable ex, String fileName) {
+
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : infos.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            sb.append(key + "=" + value + "\n");
+        }
+
+        Writer writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
+        ex.printStackTrace(printWriter);
+        Throwable cause = ex.getCause();
+        while (cause != null) {
+            cause.printStackTrace(printWriter);
+            cause = cause.getCause();
+        }
+        printWriter.close();
+        String result = writer.toString();
+        sb.append(result);
+        try {
+
+            // long timestamp = System.currentTimeMillis();
+            // String time = getNowDate();
+
+            if (Environment.getExternalStorageState()
+                    .equals(Environment.MEDIA_MOUNTED)) {
+                String path = Environment.getExternalStorageDirectory()
+                        .getPath() + "/" + CrashDir;
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                FileOutputStream fos = new FileOutputStream(path + "/" + fileName);
+                fos.write(sb.toString()
+                        .getBytes());
+                fos.close();
+            }
+            return result;
+        } catch (Exception e) {
+            Log.e("ErrorManager-------", "an error occured while writing file...", e);
+            e.printStackTrace();
+
+        }
+        return result;
+    }
+
+    public static final String TAG = "ErrorManager-------";
 }
