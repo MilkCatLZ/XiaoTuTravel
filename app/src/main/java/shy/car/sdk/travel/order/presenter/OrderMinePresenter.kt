@@ -25,7 +25,7 @@ class OrderMinePresenter(context: Context, var callBack: CallBack) : BasePresent
 
     var adapter: DataBindingItemClickAdapter<OrderMineList> = DataBindingItemClickAdapter(R.layout.item_order_mine, BR.order, BR.click) {
         val order = it.tag as OrderMineList
-        if (order.type == 1) {
+        if (type == 1) {
             when (order.status) {
             //1:预约单
                 RentOrderState.Create -> {

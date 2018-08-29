@@ -243,7 +243,7 @@ class OrderDetailFragment : XTBaseFragment(),
         }
     }
 
-    fun selectPayMethod() {
+    private fun selectPayMethod() {
         val dialog = ARouter.getInstance().build(RouteMap.PaySelect)
                 .withObject(ParamsConstant.Object1, presenter.payMethod.get())
                 .withInt(ParamsConstant.Int1, 2)//1:充值，2:支付

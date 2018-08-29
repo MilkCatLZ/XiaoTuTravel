@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,7 +11,11 @@
 
         <variable
             name="presenter"
-            type="shy.car.sdk.travel.take.presenter.VerifyDeliverPresenter" />
+            type="shy.car.sdk.travel.user.presenter.VerifyDeliverPresenter" />
+
+        <variable
+            name="user"
+            type="shy.car.sdk.travel.user.data.User" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:drawablePadding="5dp"
+                android:visibleOrGone="@{user.driverAuth==0}"
                 android:drawableTop="@drawable/icon_photo_add"
                 android:text="点击上传货运资格证照片"
                 android:textSize="@dimen/text_primary_14dp" />
@@ -53,8 +59,34 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibleOrGone="@{user.driverAuth==0}"
                 android:layout_centerInParent="true"
                 android:imageURL="@{presenter.photo}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000"
+                android:gravity="center"
+                android:text="认证中..."
+                android:textColor="@color/_foreground_material_light"
+                android:visibleOrGone="@{user.driverAuth==1}" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#88000000"
+                android:visibleOrGone="@{presenter.progressObservable>0&amp;&amp;100>presenter.progressObservable}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text='@{""+presenter.progressObservable+@string/str_percent}'
+                    android:textColor="@color/_foreground_material_light"
+                    android:visibleOrGone="@{presenter.progressObservable>0}"
+                    tools:text="99%" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <TextView
@@ -67,6 +99,7 @@
             android:gravity="center"
             android:onClick="@{()->ac.upload()}"
             android:text="提交"
+            android:visibleOrGone="@{user.driverAuth==0}"
             android:textColor="@color/_foreground_material_light"
             android:textSize="@dimen/text_title_16dp" />
     </LinearLayout>

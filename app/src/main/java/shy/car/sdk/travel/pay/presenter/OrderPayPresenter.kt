@@ -83,18 +83,22 @@ class OrderPayPresenter(context: Context, var callBack: CallBack) : BasePresente
                         callBack.getPayStringSuccess(t)
                     }
                 } catch (_: Exception) {
-                    callBack.getPayStringSuccess(t)
+                    throw NullPointerException()
                 }
 
             }
 
             override fun onError(e: Throwable) {
                 ProgressDialog.hideLoadingView(context)
-                val err = ErrorManager.managerError(context, e, "支付失败")
-                if (err?.error_code == 400118) {
-                    ARouter.getInstance()
-                            .build(RouteMap.Pay)
-                            .navigation()
+                if(e is NullPointerException){
+                    ToastManager.showShortToast(context, "支付失败，如有疑问请联系客服")
+                }else {
+                    val err = ErrorManager.managerError(context, e, "支付失败")
+                    if (err?.error_code == 400118) {
+                        ARouter.getInstance()
+                                .build(RouteMap.Pay)
+                                .navigation()
+                    }
                 }
             }
 

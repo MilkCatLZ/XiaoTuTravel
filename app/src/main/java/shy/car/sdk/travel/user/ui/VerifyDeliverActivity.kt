@@ -23,9 +23,11 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import shy.car.sdk.R
 import shy.car.sdk.app.base.XTBaseActivity
+import shy.car.sdk.app.eventbus.RefreshUserInfo
 import shy.car.sdk.app.route.RouteMap
 import shy.car.sdk.databinding.ActivityVerifyDeliverBinding
-import shy.car.sdk.travel.take.presenter.VerifyDeliverPresenter
+import shy.car.sdk.travel.user.presenter.VerifyDeliverPresenter
+import shy.car.sdk.travel.user.data.User
 
 /**
  * 认证司机资格证
@@ -39,7 +41,8 @@ class VerifyDeliverActivity : XTBaseActivity(),
     }
 
     override fun upLoadSuccess(t: JsonObject) {
-        var dialog = UserVerifySubmitSuccessDialogFragment()
+        eventBusDefault.post(RefreshUserInfo())
+        val dialog = UserVerifySubmitSuccessDialogFragment()
         dialog.listener = this
         dialog.show(supportFragmentManager, "dialog_user_verify_success")
     }
@@ -56,6 +59,7 @@ class VerifyDeliverActivity : XTBaseActivity(),
 
         binding.ac = this
         binding.presenter = presenter
+        binding.user = User.instance
     }
 
     fun upload() {
@@ -66,34 +70,41 @@ class VerifyDeliverActivity : XTBaseActivity(),
     }
 
     fun goAlbum() {
-        val per = RxPermissions(this)
-        per.request(Manifest.permission.CAMERA)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Boolean> {
-                    override fun onComplete() {
+        if (User.instance.driverAuth == 0) {
+            val per = RxPermissions(this)
+            per.request(Manifest.permission.CAMERA)
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Observer<Boolean> {
+                        override fun onComplete() {
 
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-
-                    }
-
-                    override fun onNext(granted: Boolean) {
-                        if (granted) {
-                            PickConfig.with(this@VerifyDeliverActivity)
-                                    .pickMode(PickConfig.MODE_TAKE_PHOTO)
-                                    .isneedcamera(true)
-                                    .start()
-                        } else {
-                            ToastManager.showShortToast(this@VerifyDeliverActivity, "请先允许相机权限")
                         }
-                    }
 
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(granted: Boolean) {
+                            if (granted) {
+                                PickConfig.with(this@VerifyDeliverActivity)
+                                        .pickMode(PickConfig.MODE_SINGLE_PICK)
+                                        .isneedcamera(true)
+                                        .start()
+                            } else {
+                                ToastManager.showShortToast(this@VerifyDeliverActivity, "请先允许相机权限")
+                            }
+                        }
+
+                        override fun onError(e: Throwable) {
+                            e.printStackTrace()
+                        }
+                    })
+        } else if (User.instance.driverAuth == 1) {
+            ToastManager.showShortToast(this, "照片已提交，请耐心等待审核...")
+        } else {
+            ToastManager.showShortToast(this, "您已通过审核，请勿重复提交...")
+            finish()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

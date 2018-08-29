@@ -1,32 +1,34 @@
-package shy.car.sdk.travel.take.presenter
+package shy.car.sdk.travel.user.presenter
 
 import android.content.Context
 import android.databinding.ObservableField
+import android.databinding.ObservableInt
 import com.base.base.ProgressDialog
+import com.base.network.retrofit.UploadFileRequestBody
+import com.base.util.Log
 import com.google.gson.JsonObject
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import okhttp3.MediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import shy.car.sdk.app.data.ErrorManager
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
-import shy.car.sdk.travel.order.data.DeliveryOrderDetail
 import java.io.File
 
 class VerifyDeliverPresenter(context: Context, var callBack: CallBack) : BasePresenter(context) {
     interface CallBack {
         fun upLoadSuccess(t: JsonObject)
     }
+
     val content = ObservableField<String>()
     val photo = ObservableField<String>()
+    val progressObservable = ObservableInt(0)
 
     /**
      * 上传目的地照片
      */
     fun upload() {
-        ProgressDialog.showLoadingView(context)
+//        ProgressDialog.showLoadingView(context)
         val observable = ApiManager.getInstance()
                 .api.uploadVerifyDiliver(
                 createImageParams().parts())
@@ -41,9 +43,9 @@ class VerifyDeliverPresenter(context: Context, var callBack: CallBack) : BasePre
             }
 
             override fun onNext(t: JsonObject) {
-                ProgressDialog.hideLoadingView(context)
+//                ProgressDialog.hideLoadingView(context)
                 callBack.upLoadSuccess(t)
-
+                progressObservable.set(100)
             }
 
             override fun onError(e: Throwable) {
@@ -57,17 +59,37 @@ class VerifyDeliverPresenter(context: Context, var callBack: CallBack) : BasePre
                 .toSubscribe(observable, observer)
     }
 
+//    private fun createImageParams(): MultipartBody {
+//
+//        val leftFile = File(photo.get())
+//
+//        val builder = MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//
+//        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
+//
+//        builder.addFormDataPart("freight_img", leftFile.name, drive)
+//        return builder.build()
+//
+//    }
+
     private fun createImageParams(): MultipartBody {
 
-        val leftFile = File(photo.get())
+        val file = File(photo.get())
 
         val builder = MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
 
-        val drive = RequestBody.create(MediaType.parse("image/jpeg"), leftFile)
+        val left = UploadFileRequestBody(file, object : UploadFileRequestBody.ProgressListener {
+            override fun onProgress(hasWrittenLen: Long, totalLen: Long, hasFinish: Boolean) {
+                val progress = (hasWrittenLen.toDouble() / totalLen.toDouble() * 99.0).toInt()
+                Log.d("onProgress-----------------", "progress============$progress${System.currentTimeMillis()}")
+                progressObservable.set(progress)
+            }
 
-        builder.addFormDataPart("freight_img", leftFile.name, drive)
+        })
+//        return left
+        builder.addFormDataPart("freight_img", file.name, left)
         return builder.build()
-
     }
 }

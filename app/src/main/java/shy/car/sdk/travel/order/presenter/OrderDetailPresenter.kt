@@ -9,8 +9,10 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Response
 import shy.car.sdk.app.data.ErrorManager
+import shy.car.sdk.app.eventbus.RefreshOrderList
 import shy.car.sdk.app.net.ApiManager
 import shy.car.sdk.app.presenter.BasePresenter
 import shy.car.sdk.travel.order.data.DeliveryOrderDetail
@@ -82,6 +84,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "接单成功，请尽快发货")
                 getOrderDetail()
+                EventBus.getDefault().post(RefreshOrderList())
             }
 
             override fun onError(e: Throwable) {
@@ -115,6 +118,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 ProgressDialog.hideLoadingView(context)
                 ToastManager.showShortToast(context, "订单已签收")
                 getOrderDetail()
+                EventBus.getDefault().post(RefreshOrderList())
             }
 
             override fun onError(e: Throwable) {
@@ -151,6 +155,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 ApiManager.getInstance()
                         .clearCache()
                 callBack.cancelOrderSuccess()
+                EventBus.getDefault().post(RefreshOrderList())
             }
 
             override fun onError(e: Throwable) {
@@ -193,7 +198,7 @@ class OrderDetailPresenter(context: Context, var callBack: CallBack) : BasePrese
                 } catch (_: Exception) {
                     callBack.onCreatePaySuccess(t)
                 }
-
+                EventBus.getDefault().post(RefreshOrderList())
             }
 
             override fun onError(e: Throwable) {

@@ -426,7 +426,7 @@ interface ApiInterface {
                      @Part image: List<MultipartBody.Part>): Observable<JsonObject>
 
     /**
-     * 提交身份认证
+     * 提交还车图片
      */
     @Multipart
     @POST("orders/{oid}/photos")
