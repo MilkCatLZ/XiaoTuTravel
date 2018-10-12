@@ -90,7 +90,7 @@ class OrderDetailFragment : XTBaseFragment(),
             }
             OrderState.StateWaitPay -> {
                 isBtnVisible.set(User.instance.phone == binding.detail?.user?.phone)
-                canCancel.set(binding.detail?.user?.phone == User.instance.phone || binding.detail?.carrier?.phone == User.instance.phone)
+                canCancel.set(false)
                 "确认支付"
             }
             OrderState.StateSending -> {

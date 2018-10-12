@@ -156,7 +156,7 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
 
     override fun addHeader(newRequest: Request.Builder) {
         if (User.instance.login) {
-            newRequest.addHeader("authorization", "Bearer " + User.instance.accessToken)
+            newRequest.header("authorization", "Bearer " + User.instance.accessToken)
         }
 //
 //        else if(BuildConfig.DEBUG){
@@ -167,6 +167,6 @@ class BaseInterceptor(val app: Context) : BaseInterceptor() {
 //        newRequest.addHeader("Accept-Language", "gzip, deflate" )
 //        newRequest.addHeader("Accept", "*/*" )
 //        newRequest.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36" )
-        newRequest.addHeader("Cookie", "PHPSESSID=e8gvutddof6sner3p3qh8vm1p3")
+        newRequest.header("Cookie", "PHPSESSID=e8gvutddof6sner3p3qh8vm1p3")
     }
 }
