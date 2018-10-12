@@ -140,7 +140,7 @@
                                 style="@style/style_ww.text_13_666"
                                 android:ellipsize="end"
                                 android:maxLines="1"
-                                android:text="@{LNTextUtil.getPriceText(detail.money)+@string/str_yuan_c}"
+                                android:text="@{LNTextUtil.getPriceText(safeUnbox(detail.money))+@string/str_yuan_c}"
                                 tools:text="155元" />
                         </LinearLayout>
 

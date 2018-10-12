@@ -1,6 +1,7 @@
 package shy.car.sdk.app;
 
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -24,6 +25,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return doubleString
      */
+    @NonNull
     public static String convertPriceText(double price, int dot) {
 
 //        int ps = (int) Math.floor(price * 100);
@@ -153,6 +155,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return
      */
+    @NonNull
     public static String getPriceText(double price) {
         return convertPriceText(price, 2);
     }
@@ -164,6 +167,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return
      */
+    @NonNull
     public static String getPriceTextNoRound(double price) {
         return convertPriceTextNoRound(price, 2);
     }
@@ -175,6 +179,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return
      */
+    @NonNull
     public static String getPriceTextRoundUp(double price) {
         return convertPriceTextRoundUp(price, 2);
     }
@@ -197,6 +202,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return
      */
+    @NonNull
     public static String getDiscountPrice(double price) {
         return convertPriceText(price, 1);
     }
@@ -208,6 +214,7 @@ public class LNTextUtil extends StringUtils {
      *
      * @return
      */
+    @NonNull
     public static String PhoneEncode(@Nullable String phone) {
         if (isEmpty(phone)) {
             return "";

@@ -36,11 +36,11 @@ open class BaseApiManager<T>(var baseUrl: String, var interceptor: BaseIntercept
                 .writeTimeout(90, TimeUnit.SECONDS)
 
         if (interceptor != null) {
-            builder.addInterceptor(interceptor)
+            builder.addInterceptor(interceptor!!)
         }
         builder.addInterceptor(HttpLoggingInterceptor())
         if (cookieJar != null) {
-            builder.cookieJar(cookieJar)
+            builder.cookieJar(cookieJar!!)
         }
         client = builder.build()
 

@@ -196,7 +196,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="5dp"
-                            android:text="@{LNTextUtil.getPriceText(detail.money)+@string/str_yuan_c}"
+                            android:text="@{LNTextUtil.getPriceText(safeUnbox(detail.money))+@string/str_yuan_c}"
                             android:textColor="@color/text_second_primary_666666"
                             android:textSize="@dimen/text_second_primary_12dp" />
                     </LinearLayout>

@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{LNTextUtil.getPriceText(history.money)}"
+                    android:text="@{LNTextUtil.getPriceText(safeUnbox(history.money))}"
                     android:textColor="@color/text_primary_333333"
                     android:textSize="@dimen/text_title_16dp"
                     tools:text="160.00"/>
