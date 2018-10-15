@@ -101,7 +101,9 @@ class SettingActivity : XTBaseActivity() {
                         val format = DecimalFormat("#.#")
                         txtSettingCache.text = (format.format(it) + " M")
                     }
-                }, {})
+                }, {
+
+                })
     }
 
     var disposable: Disposable? = null

@@ -177,7 +177,7 @@ interface ApiInterface {
      *
      */
     @GET("versions/newest")
-    fun getUpdateInfo(): Observable<ResponseBody>
+    fun getUpdateInfo(@Query(ParamsConstant.ClientID) client_id: String = "10001"): Observable<ResponseBody>
 
     /**
      * 获取发货列表
@@ -187,13 +187,15 @@ interface ApiInterface {
     fun getMessageList(
             @Query(ParamsConstant.Type) type: Int,
             @Query(ParamsConstant.Offset) offset: Int = 0,
-            @Query(ParamsConstant.Limit) limit: Int = 10): Observable<ArrayList<MessageList>>    /**
+            @Query(ParamsConstant.Limit) limit: Int = 10): Observable<ArrayList<MessageList>>
+
+    /**
      * 获取发货列表
      *
      */
     @GET("users/messages")
     fun getMessageInfo(
-            @Query(ParamsConstant.Type) type: Int=0): Observable<MessageInfo>
+            @Query(ParamsConstant.Type) type: Int = 0): Observable<MessageInfo>
 
     /**
      * 附近网点列表
