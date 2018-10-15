@@ -197,7 +197,7 @@ public class RouteMap {
     @NotNull
     public static final String GoodsTypeSelect = "/common/goods_type_select";
     /**
-     * 选择同城小包
+     * 选择同城拼车
      * {@link SendCitySmallPackageActivity}
      */
     @NotNull

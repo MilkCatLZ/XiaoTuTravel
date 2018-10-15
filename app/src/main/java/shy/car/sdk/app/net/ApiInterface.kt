@@ -125,7 +125,7 @@ interface ApiInterface {
 
     /**
      * 获取接单列表
-     * type	integer	否	类型：1同城小包2整车物流
+     * type	integer	否	类型：1同城拼车2整车物流
      */
     @GET("orders/freights")
     fun getOrderList(
@@ -370,7 +370,7 @@ interface ApiInterface {
     to_address	string	是	到达地址
     to_lng	float	是	达到经度
     to_lat	float	是	达到纬度
-    type	integer	是	货运类型：1同城小包2整车物流
+    type	integer	是	货运类型：1同城拼车2整车物流
     freight_type	integer	是	货物类型
     freight_other	string	是	货物类型其它添加
     freight	float	是	运费

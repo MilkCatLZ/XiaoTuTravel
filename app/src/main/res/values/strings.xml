@@ -26,7 +26,7 @@
     <string name="str_verify_user">服务认证</string>
     <string name="str_send_hole_car">整车发货</string>
     <string name="str_location_select">选择位置</string>
-    <string name="str_send_city_small_package">同城小包</string>
+    <string name="str_send_city_small_package">同城拼车</string>
     <string name="str_send_detail">整车发货</string>
     <string name="str_find_and_rent">找车取车</string>
     <string name="str_order_detail">订单详情</string>

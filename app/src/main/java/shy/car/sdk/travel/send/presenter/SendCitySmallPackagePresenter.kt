@@ -90,7 +90,7 @@ class SendCitySmallPackagePresenter(context: Context, var callBack: CallBack) : 
                     endLocation.get()?.address!!,
                     endLocation.get()?.lng.toString(),
                     endLocation.get()?.lat.toString(),
-                    "1",//type=1同城小包
+                    "1",//type=1同城拼车
                     goodsType.get()?.goodsType.toString(),
                     goodsType.get()?.goodsTypeName!!,
                     price.get()!!,

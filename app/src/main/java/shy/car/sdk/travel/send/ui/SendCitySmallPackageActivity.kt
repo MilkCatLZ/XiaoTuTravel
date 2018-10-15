@@ -10,7 +10,7 @@ import shy.car.sdk.databinding.ActivitySendCityPackageBinding
 
 /**
  * create by LZ at 2018/05/25
- * 同城小包
+ * 同城拼车
  */
 @Route(path = RouteMap.SendCitySmallPackageSelect)
 class SendCitySmallPackageActivity : XTBaseActivity() {
