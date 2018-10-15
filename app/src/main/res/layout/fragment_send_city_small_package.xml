@@ -28,7 +28,7 @@
 
             <include
                 layout="@layout/layout_title"
-                app:title="@{@string/str_send_hole_car}" />
+                app:title="@{@string/str_send_city_small_package}" />
 
             <TextView
                 android:layout_width="wrap_content"
