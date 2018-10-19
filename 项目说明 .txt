@@ -2,5 +2,12 @@
 开发语言：Kotlin
 网络框架：RxAndroid+retrofit
 
+其他运用：DataBinding，EventBus3.0，ARouter（路由表：app\src\main\java\shy\car\sdk\app\route\RouteMap.java）
+
 项目主要配置文件：/gradle.properties
 签名文件：keystore_xxx8d9fx5Ddx5665.jks （密码：xxx8d9fx5Ddx5665）
+
+
+程序入口：app\src\main\java\shy\car\sdk\app\Application.kt
+界面入口：src\main\java\shy\car\sdk\travel\home\ui\StartActivity.kt
+主界面：app\src\main\java\shy\car\sdk\MainActivity.kt

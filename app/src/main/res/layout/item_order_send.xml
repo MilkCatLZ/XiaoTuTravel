@@ -80,6 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:onClick="@{click}"
+                            android:tag="@{order}"
                             android:src="@drawable/icon_tell"/>
                     </LinearLayout>
 
