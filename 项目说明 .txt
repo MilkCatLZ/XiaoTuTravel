@@ -1,0 +1,6 @@
+开发环境：Android Studio 3.2
+开发语言：Kotlin
+网络框架：RxAndroid+retrofit
+
+项目主要配置文件：/gradle.properties
+签名文件：keystore_xxx8d9fx5Ddx5665.jks （密码：xxx8d9fx5Ddx5665）
