@@ -6,6 +6,16 @@ android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILD_TOOLS_VERSION
 
+    dataBinding {
+        enabled true
+    }
+
+    sourceSets{
+        main{
+            jniLibs.srcDirs=['libs/jni']
+        }
+    }
+
     defaultConfig {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
@@ -35,20 +45,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
-    api ('com.amap.api:location:latest.integration'){
-        exclude module: 'support-v13'
-    }
-    api ('com.amap.api:map2d:latest.integration'){
-        exclude module: 'support-v13'
-    }
-    api ('com.amap.api:navi-3dmap:latest.integration'){
-        exclude module: 'support-v13'
-    }
-    api ('com.amap.api:search:latest.integration'){
-        exclude module: 'support-v13'
-    }
     implementation project(':BaseProject:util')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api files('libs/AMap3DMap_6.5.0_AMapNavi_6.4.0_AMapSearch_6.5.0_AMapLocation_4.3.0_20181016.jar')
 }
 repositories {
     mavenCentral()

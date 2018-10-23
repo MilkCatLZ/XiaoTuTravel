@@ -475,3 +475,5 @@
 *;
 }
 #end
+
+-dontwarn mbanje.kurt.**
