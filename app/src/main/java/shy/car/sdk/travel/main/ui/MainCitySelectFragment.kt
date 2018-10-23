@@ -1,10 +1,10 @@
 package shy.car.sdk.travel.main.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

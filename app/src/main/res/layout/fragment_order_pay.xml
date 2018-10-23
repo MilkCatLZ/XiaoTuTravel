@@ -242,11 +242,11 @@
                                 tools:text="￥20" />
                         </LinearLayout>
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerView_order_car_discount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
                         <LinearLayout

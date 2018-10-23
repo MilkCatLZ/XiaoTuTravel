@@ -2,9 +2,9 @@ package shy.car.sdk.travel.login.ui
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableInt
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableInt
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher

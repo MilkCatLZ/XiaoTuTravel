@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.base.base.ProgressDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable

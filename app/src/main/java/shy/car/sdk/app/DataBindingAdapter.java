@@ -3,8 +3,8 @@ package shy.car.sdk.app;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,7 +24,7 @@ import shy.car.sdk.R;
  */
 public class DataBindingAdapter extends BindingAdapter {
 
-    @android.databinding.BindingAdapter("android:imageURL")
+    @androidx.databinding.BindingAdapter("android:imageURL")
     public static void setUrlImage(@NonNull ImageView imageView, String url) {
         try {
             if (!url.contains("http") && !url.contains("storage")) {
@@ -50,7 +50,7 @@ public class DataBindingAdapter extends BindingAdapter {
     }
 
 
-    @android.databinding.BindingAdapter("android:appAvatarURL")
+    @androidx.databinding.BindingAdapter("android:appAvatarURL")
     public static void setRoundImage(@NonNull ImageView imageView, @Nullable String url) {
         try {
             if (!url.contains("http") && !url.contains("storage")) {
@@ -84,7 +84,7 @@ public class DataBindingAdapter extends BindingAdapter {
      * @param view
      * @param visible
      */
-    @android.databinding.BindingAdapter("android:visibleOrGoneLtoR_normal")
+    @androidx.databinding.BindingAdapter("android:visibleOrGoneLtoR_normal")
     public static void setViewVisiblesOrGoneLeftToRightNormal(@NonNull final View view, @NonNull boolean visible) {
         if (visible) {
             if (view.getVisibility() != View.VISIBLE) {
@@ -111,7 +111,7 @@ public class DataBindingAdapter extends BindingAdapter {
      * @param view
      * @param visible
      */
-    @android.databinding.BindingAdapter("android:visibleOrGoneLtoR_full")
+    @androidx.databinding.BindingAdapter("android:visibleOrGoneLtoR_full")
     public static void setViewVisiblesOrGoneLeftToRightFull(@NonNull final View view, @NonNull boolean visible) {
         if (visible) {
             if (view.getVisibility() != View.VISIBLE) {
@@ -138,7 +138,7 @@ public class DataBindingAdapter extends BindingAdapter {
      * @param view
      * @param visible
      */
-    @android.databinding.BindingAdapter("android:visibleOrGoneRtoL_normal")
+    @androidx.databinding.BindingAdapter("android:visibleOrGoneRtoL_normal")
     public static void setViewVisiblesOrGoneRightToLeftNormal(@NonNull final View view, @NonNull boolean visible) {
         if (visible) {
             if (view.getVisibility() != View.VISIBLE) {
@@ -165,7 +165,7 @@ public class DataBindingAdapter extends BindingAdapter {
      * @param view
      * @param visible
      */
-    @android.databinding.BindingAdapter("android:visibleOrGoneRtoL_full")
+    @androidx.databinding.BindingAdapter("android:visibleOrGoneRtoL_full")
     public static void setViewVisiblesOrGoneRightToLeftFull(@NonNull final View view, @NonNull boolean visible) {
         if (visible) {
             if (view.getVisibility() != View.VISIBLE) {
@@ -192,7 +192,7 @@ public class DataBindingAdapter extends BindingAdapter {
      * @param view
      * @param alpha
      */
-    @android.databinding.BindingAdapter("android:backgroundAlpha")
+    @androidx.databinding.BindingAdapter("android:backgroundAlpha")
     public static void setBackgroundAlpha(@NonNull final View view, @NonNull int alpha) {
         if (alpha >= 0 && alpha <= 255) {
             view.getBackground()

@@ -11,16 +11,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.view.Window;
 import android.widget.TextView;
 
 import java.lang.reflect.Field;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 
 
 /**
@@ -37,19 +38,19 @@ public class DialogManager extends DialogFragment {
     protected CharSequence leftButtonText;
     protected OnClickListener rightButtonOnClickListener;
     protected OnClickListener leftButtonOnClickListener;
-    
+
     protected Context context;
     protected FragmentManager manager;
     private boolean rightButtonVisible = true;
     private boolean leftButtonVisible = true;
     private OnDismissListener onDismissListener;
-    
+
     public static void init(int titleColor, int messageColor, int titleID) {
         DialogManager.titleColor = titleColor;
         DialogManager.messageColor = messageColor;
         DialogManager.titleID = titleID;
     }
-    
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +63,10 @@ public class DialogManager extends DialogFragment {
                 PackageInfo pkg = null;
                 try {
                     pkg = getActivity().getPackageManager()
-                                       .getPackageInfo(getActivity().getApplication()
-                                                                    .getPackageName(), 0);
+                            .getPackageInfo(getActivity().getApplication()
+                                    .getPackageName(), 0);
                     String appName = pkg.applicationInfo.loadLabel(getActivity().getPackageManager())
-                                                        .toString();
+                            .toString();
                     title = appName;
                 } catch (NameNotFoundException e) {
                     e.printStackTrace();
@@ -75,15 +76,15 @@ public class DialogManager extends DialogFragment {
             }
         }
     }
-    
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        
-        
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title)
-               .setMessage(message);
+                .setMessage(message);
         if (rightButtonVisible)
             builder.setPositiveButton(rightButtonText, new OnClickListener() {
                 @Override
@@ -104,103 +105,104 @@ public class DialogManager extends DialogFragment {
                     }
                 }
             });
-        
+
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(false);
-        
+
         return alert;
     }
-    
+
     public static DialogManager with(Context context, FragmentManager manager) {
         return new DialogManager().setContext(context)
-                                  .setManager(manager);
+                .setManager(manager);
     }
-    
+
     private DialogManager setContext(Context context) {
         this.context = context;
         return this;
     }
-    
+
     public DialogManager setManager(FragmentManager manager) {
         this.manager = manager;
         return this;
     }
-    
+
     public DialogManager leftButtonText(@StringRes int leftButtonText) {
         this.leftButtonText = context.getString(leftButtonText);
         return this;
     }
-    
+
     public DialogManager leftButtonText(String leftButtonText) {
         this.leftButtonText = leftButtonText;
         return this;
     }
-    
+
     public DialogManager rightButtonText(@StringRes int rightButtonText) {
         this.rightButtonText = context.getString(rightButtonText);
         return this;
     }
-    
+
     public DialogManager rightButtonText(String rightButtonText) {
         this.rightButtonText = rightButtonText;
         return this;
     }
-    
-    
+
+
     public DialogManager onLeftClick(OnClickListener onLeftClick) {
         this.leftButtonOnClickListener = onLeftClick;
         return this;
     }
-    
+
     public DialogManager onRightClick(OnClickListener onRightClick) {
         this.rightButtonOnClickListener = onRightClick;
         return this;
     }
-    
-    
+
+
     public DialogManager title(String title) {
         this.title = title;
         return this;
     }
-    
+
     public DialogManager title(@StringRes int title) {
         this.title = context.getString(title);
         return this;
     }
-    
+
     public DialogManager message(String message) {
         this.message = message;
         return this;
     }
-    
+
     public DialogManager message(@StringRes int message) {
         this.message = context.getString(message);
         return this;
     }
-    
+
     public DialogManager rightButtonVisible(boolean rightButtonVisible) {
         this.rightButtonVisible = rightButtonVisible;
         return this;
     }
-    
+
     public DialogManager leftButtonVisible(boolean leftButtonVisible) {
         this.leftButtonVisible = leftButtonVisible;
         return this;
     }
+
     public DialogManager onDismiss(OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
         return this;
     }
-    
-    
+
+
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(onDismissListener!=null){
+        if (onDismissListener != null) {
             onDismissListener.onDismiss(dialog);
         }
     }
-    
+
     public DialogManager show() {
         try {
             show(manager, LNCUSTOM_DIALOG_DIALOG);
@@ -212,7 +214,7 @@ public class DialogManager extends DialogFragment {
         }
         return this;
     }
-    
+
     @SuppressLint("StaticFieldLeak")
     private void setDialogTextColor() {
         new AsyncTask<String, String, String>() {
@@ -221,22 +223,22 @@ public class DialogManager extends DialogFragment {
                 super.onPostExecute(s);
                 try {
                     Field mAlertController = getDialog().getClass()
-                                                        .getDeclaredField("mAlert");
+                            .getDeclaredField("mAlert");
                     mAlertController.setAccessible(true);
                     Object object = mAlertController.get(getDialog());
                     mAlertController.setAccessible(true);
-                    
+
                     Field mTitleViewField = object.getClass()
-                                                  .getDeclaredField("mTitleView");
+                            .getDeclaredField("mTitleView");
                     Field mMessageViewField = object.getClass()
-                                                    .getDeclaredField("mMessageView");
+                            .getDeclaredField("mMessageView");
                     Field mViewField = object.getClass()
-                                             .getDeclaredField("mWindow");
-                    
+                            .getDeclaredField("mWindow");
+
                     mTitleViewField.setAccessible(true);
                     mMessageViewField.setAccessible(true);
                     mViewField.setAccessible(true);
-                    
+
                     TextView mTitleView = (TextView) mTitleViewField.get(object);
                     TextView mMessageView = (TextView) mMessageViewField.get(object);
                     Window mView = (Window) mViewField.get(object);
@@ -246,15 +248,15 @@ public class DialogManager extends DialogFragment {
                     if (messageColor != 0 && mMessageView != null)
                         mMessageView.setTextColor(DialogManager.messageColor);
                     mView.setBackgroundDrawableResource(android.R.color.white);
-                    
+
                 } catch (Exception e) {
                     Log.e("DialogBuilder", "onCreateDialog", e);
                 }
             }
-            
+
             @Override
             protected String doInBackground(String... params) {
-                for(int i = 0; getDialog() == null || !getDialog().isShowing(); i++) {
+                for (int i = 0; getDialog() == null || !getDialog().isShowing(); i++) {
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {

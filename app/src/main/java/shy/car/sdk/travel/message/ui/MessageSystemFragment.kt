@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.message.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableInt
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableInt
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

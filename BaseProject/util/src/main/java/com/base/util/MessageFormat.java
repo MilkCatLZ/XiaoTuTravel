@@ -1,7 +1,7 @@
 package com.base.util;
 
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 
 /**

@@ -45,7 +45,7 @@
 
         <View style="@style/style_shadow" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -61,7 +61,7 @@
                     android:clipChildren="false"
                     android:minHeight="150dp">
 
-                    <android.support.v4.view.ViewPager
+                    <androidx.viewpager.widget.ViewPager
                         android:id="@+id/viewPager_send_hold_car"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -376,6 +376,6 @@
                     android:textSize="@dimen/text_title_16dp" />
 
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 </layout>

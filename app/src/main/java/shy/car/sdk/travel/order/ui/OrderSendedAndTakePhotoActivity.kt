@@ -3,7 +3,7 @@ package shy.car.sdk.travel.order.ui
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.BitmapFactory
 import android.os.Binder
 import android.os.Bundle

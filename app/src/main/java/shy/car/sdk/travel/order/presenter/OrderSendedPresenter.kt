@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.order.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import com.base.base.ProgressDialog
 import com.base.network.retrofit.UploadFileRequestBody
 import com.base.util.Log

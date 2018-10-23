@@ -1,13 +1,13 @@
 package shy.car.sdk.travel.location.data
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.amap.api.services.core.PoiItem
-import com.android.databinding.library.baseAdapters.BR
 import com.base.location.Location
 import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
+import shy.car.sdk.BR
 
 class CurrentLocation : BaseObservable(),
         IndexableEntity {

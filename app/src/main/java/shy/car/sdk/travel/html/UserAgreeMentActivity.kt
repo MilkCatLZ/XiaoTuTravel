@@ -2,7 +2,7 @@ package shy.car.sdk.travel.html
 
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import com.alibaba.android.arouter.facade.annotation.Route
 import kotlinx.android.synthetic.main.activity_return_car_agreement.*
 import shy.car.sdk.BuildConfig

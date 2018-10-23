@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.setting.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.util.StringUtils

@@ -2,7 +2,7 @@ package shy.car.sdk.app.presenter
 
 
 import android.content.Context
-import android.databinding.BaseObservable
+import androidx.databinding.BaseObservable
 import com.base.util.Log
 import io.reactivex.disposables.Disposable
 import org.greenrobot.eventbus.EventBus

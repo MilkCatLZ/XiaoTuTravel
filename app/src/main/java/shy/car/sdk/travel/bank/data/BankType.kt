@@ -1,9 +1,9 @@
 package shy.car.sdk.travel.bank.data
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
-import android.databinding.Observable
-import android.databinding.PropertyChangeRegistry
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
+import androidx.databinding.PropertyChangeRegistry
 
 import shy.car.sdk.BR
 

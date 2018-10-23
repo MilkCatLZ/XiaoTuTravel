@@ -1,11 +1,11 @@
 package shy.car.sdk
 
 import android.Manifest
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.Gravity
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route

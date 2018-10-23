@@ -1,6 +1,6 @@
 package shy.car.sdk.travel.home.ui
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View

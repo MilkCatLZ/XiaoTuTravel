@@ -25,8 +25,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api 'com.github.bumptech.glide:glide:3.7.0'
-    api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
-    api "com.android.support:recyclerview-v7:${AndroidSupportVersion}"
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
     api('com.commit451:PhotoView:1.2.4') {
         exclude module: 'support-v4'
         exclude module: 'support-annotations'

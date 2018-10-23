@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.pay.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

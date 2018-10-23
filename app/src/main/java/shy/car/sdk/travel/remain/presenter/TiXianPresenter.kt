@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.remain.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import android.text.TextUtils
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager

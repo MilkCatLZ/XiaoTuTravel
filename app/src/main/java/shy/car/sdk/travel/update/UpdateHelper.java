@@ -2,7 +2,7 @@ package shy.car.sdk.travel.update;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.base.update.update.BaseUpdateHelper;
 import com.base.util.SPCache;

@@ -1,14 +1,13 @@
 package shy.car.sdk.travel.user.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.base.util.ToastManager
 import shy.car.sdk.R

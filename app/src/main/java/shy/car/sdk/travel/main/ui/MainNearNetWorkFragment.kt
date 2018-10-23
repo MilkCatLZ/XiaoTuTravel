@@ -1,6 +1,6 @@
 package shy.car.sdk.travel.main.ui
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher

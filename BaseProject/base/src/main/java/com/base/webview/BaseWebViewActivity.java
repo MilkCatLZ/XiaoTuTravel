@@ -34,7 +34,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Handler.Callback;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +46,6 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.base.R;
-import com.base.app.BaseApplication;
 import com.base.app.BaseApplicationInterface;
 import com.base.base.BaseActivity;
 import com.base.util.ToastManager;

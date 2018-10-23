@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.user.data
 
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.base.util.StringUtils
 
 import com.google.gson.annotations.SerializedName

@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager

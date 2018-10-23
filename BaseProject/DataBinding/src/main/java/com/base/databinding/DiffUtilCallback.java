@@ -1,7 +1,7 @@
 package com.base.databinding;
 
 
-import android.support.v7.util.DiffUtil.Callback;
+import androidx.recyclerview.widget.DiffUtil.Callback;
 
 import java.util.List;
 

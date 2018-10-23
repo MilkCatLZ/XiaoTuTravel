@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.setting.data;
 
 
-import android.databinding.BaseObservable;
+import androidx.databinding.BaseObservable;
 
 import com.google.gson.annotations.SerializedName;
 

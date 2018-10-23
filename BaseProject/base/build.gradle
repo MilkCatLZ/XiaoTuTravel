@@ -26,9 +26,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
-    api "com.android.support:design:${AndroidSupportVersion}"
-    api "com.android.support:support-annotations:${AndroidSupportVersion}"
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'com.google.android.material:material:1.0.0'
+    api 'androidx.annotation:annotation:1.0.0'
 
     api('com.nineoldandroids:library:2.4.0') {
         exclude module: 'support-v13'

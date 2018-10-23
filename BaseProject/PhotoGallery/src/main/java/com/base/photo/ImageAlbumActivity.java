@@ -3,11 +3,6 @@ package com.base.photo;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +17,20 @@ import com.wq.photo.R;
 
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import uk.co.senab.photoview.PhotoView;
 
 
 /**
  * @author LiuZhi
- *         本地图片相册，尚未加入网络图片功能，预订加入type参数，标记是网络图片相册还是本地图片相册
- *         传入参数 intent.putStringArrayListExtra({@link #IMAGES},list)必传
- *         intent.putStringArrayListExtra({@link #POSITION},0)可选,图片当前位置
+ * 本地图片相册，尚未加入网络图片功能，预订加入type参数，标记是网络图片相册还是本地图片相册
+ * 传入参数 intent.putStringArrayListExtra({@link #IMAGES},list)必传
+ * intent.putStringArrayListExtra({@link #POSITION},0)可选,图片当前位置
  */
-public class ImageAlbumActivity extends AppCompatActivity implements OnPageChangeListener {
+public class ImageAlbumActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     public static String IMAGES = "images";
     public static String POSITION = "position";
 //    public static String EXTRA_IMAGE = "image_album_activity";
@@ -51,8 +50,8 @@ public class ImageAlbumActivity extends AppCompatActivity implements OnPageChang
 
     private void initCache() {
         Glide.with(ImageAlbumActivity.this)
-             .load(list.get(mCurrentPageIndex))
-             .into((ImageView) findViewById(R.id.img_cache));
+                .load(list.get(mCurrentPageIndex))
+                .into((ImageView) findViewById(R.id.img_cache));
     }
 
     //    @Override
@@ -103,13 +102,13 @@ public class ImageAlbumActivity extends AppCompatActivity implements OnPageChang
             final PhotoView imageView = (PhotoView) view.findViewById(R.id.imageView1);
 
             Glide.with(ImageAlbumActivity.this)
-                 .load(list.get(position))
-                 .into(new SimpleTarget<GlideDrawable>() {
-                     @Override
-                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                         imageView.setImageDrawable(resource);
-                     }
-                 });
+                    .load(list.get(position))
+                    .into(new SimpleTarget<GlideDrawable>() {
+                        @Override
+                        public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                            imageView.setImageDrawable(resource);
+                        }
+                    });
 
 
             container.addView(view);
@@ -119,19 +118,19 @@ public class ImageAlbumActivity extends AppCompatActivity implements OnPageChang
 
         @Override
         public int getCount() {
-            
+
             return list.size();
         }
 
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
-            
+
             return arg0 == arg1;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            
+
             try {
                 ((ViewPager) container).removeView((View) object);
             } catch (Exception e) {
@@ -143,13 +142,13 @@ public class ImageAlbumActivity extends AppCompatActivity implements OnPageChang
 
     @Override
     public void onPageScrollStateChanged(int arg0) {
-        
+
 
     }
 
     @Override
     public void onPageScrolled(int arg0, float arg1, int arg2) {
-        
+
 
     }
 

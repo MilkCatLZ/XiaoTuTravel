@@ -1,7 +1,7 @@
 package com.base.app;
 
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**

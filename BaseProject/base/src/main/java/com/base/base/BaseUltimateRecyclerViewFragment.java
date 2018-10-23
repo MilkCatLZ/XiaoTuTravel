@@ -2,12 +2,6 @@ package com.base.base;
 
 
 import android.os.Bundle;
-import android.support.annotation.Keep;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -18,6 +12,12 @@ import com.base.widget.UltimateRecyclerView;
 import com.base.widget.UltimateRecyclerView.OnLoadMoreListener;
 import com.marshalchen.ultimaterecyclerview.uiUtils.RecyclerViewPositionHelper;
 
+import androidx.annotation.Keep;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.LayoutManager;
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 
@@ -25,7 +25,7 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator;
  * Created by liuz on 16-1-11.
  * 用于在使用SuperRecyclerView的Fragment统一处理刷新和下一页的逻辑，继承的子fragment就不用重新写这些代码了
  */
-public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicationInterface> extends BaseFragment<App> implements OnRefreshListener, OnLoadMoreListener {
+public abstract class BaseUltimateRecyclerViewFragment<App extends BaseApplicationInterface> extends BaseFragment<App> implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
 
 
     public static final int MAX_LOAD_MORE_COUNT = 0;

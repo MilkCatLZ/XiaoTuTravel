@@ -2,7 +2,7 @@ package shy.car.sdk.travel.login.presenter
 
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
 import com.base.base.ProgressDialog

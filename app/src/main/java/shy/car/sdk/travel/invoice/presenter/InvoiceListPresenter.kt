@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.invoice.presenter
 
 import android.content.Context
-import android.databinding.*
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.*
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.base.databinding.DataBindingItemClickAdapter
 import com.base.databinding.ItemViewHolder

@@ -1,7 +1,7 @@
 package com.base.network.xutils;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.xutils.common.Callback.CommonCallback;
 

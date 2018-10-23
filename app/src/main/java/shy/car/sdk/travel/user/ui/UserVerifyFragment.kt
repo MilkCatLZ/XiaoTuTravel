@@ -4,7 +4,7 @@ import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.DialogInterface
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment

@@ -27,7 +27,7 @@
                 style="@style/style_ww.text_14_666"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{LNTextUtil.getPriceText(preferential.money)}"
+                android:text="@{LNTextUtil.getPriceText(safeUnbox(preferential.money))}"
                 tools:text="￥20" />
         </LinearLayout>
 </layout>

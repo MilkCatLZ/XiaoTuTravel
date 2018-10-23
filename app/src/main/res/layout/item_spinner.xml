@@ -8,7 +8,7 @@
             type="com.base.util.key.KeyValue"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
 
@@ -19,5 +19,5 @@
             android:text="@{item.key.toString()}"
             android:textColorHint="@color/text_third_primary_999999"
             android:textSize="@dimen/text_primary_14dp"/>
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
-import android.databinding.ObservableInt
+import androidx.databinding.ObservableInt
 import android.view.View
 import com.base.databinding.DataBindingItemClickAdapter
 import io.reactivex.Observer

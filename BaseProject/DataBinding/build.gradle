@@ -27,8 +27,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     //noinspection GradleCompatible
-    api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
-    api "com.android.support:recyclerview-v7:${AndroidSupportVersion}"
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
     api('com.marshalchen.ultimaterecyclerview:library:0.7.0') {
         exclude module: 'support-v4'
         exclude module: 'appcompat-v7'

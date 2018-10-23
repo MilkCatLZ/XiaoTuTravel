@@ -1,9 +1,9 @@
 package shy.car.sdk.travel.take.data
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
-import android.databinding.Observable
-import android.databinding.PropertyChangeRegistry
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
+import androidx.databinding.PropertyChangeRegistry
 import com.google.gson.annotations.SerializedName
 
 open class DeliveryOrderList : BaseObservable() {

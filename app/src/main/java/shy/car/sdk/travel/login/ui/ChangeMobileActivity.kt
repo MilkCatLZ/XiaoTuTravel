@@ -1,6 +1,6 @@
 package shy.car.sdk.travel.login.ui
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import org.greenrobot.eventbus.Subscribe

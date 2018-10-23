@@ -22,12 +22,12 @@
 package com.base.databinding;
 
 
-import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
-import android.databinding.ViewDataBinding;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
+import androidx.databinding.ViewDataBinding;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,7 +37,7 @@ import static android.view.LayoutInflater.from;
 
 
 /**
- * {@link android.support.v7.widget.RecyclerView.ViewHolder ViewHolder}
+ * {@link RecyclerView.ViewHolder ViewHolder}
  * using {@link ViewDataBinding} tech.
  * Created by yk on 15/11/16.
  */

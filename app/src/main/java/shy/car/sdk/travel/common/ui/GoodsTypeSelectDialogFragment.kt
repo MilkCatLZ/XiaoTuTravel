@@ -1,9 +1,9 @@
 package shy.car.sdk.travel.common.ui
 
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialogFragment
-import android.support.v7.widget.GridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.recyclerview.widget.GridLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater

@@ -3,8 +3,8 @@ package com.base.databinding;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.widget.TextView;
 
 import com.base.util.drawable.DrawableTintManager;
@@ -23,35 +23,35 @@ public class DrawableBindingAdapter {
         return DrawableTintManager.tintColorList(drawable, colorStateList);
     }
 
-    @android.databinding.BindingAdapter("android:drawableLeftColor")
+    @androidx.databinding.BindingAdapter("android:drawableLeftColor")
     public static void setDrawableLeftColor(@NonNull TextView textView, @Nullable ColorStateList colorStateList) {
         Drawable sourceDrawable = textView.getCompoundDrawables()[0];
         textView.setCompoundDrawables(tintColorList(sourceDrawable, colorStateList), null, null, null);
     }
 
-    @android.databinding.BindingAdapter("android:drawableTopColor")
+    @androidx.databinding.BindingAdapter("android:drawableTopColor")
     public static void setDrawableTopColor(@NonNull TextView textView, @Nullable ColorStateList colorStateList) {
         Drawable sourceDrawable = textView.getCompoundDrawables()[1];
         textView.setCompoundDrawables(null, tintColorList(sourceDrawable, colorStateList), null, null);
     }
 
-    @android.databinding.BindingAdapter("android:drawableRightColor")
+    @androidx.databinding.BindingAdapter("android:drawableRightColor")
     public static void setDrawableRightColor(@NonNull TextView textView, @Nullable ColorStateList colorStateList) {
         Drawable sourceDrawable = textView.getCompoundDrawables()[2];
         textView.setCompoundDrawables(null, null, tintColorList(sourceDrawable, colorStateList), null);
     }
 
-    @android.databinding.BindingAdapter("android:drawableBottomColor")
+    @androidx.databinding.BindingAdapter("android:drawableBottomColor")
     public static void setDrawableBottomColor(@NonNull TextView textView, @Nullable ColorStateList colorStateList) {
         Drawable sourceDrawable = textView.getCompoundDrawables()[3];
         textView.setCompoundDrawables(null, null, null, tintColorList(sourceDrawable, colorStateList));
     }
-    @android.databinding.BindingAdapter("android:drawableTop")
+    @androidx.databinding.BindingAdapter("android:drawableTop")
     public static void setDrawableTop(@NonNull TextView textView, @Nullable Drawable drawable) {
         textView.setCompoundDrawablesWithIntrinsicBounds(null,drawable,null,null);
     }
     
-    @android.databinding.BindingAdapter("android:drawableStart")
+    @androidx.databinding.BindingAdapter("android:drawableStart")
     public static void setDrawableStarts(@NonNull TextView textView, @Nullable Drawable drawable) {
         textView.setCompoundDrawablesWithIntrinsicBounds(drawable,null,null,null);
     }

@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.rent.presenter
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import android.view.View
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.base.ProgressDialog

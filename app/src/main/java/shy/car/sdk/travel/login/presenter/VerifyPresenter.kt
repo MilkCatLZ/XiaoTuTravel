@@ -2,7 +2,7 @@ package shy.car.sdk.travel.login.presenter
 
 
 import android.content.Context
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.SPCache
 import com.base.util.StringUtils

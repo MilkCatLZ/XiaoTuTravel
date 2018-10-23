@@ -1,12 +1,6 @@
 package com.base.base;
 
 
-import android.support.annotation.Keep;
-import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.animation.OvershootInterpolator;
 
 import com.base.app.BaseApplicationInterface;
@@ -16,6 +10,12 @@ import com.base.widget.UltimateRecyclerView;
 import com.base.widget.UltimateRecyclerView.OnLoadMoreListener;
 import com.marshalchen.ultimaterecyclerview.uiUtils.RecyclerViewPositionHelper;
 
+import androidx.annotation.Keep;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.LayoutManager;
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 
@@ -26,7 +26,7 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator;
  * 1.要获取adapter数量的时候请用getAdapter().getAdapterItemCount()，而不是getAdapter().getItemCount()
  * 2.列表刷新完成后，必须调用{@link #refreshOrLoadMoreComplete}方法
  */
-public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicationInterface> extends BaseActivity<App> implements OnRefreshListener, OnLoadMoreListener {
+public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicationInterface> extends BaseActivity<App> implements SwipeRefreshLayout.OnRefreshListener, OnLoadMoreListener {
 
 
     public static final int MAX_LOAD_MORE_COUNT = 5;
@@ -61,9 +61,9 @@ public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicati
 
         getUltimateRecyclerView().setItemAnimator(new FadeInAnimator(new OvershootInterpolator(0.5f)));
         getUltimateRecyclerView().getItemAnimator()
-                                 .setAddDuration(350);
+                .setAddDuration(350);
         getUltimateRecyclerView().getItemAnimator()
-                                 .setRemoveDuration(0);
+                .setRemoveDuration(0);
         //加载更多
         getUltimateRecyclerView().addOnScrollListener(new OnScrollListener() {
 
@@ -94,6 +94,7 @@ public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicati
 
     /**
      * 获取LayoutManager，子类需要其他Manager的重写这个方法就可以
+     *
      * @return LayoutManager
      */
     protected LayoutManager getLayoutManager() {
@@ -180,7 +181,7 @@ public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicati
      * 隐藏footer
      */
     protected void disableLoadMore() {
-    
+
         try {
             if (getAdapter() != null) {
                 getAdapter().disableFooter();
@@ -194,7 +195,7 @@ public abstract class BaseUltimateRecyclerViewActivity<App extends BaseApplicati
      * footer设置成loading状态
      */
     protected void setFooterLoading() {
-    
+
         try {
             if (getAdapter() != null) {
                 if (!getAdapter().isEnableLoadMore()) {

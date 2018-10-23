@@ -135,7 +135,7 @@
 }
 
 #保持所有的LayoutManager，因为它们可以在xml里被实例化。
--keep,includedescriptorclasses class ** extends android.support.v7.widget.RecyclerView$LayoutManager {
+-keep,includedescriptorclasses class ** extends androidx.recyclerview.widget.RecyclerView$LayoutManager {
     !private *;
 }
 

@@ -1,8 +1,8 @@
 package com.base.widget;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,7 +26,7 @@ public class FullLinearLayoutManager extends LinearLayoutManager {
 
     @Override
     public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,
-            int widthSpec, int heightSpec) {
+                          int widthSpec, int heightSpec) {
 
         final int widthMode = View.MeasureSpec.getMode(widthSpec);
         final int heightMode = View.MeasureSpec.getMode(heightSpec);
@@ -81,7 +81,7 @@ public class FullLinearLayoutManager extends LinearLayoutManager {
     }
 
     private void measureScrapChild(RecyclerView.Recycler recycler, int position, int widthSpec,
-            int heightSpec, int[] measuredDimension) {
+                                   int heightSpec, int[] measuredDimension) {
         try {
             View view = null;
             if (position >= getItemCount()) {

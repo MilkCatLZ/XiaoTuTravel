@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.setting.data
 
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import shy.car.sdk.BR
 
 

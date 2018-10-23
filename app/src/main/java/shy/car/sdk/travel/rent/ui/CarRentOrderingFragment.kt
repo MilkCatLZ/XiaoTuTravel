@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.rent.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -34,8 +34,8 @@
 
         <View style="@style/line_horizontal"/>
 
-        <android.support.v7.widget.RecyclerView
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        <androidx.recyclerview.widget.RecyclerView
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:bindAdapter="@{presenter.adapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

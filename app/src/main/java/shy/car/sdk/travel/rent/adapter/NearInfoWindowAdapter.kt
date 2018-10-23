@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.rent.adapter
 
 import android.content.Context
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.View
 import com.amap.api.maps.AMap

@@ -1,7 +1,7 @@
 package shy.car.sdk.travel.pay.ui
 
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route

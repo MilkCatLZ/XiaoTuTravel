@@ -1,12 +1,12 @@
 package shy.car.sdk.travel.rent.data
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
-import com.android.databinding.library.baseAdapters.BR
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.google.gson.annotations.SerializedName
 import me.yokeyword.indexablerv.IndexableEntity
 import me.yokeyword.indexablerv.PinyinUtil
 
+import shy.car.sdk.BR
 /**
  * 附近网点
  */

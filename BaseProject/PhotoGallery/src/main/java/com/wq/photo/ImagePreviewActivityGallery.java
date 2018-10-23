@@ -1,12 +1,6 @@
 package com.wq.photo;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +16,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class ImagePreviewActivityGallery extends GalleryBaseActivity {
@@ -49,7 +47,6 @@ public class ImagePreviewActivityGallery extends GalleryBaseActivity {
         viewPager.setCurrentItem(pos);
 
     }
-
 
 
     private void checkPreviewOnly() {
@@ -123,12 +120,11 @@ public class ImagePreviewActivityGallery extends GalleryBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
         if (getIntent() != null) {
             images = getIntent().getStringArrayListExtra(EXTRA_IMAGES_LIST);
             pos = getIntent().getIntExtra(EXTRA_POS, 0);
 
-            previewOnly= getIntent().getBooleanExtra(EXTRA_PREVIEW_ONLY, false);
+            previewOnly = getIntent().getBooleanExtra(EXTRA_PREVIEW_ONLY, false);
         }
         viewPager = (ViewPager) findViewById(R.id.pager);
     }
@@ -204,7 +200,7 @@ public class ImagePreviewActivityGallery extends GalleryBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_confirm) {
             finish();
-        }else if(item.getItemId()==android.R.id.home){
+        } else if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);

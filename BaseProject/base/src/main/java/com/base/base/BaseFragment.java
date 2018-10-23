@@ -26,19 +26,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.Keep;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +40,19 @@ import com.base.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+
 
 /**
  * 所有Fragment基类
@@ -59,10 +60,10 @@ import org.greenrobot.eventbus.EventBus;
  */
 public abstract class BaseFragment<App extends BaseApplicationInterface> extends Fragment implements BaseInterface {
     protected String tag = getClass().getSimpleName();
-    
+
     private BaseDelegate tcBaseDelegate = new BaseDelegate();
     protected App app;
-    
+
     /**
      * 判断View是否被创建
      */
@@ -72,7 +73,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
      */
     private boolean isFirstVisible = true;
     private boolean isResumed;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +86,9 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
         }
         tcBaseDelegate.onCreate(this, savedInstanceState, app);
     }
-    
+
     protected abstract App getBaseApplicationInterface();
-    
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -96,7 +97,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             onVisibleToUser();
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();
@@ -105,7 +106,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             onViewCreatedResume();
         }
     }
-    
+
     @Override
     public void onPause() {
         super.onPause();
@@ -114,39 +115,39 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             onRealPauseMothod();
         }
     }
-    
+
     @Override
     public void onDestroy() {
         tcBaseDelegate.onDestroy(this);
         super.onDestroy();
     }
-    
+
     public BaseFragment() {
         setArguments(new Bundle(0));
     }
-    
-    
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         tcBaseDelegate.onOptionsItemSelected(item, this);
         return super.onOptionsItemSelected(item);
     }
-    
-    
+
+
     public CharSequence getFragmentName() {
         return "";
     }
-    
+
     @Override
     public CharSequence getTitleText() {
         return getFragmentName();
     }
-    
+
     @Keep
     public ViewDataBinding getViewDataBind() {
         return null;
     }
-    
+
     /**
      * 为了兼容现有代码做出的妥协写法
      *
@@ -156,39 +157,39 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
     public ViewDataBinding getViewDataBinds() {
         return getViewDataBind();
     }
-    
+
     @Override
     public EventBus getEventBusDefault() {
         return tcBaseDelegate.getEventBusDefault();
     }
-    
+
     @Override
     public void register(Object o) {
         tcBaseDelegate.register(o);
     }
-    
+
     @Override
     public boolean isActive() {
         return tcBaseDelegate.isActive();
     }
-    
+
     @Override
     public void postSticky(Object o) {
         tcBaseDelegate.postSticky(o);
     }
-    
+
     @Override
     @Nullable
     public ActionBar getSupportActionBar() {
         return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
-    
+
     @Override
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         tcBaseDelegate.setSupportActionBar(this);
     }
-    
+
     @Override
     @Nullable
     public View findViewById(@IdRes int id) {
@@ -197,24 +198,24 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
         }
         return null;
     }
-    
+
     @Override
     public void finish() {
         if (getActivity() != null)
             getActivity().finish();
     }
-    
+
     @Override
     public Application getApplication() {
         return getActivity().getApplication();
     }
-    
+
     @Override
     public void setStatusBarColor(@ColorRes int color) {
         tcBaseDelegate.setStatusBarColor(getActivity(), color);
     }
-    
-    
+
+
     @Keep
     public void setSupportActionBar(@IdRes int toolBarID) {
         if (getView() != null) {
@@ -223,35 +224,35 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             tcBaseDelegate.setSupportActionBar(this);
         }
     }
-    
+
     @Override
     public void hideSoftKeyboard() {
         try {
             if (getActivity() != null && !getActivity().isFinishing())
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE))
-                    .hideSoftInputFromWindow(((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0)
-                                                                                                           .getWindowToken(),
-                                             android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS);
+                        .hideSoftInputFromWindow(((ViewGroup) getActivity().findViewById(android.R.id.content)).getChildAt(0)
+                                        .getWindowToken(),
+                                android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception ignored) {
-            
+
         }
     }
-    
+
     @Override
     public void setHomeIndicator(@DrawableRes int homeIndicator) {
         tcBaseDelegate.setHomeIndicator(homeIndicator);
     }
-    
+
     public final <A extends Activity> void startActivity(@NonNull Class<A> target) {
         startActivity(new Intent(getContext(), target));
         getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
     }
-    
+
     public final <A extends Activity> void startActivity(@NonNull Class<A> target, int flags) {
         startActivity(new Intent(getContext(), target).addFlags(flags));
         getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_to_left);
     }
-    
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -261,7 +262,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             onRealPauseMothod();
         }
     }
-    
+
     private void onRealPauseMothod() {
         if (isResumed) {
             isResumed = false;
@@ -269,7 +270,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             Log.d(getClass().getSimpleName(), "onRealPause");
         }
     }
-    
+
     /**
      * View创建完成，并且每次从不可用变为可用时调用
      * {@link #onViewCreatedResume} 两个同时使用才能得到onActivityResume的效果
@@ -283,7 +284,7 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             Log.d(getClass().getSimpleName(), "onRealResume");
         }
     }
-    
+
     /**
      * 在view创建完成后，再次调用Resume时的回调
      * {@link #onVisibleToUser} 两个同时使用才能得到onActivityResume的效果
@@ -295,25 +296,25 @@ public abstract class BaseFragment<App extends BaseApplicationInterface> extends
             Log.d(getClass().getSimpleName(), "onRealResume");
         }
     }
-    
+
     /**
      * 下面这个方法为Fragment的真Resume效果
      */
     protected void onRealResume() {
-        
+
     }
-    
+
     /**
      * 下面这个方法为Fragment的真onPause，每次从界面消失时触发
      */
     protected void onRealPause() {
-        
+
     }
-    
+
     protected void tintHomeAsUp(@ColorRes int color) {
         tcBaseDelegate.tintHomeAsUp(this, color);
     }
-    
+
     protected void tintHomeAsUpWithColor(@ColorInt int color) {
         tcBaseDelegate.tintHomeAsUpWithColor(this, color);
     }

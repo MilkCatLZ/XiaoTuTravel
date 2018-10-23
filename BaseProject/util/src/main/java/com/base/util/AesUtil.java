@@ -1,7 +1,7 @@
 package com.base.util;
 
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Base64;
 
 import javax.crypto.Cipher;

@@ -1,8 +1,8 @@
 package shy.car.sdk.travel.pay.presenter
 
 import android.content.Context
-import android.databinding.ObservableDouble
-import android.databinding.ObservableField
+import androidx.databinding.ObservableDouble
+import androidx.databinding.ObservableField
 import com.base.base.ProgressDialog
 import com.base.util.ToastManager
 import com.google.gson.JsonObject

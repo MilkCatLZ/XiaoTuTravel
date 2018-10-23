@@ -23,7 +23,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    api "com.android.support:appcompat-v7:${AndroidSupportVersion}"
+    api 'androidx.appcompat:appcompat:1.0.0'
     implementation project(':BaseProject:Network')
     implementation project(':BaseProject:util')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

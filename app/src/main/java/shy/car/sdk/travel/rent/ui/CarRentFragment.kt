@@ -1,15 +1,15 @@
 package shy.car.sdk.travel.rent.ui
 
 import android.annotation.SuppressLint
-import android.databinding.DataBindingUtil
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetBehavior.STATE_COLLAPSED
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -325,8 +325,8 @@ class CarRentFragment : XTBaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.let { carRentPresenter = CarRentPresenter(it, callBack) }
-        oneKeyOpen.addOnPropertyChangedCallback(object : android.databinding.Observable.OnPropertyChangedCallback() {
-            override fun onPropertyChanged(sender: android.databinding.Observable?, propertyId: Int) {
+        oneKeyOpen.addOnPropertyChangedCallback(object : androidx.databinding.Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: androidx.databinding.Observable?, propertyId: Int) {
                 if (sender is ObservableBoolean) {
                     when (sender.get()) {
                         true -> {

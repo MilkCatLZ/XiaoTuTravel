@@ -35,7 +35,7 @@
 
         <View style="@style/style_shadow" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -79,12 +79,12 @@
                     android:orientation="vertical"
                     android:paddingBottom="15dp">
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView_pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:bindAdapter="@{presenter.adapter}"
-                        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
                         tools:listitem="@layout/item_pay_amount" />
 
@@ -144,7 +144,7 @@
                     android:textColor="@color/_foreground_material_light"
                     android:textSize="@dimen/text_title_16dp" />
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
     </LinearLayout>
 
 </layout>

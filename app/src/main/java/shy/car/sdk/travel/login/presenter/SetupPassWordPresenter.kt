@@ -2,8 +2,8 @@ package shy.car.sdk.travel.login.presenter
 
 
 import android.content.Context
-import android.databinding.ObservableBoolean
-import android.databinding.ObservableField
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View.OnClickListener
